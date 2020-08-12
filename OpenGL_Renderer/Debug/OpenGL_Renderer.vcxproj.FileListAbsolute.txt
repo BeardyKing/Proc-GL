@@ -1,0 +1,2 @@
+C:\dev\Personal\OpenGL_Renderer\OpenGL_Renderer\Debug\OpenGL_Renderer.vcxproj.CopyComplete
+C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\OpenGL_Renderer\Debug\OpenGL_Renderer.vcxproj.CopyComplete
