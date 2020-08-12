@@ -1,2 +1,11 @@
-﻿  OpenGL_Renderer.cpp
-  OpenGL_Renderer.vcxproj -> C:\dev\Personal\OpenGL_Renderer\x64\Debug\OpenGL_Renderer.exe
+﻿main.obj : error LNK2019: unresolved external symbol __imp_glClear referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glClearColor referenced in function "bool __cdecl InitOpenGL(void)" (?InitOpenGL@@YA_NXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_glDrawArrays referenced in function main
+main.obj : error LNK2001: unresolved external symbol __glewBindBuffer
+main.obj : error LNK2001: unresolved external symbol __glewBufferData
+main.obj : error LNK2001: unresolved external symbol __glewGenBuffers
+main.obj : error LNK2001: unresolved external symbol __glewEnableVertexAttribArray
+main.obj : error LNK2001: unresolved external symbol __glewVertexAttribIPointer
+main.obj : error LNK2001: unresolved external symbol __glewBindVertexArray
+main.obj : error LNK2001: unresolved external symbol __glewGenVertexArrays
+C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\x64\Debug\OpenGL_Renderer.exe : fatal error LNK1120: 10 unresolved externals

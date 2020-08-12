@@ -1,0 +1,9 @@
+﻿  main.cpp
+main.obj : error LNK2001: unresolved external symbol ___glewEnableVertexAttribArray
+main.obj : error LNK2001: unresolved external symbol ___glewBindVertexArray
+main.obj : error LNK2001: unresolved external symbol ___glewBindBuffer
+main.obj : error LNK2001: unresolved external symbol ___glewBufferData
+main.obj : error LNK2001: unresolved external symbol ___glewGenVertexArrays
+main.obj : error LNK2001: unresolved external symbol ___glewVertexAttribIPointer
+main.obj : error LNK2001: unresolved external symbol ___glewGenBuffers
+C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\Release\OpenGL_Renderer.exe : fatal error LNK1120: 7 unresolved externals
