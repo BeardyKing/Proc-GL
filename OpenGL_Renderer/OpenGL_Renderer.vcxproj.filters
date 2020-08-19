@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{74127818-d609-4731-968d-5cc9161bca70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -28,7 +31,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\basic.vert" />
-    <None Include="bin\basic.frag" />
+    <None Include="bin\basic.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="bin\basic.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
