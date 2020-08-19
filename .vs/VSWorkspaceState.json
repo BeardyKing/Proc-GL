@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\OpenGL_Renderer",
+    "\\OpenGL_Renderer\\src"
   ],
-  "SelectedNode": "\\openGL_RenderingTests",
+  "SelectedNode": "\\OpenGL_Renderer\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

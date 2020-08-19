@@ -1,2 +1,4 @@
 ﻿  main.cpp
-  OpenGL_Renderer.vcxproj -> C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\Debug\OpenGL_Renderer.exe
+  ShaderProgram.cpp
+  Generating Code...
+  OpenGL_Renderer.vcxproj -> C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_Renderer", "OpenGL_Renderer\OpenGL_Renderer.vcxproj", "{B3FFA61C-8E95-4371-BDAF-AC0D4CA898ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C134C77-F28B-492C-A05A-0DAB965E85E6}"
+	ProjectSection(SolutionItems) = preProject
+		OpenGL_Renderer\src\ShaderProgram.cpp = OpenGL_Renderer\src\ShaderProgram.cpp
+		OpenGL_Renderer\src\ShaderProgram.h = OpenGL_Renderer\src\ShaderProgram.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
