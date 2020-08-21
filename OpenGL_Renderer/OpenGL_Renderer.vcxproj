@@ -149,9 +149,11 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
+    <ClCompile Include="src\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h" />
+    <ClInclude Include="src\Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\basic.frag" />

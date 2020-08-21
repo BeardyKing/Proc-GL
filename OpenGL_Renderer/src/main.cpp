@@ -6,6 +6,7 @@
 #include<GLFW/glfw3.h>
 
 #include "ShaderProgram.h"
+#include "Texture2D.h"
 
 
 const char* APP_TITLE = "OpenGL";
@@ -16,6 +17,8 @@ GLFWwindow* gWindow = NULL;
 
 bool gFullscreen = false;
 bool glWireframe = false;
+
+const std::string texture1 = "dog.png";
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
 void showFPS(GLFWwindow* window);
@@ -30,15 +33,11 @@ int main(){
 	}
 
 	GLfloat verticies[] = {
-		//tri 0			
-		-0.5f,	 0.5f,	0.0f,	
-		 0.5f,	 0.5f,	0.0f,	
-	     0.5f,	-0.5f,	0.0f,
-		 -0.5,  -0.5f, 0.0f
-	   //tri 1
-		-0.5f,	 0.5f,	0.0f,
-		0.5f,	-0.5f,	0.0f,
-	   -0.5f,	-0.5f,	0.0f
+		//positions				// text coord ( UV )
+		-0.5f,	 0.5f,	0.0f,	0.0f, 1.0f, //top left
+		 0.5f,	 0.5f,	0.0f,	1.0f, 1.0f, // top right 
+	     0.5f,	-0.5f,	0.0f,	1.0f, 0.0f, // bottom right 
+		-0.5f,  -0.5f,	0.0f,	 0.0f, 0.0f  // bottom left
 	};
 
 	GLuint indicies[] = {
@@ -59,8 +58,13 @@ int main(){
 	glBindVertexArray(vao);
 
 	// position attrib
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), NULL);
 	glEnableVertexAttribArray(0);
+
+	// text Coord 
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -69,7 +73,8 @@ int main(){
 	ShaderProgram shaderProgram;
 	shaderProgram.loadShaders("basic.vert", "basic.frag");
 
-
+	Texture2D texture;
+	texture.loadTexture(texture1, true);
 
 
 
@@ -78,6 +83,7 @@ int main(){
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		texture.bind();
 
 		shaderProgram.use();
 
@@ -106,12 +112,14 @@ int main(){
 }
 
 bool InitOpenGL() {
+	
+
 	if (!glfwInit()){
 		std::cerr << "GLFW DID NOT INIT" << std::endl;
 		return false;
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -134,10 +142,12 @@ bool InitOpenGL() {
 	}
 	glfwMakeContextCurrent(gWindow);
 
+	
+
 	// input
 	glfwSetKeyCallback(gWindow, glfw_onKey);
 
-	glewExperimental = true;
+	glewExperimental = GL_TRUE;
 
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "GLEW Did not init" << std::endl;

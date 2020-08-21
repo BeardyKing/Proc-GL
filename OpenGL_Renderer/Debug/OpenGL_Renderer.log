@@ -1,3 +1,2 @@
-﻿  main.cpp
-C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\OpenGL_Renderer\src\main.cpp(84,16): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+﻿  Texture2D.cpp
   OpenGL_Renderer.vcxproj -> C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
