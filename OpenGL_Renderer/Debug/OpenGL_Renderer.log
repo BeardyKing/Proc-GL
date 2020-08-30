@@ -1,2 +1,10 @@
-﻿  Texture2D.cpp
-  OpenGL_Renderer.vcxproj -> C:\dev\Personal\OpenGL_Renderer\openGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
+﻿  main.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(90,16): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+  ShaderProgram.cpp
+  Texture2D.cpp
+  Generating Code...
+  LINK : C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe not found or not built by the last incremental link; performing full link
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\glew_static.pdb'; linking object as if no debug info
+  OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
