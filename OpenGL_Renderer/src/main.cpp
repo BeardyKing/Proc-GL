@@ -18,13 +18,12 @@ GLFWwindow* gWindow = NULL;
 bool gFullscreen = false;
 bool glWireframe = false;
 
-const std::string texture1 = "dog.png";
+const std::string texture1Path = "dog.png";
+const std::string texture2Path = "meat.png";
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
-
-
 
 int main(){
 	if (!InitOpenGL()){ 
@@ -33,16 +32,16 @@ int main(){
 	}
 
 	GLfloat verticies[] = {
-		//positions				// text coord ( UV )
-		-0.5f,	 0.5f,	0.0f,	0.0f, 1.0f, //top left
-		 0.5f,	 0.5f,	0.0f,	1.0f, 1.0f, // top right 
-	     0.5f,	-0.5f,	0.0f,	1.0f, 0.0f, // bottom right 
+		//positions				 // text coord ( UV )
+		-0.5f,	 0.5f,	0.0f,	 0.0f, 1.0f, //top left
+		 0.5f,	 0.5f,	0.0f,	 1.0f, 1.0f, // top right 
+	     0.5f,	-0.5f,	0.0f,	 1.0f, 0.0f, // bottom right 
 		-0.5f,  -0.5f,	0.0f,	 0.0f, 0.0f  // bottom left
 	};
 
 	GLuint indicies[] = {
-		0,1,2, // tri 0
-		0,2,3 // tri 1
+		0,1,2,	// tri 0
+		0,2,3	// tri 1
 	};
 	// vbo vertex buffer,
 	// ibo index buffer, 
@@ -73,8 +72,11 @@ int main(){
 	ShaderProgram shaderProgram;
 	shaderProgram.loadShaders("basic.vert", "basic.frag");
 
-	Texture2D texture;
-	texture.loadTexture(texture1, true);
+	Texture2D texture1;
+	texture1.loadTexture(texture1Path, true);
+
+	Texture2D texture2;
+	texture2.loadTexture(texture2Path, true);
 
 
 
@@ -83,9 +85,14 @@ int main(){
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		texture.bind();
+		texture1.bind(0);
+		texture2.bind(1);
+
 
 		shaderProgram.use();
+
+		glUniform1i(glGetUniformLocation(shaderProgram.getProgram(), "myTexture1"), 0);
+		glUniform1i(glGetUniformLocation(shaderProgram.getProgram(), "myTexture2"), 1);
 
 		GLfloat time = glfwGetTime();
 		GLfloat blueCol = (sin(time) / 2) + 0.5f;
@@ -112,8 +119,6 @@ int main(){
 }
 
 bool InitOpenGL() {
-	
-
 	if (!glfwInit()){
 		std::cerr << "GLFW DID NOT INIT" << std::endl;
 		return false;
@@ -141,8 +146,6 @@ bool InitOpenGL() {
 		return false;
 	}
 	glfwMakeContextCurrent(gWindow);
-
-	
 
 	// input
 	glfwSetKeyCallback(gWindow, glfw_onKey);
