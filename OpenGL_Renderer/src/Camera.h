@@ -17,7 +17,7 @@ public:
 	virtual void Rotate		(float yaw, float pitch)	 {} // float roll // in degrees
 	virtual void Move		(const glm::vec3& offsetPos) {}
 
-	const glm::vec3& GetLook()	const;
+	const glm::vec3& GetLook()	const; // TODO REPLACE WITH GETFORWARD
 	const glm::vec3& GetRight() const;
 	const glm::vec3& GetUp()	const;
 
@@ -39,7 +39,7 @@ protected:
 	//Euler angle (in radians)
 	float mYaw;
 	float mPitch;
-	float mRoll;
+	float mRoll; // TODO ADD ROLL TO CAMERA ON Q & E
 
 	float mFOV; //degrees
 
