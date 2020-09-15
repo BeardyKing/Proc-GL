@@ -13,6 +13,7 @@ public:
 
 	bool loadTexture(const std::string& fileName, bool generateMipMaps = true);
 	void bind(GLuint texUint = 0);
+	void unbind(GLuint texUnit = 0);
 private:
 	GLuint m_Texture;
 };

@@ -9,6 +9,7 @@
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 #include "Camera.h"
+#include "Mesh.h"
 
 
 const char* APP_TITLE = "OpenGL";
@@ -19,9 +20,6 @@ GLFWwindow* gWindow = NULL;
 
 bool gFullscreen = false;
 bool glWireframe = false;
-
-const std::string texture1Path = "Wall/Brick_wall_02_1K_Base_Color.png";
-const std::string texture2Path = "Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png";
 
 //OrbitCamera orbitCamera;
 //float gYaw = 0.0f;
@@ -50,97 +48,40 @@ int main(){
 		return -1;
 	}
 
-	GLfloat verticies[] = {
-		//positions				 // text coord ( UV )
-		//Front face
-		-1.0f,	 1.0f,	1.0f,	 0.0f,	1.0f, 
-		 1.0f,	-1.0f,	1.0f,	 1.0f,	0.0f, 
-		 1.0f,	 1.0f,	1.0f,	 1.0f,	1.0f, 
-		-1.0f,	 1.0f,	1.0f,	 0.0f,	1.0f, 
-		-1.0f,	-1.0f,	1.0f,	 0.0f,	0.0f, 
-		 1.0f,	-1.0f,	1.0f,	 1.0f,	0.0f, 
-										
-		 //Back face					
-		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
-		 1.0f,	 1.0f,	-1.0f,	 1.0f,	1.0f,
-		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
-		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
-										
-		 //Left face					
-		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		-1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
-		-1.0f,	 1.0f,	 1.0f,	 1.0f,	1.0f,
-		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
-		-1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
-										
-		//Right face					
-		 1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		 1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
-		 1.0f,	 1.0f,	 1.0f,	 1.0f,	1.0f,
-		 1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
-		 1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
-		 1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
-										
-		 //Top face						
-		-1.0f,	1.0f,	-1.0f,	 0.0f,	1.0f,
-		 1.0f,	1.0f,	 1.0f,	 1.0f,	0.0f,
-		 1.0f,	1.0f,	-1.0f,	 1.0f,	1.0f,
-		-1.0f,	1.0f,	-1.0f,	 0.0f,	1.0f,
-		-1.0f,	1.0f,	 1.0f,	 0.0f,	0.0f,
-		 1.0f,	1.0f,	 1.0f,	 1.0f,	0.0f,
-
-		 //Bottom face						
-		-1.0f,	-1.0f,	 1.0f,	 0.0f,	1.0f,
-		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
-		 1.0f,	-1.0f,	 1.0f,	 1.0f,	1.0f,
-		-1.0f,	-1.0f,	 1.0f,	 0.0f,	1.0f,
-		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
-		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
+	//model positions
+	glm::vec3 modelPos[] = {
+		glm::vec3(-5.0f,-0.5f,0.0f),
+		glm::vec3(0.0f,-1.0f,0.0f),
+		glm::vec3(-2.0f,0.0f,-3.0f),
+		glm::vec3(0.0f,0.5f,0.0f)
 	};
 
-	glm::vec3 cubePos  = glm::vec3(0.0f, 0.0f, -5.0f);
-	glm::vec3 floorPos = glm::vec3(0.0f, -1.0f, 5.0f);
-	
-	// vbo vertex buffer,
-	// ibo index buffer, 
-	// vao vertex array obj
+	glm::vec3 modelScale[] = {
+		glm::vec3(1.0f,1.0f,1.0f),
+		glm::vec3(1.0f,1.0f,1.0f),
+		glm::vec3(2.0f,2.0f,2.0f),
+		glm::vec3(1.0f,1.0f,1.0f)
+	};
+	// Load meshes and textures
+	const int numModels = 4;
+	Mesh mesh[numModels];
+	Texture2D texture[numModels];
 
-	GLuint vbo, vao;
-	//GLuint ibo;
+	//load mesh
+	mesh[0].LoadOBJ("mesh/box.obj");
+	mesh[1].LoadOBJ("mesh/ground.obj");
+	mesh[2].LoadOBJ("mesh/pipe.obj");
+	mesh[3].LoadOBJ("frog/frog.obj");
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
-
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	// position attrib
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), NULL);
-	glEnableVertexAttribArray(0);
-
-	// text Coord 
-
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-
-	/*glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);*/
+	//load texture
+	texture[0].loadTexture("Wall/Brick_wall_02_1K_Base_Color.png",true);
+	texture[1].loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png",true);
+	texture[2].loadTexture("mesh/polygon_texture.png",true);
+	texture[3].loadTexture("frog/frog.png",true);
 
 	ShaderProgram shaderProgram;
 	shaderProgram.loadShaders("basic.vert", "basic.frag");
 
-	Texture2D texture1;
-	texture1.loadTexture(texture1Path, true);
-
-	Texture2D texture2;
-	texture2.loadTexture(texture2Path, true);
-
-	float cubeAngle = 0.0f;
 	double lastTime = glfwGetTime();
 
 	while (!glfwWindowShouldClose(gWindow)){
@@ -154,41 +95,30 @@ int main(){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		texture1.bind(0);
 		 
 		glm::mat4 model, view, projection;
 
-		model = glm::translate(model, cubePos);
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 		
 		shaderProgram.use();
 
-		shaderProgram.setUniform("model",		model);
-		shaderProgram.setUniform("view",		view);
-		shaderProgram.setUniform("projection",	projection);
+		shaderProgram.setUniform("view", view);
+		shaderProgram.setUniform("projection", projection);
 
-		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		for (int i = 0; i < numModels; i++){
+			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
+			shaderProgram.setUniform("model", model);
 
-		// ground object
-		texture2.bind(0);
-
-		model = glm::translate(model, floorPos) * glm::scale(model, glm::vec3(10.0f, 0.01f, 10.0f));
-
-		shaderProgram.setUniform("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glBindVertexArray(0);
+			texture[i].bind(0);
+			mesh[i].Draw();
+			texture[i].unbind(0);
+		}
 
 		glfwSwapBuffers(gWindow);
-
 		lastTime = currentTime;
 	}
 
-	glDeleteVertexArrays(1, &vao);
-	glDeleteBuffers(1, &vbo);
-	//glDeleteBuffers(1, &ibo);
 	glfwTerminate();
 	return 0;
 }
