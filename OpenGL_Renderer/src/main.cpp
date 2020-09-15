@@ -8,6 +8,7 @@
 
 #include "ShaderProgram.h"
 #include "Texture2D.h"
+#include "Camera.h"
 
 
 const char* APP_TITLE = "OpenGL";
@@ -20,10 +21,18 @@ bool gFullscreen = false;
 bool glWireframe = false;
 
 const std::string texture1Path = "Wall/Brick_wall_02_1K_Base_Color.png";
-//const std::string texture2Path = "Wall/Brick_wall_02_1K_Roughness.png";
+const std::string texture2Path = "Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png";
+
+OrbitCamera orbitCamera;
+float gYaw = 0.0f;
+float gPitch = 0.0f;
+float gRadius = 10.0f;
+const float MOUSE_SENSITIVITY = 0.25f;
+
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height);
+void glfw_OnMouseMove(GLFWwindow* window, double posX, double posY);
 
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
@@ -120,8 +129,8 @@ int main(){
 	Texture2D texture1;
 	texture1.loadTexture(texture1Path, true);
 
-	//Texture2D texture2;
-	//texture2.loadTexture(texture2Path, true);
+	Texture2D texture2;
+	texture2.loadTexture(texture2Path, true);
 
 	float cubeAngle = 0.0f;
 	double lastTime = glfwGetTime();
@@ -138,28 +147,19 @@ int main(){
 		texture1.bind(0);
 		//texture2.bind(1);
 
-		cubeAngle += (float)(deltaTime * 50.0f);
-		if (cubeAngle >= 360.0){
-			cubeAngle = 0.0f;
-		}
 		 
 		glm::mat4 model, view, projection;
-		
-		// model starts at 0,0,0 translate it by cube pos 0,0,-5 rotate by cube angle around the 0,1,0 axis 
-		model = glm::translate(model, cubePos) * glm::rotate(model, glm::radians(cubeAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		glm::vec3 camPos(0.0f, 0.0f, 0.0f);
-		glm::vec3 targetPos(0.0f, 0.0f, -1.0f);
-		glm::vec3 up(0.0f, 1.0f, 0.0f);
-		view = glm::lookAt(camPos,targetPos,up);
+		orbitCamera.SetLookAt(cubePos);
+		orbitCamera.Rotate(gYaw, gPitch);
+		orbitCamera.SetRadius(gRadius);
 
+		model = glm::translate(model, cubePos);
+		view = orbitCamera.getViewMatrix();
 		projection = glm::perspective(glm::radians(45.0f), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 		
 
 		shaderProgram.use();
-		/*model;
-		view;
-		projection*/ 
 
 		shaderProgram.setUniform("model",		model);
 		shaderProgram.setUniform("view",		view);
@@ -167,6 +167,7 @@ int main(){
 
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(gWindow);
@@ -212,6 +213,7 @@ bool InitOpenGL() {
 
 	// input
 	glfwSetKeyCallback(gWindow, glfw_onKey);
+	glfwSetCursorPosCallback(gWindow, glfw_OnMouseMove);
 
 	glewExperimental = GL_TRUE;
 
@@ -250,6 +252,25 @@ void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height) {
 
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
 }
+
+void glfw_OnMouseMove(GLFWwindow* window, double posX, double posY) {
+	static glm::vec2 lastMousePos = glm::vec2(0, 0);
+
+	if (glfwGetMouseButton(gWindow, GLFW_MOUSE_BUTTON_LEFT) == 1){
+		gYaw -= ((float)posX - lastMousePos.x) * MOUSE_SENSITIVITY;
+		gPitch += ((float)posY - lastMousePos.y) * MOUSE_SENSITIVITY;
+	}
+
+	if (glfwGetMouseButton(gWindow, GLFW_MOUSE_BUTTON_RIGHT) == 1){
+		float dx = 0.01f * ((float)posX - lastMousePos.x);
+		float dy = 0.01f * ((float)posY - lastMousePos.y);
+		gRadius += dx - dy;
+	}
+
+	lastMousePos.x = (float)posX;
+	lastMousePos.y = (float)posY;
+}
+
 
 
 void showFPS(GLFWwindow* window) {
