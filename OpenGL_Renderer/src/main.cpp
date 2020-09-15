@@ -168,6 +168,19 @@ int main(){
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
+		// ground object
+		texture2.bind(0);
+
+		glm::vec3 floorPos;
+		floorPos.y = -1.0f;
+		floorPos.z = 5.0f; 
+
+		model = glm::translate(model, floorPos) * glm::scale(model, glm::vec3(10.0f, 0.01f, 10.0f));
+
+		shaderProgram.setUniform("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(gWindow);
