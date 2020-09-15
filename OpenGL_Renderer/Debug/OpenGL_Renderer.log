@@ -1,3 +1,2 @@
 ﻿  main.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(99,16): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

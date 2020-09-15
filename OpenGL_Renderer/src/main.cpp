@@ -4,24 +4,27 @@
 #define GLEW_STATIC
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 
 
 const char* APP_TITLE = "OpenGL";
-const int gWindowWidth = 800;
-const int gWindowHeight = 600;
+int gWindowWidth = 1024;
+int gWindowHeight = 768;
 
 GLFWwindow* gWindow = NULL;
 
 bool gFullscreen = false;
 bool glWireframe = false;
 
-const std::string texture1Path = "dog.png";
-const std::string texture2Path = "meat.png";
+const std::string texture1Path = "Wall/Brick_wall_02_1K_Base_Color.png";
+//const std::string texture2Path = "Wall/Brick_wall_02_1K_Roughness.png";
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
+void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height);
+
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
 
@@ -33,21 +36,63 @@ int main(){
 
 	GLfloat verticies[] = {
 		//positions				 // text coord ( UV )
-		-0.5f,	 0.5f,	0.0f,	 0.0f, 1.0f, //top left
-		 0.5f,	 0.5f,	0.0f,	 1.0f, 1.0f, // top right 
-	     0.5f,	-0.5f,	0.0f,	 1.0f, 0.0f, // bottom right 
-		-0.5f,  -0.5f,	0.0f,	 0.0f, 0.0f  // bottom left
+		//Front face
+		-1.0f,	 1.0f,	1.0f,	 0.0f,	1.0f, 
+		 1.0f,	-1.0f,	1.0f,	 1.0f,	0.0f, 
+		 1.0f,	 1.0f,	1.0f,	 1.0f,	1.0f, 
+		-1.0f,	 1.0f,	1.0f,	 0.0f,	1.0f, 
+		-1.0f,	-1.0f,	1.0f,	 0.0f,	0.0f, 
+		 1.0f,	-1.0f,	1.0f,	 1.0f,	0.0f, 
+										
+		 //Back face					
+		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
+		 1.0f,	 1.0f,	-1.0f,	 1.0f,	1.0f,
+		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
+		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
+										
+		 //Left face					
+		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		-1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
+		-1.0f,	 1.0f,	 1.0f,	 1.0f,	1.0f,
+		-1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
+		-1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
+										
+		//Right face					
+		 1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		 1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
+		 1.0f,	 1.0f,	 1.0f,	 1.0f,	1.0f,
+		 1.0f,	 1.0f,	-1.0f,	 0.0f,	1.0f,
+		 1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
+		 1.0f,	-1.0f,	 1.0f,	 1.0f,	0.0f,
+										
+		 //Top face						
+		-1.0f,	1.0f,	-1.0f,	 0.0f,	1.0f,
+		 1.0f,	1.0f,	 1.0f,	 1.0f,	0.0f,
+		 1.0f,	1.0f,	-1.0f,	 1.0f,	1.0f,
+		-1.0f,	1.0f,	-1.0f,	 0.0f,	1.0f,
+		-1.0f,	1.0f,	 1.0f,	 0.0f,	0.0f,
+		 1.0f,	1.0f,	 1.0f,	 1.0f,	0.0f,
+
+		 //Bottom face						
+		-1.0f,	-1.0f,	 1.0f,	 0.0f,	1.0f,
+		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
+		 1.0f,	-1.0f,	 1.0f,	 1.0f,	1.0f,
+		-1.0f,	-1.0f,	 1.0f,	 0.0f,	1.0f,
+		-1.0f,	-1.0f,	-1.0f,	 0.0f,	0.0f,
+		 1.0f,	-1.0f,	-1.0f,	 1.0f,	0.0f,
 	};
 
-	GLuint indicies[] = {
-		0,1,2,	// tri 0
-		0,2,3	// tri 1
-	};
+	glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, -5.0f);
+
 	// vbo vertex buffer,
 	// ibo index buffer, 
 	// vao vertex array obj
 
-	GLuint vbo,ibo, vao;
+	GLuint vbo, vao;
+	//GLuint ibo;
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -65,9 +110,9 @@ int main(){
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
 
-	glGenBuffers(1, &ibo);
+	/*glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);*/
 
 	ShaderProgram shaderProgram;
 	shaderProgram.loadShaders("basic.vert", "basic.frag");
@@ -75,45 +120,63 @@ int main(){
 	Texture2D texture1;
 	texture1.loadTexture(texture1Path, true);
 
-	Texture2D texture2;
-	texture2.loadTexture(texture2Path, true);
+	//Texture2D texture2;
+	//texture2.loadTexture(texture2Path, true);
 
-
+	float cubeAngle = 0.0f;
+	double lastTime = glfwGetTime();
 
 	while (!glfwWindowShouldClose(gWindow)){
 		showFPS(gWindow);
+
+		double currentTime = glfwGetTime();
+		double deltaTime = currentTime - lastTime;
+
 		glfwPollEvents();
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		texture1.bind(0);
-		texture2.bind(1);
+		//texture2.bind(1);
 
+		cubeAngle += (float)(deltaTime * 50.0f);
+		if (cubeAngle >= 360.0){
+			cubeAngle = 0.0f;
+		}
+		 
+		glm::mat4 model, view, projection;
+		
+		// model starts at 0,0,0 translate it by cube pos 0,0,-5 rotate by cube angle around the 0,1,0 axis 
+		model = glm::translate(model, cubePos) * glm::rotate(model, glm::radians(cubeAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glm::vec3 camPos(0.0f, 0.0f, 0.0f);
+		glm::vec3 targetPos(0.0f, 0.0f, -1.0f);
+		glm::vec3 up(0.0f, 1.0f, 0.0f);
+		view = glm::lookAt(camPos,targetPos,up);
+
+		projection = glm::perspective(glm::radians(45.0f), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
+		
 
 		shaderProgram.use();
+		/*model;
+		view;
+		projection*/ 
 
-		glUniform1i(glGetUniformLocation(shaderProgram.getProgram(), "myTexture1"), 0);
-		glUniform1i(glGetUniformLocation(shaderProgram.getProgram(), "myTexture2"), 1);
-
-		GLfloat time = glfwGetTime();
-		GLfloat blueCol = (sin(time) / 2) + 0.5f;
-
-		glm::vec2 pos;
-		pos.x = sin(time) / 2;
-		pos.y = cos(time) / 2;
-
-		shaderProgram.setUniform("posOffset", pos);
-		shaderProgram.setUniform("vertCol", glm::vec4(0.0f, 0.0f, blueCol, 1.0f));
+		shaderProgram.setUniform("model",		model);
+		shaderProgram.setUniform("view",		view);
+		shaderProgram.setUniform("projection",	projection);
 
 		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(gWindow);
+
+		lastTime = currentTime;
 	}
 
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ibo);
+	//glDeleteBuffers(1, &ibo);
 	glfwTerminate();
 	return 0;
 }
@@ -159,6 +222,8 @@ bool InitOpenGL() {
 	}
 
 	glClearColor(0.25f, 0.38f, 0.47f, 1.0f);
+	glViewport(0, 0, gWindowWidth, gWindowHeight);
+	glEnable(GL_DEPTH_TEST);
 
 	return true;
 }
@@ -178,6 +243,14 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 		}
 	}
 }
+
+void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height) {
+	gWindowWidth	= width;
+	gWindowHeight	= height;
+
+	glViewport(0, 0, gWindowWidth, gWindowHeight);
+}
+
 
 void showFPS(GLFWwindow* window) {
 	static double previousSecond = 0.0;
