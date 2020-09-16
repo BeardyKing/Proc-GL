@@ -1,2 +1,4 @@
 ﻿  main.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(142,50): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(143,52): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

@@ -89,7 +89,7 @@ int main(){
 	// ---------- mesh shader ----------
 
 	ShaderProgram lightingShader;
-	lightingShader.loadShaders("lightingDirectional.vert", "lightingDirectional.frag");
+	lightingShader.loadShaders("lightingPoint.vert", "lightingPoint.frag");
 
 	float angle = 0.0f;
 	double lastTime = glfwGetTime();
@@ -112,7 +112,7 @@ int main(){
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
 
-		glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
+		glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
 		glm::vec3 lightDirection(0.0f, -0.9f, -0.17);
 		glm::vec3 lightScale(0.5f, 0.5f, 0.5f);
@@ -124,8 +124,9 @@ int main(){
 
 		//move light
 		angle += (float)deltaTime * 90.0f;
-		lightPos.x += 1.5f * sinf(glm::radians(angle));
-		lightPos.z += 1.5f * cosf(glm::radians(angle));
+
+		lightPos.x = 3.0f * sinf(glm::radians(angle));
+		lightPos.z = 14.0f + 10.0f * cosf(glm::radians(angle));
 		
 		lightingShader.use();
 
@@ -133,10 +134,13 @@ int main(){
 		lightingShader.setUniform("projection", projection);
 		lightingShader.setUniform("viewPos", viewPos);
 
-		lightingShader.setUniform("light.direction", lightDirection);
+		lightingShader.setUniform("light.position", lightPos);
 		lightingShader.setUniform("light.ambient", glm::vec3(0.25f, 0.5f, 0.2f));
 		lightingShader.setUniform("light.diffuse", lightCol);
 		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setUniform("light.constant", 1.0f);
+		lightingShader.setUniform("light.linear;", 0.07);
+		lightingShader.setUniform("light.exponent", 0.017);
 
 
 		for (int i = 0; i < numModels; i++){
@@ -152,6 +156,15 @@ int main(){
 			mesh[i].Draw();
 			texture[i].unbind(0);
 		}
+
+		// render light
+		model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
+		lightbulbShader.use();
+		lightbulbShader.setUniform("lightCol", lightCol);
+		lightbulbShader.setUniform("model", model);
+		lightbulbShader.setUniform("view", view);
+		lightbulbShader.setUniform("projection", projection);
+		lightMesh.Draw();
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
