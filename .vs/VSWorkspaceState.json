@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\OpenGL_Renderer",
+    "\\OpenGL_Renderer\\bin",
     "\\OpenGL_Renderer\\src"
   ],
-  "SelectedNode": "\\OpenGL_Renderer\\src\\Mesh.cpp",
+  "SelectedNode": "\\OpenGL_Renderer\\bin\\Wall",
   "PreviewInSolutionExplorer": false
 }

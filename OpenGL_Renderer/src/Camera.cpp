@@ -36,6 +36,10 @@ const glm::vec3& Camera::GetUp()	const {
 	return mUp;
 }
 
+const glm::vec3 Camera::GetPosition()const {
+	return mPosition;
+}
+
 
 // --------------------------------
 // FPS CAMERA

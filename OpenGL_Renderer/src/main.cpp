@@ -2,8 +2,8 @@
 #include <sstream>
 
 #define GLEW_STATIC
-#include<GL/glew.h>
-#include<GLFW/glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "ShaderProgram.h"
@@ -53,14 +53,14 @@ int main(){
 		glm::vec3(-5.0f,-0.5f,0.0f),
 		glm::vec3(0.0f,-1.0f,0.0f),
 		glm::vec3(-2.0f,0.0f,-3.0f),
-		glm::vec3(0.0f,0.5f,0.0f)
+		glm::vec3(0.0f,0.0f,0.0f)
 	};
 
 	glm::vec3 modelScale[] = {
 		glm::vec3(1.0f,1.0f,1.0f),
 		glm::vec3(1.0f,1.0f,1.0f),
 		glm::vec3(2.0f,2.0f,2.0f),
-		glm::vec3(1.0f,1.0f,1.0f)
+		glm::vec3(0.5f,0.5f,0.5f)
 	};
 	// Load meshes and textures
 	const int numModels = 4;
@@ -79,9 +79,19 @@ int main(){
 	texture[2].loadTexture("mesh/polygon_texture.png",true);
 	texture[3].loadTexture("frog/frog.png",true);
 
-	ShaderProgram shaderProgram;
-	shaderProgram.loadShaders("basic.vert", "basic.frag");
+	// ---------- light bulb ----------
+	Mesh lightMesh;
+	lightMesh.LoadOBJ("light.obj");
 
+	ShaderProgram lightbulbShader;
+	lightbulbShader.loadShaders("basic.vert", "basic.frag");
+	// ---------- ----------- ----------
+	// ---------- mesh shader ----------
+
+	ShaderProgram lightingShader;
+	lightingShader.loadShaders("lighting.vert", "lighting.frag");
+
+	float angle = 0.0f;
 	double lastTime = glfwGetTime();
 
 	while (!glfwWindowShouldClose(gWindow)){
@@ -100,20 +110,48 @@ int main(){
 
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
-		
-		shaderProgram.use();
 
-		shaderProgram.setUniform("view", view);
-		shaderProgram.setUniform("projection", projection);
+		glm::vec3 lightPos(0.0f, 3.0f, 0.0f);
+		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
+
+		glm::vec3 viewPos;
+		viewPos.x = fpsCamera.GetPosition().x;
+		viewPos.y = fpsCamera.GetPosition().y;
+		viewPos.z = fpsCamera.GetPosition().z;
+
+		//move light
+		angle += (float)deltaTime * 50.0f;
+		lightPos.x += 8.0f * sinf(glm::radians(angle));
+		//lightPos.z += 8.0f * sinf(glm::radians(angle));
+		
+		lightingShader.use();
+
+		lightingShader.setUniform("view", view);
+		lightingShader.setUniform("projection", projection);
+		lightingShader.setUniform("lightCol", lightCol);
+		lightingShader.setUniform("lightPos", lightPos);
+		lightingShader.setUniform("viewPos", viewPos);
 
 		for (int i = 0; i < numModels; i++){
 			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
-			shaderProgram.setUniform("model", model);
+			lightingShader.setUniform("model", model);
 
 			texture[i].bind(0);
 			mesh[i].Draw();
 			texture[i].unbind(0);
 		}
+
+		//light
+
+
+		// render light
+		model = glm::translate(glm::mat4(), lightPos);
+		lightbulbShader.use();
+		lightbulbShader.setUniform("lightCol", lightCol);
+		lightbulbShader.setUniform("model", model);
+		lightbulbShader.setUniform("view", view);
+		lightbulbShader.setUniform("projection", projection);
+		lightMesh.Draw();
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;

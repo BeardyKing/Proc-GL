@@ -20,6 +20,7 @@ public:
 	const glm::vec3& GetLook()	const; // TODO REPLACE WITH GETFORWARD
 	const glm::vec3& GetRight() const;
 	const glm::vec3& GetUp()	const;
+	const glm::vec3 GetPosition() const;
 
 	float getFOV() const	{ return mFOV; }
 	void  setFOV(float fov) { mFOV = fov; } // in Degrees

@@ -55,5 +55,11 @@
     <None Include="bin\basic.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="bin\lighting.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="bin\lighting.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
