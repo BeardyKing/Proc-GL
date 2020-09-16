@@ -11,7 +11,6 @@
 #include "Camera.h"
 #include "Mesh.h"
 
-
 const char* APP_TITLE = "OpenGL";
 int gWindowWidth = 1024;
 int gWindowHeight = 768;
@@ -80,15 +79,16 @@ int main(){
 	texture[2].loadTexture("mesh/polygon_texture.png",true);
 	texture[3].loadTexture("frog/frog.png",true);
 
-	// ---------- light bulb ----------
+	// ---------- --------- ----------
+	// ---------- point_Pos ----------
 	Mesh lightMesh;
 	lightMesh.LoadOBJ("light.obj");
 
 	ShaderProgram lightbulbShader;
 	lightbulbShader.loadShaders("basic.vert", "basic.frag");
+
 	// ---------- ----------- ----------
 	// ---------- mesh shader ----------
-
 	ShaderProgram lightingShader;
 	lightingShader.loadShaders("lightingMultiple.vert", "lightingMultiple.frag");
 
@@ -106,20 +106,19 @@ int main(){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		 
+
 		glm::mat4 model, view, projection;
 
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
 		//spot light 
-		glm::vec3 lightPos = fpsCamera.GetPosition();
-		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
+		glm::vec3 spotLight_Pos = fpsCamera.GetPosition();
+		glm::vec3 spotLight_Col(1.0f, 1.0f, 1.0f);
 
 		//directional light
 		glm::vec3 directional_lightDirection(0.0f, -0.9f, -0.17);
 		glm::vec3 directional_lightCol(0.4f, 0.4f, 0.2f);
-		//lightPos.y -= -0.5f;
 		
 		//point light 
 		glm::vec3 point_Pos(0.0f, 0.0f, 0.0f);
@@ -133,43 +132,39 @@ int main(){
 		point_Pos.z += 1.5f * cosf(glm::radians(angle));
 		point_Pos.y += 1 + (0.5f * sinf(glm::radians(angle) * 2));
 
-
 		glm::vec3 viewPos = fpsCamera.GetPosition();
 		
 		lightingShader.use();
 
-		lightingShader.setUniform("view", view);
-		lightingShader.setUniform("projection", projection);
-		lightingShader.setUniform("viewPos", viewPos);
+		lightingShader.setUniform("view"						, view);
+		lightingShader.setUniform("projection"					, projection);
+		lightingShader.setUniform("viewPos"						, viewPos);
 
-		lightingShader.setUniform("spotLight.position"		, lightPos);
-		lightingShader.setUniform("spotLight.direction"		, fpsCamera.GetLook());
-		lightingShader.setUniform("spotLight.ambient"		, glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("spotLight.diffuse"		, lightCol);
-		lightingShader.setUniform("spotLight.specular"		, glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setUniform("spotLight.constant"		, 1.0f);
-		lightingShader.setUniform("spotLight.linear"		, 0.07f);
-		lightingShader.setUniform("spotLight.exponent"		, 0.017f);
-		lightingShader.setUniform("spotLight.cosInnerCone"	, glm::cos(glm::radians(15.0f)));
-		lightingShader.setUniform("spotLight.cosOuterCone"	, glm::cos(glm::radians(20.0f)));
-		lightingShader.setUniform("spotLight.on"			, gFlashlightOn);
+		lightingShader.setUniform("spotLight.position"			, spotLight_Pos);
+		lightingShader.setUniform("spotLight.direction"			, fpsCamera.GetLook());
+		lightingShader.setUniform("spotLight.ambient"			, glm::vec3(0.25f, 0.5f, 0.2f));
+		lightingShader.setUniform("spotLight.diffuse"			, spotLight_Col);
+		lightingShader.setUniform("spotLight.specular"			, glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setUniform("spotLight.constant"			, 1.0f);
+		lightingShader.setUniform("spotLight.linear"			, 0.07f);
+		lightingShader.setUniform("spotLight.exponent"			, 0.017f);
+		lightingShader.setUniform("spotLight.cosInnerCone"		, glm::cos(glm::radians(15.0f)));
+		lightingShader.setUniform("spotLight.cosOuterCone"		, glm::cos(glm::radians(20.0f)));
+		lightingShader.setUniform("spotLight.on"				, gFlashlightOn);
 
 		lightingShader.setUniform("directionalLight.direction"	, directional_lightDirection);
 		lightingShader.setUniform("directionalLight.ambient"	, glm::vec3(0.25f, 0.5f, 0.2f));
 		lightingShader.setUniform("directionalLight.diffuse"	, directional_lightCol);
 		lightingShader.setUniform("directionalLight.specular"	, glm::vec3(1.0f, 1.0f, 1.0f));
 
-		lightingShader.setUniform("pointLight.direction"	, point_Direction);
-		lightingShader.setUniform("pointLight.position"		, point_Pos);
-		lightingShader.setUniform("pointLight.ambient"		, glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("pointLight.diffuse"		, point_lightCol);
-		lightingShader.setUniform("pointLight.specular"		, glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setUniform("pointLight.constant"		, 1.0f);
-		lightingShader.setUniform("pointLight.linear;"		, 0.07f);
-		lightingShader.setUniform("pointLight.exponent"		, 0.017f);
-
-
-
+		lightingShader.setUniform("pointLight.direction"		, point_Direction);
+		lightingShader.setUniform("pointLight.position"			, point_Pos);
+		lightingShader.setUniform("pointLight.ambient"			, glm::vec3(0.25f, 0.5f, 0.2f));
+		lightingShader.setUniform("pointLight.diffuse"			, point_lightCol);
+		lightingShader.setUniform("pointLight.specular"			, glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setUniform("pointLight.constant"			, 1.0f);
+		lightingShader.setUniform("pointLight.linear;"			, 0.07f);
+		lightingShader.setUniform("pointLight.exponent"			, 0.017f);
 
 		for (int i = 0; i < numModels; i++){
 			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
@@ -185,10 +180,10 @@ int main(){
 			texture[i].unbind(0);
 		}
 
-		// render light
+		// render light mesh
 		model = glm::translate(glm::mat4(), point_Pos) * glm::scale(glm::mat4(), point_Scale);
 		lightbulbShader.use();
-		lightbulbShader.setUniform("lightCol", lightCol);
+		lightbulbShader.setUniform("lightCol", point_Col);
 		lightbulbShader.setUniform("model", model);
 		lightbulbShader.setUniform("view", view);
 		lightbulbShader.setUniform("projection", projection);
@@ -235,6 +230,7 @@ bool InitOpenGL() {
 	glfwSetKeyCallback(gWindow, glfw_onKey);
 	glfwSetCursorPosCallback(gWindow, glfw_OnMouseMove);
 	glfwSetScrollCallback(gWindow, glfw_OnMouseScroll);
+	glfwSetFramebufferSizeCallback(gWindow, glfw_OnFrameBufferSize);
 
 	//hides and grabs cursor, unlimited movement
 	glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -318,28 +314,34 @@ void Update(double elapsedTime) {
 
 	glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
 
+	//sprint
+	float moveSpeedDelta = 1;
+	if (glfwGetKey(gWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
+		moveSpeedDelta = 4;
+	}
+
 	//forwards / backwards
 	if (glfwGetKey(gWindow, GLFW_KEY_W) == GLFW_PRESS){
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * fpsCamera.GetLook());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetLook());
 	}
 	else if (glfwGetKey(gWindow, GLFW_KEY_S) == GLFW_PRESS) {
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * -fpsCamera.GetLook());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetLook());
 	}
 
 	// left / right
 	if (glfwGetKey(gWindow, GLFW_KEY_A) == GLFW_PRESS) {
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * -fpsCamera.GetRight());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetRight());
 	}
 	else if (glfwGetKey(gWindow, GLFW_KEY_D) == GLFW_PRESS) {
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * fpsCamera.GetRight());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetRight());
 	}
 
 	//up / down
 	if (glfwGetKey(gWindow, GLFW_KEY_Z) == GLFW_PRESS) {
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * fpsCamera.GetUp());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetUp());
 	}
 	else if (glfwGetKey(gWindow, GLFW_KEY_X) == GLFW_PRESS) {
-		fpsCamera.Move(MOVE_SPEED * (float)elapsedTime * -fpsCamera.GetUp());
+		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetUp());
 	}
 }
 
