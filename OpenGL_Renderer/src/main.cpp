@@ -111,9 +111,10 @@ int main(){
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
-		glm::vec3 lightPos(0.0f, 3.0f, 0.0f);
-		glm::vec3 lightCol(0.9, 0.9, 0.9f);
-		glm::vec3 lightScale(1.0f, 1.0f, 1.0f);
+
+		glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
+		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
+		glm::vec3 lightScale(0.5f, 0.5f, 0.5f);
 
 		glm::vec3 viewPos;
 		viewPos.x = fpsCamera.GetPosition().x;
@@ -121,9 +122,9 @@ int main(){
 		viewPos.z = fpsCamera.GetPosition().z;
 
 		//move light
-		angle += (float)deltaTime * 50.0f;
-		lightPos.x += 8.0f * sinf(glm::radians(angle));
-		//lightPos.z += 8.0f * sinf(glm::radians(angle));
+		angle += (float)deltaTime * 90.0f;
+		lightPos.x += 1.5f * sinf(glm::radians(angle));
+		lightPos.z += 1.5f * cosf(glm::radians(angle));
 		
 		lightingShader.use();
 
@@ -132,7 +133,7 @@ int main(){
 		lightingShader.setUniform("viewPos", viewPos);
 
 		lightingShader.setUniform("light.position", lightPos);
-		lightingShader.setUniform("light.ambient", glm::vec3(0.3f, 0.3f, 0.2f));
+		lightingShader.setUniform("light.ambient", glm::vec3(0.25f, 0.5f, 0.2f));
 		lightingShader.setUniform("light.diffuse", lightCol);
 		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -141,7 +142,7 @@ int main(){
 			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
 			lightingShader.setUniform("model", model);
 			
-			lightingShader.setUniform("material.ambient", glm::vec3(0.3f, 0.3f, 0.2f));
+			lightingShader.setUniform("material.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 			lightingShader.setUniformSampler("material.diffuseMap", 0);
 			lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
 			lightingShader.setUniform("material.shininess", 10.0f);

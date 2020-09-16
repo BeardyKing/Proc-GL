@@ -33,7 +33,9 @@ void main(){
 	vec3 normal		= normalize(Normal);
 	vec3 lightDir	= normalize(light.position - FragPos);
 	float NDotL		= max(dot(normal, lightDir), 0.0f);
-	vec3 diffuse	= light.diffuse * vec3(texture(material.diffuseMap, TexCoord)) * NDotL;
+	vec3 temp = light.diffuse * vec3(texture(material.diffuseMap, TexCoord)) * NDotL;
+	temp = temp + vec3(texture(material.diffuseMap, TexCoord) / 4 ); // make texture visible when no light
+	vec3 diffuse = temp;
 
 	//specular (blit-phong)
 	vec3 viewDir = normalize(viewPos - FragPos);
