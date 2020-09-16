@@ -58,7 +58,7 @@ int main(){
 
 	glm::vec3 modelScale[] = {
 		glm::vec3(1.0f,1.0f,1.0f),
-		glm::vec3(1.0f,1.0f,1.0f),
+		glm::vec3(5.0f,0.2f,5.0f),
 		glm::vec3(2.0f,2.0f,2.0f),
 		glm::vec3(0.5f,0.5f,0.5f)
 	};
@@ -112,7 +112,8 @@ int main(){
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
 		glm::vec3 lightPos(0.0f, 3.0f, 0.0f);
-		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
+		glm::vec3 lightCol(0.9, 0.9, 0.9f);
+		glm::vec3 lightScale(1.0f, 1.0f, 1.0f);
 
 		glm::vec3 viewPos;
 		viewPos.x = fpsCamera.GetPosition().x;
@@ -128,14 +129,23 @@ int main(){
 
 		lightingShader.setUniform("view", view);
 		lightingShader.setUniform("projection", projection);
-		lightingShader.setUniform("lightCol", lightCol);
-		lightingShader.setUniform("lightPos", lightPos);
 		lightingShader.setUniform("viewPos", viewPos);
+
+		lightingShader.setUniform("light.position", lightPos);
+		lightingShader.setUniform("light.ambient", glm::vec3(0.3f, 0.3f, 0.2f));
+		lightingShader.setUniform("light.diffuse", lightCol);
+		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+
 
 		for (int i = 0; i < numModels; i++){
 			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
 			lightingShader.setUniform("model", model);
-
+			
+			lightingShader.setUniform("material.ambient", glm::vec3(0.3f, 0.3f, 0.2f));
+			lightingShader.setUniformSampler("material.diffuseMap", 0);
+			lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+			lightingShader.setUniform("material.shininess", 10.0f);
+			
 			texture[i].bind(0);
 			mesh[i].Draw();
 			texture[i].unbind(0);
@@ -145,7 +155,7 @@ int main(){
 
 
 		// render light
-		model = glm::translate(glm::mat4(), lightPos);
+		model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
 		lightbulbShader.use();
 		lightbulbShader.setUniform("lightCol", lightCol);
 		lightbulbShader.setUniform("model", model);

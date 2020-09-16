@@ -14,7 +14,8 @@ out vec3 Normal;
 out vec3 FragPos;
 
 void main(){
-	Normal = normal;
+	Normal = mat3(transpose(inverse(model))) * normal; // for scaling in 2 axies
+//	Normal = normal;
 	FragPos = vec3(model * vec4(pos, 1.0f));
 
 	TexCoord = texCoord;

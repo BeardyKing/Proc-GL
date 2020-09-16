@@ -1,6 +1,18 @@
 #version 330 core
 
-uniform vec4 vertCol;
+struct Material{
+	vec3 ambient;
+	sampler2D diffuseMap;
+	vec3 specular;
+	float shininess;
+};
+
+struct Light{
+	vec3 position;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
 
 in vec2 TexCoord; 
 in vec3 Normal;
@@ -8,33 +20,27 @@ in vec3 FragPos;
 
 out vec4 frag_colour;
 
-uniform sampler2D myTexture1;
-uniform sampler2D myTexture2;
+uniform Light light;
+uniform Material material;
 
-uniform vec3 lightCol;	// light colour
-uniform vec3 lightPos;	// light source pos
+
 uniform vec3 viewPos;	// cam pos
 
-void main(){
+void main(){ 
 	//ambient
-	float ambientFactor = 0.1f;
-	vec3 ambient = lightCol * ambientFactor; 
-	
-	//diffuse
+	vec3 ambient = light.ambient * material.ambient; 
+ 	//diffuse
 	vec3 normal		= normalize(Normal);
-	vec3 lightDir	= normalize(lightPos - FragPos);
+	vec3 lightDir	= normalize(light.position - FragPos);
 	float NDotL		= max(dot(normal, lightDir), 0.0f);
-	vec3 diffuse	= lightCol * NDotL;
+	vec3 diffuse	= light.diffuse * vec3(texture(material.diffuseMap, TexCoord)) * NDotL;
 
 	//specular (blit-phong)
-	float specularFactor = 0.8f;
-	float shininess = 290.0f;
 	vec3 viewDir = normalize(viewPos - FragPos);
 	vec3 halfDir = normalize(lightDir + viewDir);
 
 	float NDotH = max(dot(normal,halfDir),0.0f);
-	vec3 specular = lightCol * specularFactor * pow(NDotH, shininess);
+	vec3 specular = light.specular * material.specular * pow(NDotH, material.shininess);
 
-	vec4 texel = texture(myTexture1, TexCoord); 
-	frag_colour = vec4(ambient + diffuse + specular,1.0f) * texel;
+	frag_colour = vec4(ambient + diffuse + specular,1.0f);
 };
