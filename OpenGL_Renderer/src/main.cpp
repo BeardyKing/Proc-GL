@@ -28,7 +28,7 @@ bool glWireframe = false;
 //const float MOUSE_SENSITIVITY = 0.25f;
 
 FPSCamera fpsCamera(glm::vec3(0.0f, 0.0f, 5.0f));
-const double ZOOM_SENSITIVITY = -3.0f;
+const double ZOOM_SENSITIVITY = -0.02f;
 const float  MOVE_SPEED = 5.0f;
 const float  MOUSE_SENSITIVITY = 0.1f;
 
@@ -89,7 +89,7 @@ int main(){
 	// ---------- mesh shader ----------
 
 	ShaderProgram lightingShader;
-	lightingShader.loadShaders("lighting.vert", "lighting.frag");
+	lightingShader.loadShaders("lightingDirectional.vert", "lightingDirectional.frag");
 
 	float angle = 0.0f;
 	double lastTime = glfwGetTime();
@@ -114,6 +114,7 @@ int main(){
 
 		glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
 		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
+		glm::vec3 lightDirection(0.0f, -0.9f, -0.17);
 		glm::vec3 lightScale(0.5f, 0.5f, 0.5f);
 
 		glm::vec3 viewPos;
@@ -132,7 +133,7 @@ int main(){
 		lightingShader.setUniform("projection", projection);
 		lightingShader.setUniform("viewPos", viewPos);
 
-		lightingShader.setUniform("light.position", lightPos);
+		lightingShader.setUniform("light.direction", lightDirection);
 		lightingShader.setUniform("light.ambient", glm::vec3(0.25f, 0.5f, 0.2f));
 		lightingShader.setUniform("light.diffuse", lightCol);
 		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -151,18 +152,6 @@ int main(){
 			mesh[i].Draw();
 			texture[i].unbind(0);
 		}
-
-		//light
-
-
-		// render light
-		model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
-		lightbulbShader.use();
-		lightbulbShader.setUniform("lightCol", lightCol);
-		lightbulbShader.setUniform("model", model);
-		lightbulbShader.setUniform("view", view);
-		lightbulbShader.setUniform("projection", projection);
-		lightMesh.Draw();
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
