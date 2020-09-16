@@ -79,5 +79,11 @@
     <None Include="bin\lightingSpot.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="bin\lightingMultiple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="bin\lightingMultiple.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

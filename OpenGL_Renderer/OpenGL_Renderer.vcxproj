@@ -166,6 +166,8 @@
     <None Include="bin\lighting.vert" />
     <None Include="bin\lightingDirectional.frag" />
     <None Include="bin\lightingDirectional.vert" />
+    <None Include="bin\lightingMultiple.frag" />
+    <None Include="bin\lightingMultiple.vert" />
     <None Include="bin\lightingPoint.frag" />
     <None Include="bin\lightingPoint.vert" />
     <None Include="bin\lightingSpot.frag" />

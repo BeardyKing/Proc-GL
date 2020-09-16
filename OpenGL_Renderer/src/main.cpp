@@ -90,9 +90,9 @@ int main(){
 	// ---------- mesh shader ----------
 
 	ShaderProgram lightingShader;
-	lightingShader.loadShaders("lightingSpot.vert", "lightingSpot.frag");
+	lightingShader.loadShaders("lightingMultiple.vert", "lightingMultiple.frag");
 
-	float angle = 0.0f;
+	float angle = 10.0f;
 	double lastTime = glfwGetTime();
 
 	while (!glfwWindowShouldClose(gWindow)){
@@ -112,15 +112,29 @@ int main(){
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
-
+		//spot light 
 		glm::vec3 lightPos = fpsCamera.GetPosition();
 		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
-		//lightPos.y -= -0.5f;
 
-		glm::vec3 viewPos;
-		viewPos.x = fpsCamera.GetPosition().x;
-		viewPos.y = fpsCamera.GetPosition().y;
-		viewPos.z = fpsCamera.GetPosition().z;
+		//directional light
+		glm::vec3 directional_lightDirection(0.0f, -0.9f, -0.17);
+		glm::vec3 directional_lightCol(0.4f, 0.4f, 0.2f);
+		//lightPos.y -= -0.5f;
+		
+		//point light 
+		glm::vec3 point_Pos(0.0f, 0.0f, 0.0f);
+		glm::vec3 point_Col(1.0f, 1.0f, 1.0f);
+		glm::vec3 point_Direction(0.0f, -0.9f, -0.17);
+		glm::vec3 point_Scale(0.5f, 0.5f, 0.5f);
+		glm::vec3 point_lightCol(1.0f, 1.0f, 1.0f);
+
+		angle += (float)deltaTime * 90.0f;
+		point_Pos.x += 1.5f * sinf(glm::radians(angle));
+		point_Pos.z += 1.5f * cosf(glm::radians(angle));
+		point_Pos.y += 1 + (0.5f * sinf(glm::radians(angle) * 2));
+
+
+		glm::vec3 viewPos = fpsCamera.GetPosition();
 		
 		lightingShader.use();
 
@@ -128,17 +142,31 @@ int main(){
 		lightingShader.setUniform("projection", projection);
 		lightingShader.setUniform("viewPos", viewPos);
 
-		lightingShader.setUniform("light.position", lightPos);
-		lightingShader.setUniform("light.direction", fpsCamera.GetLook());
-		lightingShader.setUniform("light.ambient", glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("light.diffuse", lightCol);
-		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setUniform("light.constant", 1.0f);
-		lightingShader.setUniform("light.linear", 0.07f);
-		lightingShader.setUniform("light.exponent", 0.017f);
-		lightingShader.setUniform("light.cosInnerCone", glm::cos(glm::radians(15.0f)));
-		lightingShader.setUniform("light.cosOuterCone", glm::cos(glm::radians(20.0f)));
-		lightingShader.setUniform("light.on", gFlashlightOn);
+		lightingShader.setUniform("spotLight.position"		, lightPos);
+		lightingShader.setUniform("spotLight.direction"		, fpsCamera.GetLook());
+		lightingShader.setUniform("spotLight.ambient"		, glm::vec3(0.25f, 0.5f, 0.2f));
+		lightingShader.setUniform("spotLight.diffuse"		, lightCol);
+		lightingShader.setUniform("spotLight.specular"		, glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setUniform("spotLight.constant"		, 1.0f);
+		lightingShader.setUniform("spotLight.linear"		, 0.07f);
+		lightingShader.setUniform("spotLight.exponent"		, 0.017f);
+		lightingShader.setUniform("spotLight.cosInnerCone"	, glm::cos(glm::radians(15.0f)));
+		lightingShader.setUniform("spotLight.cosOuterCone"	, glm::cos(glm::radians(20.0f)));
+		lightingShader.setUniform("spotLight.on"			, gFlashlightOn);
+
+		lightingShader.setUniform("directionalLight.direction"	, directional_lightDirection);
+		lightingShader.setUniform("directionalLight.ambient"	, glm::vec3(0.25f, 0.5f, 0.2f));
+		lightingShader.setUniform("directionalLight.diffuse"	, directional_lightCol);
+		lightingShader.setUniform("directionalLight.specular"	, glm::vec3(1.0f, 1.0f, 1.0f));
+
+		lightingShader.setUniform("pointLight.direction"	, point_Direction);
+		lightingShader.setUniform("pointLight.position"		, point_Pos);
+		lightingShader.setUniform("pointLight.ambient"		, glm::vec3(0.25f, 0.5f, 0.2f));
+		lightingShader.setUniform("pointLight.diffuse"		, point_lightCol);
+		lightingShader.setUniform("pointLight.specular"		, glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setUniform("pointLight.constant"		, 1.0f);
+		lightingShader.setUniform("pointLight.linear;"		, 0.07f);
+		lightingShader.setUniform("pointLight.exponent"		, 0.017f);
 
 
 
@@ -158,13 +186,13 @@ int main(){
 		}
 
 		// render light
-		/*model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
+		model = glm::translate(glm::mat4(), point_Pos) * glm::scale(glm::mat4(), point_Scale);
 		lightbulbShader.use();
 		lightbulbShader.setUniform("lightCol", lightCol);
 		lightbulbShader.setUniform("model", model);
 		lightbulbShader.setUniform("view", view);
 		lightbulbShader.setUniform("projection", projection);
-		lightMesh.Draw();*/
+		lightMesh.Draw();
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
