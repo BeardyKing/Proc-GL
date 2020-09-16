@@ -20,6 +20,7 @@ GLFWwindow* gWindow = NULL;
 
 bool gFullscreen = false;
 bool glWireframe = false;
+bool gFlashlightOn = true;
 
 //OrbitCamera orbitCamera;
 //float gYaw = 0.0f;
@@ -89,7 +90,7 @@ int main(){
 	// ---------- mesh shader ----------
 
 	ShaderProgram lightingShader;
-	lightingShader.loadShaders("lightingPoint.vert", "lightingPoint.frag");
+	lightingShader.loadShaders("lightingSpot.vert", "lightingSpot.frag");
 
 	float angle = 0.0f;
 	double lastTime = glfwGetTime();
@@ -98,7 +99,7 @@ int main(){
 		showFPS(gWindow);
 
 		double currentTime = glfwGetTime();
-		double deltaTime = currentTime - lastTime;
+		double deltaTime = currentTime - lastTime; 
 
 		glfwPollEvents();
 		Update(deltaTime);
@@ -112,21 +113,14 @@ int main(){
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
 
-		glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
+		glm::vec3 lightPos = fpsCamera.GetPosition();
 		glm::vec3 lightCol(1.0f, 1.0f, 1.0f);
-		glm::vec3 lightDirection(0.0f, -0.9f, -0.17);
-		glm::vec3 lightScale(0.5f, 0.5f, 0.5f);
+		//lightPos.y -= -0.5f;
 
 		glm::vec3 viewPos;
 		viewPos.x = fpsCamera.GetPosition().x;
 		viewPos.y = fpsCamera.GetPosition().y;
 		viewPos.z = fpsCamera.GetPosition().z;
-
-		//move light
-		angle += (float)deltaTime * 90.0f;
-
-		lightPos.x = 3.0f * sinf(glm::radians(angle));
-		lightPos.z = 14.0f + 10.0f * cosf(glm::radians(angle));
 		
 		lightingShader.use();
 
@@ -135,12 +129,18 @@ int main(){
 		lightingShader.setUniform("viewPos", viewPos);
 
 		lightingShader.setUniform("light.position", lightPos);
+		lightingShader.setUniform("light.direction", fpsCamera.GetLook());
 		lightingShader.setUniform("light.ambient", glm::vec3(0.25f, 0.5f, 0.2f));
 		lightingShader.setUniform("light.diffuse", lightCol);
 		lightingShader.setUniform("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		lightingShader.setUniform("light.constant", 1.0f);
-		lightingShader.setUniform("light.linear;", 0.07);
-		lightingShader.setUniform("light.exponent", 0.017);
+		lightingShader.setUniform("light.linear", 0.07f);
+		lightingShader.setUniform("light.exponent", 0.017f);
+		lightingShader.setUniform("light.cosInnerCone", glm::cos(glm::radians(15.0f)));
+		lightingShader.setUniform("light.cosOuterCone", glm::cos(glm::radians(20.0f)));
+		lightingShader.setUniform("light.on", gFlashlightOn);
+
+
 
 
 		for (int i = 0; i < numModels; i++){
@@ -158,13 +158,13 @@ int main(){
 		}
 
 		// render light
-		model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
+		/*model = glm::translate(glm::mat4(), lightPos) * glm::scale(glm::mat4(), lightScale);
 		lightbulbShader.use();
 		lightbulbShader.setUniform("lightCol", lightCol);
 		lightbulbShader.setUniform("model", model);
 		lightbulbShader.setUniform("view", view);
 		lightbulbShader.setUniform("projection", projection);
-		lightMesh.Draw();
+		lightMesh.Draw();*/
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
@@ -241,6 +241,11 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 	}
+
+	if (key == GLFW_KEY_F && action == GLFW_PRESS){
+		gFlashlightOn = !gFlashlightOn;
+	}
+
 }
 
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height) {

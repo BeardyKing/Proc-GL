@@ -168,6 +168,8 @@
     <None Include="bin\lightingDirectional.vert" />
     <None Include="bin\lightingPoint.frag" />
     <None Include="bin\lightingPoint.vert" />
+    <None Include="bin\lightingSpot.frag" />
+    <None Include="bin\lightingSpot.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

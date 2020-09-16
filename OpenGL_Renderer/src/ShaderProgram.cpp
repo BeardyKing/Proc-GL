@@ -148,3 +148,9 @@ void ShaderProgram::setUniformSampler(const GLchar* name, const GLint& slot) {
 	GLfloat loc = getUniformLocation(name);
 	glUniform1i(loc, slot);
 }
+
+void ShaderProgram::setUniform(const GLchar* name, const GLint& i) {
+	GLint loc = getUniformLocation(name);
+	glUniform1i(loc, i);
+}
+
