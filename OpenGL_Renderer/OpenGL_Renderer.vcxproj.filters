@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{74127818-d609-4731-968d-5cc9161bca70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\PBR">
+      <UniqueIdentifier>{02920ac6-cdeb-4182-8b7f-f1cd4c406920}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -84,6 +87,12 @@
     </None>
     <None Include="bin\lightingMultiple.vert">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="bin\pbr.frag">
+      <Filter>Shaders\PBR</Filter>
+    </None>
+    <None Include="bin\pbr.vert">
+      <Filter>Shaders\PBR</Filter>
     </None>
   </ItemGroup>
 </Project>

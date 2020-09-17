@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderProgram.h"
 #include "Texture2D.h"
@@ -50,10 +51,10 @@ int main(){
 
 	//model positions
 	glm::vec3 modelPos[] = {
-		glm::vec3(-5.0f,-0.5f,0.0f),
-		glm::vec3(0.0f,-1.0f,0.0f),
-		glm::vec3(-2.0f,0.0f,-3.0f),
-		glm::vec3(0.0f,0.0f,0.0f)
+		glm::vec3(-5.0f,-15.5f,0.0f),
+		glm::vec3(0.0f,-15.0f,0.0f),
+		glm::vec3(-2.0f,-15.0f,-3.0f),
+		glm::vec3(0.0f,-15.0f,0.0f)
 	};
 
 	glm::vec3 modelScale[] = {
@@ -80,6 +81,37 @@ int main(){
 	texture[3].loadTexture("frog/frog.png",true);
 
 	// ---------- --------- ----------
+	// ---------- PBR		----------
+	Mesh sphereMesh;
+	sphereMesh.LoadOBJ("sphere.obj");
+
+	ShaderProgram PBR_sphereShader;
+	PBR_sphereShader.loadShaders("pbr.vert", "pbr.frag");
+
+	PBR_sphereShader.use();
+	PBR_sphereShader.setUniform("albedo", glm::vec3(0.5f, 0.0f, 0.0f));
+	PBR_sphereShader.setUniform("ao", 1.0f);
+
+	// lights
+	// ------
+	glm::vec3 lightPositions[] = {
+		glm::vec3(-13.0f,  10.0f, 10.0f),
+		glm::vec3(10.0f,  10.0f, 10.0f),
+		glm::vec3(-13.0f, 0.0f, 10.0f),
+		glm::vec3(10.0f, -10.0f, 10.0f),
+	};
+	glm::vec3 lightColors[] = {
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f)
+	};
+	int nrRows = 7;
+	int nrColumns = 7;
+	float spacing = 2.5;
+
+
+	// ---------- --------- ----------
 	// ---------- point_Pos ----------
 	Mesh lightMesh;
 	lightMesh.LoadOBJ("light.obj");
@@ -94,6 +126,8 @@ int main(){
 
 	float angle = 10.0f;
 	double lastTime = glfwGetTime();
+
+	
 
 	while (!glfwWindowShouldClose(gWindow)){
 		showFPS(gWindow);
@@ -112,6 +146,9 @@ int main(){
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
 
+		PBR_sphereShader.use();
+		PBR_sphereShader.setUniform("projection", projection);
+
 		//spot light 
 		glm::vec3 spotLight_Pos = fpsCamera.GetPosition();
 		glm::vec3 spotLight_Col(1.0f, 1.0f, 1.0f);
@@ -124,15 +161,68 @@ int main(){
 		glm::vec3 point_Pos(0.0f, 0.0f, 0.0f);
 		glm::vec3 point_Col(1.0f, 1.0f, 1.0f);
 		glm::vec3 point_Direction(0.0f, -0.9f, -0.17);
-		glm::vec3 point_Scale(0.5f, 0.5f, 0.5f);
+		glm::vec3 point_Scale(1.2f, 1.2f, 1.2f);
 		glm::vec3 point_lightCol(1.0f, 1.0f, 1.0f);
 
 		angle += (float)deltaTime * 90.0f;
 		point_Pos.x += 1.5f * sinf(glm::radians(angle));
-		point_Pos.z += 1.5f * cosf(glm::radians(angle));
+		point_Pos.z += 1.5f + 10 * cosf(glm::radians(angle));
 		point_Pos.y += 1 + (0.5f * sinf(glm::radians(angle) * 2));
 
 		glm::vec3 viewPos = fpsCamera.GetPosition();
+
+		PBR_sphereShader.setUniform("view", view);
+		PBR_sphereShader.setUniform("camPos", viewPos);
+
+		lightPositions[0] = point_Pos;
+
+		// render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
+		model = glm::mat4(1.0f);
+		for (int row = 0; row < nrRows; ++row)
+		{
+			PBR_sphereShader.setUniform("metallic", (float)row / (float)nrRows);
+			for (int col = 0; col < nrColumns; ++col)
+			{
+				// we clamp the roughness to 0.025 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
+				// on direct lighting.
+				PBR_sphereShader.setUniform("roughness", glm::clamp((float)col / (float)nrColumns, 0.125f, 1.0f));
+
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(
+					(col - (nrColumns / 2)) * spacing,
+					(row - (nrRows / 2)) * spacing,
+					0.0f
+				));
+				PBR_sphereShader.setUniform("model", model);
+				if (col != 0){
+				}
+				sphereMesh.Draw();
+
+			}
+		}
+
+		// render light source (simply re-render sphere at light positions)
+		// this looks a bit off as we use the same shader, but it'll make their positions obvious and 
+		// keeps the codeprint small.
+		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
+		{
+			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+			newPos = lightPositions[i];
+			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
+			const char* c1 = str1.c_str();
+			PBR_sphereShader.setUniform(c1, newPos);
+			std::string str2 = "lightColors[" + std::to_string(i) + "]";
+			const char* c2 = str2.c_str();
+			PBR_sphereShader.setUniform(c2, lightColors[i]);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, newPos);
+			model = glm::scale(model, glm::vec3(0.5f));
+			PBR_sphereShader.setUniform("model", model);
+			sphereMesh.Draw();
+		}
+
+
 		
 		lightingShader.use();
 
@@ -175,10 +265,16 @@ int main(){
 			lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
 			lightingShader.setUniform("material.shininess", 10.0f);
 			
-			texture[i].bind(0);
+			/*texture[i].bind(0);
 			mesh[i].Draw();
-			texture[i].unbind(0);
+			texture[i].unbind(0);*/
 		}
+
+		//render PBR mesh
+		PBR_sphereShader.use();
+
+		glm::vec3 pbr_Pos	(0.0f, 0.0f, 0.0f);
+		glm::vec3 pbr_Scale	(1.0f, 1.0f, 1.0f);
 
 		// render light mesh
 		model = glm::translate(glm::mat4(), point_Pos) * glm::scale(glm::mat4(), point_Scale);
@@ -203,10 +299,11 @@ bool InitOpenGL() {
 		return false;
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	if (gFullscreen) {
 		GLFWmonitor* pMonitor = glfwGetPrimaryMonitor();
@@ -244,8 +341,9 @@ bool InitOpenGL() {
 		return false;
 	}
 
-	glClearColor(0.25f, 0.38f, 0.47f, 1.0f);
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
+	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 
 	return true;
@@ -345,8 +443,6 @@ void Update(double elapsedTime) {
 	}
 }
 
-
-
 void showFPS(GLFWwindow* window) {
 	static double previousSecond = 0.0;
 	static int frameCount = 0;
@@ -372,3 +468,4 @@ void showFPS(GLFWwindow* window) {
 	}
 	frameCount++;
 }
+
