@@ -28,7 +28,7 @@ bool gFlashlightOn = true;
 //float gRadius = 10.0f;
 //const float MOUSE_SENSITIVITY = 0.25f;
 
-FPSCamera fpsCamera(glm::vec3(0.0f, 0.0f, 5.0f));
+FPSCamera fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f));
 const double ZOOM_SENSITIVITY = -0.02f;
 const float  MOVE_SPEED = 5.0f;
 const float  MOUSE_SENSITIVITY = 0.1f;
@@ -75,15 +75,15 @@ int main(){
 	mesh[3].LoadOBJ("frog/frog.obj");
 
 	//load texture
-	texture[0].loadTexture("Wall/Brick_wall_02_1K_Base_Color.png",true);
-	texture[1].loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png",true);
-	texture[2].loadTexture("mesh/polygon_texture.png",true);
-	texture[3].loadTexture("frog/frog.png",true);
+	texture[0].loadTexture("Wall/Brick_wall_02_1K_Base_Color.png",				true);
+	texture[1].loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png",	true);
+	texture[2].loadTexture("mesh/polygon_texture.png",							true);
+	texture[3].loadTexture("frog/frog.png",										true);
 
 	// ---------- --------- ----------
 	// ---------- PBR		----------
-	Mesh sphereMesh;
-	sphereMesh.LoadOBJ("sphere.obj");
+	Mesh PBR_sphereMesh;
+	PBR_sphereMesh.LoadOBJ("sphere.obj");
 
 	ShaderProgram PBR_sphereShader;
 	PBR_sphereShader.loadShaders("pbr.vert", "pbr.frag");
@@ -91,6 +91,14 @@ int main(){
 	PBR_sphereShader.use();
 	PBR_sphereShader.setUniform("albedo", glm::vec3(0.5f, 0.0f, 0.0f));
 	PBR_sphereShader.setUniform("ao", 1.0f);
+
+	Texture2D PBR_sphereTexture[5];
+	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png",	true);	//albedo
+	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png",		true);		//normal
+	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png",		true);		//metalic
+	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png",		true);	//roughness
+	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png",			true);			//ambient occlusion 
+
 
 	// lights
 	// ------
@@ -101,14 +109,14 @@ int main(){
 		glm::vec3(10.0f, -10.0f, 10.0f),
 	};
 	glm::vec3 lightColors[] = {
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f)
+		glm::vec3(150.0f, 150.0f, 150.0f),
+		glm::vec3(150.0f, 150.0f, 150.0f),
+		glm::vec3(150.0f, 150.0f, 150.0f),
+		glm::vec3(150.0f, 150.0f, 150.0f)
 	};
-	int nrRows = 7;
-	int nrColumns = 7;
-	float spacing = 2.5;
+	int nrRows = 1;
+	int nrColumns = 1;
+	float spacing = 1;
 
 
 	// ---------- --------- ----------
@@ -165,47 +173,49 @@ int main(){
 		glm::vec3 point_lightCol(1.0f, 1.0f, 1.0f);
 
 		angle += (float)deltaTime * 90.0f;
-		point_Pos.x += 1.5f * sinf(glm::radians(angle));
+		point_Pos.x += 1.5f + 10* sinf(glm::radians(angle));
 		point_Pos.z += 1.5f + 10 * cosf(glm::radians(angle));
-		point_Pos.y += 1 + (0.5f * sinf(glm::radians(angle) * 2));
+		point_Pos.y += 3 + (0.5f * sinf(glm::radians(angle) * 4));
+
+		PBR_sphereShader.use();
+
+		glm::vec3 pbr_Pos(0.0f, 0.0f, 0.0f);
+		glm::vec3 pbr_Scale(5.0f, 5.0f, 5.0f);
 
 		glm::vec3 viewPos = fpsCamera.GetPosition();
 
 		PBR_sphereShader.setUniform("view", view);
 		PBR_sphereShader.setUniform("camPos", viewPos);
 
+		PBR_sphereTexture[0].bind(0);
+		PBR_sphereTexture[1].bind(1);
+		PBR_sphereTexture[2].bind(2);
+		PBR_sphereTexture[3].bind(3);
+		PBR_sphereTexture[4].bind(4);
+
+		PBR_sphereShader.setUniformSampler("albedoMap",		0);
+		PBR_sphereShader.setUniformSampler("normalMap",		1);
+		PBR_sphereShader.setUniformSampler("metallicMap",	2);
+		PBR_sphereShader.setUniformSampler("roughnessMap",	3);
+		PBR_sphereShader.setUniformSampler("aoMap",			4);
+
 		lightPositions[0] = point_Pos;
 
-		// render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
 		model = glm::mat4(1.0f);
-		for (int row = 0; row < nrRows; ++row)
-		{
-			PBR_sphereShader.setUniform("metallic", (float)row / (float)nrRows);
-			for (int col = 0; col < nrColumns; ++col)
-			{
-				// we clamp the roughness to 0.025 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
-				// on direct lighting.
-				PBR_sphereShader.setUniform("roughness", glm::clamp((float)col / (float)nrColumns, 0.125f, 1.0f));
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f)) * glm::scale(model, pbr_Scale);
+		PBR_sphereShader.setUniform("model", model);
+				
+		PBR_sphereMesh.Draw();
 
-				model = glm::mat4(1.0f);
-				model = glm::translate(model, glm::vec3(
-					(col - (nrColumns / 2)) * spacing,
-					(row - (nrRows / 2)) * spacing,
-					0.0f
-				));
-				PBR_sphereShader.setUniform("model", model);
-				if (col != 0){
-				}
-				sphereMesh.Draw();
+		PBR_sphereTexture[0].unbind(0);
+		PBR_sphereTexture[1].unbind(1);
+		PBR_sphereTexture[2].unbind(2);
+		PBR_sphereTexture[3].unbind(3);
+		PBR_sphereTexture[4].unbind(4);
+		
 
-			}
-		}
-
-		// render light source (simply re-render sphere at light positions)
-		// this looks a bit off as we use the same shader, but it'll make their positions obvious and 
-		// keeps the codeprint small.
-		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
-		{
+		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i){
 			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
 			newPos = lightPositions[i];
 			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
@@ -219,7 +229,7 @@ int main(){
 			model = glm::translate(model, newPos);
 			model = glm::scale(model, glm::vec3(0.5f));
 			PBR_sphereShader.setUniform("model", model);
-			sphereMesh.Draw();
+			PBR_sphereMesh.Draw();
 		}
 
 
@@ -271,10 +281,7 @@ int main(){
 		}
 
 		//render PBR mesh
-		PBR_sphereShader.use();
-
-		glm::vec3 pbr_Pos	(0.0f, 0.0f, 0.0f);
-		glm::vec3 pbr_Scale	(1.0f, 1.0f, 1.0f);
+		
 
 		// render light mesh
 		model = glm::translate(glm::mat4(), point_Pos) * glm::scale(glm::mat4(), point_Scale);
