@@ -93,11 +93,11 @@ int main(){
 	PBR_sphereShader.setUniform("ao", 1.0f);
 
 	Texture2D PBR_sphereTexture[5];
-	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png",	true);	//albedo
-	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png",		true);		//normal
-	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png",		true);		//metalic
-	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png",		true);	//roughness
-	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png",			true);			//ambient occlusion 
+	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_4K_Base_Color.png",	true);	//albedo
+	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_4K_Normal.png",		true);		//normal
+	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_4K_Metallic.png",		true);		//metalic
+	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_4K_Roughness.png",		true);	//roughness
+	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_4K_AO.png",			true);			//ambient occlusion 
 
 
 	// lights
