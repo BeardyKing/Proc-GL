@@ -94,5 +94,11 @@
     <None Include="bin\pbr.vert">
       <Filter>Shaders\PBR</Filter>
     </None>
+    <None Include="bin\cubemap.frag">
+      <Filter>Shaders\PBR</Filter>
+    </None>
+    <None Include="bin\cubemap.vert">
+      <Filter>Shaders\PBR</Filter>
+    </None>
   </ItemGroup>
 </Project>

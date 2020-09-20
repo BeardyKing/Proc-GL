@@ -162,6 +162,8 @@
   <ItemGroup>
     <None Include="bin\basic.frag" />
     <None Include="bin\basic.vert" />
+    <None Include="bin\cubemap.frag" />
+    <None Include="bin\cubemap.vert" />
     <None Include="bin\lighting.frag" />
     <None Include="bin\lighting.vert" />
     <None Include="bin\lightingDirectional.frag" />

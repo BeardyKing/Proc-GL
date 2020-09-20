@@ -93,12 +93,22 @@ int main(){
 	PBR_sphereShader.setUniform("ao", 1.0f);
 
 	Texture2D PBR_sphereTexture[5];
-	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_4K_Base_Color.png",	true);	//albedo
-	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_4K_Normal.png",		true);		//normal
-	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_4K_Metallic.png",		true);		//metalic
-	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_4K_Roughness.png",		true);	//roughness
-	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_4K_AO.png",			true);			//ambient occlusion 
+	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png",	true);	//albedo
+	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png",		true);		//normal
+	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png",		true);		//metalic
+	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png",		true);	//roughness
+	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png",			true);			//ambient occlusion 
 
+	// ---------- --------- ----------
+	// ---------- CUBE MAP	----------
+	Mesh CubeMapMesh;
+	CubeMapMesh.LoadOBJ("cube.obj");
+
+	Texture2D cubeMapTexture;
+	cubeMapTexture.loadHDRTexture("Mans_Outside_2k.hdr");
+
+	ShaderProgram cubemapShader;
+	cubemapShader.loadShaders("cubemap.vert", "cubemap.frag");
 
 	// lights
 	// ------
@@ -131,6 +141,9 @@ int main(){
 	// ---------- mesh shader ----------
 	ShaderProgram lightingShader;
 	lightingShader.loadShaders("lightingMultiple.vert", "lightingMultiple.frag");
+
+	
+
 
 	float angle = 10.0f;
 	double lastTime = glfwGetTime();
@@ -176,6 +189,27 @@ int main(){
 		point_Pos.x += 1.5f + 10* sinf(glm::radians(angle));
 		point_Pos.z += 1.5f + 10 * cosf(glm::radians(angle));
 		point_Pos.y += 3 + (0.5f * sinf(glm::radians(angle) * 4));
+
+		//---------------------------------------------------
+		cubemapShader.use();
+		glm::vec3 cubeMap_Pos(0.0f, 0.0f, 0.0f);
+		glm::vec3 cubeMap_Scale(1.0f, 1.0f, 1.0f);
+
+
+		cubeMapTexture.bind(0);
+		cubemapShader.setUniformSampler("equirectangularMap", 0);
+		cubemapShader.setUniform("col", glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, cubeMap_Pos) * glm::scale(model, cubeMap_Scale);
+
+		//cubemapShader.setUniform("model", model);
+		cubemapShader.setUniform("view", view);
+		cubemapShader.setUniform("projection", projection);
+
+		CubeMapMesh.Draw();
+		//------------------------------------------------
+
 
 		PBR_sphereShader.use();
 

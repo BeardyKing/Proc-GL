@@ -60,6 +60,31 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 	return true;
 }
 
+bool Texture2D::loadHDRTexture(const std::string& fileName) {
+	stbi_set_flip_vertically_on_load(true);
+	int width, height, components;
+	float* imageData = stbi_loadf(fileName.c_str(), &width, &height, &components, 0);
+	if (imageData)
+	{
+		glGenTextures(1, &m_Texture);
+		glBindTexture(GL_TEXTURE_2D, m_Texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, imageData);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		stbi_image_free(imageData);
+		return true;
+	}
+	else{
+		std::cout << "Failed to load HDR image at path: " << fileName << std::endl;
+	}
+	return false;
+}
+
+
 void Texture2D::bind(GLuint texUnit) {
 	glActiveTexture(GL_TEXTURE0 + texUnit);
 	glBindTexture(GL_TEXTURE_2D, m_Texture);
@@ -69,6 +94,8 @@ void Texture2D::unbind(GLuint texUnit) {
 	glActiveTexture(GL_TEXTURE0 + texUnit);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+
 
 
 //int widthInBytes = width * 4; 

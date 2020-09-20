@@ -12,9 +12,9 @@ public:
 	virtual ~Texture2D();
 
 	bool loadTexture(const std::string& fileName, bool generateMipMaps = true);
+	bool loadHDRTexture(const std::string& fileName);
 	void bind(GLuint texUint = 0);
 	void unbind(GLuint texUnit = 0);
-	GLuint GetID();
 private:
 	GLuint m_Texture;
 };
