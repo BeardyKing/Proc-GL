@@ -7,10 +7,13 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+#include "LightObject.h"
+
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 #include "Camera.h"
 #include "Mesh.h"
+#include <vector>
 
 const char* APP_TITLE = "OpenGL";
 int gWindowWidth = 1024;
@@ -21,12 +24,6 @@ GLFWwindow* gWindow = NULL;
 bool gFullscreen = false;
 bool glWireframe = false;
 bool gFlashlightOn = true;
-
-//OrbitCamera orbitCamera;
-//float gYaw = 0.0f;
-//float gPitch = 0.0f;
-//float gRadius = 10.0f;
-//const float MOUSE_SENSITIVITY = 0.25f;
 
 FPSCamera fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f));
 const double ZOOM_SENSITIVITY = -0.02f;
@@ -49,39 +46,10 @@ int main(){
 		return -1;
 	}
 
-	//model positions
-	glm::vec3 modelPos[] = {
-		glm::vec3(-5.0f,-15.5f,0.0f),
-		glm::vec3(0.0f,-15.0f,0.0f),
-		glm::vec3(-2.0f,-15.0f,-3.0f),
-		glm::vec3(0.0f,-15.0f,0.0f)
-	};
+	//----------------------------------//
+	//				PBR					//
+	//----------------------------------//
 
-	glm::vec3 modelScale[] = {
-		glm::vec3(1.0f,1.0f,1.0f),
-		glm::vec3(5.0f,0.2f,5.0f),
-		glm::vec3(2.0f,2.0f,2.0f),
-		glm::vec3(0.5f,0.5f,0.5f)
-	};
-	// Load meshes and textures
-	const int numModels = 4;
-	Mesh mesh[numModels];
-	Texture2D texture[numModels];
-
-	//load mesh
-	mesh[0].LoadOBJ("mesh/box.obj");
-	mesh[1].LoadOBJ("mesh/ground.obj");
-	mesh[2].LoadOBJ("mesh/pipe.obj");
-	mesh[3].LoadOBJ("frog/frog.obj");
-
-	//load texture
-	texture[0].loadTexture("Wall/Brick_wall_02_1K_Base_Color.png",				true);
-	texture[1].loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png",	true);
-	texture[2].loadTexture("mesh/polygon_texture.png",							true);
-	texture[3].loadTexture("frog/frog.png",										true);
-
-	// ---------- --------- ----------
-	// ---------- PBR		----------
 	Mesh PBR_sphereMesh;
 	PBR_sphereMesh.LoadOBJ("sphere.obj");
 
@@ -94,61 +62,32 @@ int main(){
 
 	Texture2D PBR_sphereTexture[5];
 	PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png",	true);	//albedo
-	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png",		true);		//normal
-	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png",		true);		//metalic
+	PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png",		true);	//normal
+	PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png",		true);	//metalic
 	PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png",		true);	//roughness
-	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png",			true);			//ambient occlusion 
+	PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png",			true);	//ambient occlusion 
 
-	// ---------- --------- ----------
-	// ---------- CUBE MAP	----------
-	Mesh CubeMapMesh;
-	CubeMapMesh.LoadOBJ("cube.obj");
+	//----------------------------------//
+	//			POINT LIGHTS			//
+	//----------------------------------//
 
-	Texture2D cubeMapTexture;
-	cubeMapTexture.loadHDRTexture("Mans_Outside_2k.hdr");
+	LightObject pointLights[6];
+	pointLights[0].position = glm::vec3(0.0f, 0.0f, 0.0f);
+	pointLights[1].position = glm::vec3(10.0f, 10.0f, 10.0f);
+	pointLights[2].position = glm::vec3(-13.0f, 0.0f, 10.0f);
+	pointLights[3].position = glm::vec3(10.0f, -10.0f, 10.0f);
+	pointLights[4].position = glm::vec3(-13.0f, 10.0f, 10.0f);
 
-	ShaderProgram cubemapShader;
-	cubemapShader.loadShaders("cubemap.vert", "cubemap.frag");
-
-	// lights
-	// ------
-	glm::vec3 lightPositions[] = {
-		glm::vec3(-13.0f,  10.0f, 10.0f),
-		glm::vec3(10.0f,  10.0f, 10.0f),
-		glm::vec3(-13.0f, 0.0f, 10.0f),
-		glm::vec3(10.0f, -10.0f, 10.0f),
-	};
-	glm::vec3 lightColors[] = {
-		glm::vec3(150.0f, 150.0f, 150.0f),
-		glm::vec3(150.0f, 150.0f, 150.0f),
-		glm::vec3(150.0f, 150.0f, 150.0f),
-		glm::vec3(150.0f, 150.0f, 150.0f)
-	};
-	int nrRows = 1;
-	int nrColumns = 1;
-	float spacing = 1;
-
-
-	// ---------- --------- ----------
-	// ---------- point_Pos ----------
-	Mesh lightMesh;
-	lightMesh.LoadOBJ("light.obj");
-
-	ShaderProgram lightbulbShader;
-	lightbulbShader.loadShaders("basic.vert", "basic.frag");
-
-	// ---------- ----------- ----------
-	// ---------- mesh shader ----------
-	ShaderProgram lightingShader;
-	lightingShader.loadShaders("lightingMultiple.vert", "lightingMultiple.frag");
-
-	
-
-
+	//----------------------------------//
 	float angle = 10.0f;
+	//----------------------------------//
+
+
 	double lastTime = glfwGetTime();
 
-	
+	//----------------------------------//
+	//				LOOP				//
+	//----------------------------------//
 
 	while (!glfwWindowShouldClose(gWindow)){
 		showFPS(gWindow);
@@ -161,64 +100,31 @@ int main(){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-		glm::mat4 model, view, projection;
-
+		//----------------------------------//
+		//				MVP					//
+		//----------------------------------//
+		glm::mat4 model, view, projection;	
 		view = fpsCamera.GetViewMatrix();
 		projection = glm::perspective(fpsCamera.getFOV(), (float)gWindowWidth / (float)gWindowHeight, 0.1f, 100.0f);
+		//----------------------------------//
+		glm::vec3 viewPos = fpsCamera.GetPosition();
+		//----------------------------------//
 
-		PBR_sphereShader.use();
-		PBR_sphereShader.setUniform("projection", projection);
-
-		//spot light 
-		glm::vec3 spotLight_Pos = fpsCamera.GetPosition();
-		glm::vec3 spotLight_Col(1.0f, 1.0f, 1.0f);
-
-		//directional light
-		glm::vec3 directional_lightDirection(0.0f, -0.9f, -0.17);
-		glm::vec3 directional_lightCol(0.4f, 0.4f, 0.2f);
-		
-		//point light 
-		glm::vec3 point_Pos(0.0f, 0.0f, 0.0f);
-		glm::vec3 point_Col(1.0f, 1.0f, 1.0f);
-		glm::vec3 point_Direction(0.0f, -0.9f, -0.17);
-		glm::vec3 point_Scale(1.2f, 1.2f, 1.2f);
-		glm::vec3 point_lightCol(1.0f, 1.0f, 1.0f);
-
-		angle += (float)deltaTime * 90.0f;
-		point_Pos.x += 1.5f + 10* sinf(glm::radians(angle));
-		point_Pos.z += 1.5f + 10 * cosf(glm::radians(angle));
-		point_Pos.y += 3 + (0.5f * sinf(glm::radians(angle) * 4));
-
-		//---------------------------------------------------
-		cubemapShader.use();
-		glm::vec3 cubeMap_Pos(0.0f, 0.0f, 0.0f);
-		glm::vec3 cubeMap_Scale(1.0f, 1.0f, 1.0f);
-
-
-		cubeMapTexture.bind(0);
-		cubemapShader.setUniformSampler("equirectangularMap", 0);
-		cubemapShader.setUniform("col", glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, cubeMap_Pos) * glm::scale(model, cubeMap_Scale);
-
-		//cubemapShader.setUniform("model", model);
-		cubemapShader.setUniform("view", view);
-		cubemapShader.setUniform("projection", projection);
-
-		CubeMapMesh.Draw();
-		//------------------------------------------------
-
+		//----------------------------------//
+		//			PBR MATERIAL			//
+		//----------------------------------//
 
 		PBR_sphereShader.use();
 
 		glm::vec3 pbr_Pos(0.0f, 0.0f, 0.0f);
 		glm::vec3 pbr_Scale(5.0f, 5.0f, 5.0f);
 
-		glm::vec3 viewPos = fpsCamera.GetPosition();
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f)) * glm::scale(model, pbr_Scale);
 
+		PBR_sphereShader.setUniform("model", model);
 		PBR_sphereShader.setUniform("view", view);
+		PBR_sphereShader.setUniform("projection", projection);
 		PBR_sphereShader.setUniform("camPos", viewPos);
 
 		PBR_sphereTexture[0].bind(0);
@@ -233,98 +139,61 @@ int main(){
 		PBR_sphereShader.setUniformSampler("roughnessMap",	3);
 		PBR_sphereShader.setUniformSampler("aoMap",			4);
 
-		lightPositions[0] = point_Pos;
-
-		model = glm::mat4(1.0f);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f)) * glm::scale(model, pbr_Scale);
-		PBR_sphereShader.setUniform("model", model);
-				
 		PBR_sphereMesh.Draw();
-
-		PBR_sphereTexture[0].unbind(0);
-		PBR_sphereTexture[1].unbind(1);
-		PBR_sphereTexture[2].unbind(2);
-		PBR_sphereTexture[3].unbind(3);
-		PBR_sphereTexture[4].unbind(4);
 		
+		//----------------------------------//
+		//		PBR SET LIGHT UNIFORMS		//
+		//----------------------------------//
 
-		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i){
-			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
-			newPos = lightPositions[i];
+		int amountOfLights = sizeof(pointLights) / sizeof(pointLights[0]);
+		std::cout << "LIGHTS IN SCENE :" << amountOfLights << std::endl;
+
+		PBR_sphereShader.use();
+		PBR_sphereShader.setUniform("amountOfLights", amountOfLights);
+
+		for (unsigned int i = 0; i < amountOfLights; ++i) {
+			glm::vec3 newPos = pointLights[i].position + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+			newPos = pointLights[i].position;
+
 			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
 			const char* c1 = str1.c_str();
 			PBR_sphereShader.setUniform(c1, newPos);
+
 			std::string str2 = "lightColors[" + std::to_string(i) + "]";
 			const char* c2 = str2.c_str();
-			PBR_sphereShader.setUniform(c2, lightColors[i]);
+			PBR_sphereShader.setUniform(c2, pointLights[i].color);
+		}
 
+		//----------------------------------//
+		//			Moving Light			//
+		//----------------------------------//
+
+		angle += (float)deltaTime * 90.0f;
+
+		pointLights[0].position.x = 1.5f + 10 * sinf(glm::radians(angle));
+		pointLights[0].position.z = 1.5f + 10 * cosf(glm::radians(angle));
+		pointLights[0].position.y = 3 + (0.5f * sinf(glm::radians(angle) * 4));
+
+		//----------------------------------//
+		//			Render Lights			//
+		//----------------------------------//
+
+		for (unsigned int i = 0; i < amountOfLights; i++) {
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, newPos);
 			model = glm::scale(model, glm::vec3(0.5f));
-			PBR_sphereShader.setUniform("model", model);
-			PBR_sphereMesh.Draw();
+			model = glm::translate(model, pointLights[i].position);
+
+			pointLights[i].m_Shader->use();
+			pointLights[i].m_Shader->setUniform("lightCol", pointLights[i].color);
+			pointLights[i].m_Shader->setUniform("model", model);
+			pointLights[i].m_Shader->setUniform("view", view);
+			pointLights[i].m_Shader->setUniform("projection", projection);
+			pointLights[i].m_Mesh->Draw();
 		}
 
-
-		
-		lightingShader.use();
-
-		lightingShader.setUniform("view"						, view);
-		lightingShader.setUniform("projection"					, projection);
-		lightingShader.setUniform("viewPos"						, viewPos);
-
-		lightingShader.setUniform("spotLight.position"			, spotLight_Pos);
-		lightingShader.setUniform("spotLight.direction"			, fpsCamera.GetLook());
-		lightingShader.setUniform("spotLight.ambient"			, glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("spotLight.diffuse"			, spotLight_Col);
-		lightingShader.setUniform("spotLight.specular"			, glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setUniform("spotLight.constant"			, 1.0f);
-		lightingShader.setUniform("spotLight.linear"			, 0.07f);
-		lightingShader.setUniform("spotLight.exponent"			, 0.017f);
-		lightingShader.setUniform("spotLight.cosInnerCone"		, glm::cos(glm::radians(15.0f)));
-		lightingShader.setUniform("spotLight.cosOuterCone"		, glm::cos(glm::radians(20.0f)));
-		lightingShader.setUniform("spotLight.on"				, gFlashlightOn);
-
-		lightingShader.setUniform("directionalLight.direction"	, directional_lightDirection);
-		lightingShader.setUniform("directionalLight.ambient"	, glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("directionalLight.diffuse"	, directional_lightCol);
-		lightingShader.setUniform("directionalLight.specular"	, glm::vec3(1.0f, 1.0f, 1.0f));
-
-		lightingShader.setUniform("pointLight.direction"		, point_Direction);
-		lightingShader.setUniform("pointLight.position"			, point_Pos);
-		lightingShader.setUniform("pointLight.ambient"			, glm::vec3(0.25f, 0.5f, 0.2f));
-		lightingShader.setUniform("pointLight.diffuse"			, point_lightCol);
-		lightingShader.setUniform("pointLight.specular"			, glm::vec3(1.0f, 1.0f, 1.0f));
-		lightingShader.setUniform("pointLight.constant"			, 1.0f);
-		lightingShader.setUniform("pointLight.linear;"			, 0.07f);
-		lightingShader.setUniform("pointLight.exponent"			, 0.017f);
-
-		for (int i = 0; i < numModels; i++){
-			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
-			lightingShader.setUniform("model", model);
-			
-			lightingShader.setUniform("material.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-			lightingShader.setUniformSampler("material.diffuseMap", 0);
-			lightingShader.setUniform("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-			lightingShader.setUniform("material.shininess", 10.0f);
-			
-			/*texture[i].bind(0);
-			mesh[i].Draw();
-			texture[i].unbind(0);*/
-		}
-
-		//render PBR mesh
-		
-
-		// render light mesh
-		model = glm::translate(glm::mat4(), point_Pos) * glm::scale(glm::mat4(), point_Scale);
-		lightbulbShader.use();
-		lightbulbShader.setUniform("lightCol", point_Col);
-		lightbulbShader.setUniform("model", model);
-		lightbulbShader.setUniform("view", view);
-		lightbulbShader.setUniform("projection", projection);
-		lightMesh.Draw();
+		//----------------------------------//
+		//				END					//
+		//----------------------------------//
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
@@ -509,4 +378,6 @@ void showFPS(GLFWwindow* window) {
 	}
 	frameCount++;
 }
+
+
 

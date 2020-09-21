@@ -64,8 +64,7 @@ bool Texture2D::loadHDRTexture(const std::string& fileName) {
 	stbi_set_flip_vertically_on_load(true);
 	int width, height, components;
 	float* imageData = stbi_loadf(fileName.c_str(), &width, &height, &components, 0);
-	if (imageData)
-	{
+	if (imageData){
 		glGenTextures(1, &m_Texture);
 		glBindTexture(GL_TEXTURE_2D, m_Texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, imageData);
@@ -82,6 +81,33 @@ bool Texture2D::loadHDRTexture(const std::string& fileName) {
 		std::cout << "Failed to load HDR image at path: " << fileName << std::endl;
 	}
 	return false;
+}
+
+bool Texture2D::loadCubemap(const std::vector<std::string> fileNames) {
+	glGenTextures(1, &m_Texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, m_Texture);
+
+	int width, height, components;
+	for (unsigned int i = 0; i < fileNames.size(); i++){
+		unsigned char* imageData = stbi_load(fileNames[i].c_str(), &width, &height, &components, 0);
+		if (imageData){
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+			stbi_image_free(imageData);
+		}
+		else{
+			std::cout << "Cubemap tex failed to load at path: " << fileNames[i] << std::endl;
+			stbi_image_free(imageData);
+			return false;
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return true;
 }
 
 

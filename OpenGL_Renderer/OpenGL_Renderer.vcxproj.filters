@@ -19,6 +19,9 @@
     <Filter Include="Shaders\PBR">
       <UniqueIdentifier>{02920ac6-cdeb-4182-8b7f-f1cd4c406920}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\LightObject_Defaults">
+      <UniqueIdentifier>{da23d5b6-ff06-4e4e-9b47-3c7f4b5c8ebf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LightObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -48,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LightObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

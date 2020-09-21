@@ -3,6 +3,8 @@
 
 #include "GL/glew.h"
 #include <string>
+#include <vector>
+
 
 
 class Texture2D {
@@ -13,6 +15,7 @@ public:
 
 	bool loadTexture(const std::string& fileName, bool generateMipMaps = true);
 	bool loadHDRTexture(const std::string& fileName);
+	bool loadCubemap(const std::vector<std::string> fileNames);
 	void bind(GLuint texUint = 0);
 	void unbind(GLuint texUnit = 0);
 private:
