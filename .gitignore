@@ -5,7 +5,8 @@
 *.slo
 *.lo
 *.o
-*.obj
+# removed due to using obj file format for 3d objects
+#*.obj
 
 # Precompiled Headers
 *.gch
