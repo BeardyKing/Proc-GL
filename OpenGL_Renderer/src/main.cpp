@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -7,13 +8,17 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_opengl3.h"
+
+
 #include "LightObject.h"
 
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 #include "Camera.h"
 #include "Mesh.h"
-#include <vector>
 
 const char* APP_TITLE = "OpenGL";
 int gWindowWidth = 1024;
@@ -24,6 +29,8 @@ GLFWwindow* gWindow = NULL;
 bool gFullscreen = false;
 bool glWireframe = false;
 bool gFlashlightOn = true;
+bool gCursorEnabled = true;
+
 
 FPSCamera fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f));
 const double ZOOM_SENSITIVITY = -0.02f;
@@ -88,6 +95,9 @@ int main(){
 	//----------------------------------//
 	//				LOOP				//
 	//----------------------------------//
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	while (!glfwWindowShouldClose(gWindow)){
 		showFPS(gWindow);
@@ -195,6 +205,55 @@ int main(){
 		//				END					//
 		//----------------------------------//
 
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+		{
+			static float f = 0.0f;
+			static int counter = 0;
+
+			ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+			ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+			ImGui::Checkbox("Another Window", &show_another_window);
+
+			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+			ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+			if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+				counter++;
+			ImGui::SameLine();
+			ImGui::Text("counter = %d", counter);
+
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::End();
+		}
+
+		// 3. Show another simple window.
+		if (show_another_window)
+		{
+			ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+			ImGui::Text("Hello from another window!");
+			if (ImGui::Button("Close Me"))
+				show_another_window = false;
+			ImGui::End();
+		}
+
+		// Rendering
+		ImGui::Render();
+		int display_w, display_h;
+		glfwGetFramebufferSize(gWindow, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
 	}
@@ -214,6 +273,7 @@ bool InitOpenGL() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
+	const char* glsl_version = "#version 330";
 
 	if (gFullscreen) {
 		GLFWmonitor* pMonitor = glfwGetPrimaryMonitor();
@@ -240,8 +300,10 @@ bool InitOpenGL() {
 	glfwSetFramebufferSizeCallback(gWindow, glfw_OnFrameBufferSize);
 
 	//hides and grabs cursor, unlimited movement
-	glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
+	if (!gCursorEnabled){
+		glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
+	}
 
 	glewExperimental = GL_TRUE;
 
@@ -255,6 +317,25 @@ bool InitOpenGL() {
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
+
+	//----------------------------------//
+	//				IMGUI				//
+	//----------------------------------//
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
+
+	// Setup Platform/Renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(gWindow, true);
+	ImGui_ImplOpenGL3_Init(glsl_version);
+
 
 	return true;
 }
@@ -277,6 +358,17 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (key == GLFW_KEY_F && action == GLFW_PRESS){
 		gFlashlightOn = !gFlashlightOn;
 	}
+
+	if (glfwGetKey(gWindow, GLFW_KEY_E) == GLFW_PRESS) {
+		gCursorEnabled = !gCursorEnabled;
+		if (gCursorEnabled) {
+			glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+		else {
+			glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+	}
+
 
 }
 
@@ -313,44 +405,54 @@ void glfw_OnMouseScroll(GLFWwindow* window, double deltaZ, double deltaY) {
 	fpsCamera.setFOV((float)fov);
 }
 
+
 void Update(double elapsedTime) {
-	double mouseX, mouseY;
 
-	glfwGetCursorPos(gWindow, &mouseX, &mouseY);
+	
+	
+	if(gCursorEnabled){
+		
+	}
+	else {
+		double mouseX, mouseY;
 
-	fpsCamera.Rotate((float)(gWindowWidth / 2.0 - mouseX) * MOUSE_SENSITIVITY, (float)(gWindowHeight / 2.0 - mouseY) * MOUSE_SENSITIVITY);
 
-	glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
+		glfwGetCursorPos(gWindow, &mouseX, &mouseY);
+		fpsCamera.Rotate((float)(gWindowWidth / 2.0 - mouseX) * MOUSE_SENSITIVITY, (float)(gWindowHeight / 2.0 - mouseY) * MOUSE_SENSITIVITY);
 
-	//sprint
-	float moveSpeedDelta = 1;
-	if (glfwGetKey(gWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-		moveSpeedDelta = 4;
+		glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
+		//sprint
+		float moveSpeedDelta = 1;
+		if (glfwGetKey(gWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
+			moveSpeedDelta = 4;
+		}
+
+
+		//forwards / backwards
+		if (glfwGetKey(gWindow, GLFW_KEY_W) == GLFW_PRESS){
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetLook());
+		}
+		else if (glfwGetKey(gWindow, GLFW_KEY_S) == GLFW_PRESS) {
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetLook());
+		}
+
+		// left / right
+		if (glfwGetKey(gWindow, GLFW_KEY_A) == GLFW_PRESS) {
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetRight());
+		}
+		else if (glfwGetKey(gWindow, GLFW_KEY_D) == GLFW_PRESS) {
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetRight());
+		}
+
+		//up / down
+		if (glfwGetKey(gWindow, GLFW_KEY_Z) == GLFW_PRESS) {
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetUp());
+		}
+		else if (glfwGetKey(gWindow, GLFW_KEY_X) == GLFW_PRESS) {
+			fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetUp());
+		}
 	}
 
-	//forwards / backwards
-	if (glfwGetKey(gWindow, GLFW_KEY_W) == GLFW_PRESS){
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetLook());
-	}
-	else if (glfwGetKey(gWindow, GLFW_KEY_S) == GLFW_PRESS) {
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetLook());
-	}
-
-	// left / right
-	if (glfwGetKey(gWindow, GLFW_KEY_A) == GLFW_PRESS) {
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetRight());
-	}
-	else if (glfwGetKey(gWindow, GLFW_KEY_D) == GLFW_PRESS) {
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetRight());
-	}
-
-	//up / down
-	if (glfwGetKey(gWindow, GLFW_KEY_Z) == GLFW_PRESS) {
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * fpsCamera.GetUp());
-	}
-	else if (glfwGetKey(gWindow, GLFW_KEY_X) == GLFW_PRESS) {
-		fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)elapsedTime * -fpsCamera.GetUp());
-	}
 }
 
 void showFPS(GLFWwindow* window) {

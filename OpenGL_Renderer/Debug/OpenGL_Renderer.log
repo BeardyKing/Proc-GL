@@ -1,4 +1,4 @@
 ﻿  main.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(156,30): warning C4018: '<': signed/unsigned mismatch
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(183,30): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(164,30): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(191,30): warning C4018: '<': signed/unsigned mismatch
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
