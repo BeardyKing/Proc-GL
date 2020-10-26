@@ -22,6 +22,9 @@
     <Filter Include="Shaders\LightObject_Defaults">
       <UniqueIdentifier>{da23d5b6-ff06-4e4e-9b47-3c7f4b5c8ebf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{71c277a9-77e2-4c3e-a8a3-ce5173f300f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -62,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="src\imGuiStyleSheet.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test_PBR.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="src\imGuiStyleSheet.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test_PBR.h">
+      <Filter>Tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

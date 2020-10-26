@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\OpenGL_Renderer",
-    "\\OpenGL_Renderer\\bin",
     "\\OpenGL_Renderer\\src"
   ],
-  "SelectedNode": "\\OpenGL_Renderer\\bin\\Wall",
+  "SelectedNode": "\\OpenGL_Renderer\\src\\test.h",
   "PreviewInSolutionExplorer": false
 }

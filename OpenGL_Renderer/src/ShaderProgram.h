@@ -43,7 +43,6 @@ private:
 	GLuint m_Handle;
 
 	std::map<std::string, GLint> m_UniformLocations;
-
 };
 
 #endif // ! SHADER_PROGRAM_H

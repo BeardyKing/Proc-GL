@@ -1,4 +1,10 @@
 ﻿  main.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(168,30): warning C4018: '<': signed/unsigned mismatch
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(195,30): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(16,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  test_PBR.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_PBR.cpp(62,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_PBR.cpp(97,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_PBR.cpp(97,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_PBR.cpp(188,30): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_PBR.cpp(215,30): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
