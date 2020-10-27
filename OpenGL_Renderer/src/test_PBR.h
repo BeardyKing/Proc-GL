@@ -34,7 +34,6 @@ namespace test {
 
 		glm::vec3 m_pbrSpherePosition;
 		glm::vec3 m_pbrSphereRotationAxis;
-
 		glm::vec3 m_pbrSphereScale;
 
 		float m_movingLightAngle = 90;

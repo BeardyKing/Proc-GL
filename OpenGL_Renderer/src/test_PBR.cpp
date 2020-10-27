@@ -20,8 +20,7 @@ namespace test {
 		m_amountOfLights(6),
 		m_pbrSpherePosition(glm::vec3(0)),
 		m_pbrSphereRotationAxis(glm::vec3(0, 0, 0)),
-		m_pbrSphereScale(glm::vec3(3)),
-		m_pbrSphereRadians(0.0f)
+		m_pbrSphereScale(glm::vec3(3))
 	{
 
 		m_PBR_sphereMesh = std::make_unique<Mesh>();
@@ -54,25 +53,26 @@ namespace test {
 		m_pointLights[4].position = glm::vec3(-13.0f, 10.0f, 10.0f);
 		m_pointLights[5].position = glm::vec3(-13.0f, 10.0f, -10.0f);
 
-		//----------------------------------//
-		float angle = 10.0f;
-		//----------------------------------//
-
-
-		for (size_t i = 0; i < m_amountOfLights; i++)
-		{
-			std::cout << m_pointLights[i].position.x << std::endl;
-			std::cout << m_pointLights[i].position.y << std::endl;
-			std::cout << m_pointLights[i].position.x << std::endl;
-			std::cout << "------------------" << std::endl;
-		}
 	}
 
-	test_PBR::~test_PBR() {}
+	test_PBR::~test_PBR() {
+		m_PBR_sphereMesh.reset();
+		m_PBR_sphereShader.reset();
+		m_PBR_sphereTexture.reset();
+		m_pointLights.reset();
+	}
+
 	void test_PBR::OnUpdate(double deltaTime){
-		float MOVE_SPEED = 5;
+
+		//----------------------------------//
+		//			Moving Light			//
+		//----------------------------------//
 
 		m_movingLightAngle += (float)deltaTime * 90.0f;	// rotate lights
+
+		m_pointLights[0].position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
+		m_pointLights[0].position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
+		m_pointLights[0].position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 
 		if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 		if (ImGui::IsKeyReleased('E')) {m_mouseFlag = false; }
@@ -87,7 +87,10 @@ namespace test {
 			return;
 		}
 		
-		//mouse 
+		//----------------------------------//
+		//			MOUSE					//
+		//----------------------------------//
+
 		glm::vec2 currentMousePos;
 
 		currentMousePos.x = ImGui::GetMousePos().x;
@@ -96,7 +99,10 @@ namespace test {
 		glm::vec2 mouseDelta = m_lastMousePos - currentMousePos;
 		m_fpsCamera.Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
 		
-		// keyboard
+		//----------------------------------//
+		//			KEYBOARD				//
+		//----------------------------------//
+
 		if (ImGui::IsKeyDown('W')){w = true;}
 		if (ImGui::IsKeyDown('A')){a = true;}
 		if (ImGui::IsKeyDown('S')){s = true;}
@@ -109,17 +115,18 @@ namespace test {
 		if (ImGui::IsKeyReleased('S')) { s = false; }
 		if (ImGui::IsKeyReleased('D')) { d = false; }
 		if (ImGui::IsKeyReleased(GLFW_KEY_LEFT_SHIFT)){l_shift = false;}
-			
+		
+		float moveSpeed = 5;
 		float moveSpeedDelta = 1;
 		if (l_shift) {
 			moveSpeedDelta = 4;
 		}
 
-		if (w)		{m_fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetLook());}
-		else if (s) {m_fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetLook());}
+		if (w)		{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetLook());}
+		else if (s) {m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetLook());}
 
-		if (a)		{m_fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetRight());}
-		else if (d)	{m_fpsCamera.Move((MOVE_SPEED * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetRight());}
+		if (a)		{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetRight());}
+		else if (d)	{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetRight());}
 
 		m_lastMousePos = currentMousePos;
 	}
@@ -148,10 +155,10 @@ namespace test {
 		model = glm::mat4(1.0f);
 		model =
 			glm::translate(model, m_pbrSpherePosition) *
-			glm::scale(model, m_pbrSphereScale) *
 			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.x), glm::vec3(1, 0, 0)) *
 			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.y), glm::vec3(0, 1, 0)) *
-			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.z), glm::vec3(0, 0, 1));
+			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.z), glm::vec3(0, 0, 1)) *
+			glm::scale(model, m_pbrSphereScale);
 
 		m_PBR_sphereShader->setUniform("model", model);
 		m_PBR_sphereShader->setUniform("view", view);
@@ -193,14 +200,6 @@ namespace test {
 		}
 
 		//----------------------------------//
-		//			Moving Light			//
-		//----------------------------------//
-
-		m_pointLights[0].position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
-		m_pointLights[0].position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
-		m_pointLights[0].position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
-
-		//----------------------------------//
 		//			Render Lights			//
 		//----------------------------------//
 
@@ -218,12 +217,12 @@ namespace test {
 		}
 	}
 
-	void test_PBR::OnImGuiRender()
-	{
+	void test_PBR::OnImGuiRender(){
+
 		ImGui::Begin("Transform");
-		ImGui::SliderFloat3("PBR SPHERE POSITION : ", &m_pbrSpherePosition.x, -10.0f, 10.0f);
-		ImGui::SliderFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrSphereRotationAxis.x, 0.0f, 360.0f);
-		ImGui::SliderFloat3("PBR SPHERE SCALE : ", &m_pbrSphereScale.x, 0.1f, 10.0f);
+		ImGui::DragFloat3("PBR SPHERE POSITION : ", &m_pbrSpherePosition.x, -0.1f, 0.1f);
+		ImGui::DragFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrSphereRotationAxis.x, -1.0f, 1.0f);
+		ImGui::DragFloat3("PBR SPHERE SCALE : ", &m_pbrSphereScale.x, -0.1f, 0.1f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
