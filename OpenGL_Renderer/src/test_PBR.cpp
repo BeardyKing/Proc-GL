@@ -19,13 +19,13 @@ namespace test {
 		m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f)),
 		m_amountOfLights(6),
 		m_pbrSpherePosition(glm::vec3(0)),
-		m_pbrSphereRotation(glm::vec3(-180, 0, 0)),
-		m_pbrSphereScale(glm::vec3(5)),
-		m_pbrSphereRotationSpeed(0.0f)
+		m_pbrSphereRotationAxis(glm::vec3(0, 0, 0)),
+		m_pbrSphereScale(glm::vec3(3)),
+		m_pbrSphereRadians(0.0f)
 	{
 
 		m_PBR_sphereMesh = std::make_unique<Mesh>();
-		m_PBR_sphereMesh->LoadOBJ("sphere.obj");
+		m_PBR_sphereMesh->LoadOBJ("cube.obj");
 
 		m_PBR_sphereShader = std::make_unique<ShaderProgram>();
 		m_PBR_sphereShader->loadShaders("pbr.vert", "pbr.frag");
@@ -146,7 +146,12 @@ namespace test {
 		m_PBR_sphereShader->use();
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, m_pbrSpherePosition) * glm::scale(model, m_pbrSphereScale) * glm::rotate(model, (float)glfwGetTime() * m_pbrSphereRotationSpeed, m_pbrSphereRotation);
+		model =
+			glm::translate(model, m_pbrSpherePosition) *
+			glm::scale(model, m_pbrSphereScale) *
+			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.x), glm::vec3(1, 0, 0)) *
+			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.y), glm::vec3(0, 1, 0)) *
+			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.z), glm::vec3(0, 0, 1));
 
 		m_PBR_sphereShader->setUniform("model", model);
 		m_PBR_sphereShader->setUniform("view", view);
@@ -215,11 +220,10 @@ namespace test {
 
 	void test_PBR::OnImGuiRender()
 	{
-		ImGui::Begin("TRANSFROM");
+		ImGui::Begin("Transform");
 		ImGui::SliderFloat3("PBR SPHERE POSITION : ", &m_pbrSpherePosition.x, -10.0f, 10.0f);
-		ImGui::SliderFloat3("PBR SPHERE ROTATION : ", &m_pbrSphereRotation.x, -180.0f, 180.0f);
+		ImGui::SliderFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrSphereRotationAxis.x, 0.0f, 360.0f);
 		ImGui::SliderFloat3("PBR SPHERE SCALE : ", &m_pbrSphereScale.x, 0.1f, 10.0f);
-		ImGui::SliderFloat("PBR SPHERE ROTATION SPEED : ", &m_pbrSphereRotationSpeed, -5.0f, 5.0f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();

@@ -33,9 +33,9 @@ namespace test {
 		FPSCamera m_fpsCamera;
 
 		glm::vec3 m_pbrSpherePosition;
-		glm::vec3 m_pbrSphereRotation;
+		glm::vec3 m_pbrSphereRotationAxis;
+
 		glm::vec3 m_pbrSphereScale;
-		float m_pbrSphereRotationSpeed;
 
 		float m_movingLightAngle = 90;
 
