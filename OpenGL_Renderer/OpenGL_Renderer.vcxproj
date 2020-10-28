@@ -154,6 +154,7 @@
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\test.cpp" />
+    <ClCompile Include="src\test_Dock.cpp" />
     <ClCompile Include="src\test_PBR.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\test.h" />
+    <ClInclude Include="src\test_Dock.h" />
     <ClInclude Include="src\test_PBR.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />

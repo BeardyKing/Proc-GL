@@ -72,6 +72,9 @@
     <ClCompile Include="src\test_PBR.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="src\test_Dock.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -120,6 +123,9 @@
       <Filter>Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\test_PBR.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test_Dock.h">
       <Filter>Tests</Filter>
     </ClInclude>
   </ItemGroup>
