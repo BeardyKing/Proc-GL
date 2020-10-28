@@ -42,6 +42,12 @@ int main(){
 		return -1;
 	}
 
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 	test::Test* currentTest = nullptr;
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
@@ -50,40 +56,67 @@ int main(){
 	
 	double lastTime = glfwGetTime();
 
-	while (!glfwWindowShouldClose(gWindow)){
+	// Main loop
+	while (!glfwWindowShouldClose(gWindow))
+	{
+
 		showFPS(gWindow);
 
 		double currentTime = glfwGetTime();
 		double deltaTime = currentTime - lastTime; 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glfwPollEvents();{
-			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
+		glfwPollEvents();
 
-			if (currentTest) {
-				currentTest->OnUpdate(deltaTime);
-				currentTest->OnRender();
-				ImGui::Begin("Test");
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 
-				if (currentTest != testMenu && ImGui::Button("<-")){
-					delete currentTest;
-					currentTest = testMenu;
-				}
+		if (currentTest) {
+			currentTest->OnUpdate(deltaTime);
+			currentTest->OnRender();
+			ImGui::Begin("Test");
 
-				currentTest->OnImGuiRender();
-				ImGui::End();
+			if (currentTest != testMenu && ImGui::Button("<-")) {
+				delete currentTest;
+				currentTest = testMenu;
 			}
 
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+			currentTest->OnImGuiRender();
+			ImGui::End();
+		}
+
+		// Rendering
+		ImGui::Render();
+		/*int display_w, display_h;
+		glfwGetFramebufferSize(gWindow, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+		glClear(GL_COLOR_BUFFER_BIT);*/
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		// Update and Render additional Platform Windows
+		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+		//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
 		}
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
 	}
 
+	// Cleanup
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	glfwDestroyWindow(gWindow);
 	glfwTerminate();
 	return 0;
 }
@@ -139,8 +172,14 @@ bool InitOpenGL() {
 	glEnable(GL_DEPTH_TEST);
 
 	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    ////io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+    //io.ConfigViewportsNoAutoMerge = true;
+    //io.ConfigViewportsNoTaskBarIcon = true;
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplGlfw_InitForOpenGL(gWindow, true);
@@ -150,6 +189,7 @@ bool InitOpenGL() {
 
 	return true;
 }
+
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	
