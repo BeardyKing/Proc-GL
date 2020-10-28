@@ -14,6 +14,7 @@
 
 #include "test.h"
 #include "test_PBR.h";
+#include "test_Dock.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
 int gWindowWidth = 1024;
@@ -45,6 +46,7 @@ int main(){
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
 	testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
+	testMenu->RegisterTest<test::test_Dock>("docking test");
 	
 	double lastTime = glfwGetTime();
 
