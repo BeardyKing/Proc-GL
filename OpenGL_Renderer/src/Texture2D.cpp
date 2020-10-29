@@ -13,6 +13,10 @@ Texture2D::~Texture2D() {
 
 }
 
+GLuint Texture2D::GetTexture() {
+	return m_Texture;
+}
+
 bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 
 

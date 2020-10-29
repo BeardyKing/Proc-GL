@@ -25,9 +25,10 @@ namespace test {
 		void OnImGuiRender() override;
 
 	private:
-		glm::vec3 m_pbrSpherePosition;
-		glm::vec3 m_pbrSphereRotationAxis;
-		glm::vec3 m_pbrSphereScale;
+
+		LightObject m_LightObject;
+		FPSCamera m_fpsCamera;
+		Texture2D m_Texture2D;
 	};
 }
 

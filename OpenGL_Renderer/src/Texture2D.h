@@ -17,6 +17,8 @@ public:
 	bool loadCubemap(const std::vector<std::string> fileNames);
 	void bind(GLuint texUint = 0);
 	void unbind(GLuint texUnit = 0);
+	GLuint GetTexture();
+
 
 private:
 

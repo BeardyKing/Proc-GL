@@ -59,7 +59,6 @@ int main(){
 	// Main loop
 	while (!glfwWindowShouldClose(gWindow))
 	{
-
 		showFPS(gWindow);
 
 		double currentTime = glfwGetTime();
