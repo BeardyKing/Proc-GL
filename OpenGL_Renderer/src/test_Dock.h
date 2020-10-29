@@ -3,6 +3,16 @@
 
 #include "test.h"
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_opengl3.h"
+
+#include "LightObject.h"
+#include "ShaderProgram.h"
+#include "Texture2D.h"
+#include "Mesh.h"
+#include "Camera.h"
+
 namespace test {
 	class test_Dock : public Test
 	{
@@ -15,7 +25,9 @@ namespace test {
 		void OnImGuiRender() override;
 
 	private:
-
+		glm::vec3 m_pbrSpherePosition;
+		glm::vec3 m_pbrSphereRotationAxis;
+		glm::vec3 m_pbrSphereScale;
 	};
 }
 
