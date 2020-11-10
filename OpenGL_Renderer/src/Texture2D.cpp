@@ -10,7 +10,7 @@ Texture2D::Texture2D()
 }
 
 Texture2D::~Texture2D() {
-
+	glDeleteTextures(sizeof(m_Texture), &m_Texture);
 }
 
 GLuint Texture2D::GetTexture() {

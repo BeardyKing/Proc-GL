@@ -11,11 +11,30 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+    //TODO UPDATE THIS TO TAKE IN WINDOW SIZE CHANGES
 namespace test {
 	test_Dock::test_Dock():
         m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f))
     {
         m_Texture2D.loadTexture("meat.png", false);
+
+        /// <summary>
+        /// update these values on size change of window / imgui window size
+        /// </summary>
+        FramebufferName = 0;
+        glGenFramebuffers(1, &FramebufferName);
+        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+        glGenTextures(1, &renderedTexture);
+        glBindTexture(GL_TEXTURE_2D, renderedTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 768, 0, GL_RGB, GL_UNSIGNED_BYTE, 0); 
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
+        GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+        glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
     }
 
 	test_Dock::~test_Dock() {}
@@ -24,8 +43,17 @@ namespace test {
 
 	void test_Dock::OnRender() {
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        // Always check that our framebuffer is ok
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+            std::cout << "ERR"<<std::endl;
+            return;
+        }
 
+            // Render to our framebuffer
+        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         //----------------------------------//
         //				MVP					//
         //----------------------------------//
@@ -54,7 +82,14 @@ namespace test {
         m_LightObject.m_Shader->setUniform("model", model);
         m_LightObject.m_Shader->setUniform("view", view);
         m_LightObject.m_Shader->setUniform("projection", projection);
+
+
+
+
         m_LightObject.m_Mesh->Draw();
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        m_LightObject.m_Mesh->Draw();
+
     }
 
     void test_Dock::OnImGuiRender() {
@@ -62,12 +97,16 @@ namespace test {
             ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
             ImGui::Begin("Scene");
 
-            ImTextureID tex = (void*)m_Texture2D.GetTexture();
+            ImTextureID tex = (void*)renderedTexture;
+            //ImTextureID tex = (void*)m_Texture2D.GetTexture();
 
-            float my_tex_w = (float)256;
-            float my_tex_h = (float)256;
+            float my_tex_w = (float)1024/4;
+            float my_tex_h = (float)768/4;
             {
+                lastFrameWindowSize = ImGui::GetWindowSize();
                 ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
+                ImGui::Text("Window Size X");
+                ImGui::Text("%.0fx%.0f", lastFrameWindowSize.x, lastFrameWindowSize.y);
                 ImVec2 pos = ImGui::GetCursorScreenPos();
                 ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
                 ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right

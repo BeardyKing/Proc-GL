@@ -25,6 +25,14 @@ namespace test {
 		void OnImGuiRender() override;
 
 	private:
+		GLuint FramebufferName = 0;
+		GLuint renderedTexture;
+
+		GLuint framebuffer;
+		GLuint fbo;
+
+		ImTextureID tex;
+		ImVec2 lastFrameWindowSize;
 
 		LightObject m_LightObject;
 		FPSCamera m_fpsCamera;
