@@ -10,6 +10,9 @@
 #include "Mesh.h"
 #include "Camera.h"
 
+int G_GetWindowWidth();
+int G_GetWindowHeight();
+
 namespace test {
 	class test_PBR : public Test
 	{

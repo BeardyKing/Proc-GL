@@ -17,8 +17,19 @@
 #include "test_Dock.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
-int gWindowWidth = 1024;
-int gWindowHeight = 768;
+static int gWindowWidth = 1024;
+static int gWindowHeight = 768;
+static bool gWindowResizedFlag = false;
+
+bool G_GetWindowResizeFlag() {
+	return gWindowResizedFlag;
+}
+int G_GetWindowWidth() {
+	return gWindowWidth;
+}
+int G_GetWindowHeight() {
+	return gWindowHeight;
+}
 
 GLFWwindow* gWindow = NULL;
 
@@ -73,6 +84,9 @@ int main(){
 		ImGui::NewFrame();
 
 		if (currentTest) {
+
+
+
 			currentTest->OnUpdate(deltaTime);
 			currentTest->OnRender();
 			ImGui::Begin("Test");
@@ -108,6 +122,7 @@ int main(){
 
 		glfwSwapBuffers(gWindow);
 		lastTime = currentTime;
+		gWindowResizedFlag = false;
 	}
 
 	// Cleanup
@@ -176,7 +191,8 @@ bool InitOpenGL() {
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     ////io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+    
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
     //io.ConfigViewportsNoAutoMerge = true;
     //io.ConfigViewportsNoTaskBarIcon = true;
 
@@ -220,6 +236,8 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height) {
 	gWindowWidth	= width;
 	gWindowHeight	= height;
+
+	gWindowResizedFlag = true;
 
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
 }

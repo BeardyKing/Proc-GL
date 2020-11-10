@@ -14,6 +14,9 @@
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
 
+
+
+
 namespace test {
 	test_PBR::test_PBR() :
 		m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f)),
@@ -53,6 +56,8 @@ namespace test {
 		m_pointLights[4].position = glm::vec3(-13.0f, 10.0f, 10.0f);
 		m_pointLights[5].position = glm::vec3(-13.0f, 10.0f, -10.0f);
 
+		int val = G_GetWindowWidth();
+		std::cout << val << std::endl;
 	}
 
 	test_PBR::~test_PBR() {
@@ -140,7 +145,7 @@ namespace test {
 		//----------------------------------//
 		glm::mat4 model, view, projection;
 		view = m_fpsCamera.GetViewMatrix();
-		projection = glm::perspective(m_fpsCamera.getFOV(), (float)1024 / (float)768, 0.1f, 100.0f);
+		projection = glm::perspective(m_fpsCamera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
 		
 		//----------------------------------//
 		glm::vec3 viewPos = m_fpsCamera.GetPosition();

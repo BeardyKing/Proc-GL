@@ -12,6 +12,12 @@
 #include "Texture2D.h"
 #include "Mesh.h"
 #include "Camera.h"
+#include "FrameBuffer.h"
+
+int G_GetWindowWidth();
+int G_GetWindowHeight(); 
+bool G_GetWindowResizeFlag();
+
 
 namespace test {
 	class test_Dock : public Test
@@ -24,19 +30,22 @@ namespace test {
 		void OnRender() override;
 		void OnImGuiRender() override;
 
+		void UpdateFrameBufferTextureSize();
+
 	private:
+		ImTextureID tex;
+
+
 		GLuint FramebufferName = 0;
 		GLuint renderedTexture;
-
-		GLuint framebuffer;
-		GLuint fbo;
-
-		ImTextureID tex;
 		ImVec2 lastFrameWindowSize;
+		bool windowSizeFlag;
 
 		LightObject m_LightObject;
 		FPSCamera m_fpsCamera;
 		Texture2D m_Texture2D;
+		Texture2D m_frameBufferTexture;
+		FrameBuffer fbo;
 	};
 }
 

@@ -14,19 +14,22 @@
     //TODO UPDATE THIS TO TAKE IN WINDOW SIZE CHANGES
 namespace test {
 	test_Dock::test_Dock():
+        FramebufferName(0),
+        renderedTexture(0),
+        lastFrameWindowSize(ImVec2(0, 0)),
+        windowSizeFlag(false),
+
         m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f))
     {
         m_Texture2D.loadTexture("meat.png", false);
+        lastFrameWindowSize = ImVec2(0,0);
 
-        /// <summary>
-        /// update these values on size change of window / imgui window size
-        /// </summary>
         FramebufferName = 0;
         glGenFramebuffers(1, &FramebufferName);
         glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
         glGenTextures(1, &renderedTexture);
         glBindTexture(GL_TEXTURE_2D, renderedTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 768, 0, GL_RGB, GL_UNSIGNED_BYTE, 0); 
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.x, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -35,14 +38,19 @@ namespace test {
         GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
         glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
 
+
     }
 
-	test_Dock::~test_Dock() {}
+	test_Dock::~test_Dock() {
+        glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());
+    }
 
 	void test_Dock::OnUpdate(double deltaTime) {}
 
 	void test_Dock::OnRender() {
-
+        if (windowSizeFlag){
+            UpdateFrameBufferTextureSize();
+        }
         
         // Always check that our framebuffer is ok
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
@@ -59,7 +67,7 @@ namespace test {
         //----------------------------------//
         glm::mat4 model, view, projection;
         view = m_fpsCamera.GetViewMatrix();
-        projection = glm::perspective(m_fpsCamera.getFOV(), (float)1024 / (float)768, 0.1f, 100.0f);
+        projection = glm::perspective(m_fpsCamera.getFOV(), (float)lastFrameWindowSize.x / (float)lastFrameWindowSize.y, 0.1f, 100.0f);
 
         //----------------------------------//
         glm::vec3 viewPos = m_fpsCamera.GetPosition();
@@ -83,36 +91,47 @@ namespace test {
         m_LightObject.m_Shader->setUniform("view", view);
         m_LightObject.m_Shader->setUniform("projection", projection);
 
-
-
-
         m_LightObject.m_Mesh->Draw();
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        m_LightObject.m_Mesh->Draw();
-
     }
 
     void test_Dock::OnImGuiRender() {
         {
+            bool show_demo_window = false;
+            bool show_another_window = false;
+            ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+            ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
+            static int selectedGameObjectID = 0;
+            static std::string selectedGameObjectName = "";
+
+            if (show_demo_window)
+                ImGui::ShowDemoWindow(&show_demo_window);
+            if (G_GetWindowResizeFlag()){
+                UpdateFrameBufferTextureSize();
+            }
+
             ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
             ImGui::Begin("Scene");
 
-            ImTextureID tex = (void*)renderedTexture;
-            //ImTextureID tex = (void*)m_Texture2D.GetTexture();
+            ImVec2 windowSize = ImGui::GetContentRegionAvail();
 
-            float my_tex_w = (float)1024/4;
-            float my_tex_h = (float)768/4;
+            if (windowSize.x != lastFrameWindowSize.x || windowSize.y != lastFrameWindowSize.y){
+                lastFrameWindowSize = windowSize;
+                windowSizeFlag = true;
+            }
+
             {
-                lastFrameWindowSize = ImGui::GetWindowSize();
-                ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
-                ImGui::Text("Window Size X");
-                ImGui::Text("%.0fx%.0f", lastFrameWindowSize.x, lastFrameWindowSize.y);
+                ImTextureID tex = (void*)renderedTexture; // Texture from framebuffer
+
                 ImVec2 pos = ImGui::GetCursorScreenPos();
-                ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
-                ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
-                ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
-                ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.5f); // 50% opaque white
-                ImGui::Image(tex, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
+                ImVec2 uv_min = ImVec2(0.0f, 0.0f);                
+                ImVec2 uv_max = ImVec2(1.0f, 1.0f);                
+                ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);  
+                ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);
+                ImGui::Image(tex, windowSize, uv_min, uv_max, tint_col, border_col);
                 ImGui::End();
             }
             
@@ -147,32 +166,18 @@ namespace test {
                 }
                 ImGui::End();
             }
-            if (true)
-            {
-                return;
-            }
-
-            bool show_demo_window = true;
-            bool show_another_window = false;
-            ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-            ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-            static int selectedGameObjectID = 0;
-            static std::string selectedGameObjectName = "";
-
-
 
             {
                 ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
                 ImGui::Begin("Hierarchy");
                 {
-                    for (int i = 0; i < 100; i++)
+                    for (int i = 0; i < 1; i++)
                     {
                         char label[128];
                         sprintf_s(label, "GameObject %d", i);
                         if (ImGui::Selectable(label, selectedGameObjectID == i)) {
                             selectedGameObjectID = i;
                             selectedGameObjectName = (std::string)label;
-
                         }
                     }
                 }
@@ -212,10 +217,6 @@ namespace test {
                 ImGui::End();
             }
 
-
-
-
-
             if (ImGui::BeginMainMenuBar()) {
                 if (ImGui::BeginMenu("File")) {
                     if (ImGui::MenuItem("ITEM", "CTRL+O")) {
@@ -228,9 +229,15 @@ namespace test {
                 }
                 ImGui::EndMainMenuBar();
             }
-            if (show_demo_window)
-                ImGui::ShowDemoWindow(&show_demo_window);
+            
         }
+    }
+
+    void test_Dock::UpdateFrameBufferTextureSize() {
+        glBindTexture(GL_TEXTURE_2D, renderedTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        windowSizeFlag = false;
+        glViewport(0, 0, lastFrameWindowSize.x, lastFrameWindowSize.y);
     }
 }
 
