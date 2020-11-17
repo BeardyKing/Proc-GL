@@ -12,13 +12,13 @@ public:
 
 	void Bind();
 	void UnBind();
-	void GenerateFrameBuffer();
+	void GenerateFrameBuffer(float x, float y);
 	void UpdateFrameBufferTextureSize(float x, float y);
 
 private:
 
 public :
-	GLuint FramebufferName;
+	GLuint FramebufferName = 0;
 	GLuint renderedTexture;
 
 };

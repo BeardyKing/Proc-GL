@@ -1,8 +1,16 @@
-﻿  test_Dock.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(32,90): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(32,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(238,90): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(238,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(240,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(240,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+﻿  FrameBuffer.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(26,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(26,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(27,25): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(27,22): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(37,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(37,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  main.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(16,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  test_Dock.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(222,90): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(222,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(224,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\test_Dock.cpp(224,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  Generating Code...
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

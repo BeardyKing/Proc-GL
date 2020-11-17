@@ -11,34 +11,19 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+static FrameBuffer fbo;
+
     //TODO UPDATE THIS TO TAKE IN WINDOW SIZE CHANGES
 namespace test {
 	test_Dock::test_Dock():
-        FramebufferName(0),
-        renderedTexture(0),
         lastFrameWindowSize(ImVec2(0, 0)),
         windowSizeFlag(false),
-
         m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f))
     {
         m_Texture2D.loadTexture("meat.png", false);
         lastFrameWindowSize = ImVec2(0,0);
 
-        FramebufferName = 0;
-        glGenFramebuffers(1, &FramebufferName);
-        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
-        glGenTextures(1, &renderedTexture);
-        glBindTexture(GL_TEXTURE_2D, renderedTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.x, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
-        GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-        glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-
-
+        fbo.GenerateFrameBuffer(lastFrameWindowSize.x, lastFrameWindowSize.y);
     }
 
 	test_Dock::~test_Dock() {
@@ -52,14 +37,12 @@ namespace test {
             UpdateFrameBufferTextureSize();
         }
         
-        // Always check that our framebuffer is ok
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-            std::cout << "ERR"<<std::endl;
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             return;
         }
 
-            // Render to our framebuffer
-        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+        fbo.Bind();
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         //----------------------------------//
@@ -93,7 +76,8 @@ namespace test {
 
         m_LightObject.m_Mesh->Draw();
 
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        fbo.UnBind();
+
     }
 
     void test_Dock::OnImGuiRender() {
@@ -124,7 +108,7 @@ namespace test {
             }
 
             {
-                ImTextureID tex = (void*)renderedTexture; // Texture from framebuffer
+                ImTextureID tex = (void*)fbo.renderedTexture; // Texture from framebuffer
 
                 ImVec2 pos = ImGui::GetCursorScreenPos();
                 ImVec2 uv_min = ImVec2(0.0f, 0.0f);                
@@ -234,7 +218,7 @@ namespace test {
     }
 
     void test_Dock::UpdateFrameBufferTextureSize() {
-        glBindTexture(GL_TEXTURE_2D, renderedTexture);
+        glBindTexture(GL_TEXTURE_2D, fbo.renderedTexture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
         windowSizeFlag = false;
         glViewport(0, 0, lastFrameWindowSize.x, lastFrameWindowSize.y);

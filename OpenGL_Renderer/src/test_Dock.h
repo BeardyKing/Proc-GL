@@ -33,11 +33,7 @@ namespace test {
 		void UpdateFrameBufferTextureSize();
 
 	private:
-		ImTextureID tex;
-
-
-		GLuint FramebufferName = 0;
-		GLuint renderedTexture;
+		
 		ImVec2 lastFrameWindowSize;
 		bool windowSizeFlag;
 
@@ -45,7 +41,6 @@ namespace test {
 		FPSCamera m_fpsCamera;
 		Texture2D m_Texture2D;
 		Texture2D m_frameBufferTexture;
-		FrameBuffer fbo;
 	};
 }
 

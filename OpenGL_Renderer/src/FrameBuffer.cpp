@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FrameBuffer.h"
 
+
 FrameBuffer::FrameBuffer():
 	FramebufferName(0),
 	renderedTexture(0)
@@ -13,13 +14,6 @@ FrameBuffer::~FrameBuffer() {
 }
 
 void FrameBuffer::Bind() {
-
-    // Always check that our framebuffer is ok
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cout << "ERR @ FrameBuffer" << std::endl;
-        return;
-    }
-
     glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
 }
 
@@ -33,14 +27,14 @@ void FrameBuffer::UpdateFrameBufferTextureSize(float x, float y) {
     glViewport(0, 0, x, y);
 }
 
-void FrameBuffer::GenerateFrameBuffer() {
+void FrameBuffer::GenerateFrameBuffer(float x, float y) {
 
     FramebufferName = 0;
     glGenFramebuffers(1, &FramebufferName);
     glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
     glGenTextures(1, &renderedTexture);
     glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 0, 0, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
