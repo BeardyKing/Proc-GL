@@ -4,6 +4,7 @@
 #include "ShaderProgram.h"
 #include "Mesh.h"
 #include "glm/glm.hpp"
+#include "Transform.h"
 
 #include <memory>
 
@@ -36,9 +37,10 @@ public:
 	enum LightType{ Point, Directional, Spot};
 	LightType lightType;
 
-	glm::vec3 position;
+	/*glm::vec3 position;
 	glm::vec3 rotation;
-	glm::vec3 scale;
+	glm::vec3 scale;*/
+	Transform transform;
 
 	glm::vec3 color;
 	glm::vec3 direction;

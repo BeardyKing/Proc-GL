@@ -57,11 +57,11 @@ namespace test {
 
         model = glm::mat4(1.0f);
         model =
-            glm::translate(model, m_LightObject.position) *
-            glm::rotate(model, glm::radians(m_LightObject.rotation.x), glm::vec3(1, 0, 0)) *
-            glm::rotate(model, glm::radians(m_LightObject.rotation.y), glm::vec3(0, 1, 0)) *
-            glm::rotate(model, glm::radians(m_LightObject.rotation.z), glm::vec3(0, 0, 1)) *
-            glm::scale(model, m_LightObject.scale);
+            glm::translate(model, m_LightObject.transform.position) *
+            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.x), glm::vec3(1, 0, 0)) *
+            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.y), glm::vec3(0, 1, 0)) *
+            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.z), glm::vec3(0, 0, 1)) *
+            glm::scale(model, m_LightObject.transform.scale);
 
         //----------------------------------//
         //				MVP					//
@@ -135,13 +135,13 @@ namespace test {
                     ImGui::Text("Transform");
 
                     ImGui::Text("Position : "); ImGui::SameLine();
-                    ImGui::DragFloat3("P", &m_LightObject.position.x, -0.1f, 0.1f);
+                    ImGui::DragFloat3("P", &m_LightObject.transform.position.x, -0.1f, 0.1f);
 
                     ImGui::Text("Rotation : "); ImGui::SameLine();
-                    ImGui::DragFloat3("R", &m_LightObject.rotation.x, -1.0f, 1.0f);
+                    ImGui::DragFloat3("R", &m_LightObject.transform.rotation.x, -1.0f, 1.0f);
 
                     ImGui::Text("Scale :    "); ImGui::SameLine();
-                    ImGui::DragFloat3("S", &m_LightObject.scale.x, -0.1f, 0.1f);
+                    ImGui::DragFloat3("S", &m_LightObject.transform.scale.x, -0.1f, 0.1f);
 
 
                     ImGui::Separator();

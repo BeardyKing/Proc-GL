@@ -43,6 +43,8 @@ namespace test {
 		FPSCamera m_fpsCamera;
 		Texture2D m_Texture2D;
 		Texture2D m_frameBufferTexture;
+
+		uint32_t counter;
 	};
 }
 

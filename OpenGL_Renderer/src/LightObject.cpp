@@ -6,9 +6,6 @@ LightObject::LightObject()
 	m_vertexShaderPath("objectDefaults/basic.vert"),
 	m_fragmentShaderPath("objectDefaults/basic.frag"),
 	m_meshPath("objectDefaults/light.obj"),
-	position(glm::vec3(0.0f)),
-	rotation(glm::vec3(0.0f)),
-	scale(glm::vec3(1.0f)),
 	color(glm::vec3(300.0f, 150.0f, 150.0f)),
 	direction(glm::vec3(0.0f, -0.9f, -0.17f))
 {

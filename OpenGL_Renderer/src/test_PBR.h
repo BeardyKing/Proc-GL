@@ -9,6 +9,7 @@
 #include "Texture2D.h"
 #include "Mesh.h"
 #include "Camera.h"
+#include "Transform.h"
 
 int G_GetWindowWidth();
 int G_GetWindowHeight();
@@ -35,9 +36,10 @@ namespace test {
 
 		FPSCamera m_fpsCamera;
 
-		glm::vec3 m_pbrSpherePosition;
+		Transform m_pbrTransform;
+		/*glm::vec3 m_pbrSpherePosition;
 		glm::vec3 m_pbrSphereRotationAxis;
-		glm::vec3 m_pbrSphereScale;
+		glm::vec3 m_pbrSphereScale;*/
 
 		float m_movingLightAngle = 90;
 

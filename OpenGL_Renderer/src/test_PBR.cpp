@@ -20,11 +20,9 @@
 namespace test {
 	test_PBR::test_PBR() :
 		m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f)),
-		m_amountOfLights(6),
-		m_pbrSpherePosition(glm::vec3(0)),
-		m_pbrSphereRotationAxis(glm::vec3(0, 0, 0)),
-		m_pbrSphereScale(glm::vec3(3))
+		m_amountOfLights(6)
 	{
+		m_pbrTransform.scale = glm::vec3(3);
 
 		m_PBR_sphereMesh = std::make_unique<Mesh>();
 		m_PBR_sphereMesh->LoadOBJ("cube.obj");
@@ -49,12 +47,12 @@ namespace test {
 
 		m_pointLights = std::make_unique<LightObject[]>(m_amountOfLights);
 
-		m_pointLights[0].position = glm::vec3(0.0f, 0.0f, 0.0f);
-		m_pointLights[1].position = glm::vec3(10.0f, 10.0f, 10.0f);
-		m_pointLights[2].position = glm::vec3(-13.0f, 0.0f, 10.0f);
-		m_pointLights[3].position = glm::vec3(10.0f, -10.0f, 10.0f);
-		m_pointLights[4].position = glm::vec3(-13.0f, 10.0f, 10.0f);
-		m_pointLights[5].position = glm::vec3(-13.0f, 10.0f, -10.0f);
+		m_pointLights[0].transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+		m_pointLights[1].transform.position = glm::vec3(10.0f, 10.0f, 10.0f);
+		m_pointLights[2].transform.position = glm::vec3(-13.0f, 0.0f, 10.0f);
+		m_pointLights[3].transform.position = glm::vec3(10.0f, -10.0f, 10.0f);
+		m_pointLights[4].transform.position = glm::vec3(-13.0f, 10.0f, 10.0f);
+		m_pointLights[5].transform.position = glm::vec3(-13.0f, 10.0f, -10.0f);
 
 		int val = G_GetWindowWidth();
 		std::cout << val << std::endl;
@@ -75,9 +73,9 @@ namespace test {
 
 		m_movingLightAngle += (float)deltaTime * 90.0f;	// rotate lights
 
-		m_pointLights[0].position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
-		m_pointLights[0].position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
-		m_pointLights[0].position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
+		m_pointLights[0].transform.position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
+		m_pointLights[0].transform.position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
+		m_pointLights[0].transform.position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 
 		if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 		if (ImGui::IsKeyReleased('E')) {m_mouseFlag = false; }
@@ -159,11 +157,11 @@ namespace test {
 
 		model = glm::mat4(1.0f);
 		model =
-			glm::translate(model, m_pbrSpherePosition) *
-			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.x), glm::vec3(1, 0, 0)) *
-			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.y), glm::vec3(0, 1, 0)) *
-			glm::rotate(model, glm::radians(m_pbrSphereRotationAxis.z), glm::vec3(0, 0, 1)) *
-			glm::scale(model, m_pbrSphereScale);
+			glm::translate(model, m_pbrTransform.position) *
+			glm::rotate(model, glm::radians(m_pbrTransform.rotation.x), glm::vec3(1, 0, 0)) *
+			glm::rotate(model, glm::radians(m_pbrTransform.rotation.y), glm::vec3(0, 1, 0)) *
+			glm::rotate(model, glm::radians(m_pbrTransform.rotation.z), glm::vec3(0, 0, 1)) *
+			glm::scale(model, m_pbrTransform.scale);
 
 		m_PBR_sphereShader->setUniform("model", model);
 		m_PBR_sphereShader->setUniform("view", view);
@@ -192,8 +190,8 @@ namespace test {
 		m_PBR_sphereShader->setUniform("amountOfLights", m_amountOfLights);
 
 		for (unsigned int i = 0; i < m_amountOfLights; ++i) {
-			glm::vec3 newPos = m_pointLights[i].position + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
-			newPos = m_pointLights[i].position;
+			glm::vec3 newPos = m_pointLights[i].transform.position + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+			newPos = m_pointLights[i].transform.position;
 
 			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
 			const char* c1 = str1.c_str();
@@ -211,7 +209,7 @@ namespace test {
 		for (unsigned int i = 0; i < m_amountOfLights; i++) {
 			model = glm::mat4(1.0f);
 			model = glm::scale(model, glm::vec3(0.5f));
-			model = glm::translate(model, m_pointLights[i].position);
+			model = glm::translate(model, m_pointLights[i].transform.position);
 
 			m_pointLights[i].m_Shader->use();
 			m_pointLights[i].m_Shader->setUniform("lightCol", m_pointLights[i].color);
@@ -226,9 +224,9 @@ namespace test {
 
 		
 		ImGui::Begin("Transform");
-		ImGui::DragFloat3("PBR SPHERE POSITION : ", &m_pbrSpherePosition.x, -0.1f, 0.1f);
-		ImGui::DragFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrSphereRotationAxis.x, -1.0f, 1.0f);
-		ImGui::DragFloat3("PBR SPHERE SCALE : ", &m_pbrSphereScale.x, -0.1f, 0.1f);
+		ImGui::DragFloat3("PBR SPHERE POSITION : ", &m_pbrTransform.position.x, -0.1f, 0.1f);
+		ImGui::DragFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrTransform.rotation.x, -1.0f, 1.0f);
+		ImGui::DragFloat3("PBR SPHERE SCALE : ", &m_pbrTransform.scale.x, -0.1f, 0.1f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
