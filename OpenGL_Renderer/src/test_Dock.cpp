@@ -11,9 +11,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
-static FrameBuffer fbo;
 
-    //TODO UPDATE THIS TO TAKE IN WINDOW SIZE CHANGES
 namespace test {
 	test_Dock::test_Dock():
         lastFrameWindowSize(ImVec2(0, 0)),
@@ -27,6 +25,7 @@ namespace test {
     }
 
 	test_Dock::~test_Dock() {
+        fbo.UnBind();
         glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());
     }
 

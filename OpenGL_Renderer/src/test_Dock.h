@@ -34,6 +34,8 @@ namespace test {
 
 	private:
 		
+		FrameBuffer fbo;
+
 		ImVec2 lastFrameWindowSize;
 		bool windowSizeFlag;
 

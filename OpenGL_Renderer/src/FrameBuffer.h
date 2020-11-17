@@ -18,7 +18,7 @@ public:
 private:
 
 public :
-	GLuint FramebufferName = 0;
+	GLuint FramebufferName;
 	GLuint renderedTexture;
 
 };
