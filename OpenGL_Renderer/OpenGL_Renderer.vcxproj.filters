@@ -25,6 +25,12 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{71c277a9-77e2-4c3e-a8a3-ce5173f300f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{422e51bf-1f94-4778-8dfb-b5a99ac26e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{3db09e74-42e8-475f-8744-4049a3d6bdd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -66,20 +72,32 @@
     <ClCompile Include="src\imGuiStyleSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\test.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="src\test_PBR.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="src\test_Dock.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
     <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ECS\Component.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\ECS_Manager.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\Entity.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\System.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tests\test.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tests\test_Dock.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tests\test_PBR.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Transform.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,23 +143,35 @@
     <ClInclude Include="src\imGuiStyleSheet.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\test.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="src\test_PBR.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="src\test_Dock.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ECS\Component.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\ECS_Manager.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Entity.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\System.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_Dock.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_PBR.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Transform.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,9 +12,9 @@
 
 #include "imGuiStyleSheet.h"
 
-#include "test.h"
-#include "test_PBR.h";
-#include "test_Dock.h"
+#include "Tests/test.h"
+#include "Tests/test_PBR.h";
+#include "Tests/test_Dock.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
 static int gWindowWidth = 1024;

@@ -4,7 +4,7 @@
 #include "ShaderProgram.h"
 #include "Mesh.h"
 #include "glm/glm.hpp"
-#include "Transform.h"
+#include "Components/Transform.h"
 
 #include <memory>
 
