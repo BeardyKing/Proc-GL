@@ -102,6 +102,9 @@
     <ClCompile Include="src\Tests\test_ECS.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\ObjectData.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="src\ECS\Component.h">
       <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\ObjectData.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
