@@ -1,12 +1,17 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-class Entity;
+extern class Entity;
 
 class Component
 {
 public:
 	Component() = default;
+
+	Component(Entity& e):
+		entity(&e)
+	{
+	}
 	~Component() = default;
 
 	Entity* entity;

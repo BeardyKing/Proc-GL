@@ -1,5 +1,5 @@
 #ifndef ENTITY_H
-#define ENITITY_H
+#define ENTITY_H
 
 #include "ECS.h"
 #include <vector>
