@@ -3,7 +3,8 @@
 #include "test.h"
 
 #include <iostream>
-#include "../ECS/ECS_Manager.h"
+#include "../ECS/Entity.h"
+#include "../Components/Transform.h"
 
 namespace test {
 	class test_ECS : public Test

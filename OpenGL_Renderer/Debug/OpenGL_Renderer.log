@@ -1,4 +1,19 @@
-﻿  ECS_Manager.cpp
+﻿  Transform.cpp
+  LightObject.cpp
+  main.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(16,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  test_Dock.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(221,90): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(221,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(223,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(223,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  test_ECS.cpp
+  test_PBR.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(103,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(103,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(192,30): warning C4018: '<': signed/unsigned mismatch
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(209,30): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
 LINK : warning LNK4217: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj' in function '"public: void __thiscall FrameBuffer::GenerateFrameBuffer(float,float)" (?GenerateFrameBuffer@FrameBuffer@@QAEXMM@Z)'

@@ -179,6 +179,15 @@
     <ClInclude Include="src\Tests\test_ECS.h">
       <Filter>Tests</Filter>
     </ClInclude>
+    <ClInclude Include="src\ECS\ECS.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Entity.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Component.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\basic.frag">
