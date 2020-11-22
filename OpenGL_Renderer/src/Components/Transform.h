@@ -6,6 +6,7 @@
 #include <iostream>
 #include "../vendor/imgui/imgui.h"
 
+
 	class Transform : public Component
 	{
 	public:
@@ -27,24 +28,24 @@
 		void OnUpdate(double deltaTime) {}
 
 		bool ShowTransform = true;
-
+		bool flag = true;
 		void OnImGuiRender() {
-			
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 			ImGui::Begin("Inspector");
 			{
 				ImGui::Separator();
-				ImGui::Text("Transform");
+				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+					ImGui::Text("Transform");
 
-				ImGui::Text("Position : "); ImGui::SameLine();
-				ImGui::DragFloat3("P", &position.x, -0.1f, 0.1f);
+					ImGui::Text("Position : "); ImGui::SameLine();
+					ImGui::DragFloat3("P", &position.x, -0.1f, 0.1f);
 
-				ImGui::Text("Rotation : "); ImGui::SameLine();
-				ImGui::DragFloat3("R", &rotation.x, -1.0f, 1.0f);
+					ImGui::Text("Rotation : "); ImGui::SameLine();
+					ImGui::DragFloat3("R", &rotation.x, -1.0f, 1.0f);
 
-				ImGui::Text("Scale :    "); ImGui::SameLine();
-				ImGui::DragFloat3("S", &scale.x, -0.1f, 0.1f);
-
+					ImGui::Text("Scale :    "); ImGui::SameLine();
+					ImGui::DragFloat3("S", &scale.x, -0.1f, 0.1f);
+				}
 				ImGui::Separator();
 			}
 			ImGui::End();

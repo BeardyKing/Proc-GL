@@ -55,8 +55,6 @@ void ObjectData::OnImGuiRender(){
 
 		ImGui::InputText(label, char_arr, (int)(sizeof(char_arr) / sizeof(*(char_arr))));
 
-
-
 		ImGui::Separator();
 
 	}

@@ -40,12 +40,13 @@ void LightObject::OnUpdate(double deltaTime)
 
 void LightObject::OnImGuiRender(){
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-	ImGui::Begin("Inspector");
-	{
+
+	ImGui::Begin("Inspector");{
 		ImGui::Separator();
-		ImGui::Text("Light Object");
-		ImGui::ColorPicker3("Light Color", &color.r);
-		//ImGui::CollapsingHeader("HELLO FROM COL");
+
+		if (ImGui::CollapsingHeader("Light Object", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::ColorPicker3("Light Color", &color.r);
+		}
 
 		ImGui::Separator();
 	}
