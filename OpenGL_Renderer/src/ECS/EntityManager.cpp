@@ -2,19 +2,27 @@
 
 
 
-void EntityManager::draw()
+void EntityManager::OnRender()
 {
 	for (auto& entity : entities){
-		entity->draw();
+		entity->OnRender();
 	}
 
 }
 
-void EntityManager::update(){
+void EntityManager::OnUpdate(double deltaTime){
 	for (auto& entity : entities) {
-		entity->update();
+		entity->OnUpdate(deltaTime);
 	}
 }
+
+void EntityManager::OnImGuiRender() {
+	for (auto& entity : entities) {
+		entity->OnImGuiRender();
+	}
+}
+
+
 
 void EntityManager::refresh()
 {

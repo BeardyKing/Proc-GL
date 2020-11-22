@@ -6,12 +6,14 @@
 #include <memory>
 
 #include "Component.h"
+#include "../Components/ObjectData.h"
 #include "../Components/Transform.h"
 
 class Entity
 {
 public:
 	Entity() {
+		this->addComponent<ObjectData>("NAME");
 		this->addComponent<Transform>();
 	};
 
@@ -53,16 +55,26 @@ public:
 		active = false;
 	}
 
-	inline void draw() {
+	inline void OnRender() {
 		for (auto& comp : components) {
-			comp->draw();
+			comp->OnRender();
 		}
 	}
 
-	inline void update() {
+	inline void OnUpdate(double deltaTime) {
 		for (auto& comp : components) {
-			comp->update();
+			comp->OnUpdate(deltaTime);
 		}
+	}
+
+	inline void OnImGuiRender() {
+		for (auto& comp : components){
+			comp->OnImGuiRender();
+		}
+	}
+
+	inline ComponentBitset GetBitSet() {
+		return compBitset;
 	}
 
 private:

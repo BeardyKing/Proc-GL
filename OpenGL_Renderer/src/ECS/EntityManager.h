@@ -6,7 +6,7 @@
 #include <memory>
 #include "../ECS/Entity.h"
 
-extern class Entity;
+
 
 class EntityManager
 {
@@ -15,8 +15,9 @@ public:
 	EntityManager() = default;
 	~EntityManager() = default;
 	
-	void draw();
-	void update();
+	void OnRender();
+	void OnUpdate(double deltaTime);
+	void OnImGuiRender();
 	void refresh();
 	
 	void addEntity(Entity* player);

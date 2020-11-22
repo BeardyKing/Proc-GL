@@ -20,11 +20,15 @@ public:
 		return true;
 	}
 
-	virtual void draw() {
+	virtual void OnRender() {
 
 	}
 
-	virtual void update() {
+	virtual void OnUpdate(double deltaTime) {
+
+	}
+
+	virtual void OnImGuiRender() {
 
 	}
 

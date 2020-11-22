@@ -13,6 +13,12 @@ namespace test {
 		std::cout << entity->getComponent<Transform>().position.x << std::endl;
 		std::cout << entity->hasComponent<Transform>() << std::endl;
 
+		entity = new Entity();
+		manager->addEntity(entity);
+		
+		entity = new Entity();
+		manager->addEntity(entity);
+
 		
 	}
 
@@ -21,15 +27,15 @@ namespace test {
 	}
 
 	void test_ECS::OnUpdate(double deltaTime) {
-			manager->update();
+			manager->OnUpdate(deltaTime);
 	}
 
 	void test_ECS::OnRender() {
-			manager->draw();
+			manager->OnRender();
 	}
 
 	void test_ECS::OnImGuiRender() {
-
+		manager->OnImGuiRender();
 	}
 
 }

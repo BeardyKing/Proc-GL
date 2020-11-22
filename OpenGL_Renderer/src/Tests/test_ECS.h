@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "../Components/Transform.h"
+#include "../Components/ObjectData.h"
 #include "../ECS/Entity.h"
 #include "../ECS/EntityManager.h"
 
