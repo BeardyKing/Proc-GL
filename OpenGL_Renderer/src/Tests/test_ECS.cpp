@@ -5,9 +5,9 @@ namespace test {
 	test_ECS::test_ECS(){
 
 		Entity* entity = new Entity();
-		entity->addComponent<Transform>(glm::vec3(420), glm::vec3(0), glm::vec3(1));
-
+		entity->getComponent<Transform>().position.x = 420;
 		std::cout << entity->getComponent<Transform>().position.x << std::endl;
+		std::cout << entity->hasComponent<Transform>() << std::endl;
 	}
 
 	test_ECS::~test_ECS(){

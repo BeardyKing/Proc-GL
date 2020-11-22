@@ -6,12 +6,16 @@
 #include <memory>
 
 #include "Component.h"
+#include "../Components/Transform.h"
 
 class Entity
 {
 public:
-	Entity() {}
-	virtual ~Entity() {}
+	Entity() {
+		this->addComponent<Transform>();
+	};
+
+	virtual ~Entity() = default;
 
 	template<typename T, typename... TArgs>
 	inline T& addComponent(TArgs&&... args) {
@@ -36,7 +40,33 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
+	template<typename T>
+	inline bool hasComponent() const {
+		return compBitset[getComponentTypeID<T>()];
+	}
+
+	inline bool isActive() const {
+		return active;
+	}
+
+	inline void destroy() {
+		active = false;
+	}
+
+	inline void draw() {
+		for (auto& comp : components) {
+			comp->draw();
+		}
+	}
+
+	inline void update() {
+		for (auto& comp : components) {
+			comp->update();
+		}
+	}
+
 private:
+	bool active = true;
 	ComponentList compList;
 	ComponentBitset compBitset;
 
