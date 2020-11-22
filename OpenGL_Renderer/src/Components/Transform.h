@@ -3,6 +3,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 #include "../ECS/Component.h"
+#include <iostream>
 
 class Transform : public Component
 {
@@ -18,6 +19,15 @@ public:
 		position = _position;
 		rotation = _rotation;
 		scale = _scale;
+	}
+
+	void draw() {
+		std::cout << "ENTITY DRAW : " << &entity << std::endl;
+	}
+
+	void update() {
+		std::cout << "ENTITY UPDATE : " << entity << std::endl;
+		
 	}
 
 	~Transform() = default;

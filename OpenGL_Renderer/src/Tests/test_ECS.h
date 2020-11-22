@@ -3,8 +3,9 @@
 #include "test.h"
 
 #include <iostream>
-#include "../ECS/Entity.h"
 #include "../Components/Transform.h"
+#include "../ECS/Entity.h"
+#include "../ECS/EntityManager.h"
 
 namespace test {
 	class test_ECS : public Test
@@ -17,6 +18,10 @@ namespace test {
 		void OnUpdate(double deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
+	
+	private:
+		EntityManager* manager;
+		Entity* entity;
 	};
 
 }
