@@ -22,14 +22,14 @@
     <Filter Include="Shaders\LightObject_Defaults">
       <UniqueIdentifier>{da23d5b6-ff06-4e4e-9b47-3c7f4b5c8ebf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tests">
-      <UniqueIdentifier>{71c277a9-77e2-4c3e-a8a3-ce5173f300f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ECS">
       <UniqueIdentifier>{422e51bf-1f94-4778-8dfb-b5a99ac26e29}</UniqueIdentifier>
     </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{3db09e74-42e8-475f-8744-4049a3d6bdd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Tests">
+      <UniqueIdentifier>{71c277a9-77e2-4c3e-a8a3-ce5173f300f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,17 +75,14 @@
     <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ECS_Manager.cpp">
-      <Filter>ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tests\test.cpp">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\test_Dock.cpp">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\test_PBR.cpp">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClCompile>
     <ClCompile Include="src\Components\Transform.cpp">
       <Filter>Components</Filter>
@@ -100,7 +97,7 @@
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\test_ECS.cpp">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClCompile>
     <ClCompile Include="src\Components\ObjectData.cpp">
       <Filter>Components</Filter>
@@ -155,17 +152,14 @@
     <ClInclude Include="src\FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECS_Manager.h">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tests\test.h">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\test_Dock.h">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\test_PBR.h">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\Transform.h">
       <Filter>Components</Filter>
@@ -180,7 +174,7 @@
       <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Tests\test_ECS.h">
-      <Filter>Tests</Filter>
+      <Filter>_Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECS.h">
       <Filter>ECS</Filter>

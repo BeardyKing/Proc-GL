@@ -19,12 +19,23 @@ public:
 	void OnUpdate(double deltaTime);
 	void OnImGuiRender();
 	void refresh();
+	void OnExit();
 	
 	void addEntity(Entity* player);
 	void eraseEntity(Entity* player);
 	Entity* cloneEntity(Entity* player);
-private:
+
+	void Editor_SetActiveEntity(uint32_t id);
+	uint32_t Editor_GetActiveEntity();
+
+	void Editor_RenderActiveEditityGui(uint32_t id);
+	void Editor_RenderActiveEditityGui();
+	void Editor_Reset();
+
 	std::vector<std::unique_ptr<Entity>> entities;
+private:
+
+	uint32_t selectedEntityID;
 
 };
 

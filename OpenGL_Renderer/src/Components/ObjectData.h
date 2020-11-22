@@ -20,11 +20,12 @@ public:
 	void OnRender();
 	void OnUpdate(double deltaTime);
 	void OnImGuiRender();
+	void OnExit();
 
 	void SetName(char* _name);
 
 	const char* GetName();
-
+	
 	uint32_t GetID();
 
 private:

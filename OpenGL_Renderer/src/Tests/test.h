@@ -16,6 +16,7 @@ namespace test {
 		virtual void OnUpdate(double deltaTime) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
+		virtual void OnExit() {}
 	};
 
 	class TestMenu : public Test {
@@ -27,7 +28,7 @@ namespace test {
 		template<typename T>
 		void RegisterTest(const std::string& name)
 		{
-			std::cout << "restering test" << name << std::endl;
+			std::cout << "register test" << name << std::endl;
 			m_tests.push_back(std::make_pair(name, []() {return new T(); }));
 		}
 	private:

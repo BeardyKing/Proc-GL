@@ -28,3 +28,27 @@ void LightObject::LoadShader(const char* vertPath, const char* fragPath) {
 
 }
 
+void LightObject::OnRender()
+{
+
+}
+
+void LightObject::OnUpdate(double deltaTime)
+{
+
+}
+
+void LightObject::OnImGuiRender(){
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+	ImGui::Begin("Inspector");
+	{
+		ImGui::Separator();
+		ImGui::Text("Light Object");
+		ImGui::ColorPicker3("Light Color", &color.r);
+		//ImGui::CollapsingHeader("HELLO FROM COL");
+
+		ImGui::Separator();
+	}
+	ImGui::End();
+}
+

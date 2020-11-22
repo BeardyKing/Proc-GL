@@ -151,7 +151,6 @@
     <ClCompile Include="src\Components\ObjectData.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\ECS\ComponentManager.cpp" />
-    <ClCompile Include="src\ECS\ECS_Manager.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\ECS\SystemManager.cpp" />
     <ClCompile Include="src\FrameBuffer.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="src\ECS\Component.h" />
     <ClInclude Include="src\ECS\ComponentManager.h" />
     <ClInclude Include="src\ECS\ECS.h" />
-    <ClInclude Include="src\ECS\ECS_Manager.h" />
     <ClInclude Include="src\ECS\Entity.h" />
     <ClInclude Include="src\ECS\EntityManager.h" />
     <ClInclude Include="src\ECS\SystemManager.h" />

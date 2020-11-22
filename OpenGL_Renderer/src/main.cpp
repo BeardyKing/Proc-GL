@@ -92,6 +92,7 @@ int main(){
 			currentTest->OnImGuiRender();
 
 			if (currentTest != testMenu && ImGui::Button("<-")) {
+				currentTest->OnExit();
 				delete currentTest;
 				currentTest = testMenu;
 			}

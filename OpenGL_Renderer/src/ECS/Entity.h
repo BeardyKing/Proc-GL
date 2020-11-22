@@ -13,10 +13,19 @@ class Entity
 {
 public:
 	Entity() {
-		this->addComponent<ObjectData>("NAME");
+		this->addComponent<ObjectData>();
 		this->addComponent<Transform>();
 	};
 
+	Entity(const char* _name) {
+		this->addComponent<ObjectData>(_name);
+		this->addComponent<Transform>();
+	};
+
+	/*Entity(std::string _name) {
+		this->addComponent<ObjectData>(_name);
+		this->addComponent<Transform>();
+	};*/
 	virtual ~Entity() = default;
 
 	template<typename T, typename... TArgs>
@@ -64,6 +73,12 @@ public:
 	inline void OnUpdate(double deltaTime) {
 		for (auto& comp : components) {
 			comp->OnUpdate(deltaTime);
+		}
+	}
+
+	inline void OnExit() {
+		for (auto& comp : components) {
+			comp->OnExit();
 		}
 	}
 

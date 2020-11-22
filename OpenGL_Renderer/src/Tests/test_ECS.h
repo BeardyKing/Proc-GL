@@ -19,12 +19,14 @@ namespace test {
 		void OnUpdate(double deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
+		void OnExit()override;
+
+		void RenderHierarchy();
 	
 	private:
 		EntityManager* manager;
 		Entity* entity;
 	};
-
 }
 
 #endif // !TEST_ECS_H

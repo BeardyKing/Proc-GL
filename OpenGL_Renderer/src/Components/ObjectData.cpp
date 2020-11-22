@@ -1,26 +1,36 @@
 #include "ObjectData.h"
-static uint32_t idCounter =  0;
+static uint32_t G_idCounter = 0;
+
+uint32_t GetAmountOfEntities() {
+	return G_idCounter;
+}
 
 ObjectData::ObjectData()
-	:name("new Entity"){
-	idCounter++;
-	entity_id = idCounter;
+	:name("New Entity"){
+	entity_id = G_idCounter;
+	G_idCounter++;
 }
 
 ObjectData::ObjectData(char* _name)
 	: name(name) {
-	idCounter++;
+	entity_id = G_idCounter;
+	G_idCounter++;
 }
 
 ObjectData::ObjectData(std::string _name):
 	name(_name){
-	idCounter++;
-	entity_id = idCounter;
+	entity_id = G_idCounter;
+	G_idCounter++;
 
 }
 
 ObjectData::~ObjectData(){
-	idCounter = 0;
+	
+}
+
+void ObjectData::OnExit() {
+	std::cout << "RESET ENTITY COUNT" << std::endl;
+	G_idCounter = 0;
 }
 
 void ObjectData::OnRender(){

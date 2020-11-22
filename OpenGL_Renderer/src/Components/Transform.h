@@ -22,21 +22,17 @@
 			scale = _scale;
 		}
 
-		void OnRender() {
-			std::cout << "ENTITY DRAW : " << &entity << std::endl;
-		}
+		void OnRender() {}
 
-		void OnUpdate(double deltaTime) {
-			position.x += 1 * deltaTime;
-			std::cout << "ENTITY UPDATE : " << entity << "| POS.x :"<< position.x << std::endl;
+		void OnUpdate(double deltaTime) {}
 
-		}
+		bool ShowTransform = true;
 
 		void OnImGuiRender() {
+			
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 			ImGui::Begin("Inspector");
 			{
-
 				ImGui::Separator();
 				ImGui::Text("Transform");
 
@@ -49,9 +45,7 @@
 				ImGui::Text("Scale :    "); ImGui::SameLine();
 				ImGui::DragFloat3("S", &scale.x, -0.1f, 0.1f);
 
-
 				ImGui::Separator();
-
 			}
 			ImGui::End();
 		}

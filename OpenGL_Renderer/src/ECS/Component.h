@@ -16,21 +16,14 @@ public:
 
 	Entity* entity;
 
-	virtual bool init() {
-		return true;
-	}
+	virtual bool init() {return true;}
 
-	virtual void OnRender() {
+	virtual void OnRender() {}
+	virtual void OnUpdate(double deltaTime) {}
+	virtual void OnImGuiRender() {}
+	virtual void OnExit() {}
 
-	}
 
-	virtual void OnUpdate(double deltaTime) {
-
-	}
-
-	virtual void OnImGuiRender() {
-
-	}
 
 private:
 

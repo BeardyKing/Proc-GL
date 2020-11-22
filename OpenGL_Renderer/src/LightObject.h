@@ -5,12 +5,13 @@
 #include "Mesh.h"
 #include "glm/glm.hpp"
 #include "Components/Transform.h"
+#include "ECS/Component.h"
 
 #include <memory>
 
 
 
-class LightObject
+class LightObject : public Component
 {
 public:
 	LightObject();
@@ -19,6 +20,11 @@ public:
 	void LoadMesh	(const char* meshPath);
 	void LoadShader	(const char* vertPath, const char* fragPath);
 
+	void OnRender();
+
+	void OnUpdate(double deltaTime);
+
+	void OnImGuiRender();
 
 
 private:
