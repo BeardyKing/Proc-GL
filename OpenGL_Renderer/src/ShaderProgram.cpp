@@ -7,20 +7,56 @@
 ShaderProgram::ShaderProgram() 
 	: m_Handle(0)
 {
+	loadShaders("objectDefaults/basic.vert", "objectDefaults/basic.frag");
+}
 
+ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName)
+	: m_Handle(0)
+{
+	loadShaders(_vsFileName, _fsFileName);
 }
 
 ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(m_Handle);
 }
 
+void ShaderProgram::OnImGuiRender()
+{
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+
+	ImGui::Begin("Inspector"); {
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Shader Program", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Indent();
+			if (ImGui::CollapsingHeader("Vertex Shader", ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
+			ImGui::InputTextMultiline("EDITOR_VS", &editor_fragmentShader[0], editor_fragmentShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
+			}
+
+			if (ImGui::CollapsingHeader("Fragment Shader",ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
+				ImGui::InputTextMultiline("EDITOR_FS", &editor_vertexShader[0], editor_vertexShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
+			}
+			ImGui::Unindent();
+		}
+		ImGui::Separator();
+	}
+	ImGui::End();
+}
+
 bool ShaderProgram::loadShaders (const char* vsFileName, const char* fsFileName) {
-
-
 	std::string vsString = fileToString(vsFileName);
 	std::string fsString = fileToString(fsFileName);
 	const GLchar* vsSourcePtr = vsString.c_str();
 	const GLchar* fsSourcePtr = fsString.c_str();
+
+	//_EDITOR_
+
+	editor_vertexShader = vsString;
+	editor_fragmentShader = fsString;
+
+	//_EDITOR_
 
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);

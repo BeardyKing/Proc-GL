@@ -20,12 +20,63 @@ std::vector<std::string> split(std::string s, std::string t) {
 Mesh::Mesh() 
 	: mLoaded(false)
 {
+	LoadOBJ("objectDefaults/light.obj");
+}
 
+Mesh::Mesh(const char* fileName):
+mLoaded(false)
+{
+	LoadOBJ(fileName);
 }
 
 Mesh::~Mesh() {
 	glDeleteVertexArrays(1, &mVAO);
 	glDeleteBuffers(1, &mVBO);
+}
+
+void Mesh::OnRender(){
+	Draw();
+}
+
+void Mesh::OnUpdate(){
+
+}
+
+void Mesh::OnImGuiRender(){
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+
+	ImGui::Begin("Inspector"); {
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Indent();
+			ImGui::Text("Vertex Size");
+			std::string str;
+			str = std::to_string(sizeof(Vertex));
+			ImGui::Text(&str[0]);
+			if (ImGui::CollapsingHeader("Layout", ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGui::Text("Position");
+				ImGui::Text("0");
+
+				ImGui::Text("Normal");
+				std::string editor_normal = std::to_string((3 * sizeof(GLfloat)));
+				ImGui::Text(&editor_normal[0]);
+
+				ImGui::Text("Texture coordinates");
+				std::string editor_coordinates = std::to_string((6 * sizeof(GLfloat)));
+				ImGui::Text(&editor_coordinates[0]);
+			}
+			ImGui::Unindent();
+
+		}
+
+		ImGui::Separator();
+	}
+	ImGui::End();
+}
+
+void Mesh::OnExit(){
+
 }
 
 bool Mesh::LoadOBJ(const std::string& fileName) {
@@ -112,7 +163,7 @@ bool Mesh::LoadOBJ(const std::string& fileName) {
 		//close file
 		fin.close();
 
-		std::cout << "Finsihed Reading : " << fileName << std::endl;
+		std::cout << "finished Reading : " << fileName << std::endl;
 
 		for (unsigned int i = 0; i < vertexIndices.size(); i++) {
 			Vertex meshVertex;
@@ -166,7 +217,7 @@ void Mesh::InitBuffers() {
 	//normals attrib
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(3 * sizeof(GLfloat)));//2 = vec2 // 3 * sizeof(GLfloat) is the offset
 	glEnableVertexAttribArray(1);
-	// text Coord 
+	// tex Coord 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(6 * sizeof(GLfloat)));//3 = vec3 //6 * sizeof(GLfloat) is the offset 
 	glEnableVertexAttribArray(2);
 

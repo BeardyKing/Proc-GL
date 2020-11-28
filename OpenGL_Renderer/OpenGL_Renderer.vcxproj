@@ -150,6 +150,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\ObjectData.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\ECS\SystemManager.cpp" />

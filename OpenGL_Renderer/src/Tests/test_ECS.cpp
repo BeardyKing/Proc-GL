@@ -1,5 +1,7 @@
 #include "test_ECS.h"
 #include "../LightObject.h"
+#include "../Mesh.h"
+#include "../ShaderProgram.h"
 
 extern uint32_t GetAmountOfEntities();
 
@@ -19,8 +21,12 @@ namespace test {
 		entity = new Entity("FRIEND");
 		manager->addEntity(entity);
 		
-		entity = new Entity("BASE ENTITY");
+		entity = new Entity("Cube");
 		manager->addEntity(entity);
+		entity->addComponent<ShaderProgram>();
+		entity->addComponent<Mesh>();
+
+		//entity->getComponent<Mesh>().LoadOBJ("objectDefaults/light.obj");
 
 		entity = new Entity("POINT LIGHT");
 		entity->addComponent<LightObject>();
@@ -37,6 +43,8 @@ namespace test {
 	}
 
 	void test_ECS::OnRender() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		manager->OnRender();
 	}
 

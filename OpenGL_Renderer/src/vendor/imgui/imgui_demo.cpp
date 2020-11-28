@@ -2421,7 +2421,7 @@ static void ShowDemoWindowLayout()
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNode("TabItemButton & Leading/Trailing flags"))
+        if (ImGui::TreeNode("TabIteButton & Leading/Trailing flags"))
         {
             static ImVector<int> active_tabs;
             static int next_tab_id = 0;

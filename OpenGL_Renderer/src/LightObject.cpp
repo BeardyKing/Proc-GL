@@ -1,4 +1,6 @@
 #include "LightObject.h"
+#include "ECS/Component.h"
+#include "ECS/Entity.h"
 
 LightObject::LightObject() 
 :
@@ -28,10 +30,7 @@ void LightObject::LoadShader(const char* vertPath, const char* fragPath) {
 
 }
 
-void LightObject::OnRender()
-{
-
-}
+void LightObject::OnRender(){}
 
 void LightObject::OnUpdate(double deltaTime)
 {
