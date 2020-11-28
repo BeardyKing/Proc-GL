@@ -5,7 +5,8 @@
 #include "glm/gtc/type_ptr.hpp"
 
 ShaderProgram::ShaderProgram() 
-	: m_Handle(0)
+	: m_Handle(0),
+	m_BaseColor(glm::vec3(300.0f, 150.0f, 150.0f))
 {
 	loadShaders("objectDefaults/basic.vert", "objectDefaults/basic.frag");
 }
@@ -26,9 +27,11 @@ void ShaderProgram::OnImGuiRender()
 
 	ImGui::Begin("Inspector"); {
 		ImGui::Separator();
-
 		if (ImGui::CollapsingHeader("Shader Program", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
+			if (ImGui::CollapsingHeader("Base Color", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGui::ColorPicker3("Base Color Picker", &m_BaseColor.r);
+			}
 			if (ImGui::CollapsingHeader("Vertex Shader", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
 			ImGui::InputTextMultiline("EDITOR_VS", &editor_fragmentShader[0], editor_fragmentShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
@@ -43,6 +46,14 @@ void ShaderProgram::OnImGuiRender()
 		ImGui::Separator();
 	}
 	ImGui::End();
+}
+
+glm::vec3 ShaderProgram::GetBaseColor(){
+	return m_BaseColor;
+}
+
+void ShaderProgram::SetBaseColor(glm::vec3 color){
+	m_BaseColor = color;
 }
 
 bool ShaderProgram::loadShaders (const char* vsFileName, const char* fsFileName) {

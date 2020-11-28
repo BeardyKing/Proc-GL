@@ -85,7 +85,7 @@ void Mesh::OnRender(){
 	//////----------------------------------//
 
 	shader.use();
-	shader.setUniform("lightCol", glm::vec3(300.0f, 150.0f, 150.0f));
+	shader.setUniform("lightCol", entity->getComponent<ShaderProgram>().GetBaseColor());
 	shader.setUniform("model", model);
 	shader.setUniform("view", view);
 	shader.setUniform("projection", projection);

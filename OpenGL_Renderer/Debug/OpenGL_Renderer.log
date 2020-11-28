@@ -1,20 +1,2 @@
-﻿  Camera.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Camera.cpp(88,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Camera.cpp(88,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Camera.cpp(134,69): warning C4305: 'argument': truncation from 'double' to 'float'
-  Mesh.cpp
-  test_Dock.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(221,90): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(221,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(223,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_Dock.cpp(223,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-  test_ECS.cpp
-  test_PBR.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(103,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(103,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(192,30): warning C4018: '<': signed/unsigned mismatch
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_PBR.cpp(209,30): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\main.cpp(16,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
+﻿  test_ECS.cpp
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

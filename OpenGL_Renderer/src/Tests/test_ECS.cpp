@@ -24,6 +24,7 @@ namespace test {
 
 		entity = new Entity("Main Camera");
 		entity->addComponent<FPSCamera>();
+		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
 		g_ecs_manager->addEntity(entity);
 
 
@@ -34,8 +35,18 @@ namespace test {
 			entity = new Entity(name.c_str());
 			g_ecs_manager->addEntity(entity);
 			entity->addComponent<ShaderProgram>();
-			entity->addComponent<Mesh>();
-			entity->getComponent<Transform>().position = glm::vec3(glm::ballRand((float)i));
+			entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(glm::ballRand((float)i / 2)));
+			if (i % 2){
+				entity->addComponent<Mesh>("objectDefaults/cube.obj");
+			}
+			else if(i % 3){
+				entity->addComponent<Mesh>("mesh/pipe.obj");
+			}
+			else{
+				entity->addComponent<Mesh>();
+			}
+			entity->getComponent<Transform>().position = glm::vec3(glm::ballRand((float)i/2));
+			entity->getComponent<Transform>().rotation = glm::vec3(glm::ballRand((float)i/2));
 		}
 
 		entity = new Entity();

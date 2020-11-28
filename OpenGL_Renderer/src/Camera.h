@@ -32,7 +32,7 @@ protected:
 	Camera();
 
 	virtual void UpdateCameraVectors() {}
-
+	Transform* ptr;
 	glm::vec3 mPosition;
 	glm::vec3 mTarget;
 	glm::vec3 mUp;
@@ -61,6 +61,7 @@ public:
 
 	virtual void OnUpdate(double deltaTime);
 	virtual void OnImGuiRender();
+	virtual bool init();
 
 private:
 	glm::vec2 m_lastMousePos;

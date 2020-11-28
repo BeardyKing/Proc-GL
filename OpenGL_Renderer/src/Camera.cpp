@@ -18,10 +18,11 @@ Camera::Camera()
 	mRoll(0.0f),
 	mFOV(DEFAULT_FOV)
 {
+
 }
 
 glm::mat4 Camera::GetViewMatrix()const {
-	return glm::lookAt(mPosition, mTarget, mUp);
+	return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
 }
 
 const glm::vec3& Camera::GetLook()	const { //forward
@@ -37,7 +38,7 @@ const glm::vec3& Camera::GetUp()	const {
 }
 
 const glm::vec3 Camera::GetPosition()const {
-	return mPosition;
+	return entity->getComponent<Transform>().position;
 }
 
 
@@ -52,16 +53,17 @@ FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) {
 }
 
 void FPSCamera::SetPosition(const glm::vec3& position){
-	mPosition = position;
+	entity->getComponent<Transform>().position = position;
 }
 
 void FPSCamera::Move(const glm::vec3& offsetPos) {
-	mPosition += offsetPos;
+	entity->getComponent<Transform>().position += offsetPos;
 	UpdateCameraVectors();
 }
 
 void FPSCamera::OnUpdate(double deltaTime)
 {
+
 	if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 	if (ImGui::IsKeyReleased('E')) { m_mouseFlag = false; }
 	if (m_mouseEnabled) { return; }
@@ -139,6 +141,12 @@ void FPSCamera::OnImGuiRender()
 	ImGui::End();
 }
 
+bool FPSCamera::init(){
+	//entity->getComponent<Transform>().position = glm::vec3(0.0f,0.0f,-18.0f);
+	std::cout << "init from Cam" << std::endl;
+	return true;
+}
+
 void FPSCamera::Rotate(float yaw, float pitch) {
 	mYaw += glm::radians(yaw);
 	mPitch += glm::radians(pitch);
@@ -163,7 +171,7 @@ void FPSCamera::UpdateCameraVectors() {
 	mRight = glm::normalize(glm::cross(mLook, WORLD_UP));
 	mUp = glm::normalize(glm::cross(mRight, mLook));
 
-	mTarget = mPosition + mLook;
+	mTarget = entity->getComponent<Transform>().position + mLook;
 }
 
 // --------------------------------
@@ -193,7 +201,7 @@ void OrbitCamera::Rotate(float yaw, float pitch) {
 }
 
 void OrbitCamera::UpdateCameraVectors() {
-	mPosition.x = mTarget.x + mRadius * cosf(mPitch) * sinf(mYaw);
-	mPosition.y = mTarget.y + mRadius * sinf(mPitch);
-	mPosition.z = mTarget.z + mRadius * cosf(mPitch) * cosf(mYaw);
+	entity->getComponent<Transform>().position.x = mTarget.x + mRadius * cosf(mPitch) * sinf(mYaw);
+	entity->getComponent<Transform>().position.y = mTarget.y + mRadius * sinf(mPitch);
+	entity->getComponent<Transform>().position.z = mTarget.z + mRadius * cosf(mPitch) * cosf(mYaw);
 }
