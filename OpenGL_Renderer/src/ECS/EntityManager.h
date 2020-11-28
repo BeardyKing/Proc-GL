@@ -25,6 +25,8 @@ public:
 	void eraseEntity(Entity* player);
 	Entity* cloneEntity(Entity* player);
 
+	Entity* FindEntityWithType();
+
 	void Editor_SetActiveEntity(uint32_t id);
 	uint32_t Editor_GetActiveEntity();
 

@@ -34,7 +34,7 @@ void LightObject::OnRender(){}
 
 void LightObject::OnUpdate(double deltaTime)
 {
-
+	
 }
 
 void LightObject::OnImGuiRender(){

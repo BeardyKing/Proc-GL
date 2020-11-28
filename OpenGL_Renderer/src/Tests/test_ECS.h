@@ -7,6 +7,9 @@
 #include "../Components/ObjectData.h"
 #include "../ECS/Entity.h"
 #include "../ECS/EntityManager.h"
+#include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/random.hpp"
 
 namespace test {
 	class test_ECS : public Test
@@ -24,9 +27,10 @@ namespace test {
 		void RenderHierarchy();
 	
 	private:
-		EntityManager* manager;
 		Entity* entity;
 	};
+
 }
+	static EntityManager* g_ecs_manager;
 
 #endif // !TEST_ECS_H

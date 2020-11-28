@@ -60,5 +60,16 @@ void EntityManager::refresh(){}
 void EntityManager::eraseEntity(Entity* player){}
 Entity* EntityManager::cloneEntity(Entity* player){return nullptr;}
 
+Entity* EntityManager::FindEntityWithType() {
+	/*for (size_t i = 0; i < 4; i++){
+		if (entities[i]->hasComponent<T>()){
+			return entities[i];
+		}
+	}*/
+	return NULL;
+}
+
+
+
 #pragma endregion
 

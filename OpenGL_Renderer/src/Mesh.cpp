@@ -2,6 +2,14 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include "ECS/EntityManager.h"
+#include "Camera.h"
+#include "ShaderProgram.h"
+
+int G_GetWindowWidth();
+int G_GetWindowHeight();
+bool G_GetWindowResizeFlag();
+extern EntityManager* GetManager();
 
 std::vector<std::string> split(std::string s, std::string t) {
 	std::vector<std::string> res;
@@ -35,6 +43,53 @@ Mesh::~Mesh() {
 }
 
 void Mesh::OnRender(){
+	Entity* cam = nullptr;
+	EntityManager* mgr = GetManager();
+
+		std::string name;
+		for (auto& e : mgr->entities){
+			if (e->hasComponent<FPSCamera>()){
+				cam = e->getComponent<ObjectData>().entity;
+				break;
+			}
+		}
+
+		
+
+
+	FPSCamera& camera = cam->getComponent<FPSCamera>();
+	Transform& transform = entity->getComponent<Transform>();
+	ShaderProgram& shader = entity->getComponent<ShaderProgram>();
+
+	glm::mat4 model, view, projection;
+	//cam_entity->getComponent<FPSCamera>().GetViewMatrix();
+
+	view = camera.GetViewMatrix();
+
+	projection = glm::perspective(camera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+
+	////----------------------------------//
+	glm::vec3 viewPos = camera.GetPosition();
+	////----------------------------------//
+
+	model = glm::mat4(1.0f);
+	model =
+		glm::translate(model, transform.position) *
+		glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1, 0, 0)) *
+		glm::rotate(model, glm::radians(transform.rotation.y), glm::vec3(0, 1, 0)) *
+		glm::rotate(model, glm::radians(transform.rotation.z), glm::vec3(0, 0, 1)) *
+		glm::scale(model, transform.scale);
+
+	//////----------------------------------//
+	//////				MVP					//
+	//////----------------------------------//
+
+	shader.use();
+	shader.setUniform("lightCol", glm::vec3(300.0f, 150.0f, 150.0f));
+	shader.setUniform("model", model);
+	shader.setUniform("view", view);
+	shader.setUniform("projection", projection);
+
 	Draw();
 }
 

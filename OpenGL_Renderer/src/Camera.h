@@ -1,14 +1,17 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/constants.hpp"
+#include "ECS/Component.h"
+#include "ECS/Entity.h"
 
 //---
 //Abstract Camera Class
 //---
 
-class Camera {
+class Camera : public Component{
 public:
 
 	glm::mat4 GetViewMatrix()const;
@@ -43,17 +46,30 @@ protected:
 	float mRoll; // TODO ADD ROLL TO CAMERA ON Q & E
 
 	float mFOV; //degrees
-
+	
+	float m_MoveSpeed = 5;
+	float m_MoveSpeedDelta = 4;
+	glm::vec2 m_mouseSpeedDelta = glm::vec2(1);
 };
 //--------------------
 class FPSCamera : public Camera {
 public:
-	FPSCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), float yaw = glm::pi<float>(), float pitch = 0.0f); // initial angle faces z 
+	FPSCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -18.0f), float yaw = glm::pi<float>(), float pitch = 0.0f); // initial angle faces z 
 	virtual void SetPosition(const glm::vec3& position);
 	virtual void Rotate		(float yaw, float pitch);		// in degrees
 	virtual void Move		(const glm::vec3& offsetPos);
 
+	virtual void OnUpdate(double deltaTime);
+	virtual void OnImGuiRender();
+
 private:
+	glm::vec2 m_lastMousePos;
+	bool m_mouseEnabled = true;
+	bool m_mouseFlag = false;
+
+	int m_ignoreForXFrames = 1;
+
+	bool w, a, s, d, l_shift;
 
 	void UpdateCameraVectors();
 };

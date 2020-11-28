@@ -223,6 +223,7 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 		}
 		else {
 			glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetCursorPos(gWindow, 0, 0);
 		}
 	}
 }

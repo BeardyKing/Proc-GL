@@ -8,7 +8,7 @@ const float DEFAULT_FOV = 45.0f;
 // --------------------------------
 
 Camera::Camera() 
-	:mPosition(glm::vec3(0.0f, 0.0f, 0.0f)), 
+	:mPosition(glm::vec3(0.0f, 0.0f, -18.0f)), 
 	mTarget(glm::vec3(0.0f, 0.0f, 0.0f)), 
 	mUp(glm::vec3(0.0f, 0.1f, 0.0f)),
 	mRight(0.0f, 0.0f, 0.0f),
@@ -58,6 +58,85 @@ void FPSCamera::SetPosition(const glm::vec3& position){
 void FPSCamera::Move(const glm::vec3& offsetPos) {
 	mPosition += offsetPos;
 	UpdateCameraVectors();
+}
+
+void FPSCamera::OnUpdate(double deltaTime)
+{
+	if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
+	if (ImGui::IsKeyReleased('E')) { m_mouseFlag = false; }
+	if (m_mouseEnabled) { return; }
+
+	if (m_ignoreForXFrames > 0) {
+		m_ignoreForXFrames--;
+		if (m_ignoreForXFrames == 0) {
+			m_lastMousePos.x = ImGui::GetMousePos().x;
+			m_lastMousePos.y = ImGui::GetMousePos().y;
+		}
+		return;
+	}
+
+	//----------------------------------//
+	//			MOUSE					//
+	//----------------------------------//
+
+	glm::vec2 currentMousePos;
+
+	currentMousePos.x = ImGui::GetMousePos().x;
+	currentMousePos.y = ImGui::GetMousePos().y;
+
+	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
+	Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
+
+	//----------------------------------//
+	//			KEYBOARD				//
+	//----------------------------------//
+
+	if (ImGui::IsKeyDown('W')) { w = true; }
+	if (ImGui::IsKeyDown('A')) { a = true; }
+	if (ImGui::IsKeyDown('S')) { s = true; }
+	if (ImGui::IsKeyDown('D')) { d = true; }
+	if (ImGui::IsKeyDown('L')) { d = true; }
+	if (ImGui::IsKeyDown(GLFW_KEY_LEFT_SHIFT)) { l_shift = true; }
+
+	if (ImGui::IsKeyReleased('W')) { w = false; }
+	if (ImGui::IsKeyReleased('A')) { a = false; }
+	if (ImGui::IsKeyReleased('S')) { s = false; }
+	if (ImGui::IsKeyReleased('D')) { d = false; }
+	if (ImGui::IsKeyReleased(GLFW_KEY_LEFT_SHIFT)) { l_shift = false; }
+
+	float moveSpeed = m_MoveSpeed;
+	float moveSpeedDelta = 1;
+	if (l_shift) {
+		moveSpeedDelta = m_MoveSpeedDelta;
+	}
+
+	if (w) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetLook()); }
+	else if (s) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetLook()); }
+
+	if (a) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
+	else if (d) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
+
+	m_lastMousePos = currentMousePos;
+}
+
+void FPSCamera::OnImGuiRender()
+{
+	ImGui::Begin("Inspector"); 
+	{
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Camera - FPS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Indent();
+			ImGui::DragFloat("FOV", &mFOV,0.01f);
+			ImGui::DragFloat("Move Speed", &m_MoveSpeed,0.01f);
+			ImGui::DragFloat("Move Speed Delta", &m_MoveSpeedDelta,0.01f);
+
+			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05, 0.05);
+			ImGui::Unindent();
+		}
+		ImGui::Separator();
+	}
+	ImGui::End();
 }
 
 void FPSCamera::Rotate(float yaw, float pitch) {
