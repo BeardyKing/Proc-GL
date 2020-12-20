@@ -46,7 +46,9 @@ const glm::vec3 Camera::GetPosition()const {
 // FPS CAMERA
 // --------------------------------
 
-FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) {
+FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) :
+ImGuiWindowSize(10,10)
+{
 	mPosition = position;
 	mYaw = yaw;
 	mPitch = pitch;
@@ -129,6 +131,7 @@ void FPSCamera::OnImGuiRender()
 
 		if (ImGui::CollapsingHeader("Camera - FPS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
+			ImGui::Checkbox("usingImGuiWindow",&usingImGuiWindow);
 			ImGui::DragFloat("FOV", &mFOV,0.01f);
 			ImGui::DragFloat("Move Speed", &m_MoveSpeed,0.01f);
 			ImGui::DragFloat("Move Speed Delta", &m_MoveSpeedDelta,0.01f);

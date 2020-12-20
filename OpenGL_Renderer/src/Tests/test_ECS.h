@@ -10,6 +10,13 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "glm/gtc/random.hpp"
+#include "test_ECS.h"
+#include "../LightObject.h"
+#include "../Mesh.h"
+#include "../ShaderProgram.h"
+#include "../Camera.h"
+#include "../Components/ObjectData.h"
+
 
 namespace test {
 	class test_ECS : public Test
@@ -31,6 +38,6 @@ namespace test {
 	};
 
 }
-	static EntityManager* g_ecs_manager;
+	//static EntityManager* g_ecs_manager;
 
 #endif // !TEST_ECS_H

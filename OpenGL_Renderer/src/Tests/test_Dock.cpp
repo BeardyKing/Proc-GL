@@ -10,16 +10,56 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
+extern uint32_t GetAmountOfEntities();
 
+extern void SetManager(EntityManager* mgr);
+EntityManager* GetManager();
 
 namespace test {
 	test_Dock::test_Dock():
         lastFrameWindowSize(ImVec2(0, 0)),
-        windowSizeChangeFlag(false),
-        m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f))
-    {
-        m_Texture2D.loadTexture("meat.png", false);
+        windowSizeChangeFlag(false)    {
+
+        
+        EntityManager* manager = new EntityManager;
+        SetManager(manager);
+
+
         lastFrameWindowSize = ImVec2(0,0);
+        entity = new Entity("Main Camera");
+		entity->addComponent<FPSCamera>();
+        auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
+		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
+		GetManager()->addEntity(entity);
+
+        for (size_t i = 0; i < 100; i++)
+        {
+            std::string name = "basic sphere ";
+            name.append(std::to_string(i));
+            entity = new Entity(name.c_str());
+            GetManager()->addEntity(entity);
+            entity->addComponent<ShaderProgram>();
+            entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(glm::ballRand((float)i / 2)));
+            if (i % 2) {
+                entity->addComponent<Mesh>();
+            }
+            else if (i % 3) {
+                entity->addComponent<Mesh>();
+            }
+            else {
+                entity->addComponent<Mesh>();
+            }
+            entity->getComponent<Transform>().position = glm::vec3(glm::ballRand((float)i / 2));
+            entity->getComponent<Transform>().rotation = glm::vec3(glm::ballRand((float)i / 2));
+        }
+
+        entity = new Entity();
+        GetManager()->addEntity(entity);
+
+
+        entity = new Entity("POINT LIGHT");
+        entity->addComponent<LightObject>();
+        GetManager()->addEntity(entity);
 
         fbo.GenerateFrameBuffer(lastFrameWindowSize.x, lastFrameWindowSize.y);
     }
@@ -29,7 +69,9 @@ namespace test {
         glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());
     }
 
-	void test_Dock::OnUpdate(double deltaTime) {}
+	void test_Dock::OnUpdate(double deltaTime) {
+        GetManager()->OnUpdate(deltaTime);
+    }
 
 	void test_Dock::OnRender() {
         if (windowSizeChangeFlag){
@@ -44,44 +86,19 @@ namespace test {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        //----------------------------------//
-        //				MVP					//
-        //----------------------------------//
-        glm::mat4 model, view, projection;
-        view = m_fpsCamera.GetViewMatrix();
-        projection = glm::perspective(m_fpsCamera.getFOV(), (float)lastFrameWindowSize.x / (float)lastFrameWindowSize.y, 0.1f, 100.0f);
-
-        //----------------------------------//
-        glm::vec3 viewPos = m_fpsCamera.GetPosition();
-        //----------------------------------//
-
-        model = glm::mat4(1.0f);
-        model =
-            glm::translate(model, m_LightObject.transform.position) *
-            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.x), glm::vec3(1, 0, 0)) *
-            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.y), glm::vec3(0, 1, 0)) *
-            glm::rotate(model, glm::radians(m_LightObject.transform.rotation.z), glm::vec3(0, 0, 1)) *
-            glm::scale(model, m_LightObject.transform.scale);
-
-        //----------------------------------//
-        //				MVP					//
-        //----------------------------------//
-
-        m_LightObject.m_Shader->use();
-        m_LightObject.m_Shader->setUniform("lightCol", m_LightObject.color);
-        m_LightObject.m_Shader->setUniform("model", model);
-        m_LightObject.m_Shader->setUniform("view", view);
-        m_LightObject.m_Shader->setUniform("projection", projection);
-
-        m_LightObject.m_Mesh->Draw();
+        GetManager()->OnRender();
 
         fbo.UnBind();
 
     }
 
+    void test_Dock::OnExit() {
+        GetManager()->OnExit();
+    }
+
     void test_Dock::OnImGuiRender() {
         {
-            bool show_demo_window = true;
+            bool show_demo_window = false;
             bool show_another_window = false;
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -104,7 +121,9 @@ namespace test {
             if (windowSize.x != lastFrameWindowSize.x || windowSize.y != lastFrameWindowSize.y){
                 lastFrameWindowSize = windowSize;
                 windowSizeChangeFlag = true;
+
             }
+
 
             {
                 ImTextureID tex = (void*)fbo.renderedTexture; // Texture from framebuffer
@@ -119,53 +138,11 @@ namespace test {
             }
             
             {
-                ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-                ImGui::Begin("Inspector");
-                {
-
-
-                    char label[128] = "GameObject Label";
-                    char buf[128] = "";
-                    //sprintf_s(buf, "GameObject %d", selectedGameObjectID);
-
-                    ImGui::InputText(label, buf, (int)(sizeof(buf) / sizeof(*(buf))));
-
-
-                    ImGui::Separator();
-                    ImGui::Text("Transform");
-
-                    ImGui::Text("Position : "); ImGui::SameLine();
-                    ImGui::DragFloat3("P", &m_LightObject.transform.position.x, -0.1f, 0.1f);
-
-                    ImGui::Text("Rotation : "); ImGui::SameLine();
-                    ImGui::DragFloat3("R", &m_LightObject.transform.rotation.x, -1.0f, 1.0f);
-
-                    ImGui::Text("Scale :    "); ImGui::SameLine();
-                    ImGui::DragFloat3("S", &m_LightObject.transform.scale.x, -0.1f, 0.1f);
-
-
-                    ImGui::Separator();
-
-                }
-                ImGui::End();
+                GetManager()->Editor_RenderActiveEditityGui();
             }
 
             {
-                ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-                ImGui::Begin("Hierarchy");
-                {
-                    for (int i = 0; i < 1; i++)
-                    {
-                        char label[128];
-                        sprintf_s(label, "GameObject %d", i);
-                        if (ImGui::Selectable(label, selectedGameObjectID == i)) {
-                            selectedGameObjectID = i;
-                            selectedGameObjectName = (std::string)label;
-                        }
-                    }
-                }
-                ImGui::SameLine();
-                ImGui::End();
+                RenderHierarchy();
             }
 
             {
@@ -216,11 +193,37 @@ namespace test {
         }
     }
 
+    void test_Dock::RenderHierarchy() {
+        {
+            ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+            ImGui::Begin("ECS_Hierarchy");
+            {
+                for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
+                    auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+                    if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
+                        GetManager()->Editor_SetActiveEntity(i);
+                    }
+                }
+            }
+
+            ImGui::SameLine();
+            ImGui::End();
+        }
+    }
+
     void test_Dock::UpdateFrameBufferTextureSize() {
         glBindTexture(GL_TEXTURE_2D, fbo.renderedTexture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
         windowSizeChangeFlag = false;
         glViewport(0, 0, lastFrameWindowSize.x, lastFrameWindowSize.y);
+        
+        //GetComponent FPSCamera
+        for (auto& entity : GetManager()->entities) {
+            if (entity->hasComponent<FPSCamera>()) {
+                auto& cam = entity->getComponent<FPSCamera>();
+                cam.ImGuiWindowSize = lastFrameWindowSize;
+            }
+        }
     }
 }
 

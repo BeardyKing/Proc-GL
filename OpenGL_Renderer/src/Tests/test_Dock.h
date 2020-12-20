@@ -14,6 +14,21 @@
 #include "../Camera.h"
 #include "../FrameBuffer.h"
 
+#include <iostream>
+#include "../Components/Transform.h"
+#include "../Components/ObjectData.h"
+#include "../ECS/Entity.h"
+#include "../ECS/EntityManager.h"
+#include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/random.hpp"
+#include "test_ECS.h"
+#include "../LightObject.h"
+#include "../Mesh.h"
+#include "../ShaderProgram.h"
+#include "../Camera.h"
+#include "../Components/ObjectData.h"
+
 int G_GetWindowWidth();
 int G_GetWindowHeight(); 
 bool G_GetWindowResizeFlag();
@@ -29,8 +44,10 @@ namespace test {
 		void OnUpdate(double deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
+		void OnExit()override;
 
 		void UpdateFrameBufferTextureSize();
+		void RenderHierarchy();
 
 	private:
 		
@@ -39,12 +56,13 @@ namespace test {
 		ImVec2 lastFrameWindowSize;
 		bool windowSizeChangeFlag;
 
-		LightObject m_LightObject;
-		FPSCamera m_fpsCamera;
 		Texture2D m_Texture2D;
 		Texture2D m_frameBufferTexture;
 
 		uint32_t counter;
+
+		Entity* entity;
+
 	};
 }
 

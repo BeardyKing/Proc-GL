@@ -2,7 +2,7 @@
 
 
 void EntityManager::addEntity(Entity* entity){
-	std::unique_ptr<Entity> unique_ptr{ entity }; // player not entity
+	std::unique_ptr<Entity> unique_ptr{ entity }; 
 	entities.emplace_back(std::move(unique_ptr));
 }
 
@@ -33,6 +33,7 @@ void EntityManager::OnImGuiRender() {
 void EntityManager::OnExit() {
 	for (auto& entity : entities) {
 		entity->OnExit();
+		entity.release();
 	}
 }
 
@@ -57,15 +58,15 @@ void EntityManager::Editor_RenderActiveEditityGui() {
 #pragma region TO_IMPLEMENT
 
 void EntityManager::refresh(){}
-void EntityManager::eraseEntity(Entity* player){}
-Entity* EntityManager::cloneEntity(Entity* player){return nullptr;}
+void EntityManager::eraseEntity(Entity* entity){}
+Entity* EntityManager::cloneEntity(Entity* entity){return nullptr;}
 
 Entity* EntityManager::FindEntityWithType() {
-	/*for (size_t i = 0; i < 4; i++){
+	/*for (auto& entity : entities){
 		if (entities[i]->hasComponent<T>()){
 			return entities[i];
 		}
-	}*/
+	}*/	
 	return NULL;
 }
 

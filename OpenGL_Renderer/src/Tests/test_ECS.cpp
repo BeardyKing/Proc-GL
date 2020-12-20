@@ -1,18 +1,9 @@
 #include <iostream>
 #include "test_ECS.h"
-#include "../LightObject.h"
-#include "../Mesh.h"
-#include "../ShaderProgram.h"
-#include "../Camera.h"
-#include "../Components/ObjectData.h"
-
-
-
 extern uint32_t GetAmountOfEntities();
 
-	EntityManager* GetManager() {
-		return g_ecs_manager;
-	}
+extern void SetManager(EntityManager* mgr);
+EntityManager* GetManager();
 
 namespace test {
 
@@ -20,12 +11,14 @@ namespace test {
 
 	test_ECS::test_ECS(){
 
-		g_ecs_manager = new EntityManager();
+		EntityManager* manager = new EntityManager;
+		SetManager(manager);
 
 		entity = new Entity("Main Camera");
 		entity->addComponent<FPSCamera>();
+		auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
 		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
-		g_ecs_manager->addEntity(entity);
+		GetManager()->addEntity(entity);
 
 
 		for (size_t i = 0; i < 100; i++)
@@ -33,7 +26,7 @@ namespace test {
 			std::string name = "basic sphere ";
 			name.append(std::to_string(i));
 			entity = new Entity(name.c_str());
-			g_ecs_manager->addEntity(entity);
+			GetManager()->addEntity(entity);
 			entity->addComponent<ShaderProgram>();
 			entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(glm::ballRand((float)i / 2)));
 			if (i % 2){
@@ -50,12 +43,12 @@ namespace test {
 		}
 
 		entity = new Entity();
-		g_ecs_manager->addEntity(entity);
+		GetManager()->addEntity(entity);
 
 
 		entity = new Entity("POINT LIGHT");
 		entity->addComponent<LightObject>();
-		g_ecs_manager->addEntity(entity);
+		GetManager()->addEntity(entity);
 
 	}
 
@@ -64,23 +57,23 @@ namespace test {
 	}
 
 	void test_ECS::OnUpdate(double deltaTime) {
-		g_ecs_manager->OnUpdate(deltaTime);
+		GetManager()->OnUpdate(deltaTime);
 	}
 
 	void test_ECS::OnRender() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		g_ecs_manager->OnRender();
+		GetManager()->OnRender();
 	}
 
 	void test_ECS::OnImGuiRender() {
 		
 		RenderHierarchy();
-		g_ecs_manager->Editor_RenderActiveEditityGui();
+		GetManager()->Editor_RenderActiveEditityGui();
 	}
 
 	void test_ECS::OnExit(){
-		g_ecs_manager->OnExit();
+		GetManager()->OnExit();
 	}
 
 	void test_ECS::RenderHierarchy() {
@@ -90,9 +83,9 @@ namespace test {
 			ImGui::Begin("ECS_Hierarchy");
 			{
 				for (uint32_t i = 0; i < GetAmountOfEntities(); i++){
-					auto label = g_ecs_manager->entities[i]->getComponent<ObjectData>().GetName();
-					if (ImGui::Selectable(label, g_ecs_manager->Editor_GetActiveEntity() == i)) {
-						g_ecs_manager->Editor_SetActiveEntity(i);
+					auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+					if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
+						GetManager()->Editor_SetActiveEntity(i);
 					}
 				}
 			}

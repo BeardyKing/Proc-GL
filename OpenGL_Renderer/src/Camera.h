@@ -50,6 +50,7 @@ protected:
 	float m_MoveSpeed = 5;
 	float m_MoveSpeedDelta = 4;
 	glm::vec2 m_mouseSpeedDelta = glm::vec2(1);
+
 };
 //--------------------
 class FPSCamera : public Camera {
@@ -63,6 +64,9 @@ public:
 	virtual void OnImGuiRender();
 	virtual bool init();
 
+	bool usingImGuiWindow = true;
+	ImVec2 ImGuiWindowSize;
+
 private:
 	glm::vec2 m_lastMousePos;
 	bool m_mouseEnabled = true;
@@ -71,6 +75,8 @@ private:
 	int m_ignoreForXFrames = 1;
 
 	bool w, a, s, d, l_shift;
+
+
 
 	void UpdateCameraVectors();
 };

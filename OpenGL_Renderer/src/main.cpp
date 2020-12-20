@@ -17,10 +17,14 @@
 #include "Tests/test_Dock.h"
 #include "Tests/test_ECS.h"
 
+#include "ECS/ECS_Manager.h"
+
 const char* APP_TITLE = "OpenGL - Tests";
 static int gWindowWidth = 1024;
 static int gWindowHeight = 768;
 static bool gWindowResizedFlag = false;
+
+static EntityManager* ecs_manager;
 
 bool G_GetWindowResizeFlag() {
 	return gWindowResizedFlag;
@@ -30,6 +34,14 @@ int G_GetWindowWidth() {
 }
 int G_GetWindowHeight() {
 	return gWindowHeight;
+}
+
+EntityManager* GetManager() {
+	return ecs_manager;
+}
+
+void SetManager(EntityManager* mgr) {
+	ecs_manager = mgr;
 }
 
 GLFWwindow* gWindow = NULL;

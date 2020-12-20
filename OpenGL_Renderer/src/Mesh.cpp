@@ -65,8 +65,12 @@ void Mesh::OnRender(){
 	//cam_entity->getComponent<FPSCamera>().GetViewMatrix();
 
 	view = camera.GetViewMatrix();
-
-	projection = glm::perspective(camera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+	if (camera.usingImGuiWindow == false) { // WINDOW
+		projection = glm::perspective(camera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+	}
+	else { // EDITOR
+		projection = glm::perspective(camera.getFOV(), (float)camera.ImGuiWindowSize.x / (float)camera.ImGuiWindowSize.y, 0.1f, 100.0f);
+	}
 
 	////----------------------------------//
 	glm::vec3 viewPos = camera.GetPosition();
