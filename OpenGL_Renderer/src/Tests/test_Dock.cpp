@@ -20,17 +20,15 @@ namespace test {
         lastFrameWindowSize(ImVec2(0, 0)),
         windowSizeChangeFlag(false)    {
 
-        
         EntityManager* manager = new EntityManager;
         SetManager(manager);
 
-
-        lastFrameWindowSize = ImVec2(0,0);
         entity = new Entity("Main Camera");
-		entity->addComponent<FPSCamera>();
-        auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
-		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
-		GetManager()->addEntity(entity);
+        entity->addComponent<FPSCamera>();
+        auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
+        entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
+        GetManager()->addEntity(entity);
+
 
         for (size_t i = 0; i < 100; i++)
         {
@@ -41,10 +39,10 @@ namespace test {
             entity->addComponent<ShaderProgram>();
             entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(glm::ballRand((float)i / 2)));
             if (i % 2) {
-                entity->addComponent<Mesh>();
+                entity->addComponent<Mesh>("objectDefaults/cube.obj");
             }
             else if (i % 3) {
-                entity->addComponent<Mesh>();
+                entity->addComponent<Mesh>("mesh/pipe.obj");
             }
             else {
                 entity->addComponent<Mesh>();
@@ -126,11 +124,13 @@ namespace test {
 
 
             {
+                
                 ImTextureID tex = (void*)fbo.renderedTexture; // Texture from framebuffer
+                
 
                 ImVec2 pos = ImGui::GetCursorScreenPos();
                 ImVec2 uv_min = ImVec2(0.0f, 0.0f);                
-                ImVec2 uv_max = ImVec2(1.0f, 1.0f);                
+                ImVec2 uv_max = ImVec2(1.0f, -1.0f);                
                 ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);  
                 ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);
                 ImGui::Image(tex, windowSize, uv_min, uv_max, tint_col, border_col);
