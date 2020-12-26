@@ -1,15 +1,13 @@
 #include <iostream>
 #include "test_ECS.h"
-extern uint32_t GetAmountOfEntities();
 
-extern void SetManager(EntityManager* mgr);
-EntityManager* GetManager();
 
 namespace test {
 
 
 
 	test_ECS::test_ECS(){
+		editor = new EditorGUI;
 
 		EntityManager* manager = new EntityManager;
 		SetManager(manager);
@@ -67,32 +65,11 @@ namespace test {
 	}
 
 	void test_ECS::OnImGuiRender() {
-		
-		RenderHierarchy();
-		GetManager()->Editor_RenderActiveEditityGui();
+		editor->RenderHierarchy();
+		GetManager()->Editor_RenderActiveInspector();
 	}
 
 	void test_ECS::OnExit(){
 		GetManager()->OnExit();
 	}
-
-	void test_ECS::RenderHierarchy() {
-		{
-			//std::cout << GetAmountOfEntities() << std::endl;
-			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-			ImGui::Begin("ECS_Hierarchy");
-			{
-				for (uint32_t i = 0; i < GetAmountOfEntities(); i++){
-					auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
-					if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
-						GetManager()->Editor_SetActiveEntity(i);
-					}
-				}
-			}
-
-			ImGui::SameLine();
-			ImGui::End();
-		}
-	}
-
 }

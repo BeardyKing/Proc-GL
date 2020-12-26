@@ -154,6 +154,7 @@
     <ClCompile Include="src\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\ECS\SystemManager.cpp" />
+    <ClCompile Include="src\Engine\EditorGUI.cpp" />
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\imGuiStyleSheet.cpp" />
     <ClCompile Include="src\LightObject.cpp" />
@@ -183,6 +184,8 @@
     <ClInclude Include="src\ECS\Entity.h" />
     <ClInclude Include="src\ECS\EntityManager.h" />
     <ClInclude Include="src\ECS\SystemManager.h" />
+    <ClInclude Include="src\Engine\ECS_List.h" />
+    <ClInclude Include="src\Engine\EditorGUI.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\imGuiStyleSheet.h" />
     <ClInclude Include="src\LightObject.h" />

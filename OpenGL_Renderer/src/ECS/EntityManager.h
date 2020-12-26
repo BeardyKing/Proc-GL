@@ -30,8 +30,8 @@ public:
 	void Editor_SetActiveEntity(uint32_t id);
 	uint32_t Editor_GetActiveEntity();
 
-	void Editor_RenderActiveEditityGui(uint32_t id);
-	void Editor_RenderActiveEditityGui();
+	void Editor_RenderActiveInspector(uint32_t id);
+	void Editor_RenderActiveInspector();
 	void Editor_Reset();
 
 	std::vector<std::unique_ptr<Entity>> entities;

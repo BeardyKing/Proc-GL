@@ -31,6 +31,9 @@
     <Filter Include="_Tests">
       <UniqueIdentifier>{71c277a9-77e2-4c3e-a8a3-ce5173f300f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENGINE">
+      <UniqueIdentifier>{5e59690f-ff76-4d24-bbb2-52f787520475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="src\ECS\Component.cpp">
       <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\EditorGUI.cpp">
+      <Filter>ENGINE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="src\Components\ObjectData.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EditorGUI.h">
+      <Filter>ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\ECS_List.h">
+      <Filter>ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

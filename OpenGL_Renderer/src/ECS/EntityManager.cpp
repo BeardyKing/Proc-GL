@@ -45,11 +45,11 @@ uint32_t EntityManager::Editor_GetActiveEntity(){
 	return selectedEntityID;
 }
 
-void EntityManager::Editor_RenderActiveEditityGui(uint32_t id){
+void EntityManager::Editor_RenderActiveInspector(uint32_t id){
 	entities[id]->OnImGuiRender();
 }
 
-void EntityManager::Editor_RenderActiveEditityGui() {
+void EntityManager::Editor_RenderActiveInspector() {
 	entities[selectedEntityID]->OnImGuiRender();
 }
 

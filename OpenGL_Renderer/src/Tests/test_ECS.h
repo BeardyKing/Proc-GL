@@ -3,19 +3,13 @@
 #include "test.h"
 
 #include <iostream>
-#include "../Components/Transform.h"
-#include "../Components/ObjectData.h"
-#include "../ECS/Entity.h"
-#include "../ECS/EntityManager.h"
+#include "../Engine/ECS_List.h"
+#include "../Engine/EditorGUI.h"
+
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "glm/gtc/random.hpp"
-#include "test_ECS.h"
-#include "../LightObject.h"
-#include "../Mesh.h"
-#include "../ShaderProgram.h"
-#include "../Camera.h"
-#include "../Components/ObjectData.h"
+
 
 
 namespace test {
@@ -30,14 +24,11 @@ namespace test {
 		void OnRender() override;
 		void OnImGuiRender() override;
 		void OnExit()override;
-
-		void RenderHierarchy();
 	
 	private:
 		Entity* entity;
+		EditorGUI* editor;
 	};
 
 }
-	//static EntityManager* g_ecs_manager;
-
 #endif // !TEST_ECS_H
