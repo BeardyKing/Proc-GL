@@ -10,6 +10,19 @@
 #include "../Mesh.h"
 #include "../Camera.h"
 #include "../Components/Transform.h"
+#include "../Components/ObjectData.h"
+#include "../ECS/Entity.h"
+#include "../ECS/EntityManager.h"
+
+#include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/random.hpp"
+
+#include "../LightObject.h"
+#include "../Mesh.h"
+#include "../ShaderProgram.h"
+#include "../Camera.h"
+#include "../Components/ObjectData.h"
 
 int G_GetWindowWidth();
 int G_GetWindowHeight();
@@ -24,6 +37,9 @@ namespace test {
 		void OnUpdate(double deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
+		void OnExit()override;
+
+		void RenderHierarchy();
 
 	private:
 
@@ -34,7 +50,7 @@ namespace test {
 		
 		int m_amountOfLights = 6;
 
-		FPSCamera m_fpsCamera;
+		//FPSCamera m_fpsCamera;
 
 		Transform m_pbrTransform;
 		/*glm::vec3 m_pbrSpherePosition;
@@ -50,6 +66,9 @@ namespace test {
 		int m_ignoreForXFrames = 1;
 
 		bool w, a, s, d, l_shift;
+		
+		Entity* entity;
+		FPSCamera* camRef;	
 	};
 }
 

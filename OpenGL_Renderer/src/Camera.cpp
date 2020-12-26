@@ -8,7 +8,7 @@ const float DEFAULT_FOV = 45.0f;
 // --------------------------------
 
 Camera::Camera() 
-	:mPosition(glm::vec3(0.0f, 0.0f, -18.0f)), 
+	: 
 	mTarget(glm::vec3(0.0f, 0.0f, 0.0f)), 
 	mUp(glm::vec3(0.0f, 0.1f, 0.0f)),
 	mRight(0.0f, 0.0f, 0.0f),
@@ -49,7 +49,7 @@ const glm::vec3 Camera::GetPosition()const {
 FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) :
 ImGuiWindowSize(10,10)
 {
-	mPosition = position;
+	//mPosition = position;
 	mYaw = yaw;
 	mPitch = pitch;
 }
@@ -65,7 +65,6 @@ void FPSCamera::Move(const glm::vec3& offsetPos) {
 
 void FPSCamera::OnUpdate(double deltaTime)
 {
-
 	if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 	if (ImGui::IsKeyReleased('E')) { m_mouseFlag = false; }
 	if (m_mouseEnabled) { return; }
@@ -82,14 +81,17 @@ void FPSCamera::OnUpdate(double deltaTime)
 	//----------------------------------//
 	//			MOUSE					//
 	//----------------------------------//
-
 	glm::vec2 currentMousePos;
+
 
 	currentMousePos.x = ImGui::GetMousePos().x;
 	currentMousePos.y = ImGui::GetMousePos().y;
 
 	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
-	Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
+	if (mouseDelta.x != 0 || mouseDelta.y != 0){
+		std::cout << mouseDelta.x << "  " << mouseDelta.y << std::endl;
+		Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
+	}
 
 	//----------------------------------//
 	//			KEYBOARD				//
@@ -138,6 +140,11 @@ void FPSCamera::OnImGuiRender()
 
 			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05, 0.05);
 			ImGui::Unindent();
+			glm::vec3 rot;
+			rot.x = mPitch;
+			rot.y = mYaw;
+			ImGui::DragFloat3("Rotation", &rot.x, -0.05,0.05);
+
 		}
 		ImGui::Separator();
 	}

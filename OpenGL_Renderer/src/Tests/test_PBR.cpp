@@ -7,21 +7,33 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
 
 #include "../vendor/imgui/imgui.h"
 #include "../vendor/imgui/imgui_impl_glfw.h"
 #include "../vendor/imgui/imgui_impl_opengl3.h"
 
+extern uint32_t GetAmountOfEntities();
 
+extern void SetManager(EntityManager* mgr);
+EntityManager* GetManager();
 
 
 namespace test {
 	test_PBR::test_PBR() :
-		m_fpsCamera(glm::vec3(0.0f, 0.0f, 18.0f)),
 		m_amountOfLights(6)
 	{
+
+		EntityManager* manager = new EntityManager;
+		SetManager(manager);
+
+		entity = new Entity("Main Camera");
+		entity->addComponent<FPSCamera>();
+		auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
+		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
+		GetManager()->addEntity(entity);
+
+		camRef = &entity->getComponent<FPSCamera>();
+
 		m_pbrTransform.scale = glm::vec3(3);
 
 		m_PBR_sphereMesh = std::make_unique<Mesh>();
@@ -77,61 +89,8 @@ namespace test {
 		m_pointLights[0].transform.position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
 		m_pointLights[0].transform.position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 
-		if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
-		if (ImGui::IsKeyReleased('E')) {m_mouseFlag = false; }
-		if (m_mouseEnabled) {return;}
-
-		if (m_ignoreForXFrames > 0){
-			m_ignoreForXFrames--;
-			if (m_ignoreForXFrames == 0){
-				m_lastMousePos.x = ImGui::GetMousePos().x;
-				m_lastMousePos.y = ImGui::GetMousePos().y;
-			}
-			return;
-		}
-		
-		//----------------------------------//
-		//			MOUSE					//
-		//----------------------------------//
-
-		glm::vec2 currentMousePos;
-
-		currentMousePos.x = ImGui::GetMousePos().x;
-		currentMousePos.y = ImGui::GetMousePos().y;
-
-		glm::vec2 mouseDelta = m_lastMousePos - currentMousePos;
-		m_fpsCamera.Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
-		
-		//----------------------------------//
-		//			KEYBOARD				//
-		//----------------------------------//
-
-		if (ImGui::IsKeyDown('W')){w = true;}
-		if (ImGui::IsKeyDown('A')){a = true;}
-		if (ImGui::IsKeyDown('S')){s = true;}
-		if (ImGui::IsKeyDown('D')){d = true;}
-		if (ImGui::IsKeyDown('L')){d = true;}
-		if (ImGui::IsKeyDown(GLFW_KEY_LEFT_SHIFT)){l_shift = true;}
-
-		if (ImGui::IsKeyReleased('W')) { w = false; }
-		if (ImGui::IsKeyReleased('A')) { a = false; }
-		if (ImGui::IsKeyReleased('S')) { s = false; }
-		if (ImGui::IsKeyReleased('D')) { d = false; }
-		if (ImGui::IsKeyReleased(GLFW_KEY_LEFT_SHIFT)){l_shift = false;}
-		
-		float moveSpeed = 5;
-		float moveSpeedDelta = 1;
-		if (l_shift) {
-			moveSpeedDelta = 4;
-		}
-
-		if (w)		{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetLook());}
-		else if (s) {m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetLook());}
-
-		if (a)		{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -m_fpsCamera.GetRight());}
-		else if (d)	{m_fpsCamera.Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * m_fpsCamera.GetRight());}
-
-		m_lastMousePos = currentMousePos;
+	
+		GetManager()->OnUpdate(deltaTime);
 	}
 
 	void test_PBR::OnRender() {
@@ -142,12 +101,9 @@ namespace test {
 		//				MVP					//
 		//----------------------------------//
 		glm::mat4 model, view, projection;
-		view = m_fpsCamera.GetViewMatrix();
-		projection = glm::perspective(m_fpsCamera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+		view = camRef->GetViewMatrix();
+		projection = glm::perspective(camRef->getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
 		
-		//----------------------------------//
-		glm::vec3 viewPos = m_fpsCamera.GetPosition();
-		//----------------------------------//
 
 		//----------------------------------//
 		//			PBR MATERIAL			//
@@ -166,7 +122,7 @@ namespace test {
 		m_PBR_sphereShader->setUniform("model", model);
 		m_PBR_sphereShader->setUniform("view", view);
 		m_PBR_sphereShader->setUniform("projection", projection);
-		m_PBR_sphereShader->setUniform("camPos", viewPos);
+		m_PBR_sphereShader->setUniform("camPos", camRef->GetPosition());
 
 		m_PBR_sphereTexture[0].bind(0);
 		m_PBR_sphereTexture[1].bind(1);
@@ -218,17 +174,51 @@ namespace test {
 			m_pointLights[i].m_Shader->setUniform("projection", projection);
 			m_pointLights[i].m_Mesh->Draw();
 		}
+		GetManager()->OnRender();
 	}
 
-	void test_PBR::OnImGuiRender(){
+
+
+	/*void test_PBR::OnImGuiRender(){
 
 		
-		ImGui::Begin("Transform");
+	}*/
+
+	void test_PBR::OnImGuiRender() {
+		ImGui::Begin("OLD_Transform");
 		ImGui::DragFloat3("PBR SPHERE POSITION : ", &m_pbrTransform.position.x, -0.1f, 0.1f);
 		ImGui::DragFloat3("PBR SPHERE ROTATION AXIS : ", &m_pbrTransform.rotation.x, -1.0f, 1.0f);
 		ImGui::DragFloat3("PBR SPHERE SCALE : ", &m_pbrTransform.scale.x, -0.1f, 0.1f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
+		RenderHierarchy();
+		GetManager()->Editor_RenderActiveEditityGui();
 	}
+
+	void test_PBR::OnExit() {
+		GetManager()->OnExit();
+	}
+
+	void test_PBR::RenderHierarchy() {
+		{
+			//std::cout << GetAmountOfEntities() << std::endl;
+			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+			ImGui::Begin("ECS_Hierarchy");
+			{
+				for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
+					auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+					if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
+						GetManager()->Editor_SetActiveEntity(i);
+					}
+				}
+			}
+
+			ImGui::SameLine();
+			ImGui::End();
+		}
+	}
+
 }
+
+

@@ -62,7 +62,6 @@ void Mesh::OnRender(){
 	ShaderProgram& shader = entity->getComponent<ShaderProgram>();
 
 	glm::mat4 model, view, projection;
-	//cam_entity->getComponent<FPSCamera>().GetViewMatrix();
 
 	view = camera.GetViewMatrix();
 	if (camera.usingImGuiWindow == false) { // WINDOW
