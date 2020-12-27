@@ -34,6 +34,12 @@
     <Filter Include="ENGINE">
       <UniqueIdentifier>{5e59690f-ff76-4d24-bbb2-52f787520475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendor">
+      <UniqueIdentifier>{8d0d37f2-c352-4269-af54-5ff5b4048250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\FrameBuffer">
+      <UniqueIdentifier>{d2f93455-4883-4bae-9042-4b90e6994920}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -51,31 +57,10 @@
     <ClCompile Include="src\LightObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_impl_glfw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\imGuiStyleSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\test.cpp">
@@ -110,6 +95,27 @@
     </ClCompile>
     <ClCompile Include="src\Engine\EditorGUI.cpp">
       <Filter>ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_demo.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_draw.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_impl_glfw.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\FrameBuffer\src\FrameBuffer.cpp">
+      <Filter>Vendor\FrameBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +164,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tests\test.h">
       <Filter>_Tests</Filter>
     </ClInclude>
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\ECS_List.h">
       <Filter>ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FrameBuffer\src\FrameBuffer.h">
+      <Filter>Vendor\FrameBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

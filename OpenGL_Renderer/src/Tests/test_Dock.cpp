@@ -48,11 +48,11 @@ namespace test {
             entity->getComponent<Transform>().rotation = glm::vec3(glm::ballRand((float)i / 2));
         }
 
-        fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        //fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
 
 	test_Dock::~test_Dock() {
-        fbo.UnBind();
+        //fbo.UnBind();
         glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());
     }
 
@@ -62,20 +62,20 @@ namespace test {
 
 	void test_Dock::OnRender() {
         if (editor->windowSizeChangeFlag){
-            editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
+            //editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
         }
         
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             return;
         }
 
-        fbo.Bind();
+        //fbo.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         GetManager()->OnRender();
 
-        fbo.UnBind();
+        //fbo.UnBind();
 
     }
 
@@ -87,7 +87,7 @@ namespace test {
     
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        editor->RenderScene(fbo.renderedTexture);
+        //editor->RenderScene(fbo.renderedTexture);
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

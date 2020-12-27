@@ -7,7 +7,7 @@
 #include "../Engine/ECS_List.h"
 #include "../Engine/EditorGUI.h"
 
-#include "../FrameBuffer.h"
+//#include "../FrameBuffer.h"
 
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
@@ -26,7 +26,7 @@ namespace test {
 		void OnExit()override;
 
 	private:
-		FrameBuffer fbo;
+		//FrameBuffer fbo;
 
 		Entity* entity;
 		EditorGUI* editor;
