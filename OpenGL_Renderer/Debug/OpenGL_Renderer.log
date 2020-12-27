@@ -1,2 +1,6 @@
-﻿  test_Dock.cpp
+﻿  EditorGUI.cpp
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(178,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(178,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(180,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(180,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe

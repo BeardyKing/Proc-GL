@@ -64,6 +64,8 @@ public:
 	virtual void OnImGuiRender();
 	virtual bool init();
 
+	glm::vec3 GetRotation();
+
 	bool usingImGuiWindow = true;
 	ImVec2 ImGuiWindowSize;
 

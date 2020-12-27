@@ -56,6 +56,61 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
         ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);
         ImGui::Image(tex, windowSize, uv_min, uv_max, tint_col, border_col);
+
+
+        // ImGuizmo
+        Entity* currentEntity = GetManager()->GetSelectedEntity();
+        static Entity* cam;
+
+        if (!cam) {
+            for (auto& m_entity : GetManager()->entities) {
+                if (m_entity->hasComponent<FPSCamera>()) {
+                    cam = m_entity.get();
+                    break;
+                }
+            }
+        }
+
+        if (currentEntity && cam) {
+            ImGui::Begin("Scene");
+
+            std::cout << currentEntity->getComponent<ObjectData>().GetName() << std::endl;
+            std::cout << cam->getComponent<ObjectData>().GetName() << std::endl;
+
+            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetDrawlist();
+            float windowWidth = (float)ImGui::GetWindowWidth();
+            float windowHeight = (float)ImGui::GetWindowHeight();
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+			glm::mat4 model, view, projection;
+
+			view = cam->getComponent<FPSCamera>().GetViewMatrix();
+			
+				projection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
+
+			////----------------------------------//
+			glm::vec3 viewPos = cam->getComponent<FPSCamera>().GetPosition();
+			////----------------------------------//
+
+			model = glm::mat4(1.0f);
+			model =
+				glm::translate(model, cam->getComponent<Transform>().position) *
+				glm::rotate(model, glm::radians(cam->getComponent<Transform>().rotation.x), glm::vec3(1, 0, 0)) *
+				glm::rotate(model, glm::radians(cam->getComponent<Transform>().rotation.y), glm::vec3(0, 1, 0)) *
+				glm::rotate(model, glm::radians(cam->getComponent<Transform>().rotation.z), glm::vec3(0, 0, 1)) *
+				glm::scale(model, cam->getComponent<Transform>().scale);
+
+            ////entity
+            glm::mat4 target = currentEntity->getComponent<Transform>().GetTransform();
+
+            ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(target));
+
+            ImGui::End();
+        }
+
+
+
         ImGui::End();
     }
 }

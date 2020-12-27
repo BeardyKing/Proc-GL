@@ -94,10 +94,7 @@ namespace test {
         editor->RenderMainMenuBar();
         editor->RenderActiveInspector();
 
-        // ImGuizmo
-        Entity* currentEntity = GetManager()->GetSelectedEntity();
-
-        std::cout << currentEntity->getComponent<ObjectData>().GetName() << std::endl;
+        
         
 
 

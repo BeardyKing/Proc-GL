@@ -34,6 +34,10 @@ public:
 	void Editor_RenderActiveInspector();
 	void Editor_Reset();
 
+	Entity* FindActiveCamera();
+	Entity* GetActiveCamera();
+
+
 	std::vector<std::unique_ptr<Entity>> entities;
 
 	uint32_t GetSelectedEntityID();

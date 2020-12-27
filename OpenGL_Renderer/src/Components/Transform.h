@@ -2,6 +2,8 @@
 #define TRANSFORM_H
 
 #include <glm/gtc/type_ptr.hpp>
+#include "glm/gtx/transform.hpp"
+
 #include "../ECS/Component.h"
 #include <iostream>
 #include "../vendor/imgui/imgui.h"
@@ -21,6 +23,39 @@
 			position = _position;
 			rotation = _rotation;
 			scale = _scale;
+		}
+
+		glm::mat4 GetTransform() {
+			std::cout
+				<< "rot x : " << rotation.x
+				<< "rot y : " << rotation.y
+				<< "rot z : " << rotation.z
+				<< std::endl;
+
+			std::cout
+				<< "pos x : " << position.x
+				<< "pos x : " << position.y
+				<< "pos x : " << position.z
+				<< std::endl;
+
+			std::cout
+				<< "scale x : " << scale.x
+				<< "scale y : " << scale.y
+				<< "scale z : " << scale.z
+				<< std::endl;
+
+			std::cout << "---------" << std::endl;
+
+
+			glm::mat4 m_Rotation =
+				glm::rotate(glm::mat4(1.0f), rotation.x, { 1,0,0 }) *
+				glm::rotate(glm::mat4(1.0f), rotation.y, { 0,1,0 }) *
+				glm::rotate(glm::mat4(1.0f), rotation.z, { 0,0,1 });
+
+			return glm::translate(glm::mat4(1.0f), position) *
+				m_Rotation *
+				glm::scale(glm::mat4(1.0f), scale);
+			//return glm::mat4(0);
 		}
 
 		void OnRender() {}
@@ -52,6 +87,7 @@
 		}
 
 		~Transform() = default;
+		
 
 	public:
 		glm::vec3 position;

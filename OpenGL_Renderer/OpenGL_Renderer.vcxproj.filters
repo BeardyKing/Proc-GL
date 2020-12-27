@@ -129,6 +129,9 @@
     <ClCompile Include="src\vendor\ImGuizmo\ImGradient.cpp">
       <Filter>Vendor\ImGuizmo</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\EditorCamera.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="src\vendor\ImGuizmo\ImGradient.h">
       <Filter>Vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\EditorCamera.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

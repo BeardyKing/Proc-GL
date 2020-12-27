@@ -141,14 +141,21 @@ void FPSCamera::OnImGuiRender()
 			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05, 0.05);
 			ImGui::Unindent();
 			glm::vec3 rot;
-			rot.x = mPitch;
-			rot.y = mYaw;
-			ImGui::DragFloat3("Rotation", &rot.x, -0.05,0.05);
+
+			entity->getComponent<Transform>().rotation = GetRotation();
+
+
+
+
 
 		}
 		ImGui::Separator();
 	}
 	ImGui::End();
+}
+
+glm::vec3 FPSCamera::GetRotation() {
+	return glm::vec3(mRoll, mPitch, mYaw);
 }
 
 bool FPSCamera::init(){
