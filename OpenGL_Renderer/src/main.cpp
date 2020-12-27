@@ -18,6 +18,7 @@
 #include "Tests/test_ECS.h"
 
 #include "ECS/ECS_Manager.h"
+#include "vendor/ImGuizmo/ImGuizmo.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
 static int gWindowWidth = 1024;
