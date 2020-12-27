@@ -35,6 +35,9 @@ public:
 	void Editor_Reset();
 
 	std::vector<std::unique_ptr<Entity>> entities;
+
+	uint32_t GetSelectedEntityID();
+	Entity* GetSelectedEntity();
 private:
 
 	uint32_t selectedEntityID;

@@ -37,6 +37,9 @@
     <Filter Include="Vendor">
       <UniqueIdentifier>{8d0d37f2-c352-4269-af54-5ff5b4048250}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendor\ImGuizmo">
+      <UniqueIdentifier>{7c14f159-1f3c-4adf-a7ec-95ad2bec5c8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -93,9 +96,6 @@
     <ClCompile Include="src\Engine\EditorGUI.cpp">
       <Filter>ENGINE</Filter>
     </ClCompile>
-    <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp">
-      <Filter>Vendor</Filter>
-    </ClCompile>
     <ClCompile Include="src\vendor\imgui\imgui.cpp">
       <Filter>Vendor</Filter>
     </ClCompile>
@@ -113,6 +113,21 @@
     </ClCompile>
     <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\ImGuizmo\ImSequencer.cpp">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\ImGuizmo\ImGradient.cpp">
+      <Filter>Vendor\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +220,21 @@
     </ClInclude>
     <ClInclude Include="src\FrameBuffer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ImGuizmo\ImZoomSlider.h">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ImGuizmo\ImSequencer.h">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ImGuizmo\ImCurveEdit.h">
+      <Filter>Vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ImGuizmo\ImGradient.h">
+      <Filter>Vendor\ImGuizmo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

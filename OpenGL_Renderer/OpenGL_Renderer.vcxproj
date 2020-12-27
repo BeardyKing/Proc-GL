@@ -166,6 +166,10 @@
     <ClCompile Include="src\Tests\test_ECS.cpp" />
     <ClCompile Include="src\Tests\test_PBR.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
+    <ClCompile Include="src\vendor\ImGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="src\vendor\ImGuizmo\ImGradient.cpp" />
+    <ClCompile Include="src\vendor\ImGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="src\vendor\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_draw.cpp" />
@@ -196,6 +200,11 @@
     <ClInclude Include="src\Tests\test_ECS.h" />
     <ClInclude Include="src\Tests\test_PBR.h" />
     <ClInclude Include="src\Texture2D.h" />
+    <ClInclude Include="src\vendor\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="src\vendor\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="src\vendor\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="src\vendor\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="src\vendor\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
     <ClInclude Include="src\vendor\imgui\imgui.h" />
     <ClInclude Include="src\vendor\imgui\imgui_impl_glfw.h" />

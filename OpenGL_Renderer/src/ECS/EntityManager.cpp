@@ -69,6 +69,15 @@ Entity* EntityManager::FindEntityWithType() {
 	}*/	
 	return NULL;
 }
+Entity* EntityManager::GetSelectedEntity() {
+	return entities[selectedEntityID].get();
+}
+
+uint32_t EntityManager::GetSelectedEntityID() {
+	return selectedEntityID;
+}
+
+
 
 
 

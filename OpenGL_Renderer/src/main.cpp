@@ -9,6 +9,7 @@
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
+#include "vendor/ImGuizmo/ImGuizmo.h"
 
 #include "imGuiStyleSheet.h"
 
@@ -18,7 +19,6 @@
 #include "Tests/test_ECS.h"
 
 #include "ECS/ECS_Manager.h"
-#include "vendor/ImGuizmo/ImGuizmo.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
 static int gWindowWidth = 1024;
@@ -96,6 +96,7 @@ int main(){
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 
 		if (currentTest) {
 

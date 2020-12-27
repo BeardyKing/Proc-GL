@@ -1,10 +1,2 @@
-﻿  FrameBuffer.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(26,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(26,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(30,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(30,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(32,25): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(32,22): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(44,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\FrameBuffer.cpp(44,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+﻿  test_Dock.cpp
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
