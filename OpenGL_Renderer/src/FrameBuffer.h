@@ -20,6 +20,8 @@ private:
 public :
 	GLuint FramebufferName;
 	GLuint renderedTexture;
+	GLuint depthTexture;
+
 
 };
 
