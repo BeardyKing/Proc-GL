@@ -155,6 +155,7 @@
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\ECS\SystemManager.cpp" />
     <ClCompile Include="src\Engine\EditorGUI.cpp" />
+    <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\imGuiStyleSheet.cpp" />
     <ClCompile Include="src\LightObject.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -165,7 +166,6 @@
     <ClCompile Include="src\Tests\test_ECS.cpp" />
     <ClCompile Include="src\Tests\test_PBR.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
-    <ClCompile Include="src\vendor\FrameBuffer\src\FrameBuffer.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_draw.cpp" />
@@ -186,6 +186,7 @@
     <ClInclude Include="src\ECS\SystemManager.h" />
     <ClInclude Include="src\Engine\ECS_List.h" />
     <ClInclude Include="src\Engine\EditorGUI.h" />
+    <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\imGuiStyleSheet.h" />
     <ClInclude Include="src\LightObject.h" />
     <ClInclude Include="src\Mesh.h" />
@@ -195,7 +196,6 @@
     <ClInclude Include="src\Tests\test_ECS.h" />
     <ClInclude Include="src\Tests\test_PBR.h" />
     <ClInclude Include="src\Texture2D.h" />
-    <ClInclude Include="src\vendor\FrameBuffer\src\FrameBuffer.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
     <ClInclude Include="src\vendor\imgui\imgui.h" />
     <ClInclude Include="src\vendor\imgui\imgui_impl_glfw.h" />

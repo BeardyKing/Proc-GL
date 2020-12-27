@@ -37,9 +37,6 @@
     <Filter Include="Vendor">
       <UniqueIdentifier>{8d0d37f2-c352-4269-af54-5ff5b4048250}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Vendor\FrameBuffer">
-      <UniqueIdentifier>{d2f93455-4883-4bae-9042-4b90e6994920}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -114,8 +111,8 @@
     <ClCompile Include="src\vendor\imgui\imgui_impl_opengl3.cpp">
       <Filter>Vendor</Filter>
     </ClCompile>
-    <ClCompile Include="src\vendor\FrameBuffer\src\FrameBuffer.cpp">
-      <Filter>Vendor\FrameBuffer</Filter>
+    <ClCompile Include="src\FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,8 +203,8 @@
     <ClInclude Include="src\Engine\ECS_List.h">
       <Filter>ENGINE</Filter>
     </ClInclude>
-    <ClInclude Include="src\vendor\FrameBuffer\src\FrameBuffer.h">
-      <Filter>Vendor\FrameBuffer</Filter>
+    <ClInclude Include="src\FrameBuffer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
