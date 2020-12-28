@@ -1,6 +1,52 @@
 ﻿  EditorGUI.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(178,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(178,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(180,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(180,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(184,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(184,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(186,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(186,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(115): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(194,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(201,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(202,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(209,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(211,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(217,54): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(220,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
