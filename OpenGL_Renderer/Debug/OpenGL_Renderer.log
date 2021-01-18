@@ -1,14 +1,14 @@
 ﻿  EditorGUI.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(184,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(184,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(186,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(186,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(214,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(214,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(216,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(216,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
 C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(115): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(145): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
 C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
           with
           [
@@ -49,4 +49,55 @@ C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(220,13
           [
               T=float
           ]
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4217: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj' in function '"public: void __thiscall FrameBuffer::GenerateFrameBuffer(float,float)" (?GenerateFrameBuffer@FrameBuffer@@QAEXMM@Z)'
+LINK : warning LNK4217: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj' in function '"public: void __thiscall FrameBuffer::GenerateFrameBuffer(float,float)" (?GenerateFrameBuffer@FrameBuffer@@QAEXMM@Z)'
+LINK : warning LNK4217: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj' in function '"public: void __thiscall FrameBuffer::Bind(void)" (?Bind@FrameBuffer@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj' in function '"public: void __thiscall FrameBuffer::GenerateFrameBuffer(float,float)" (?GenerateFrameBuffer@FrameBuffer@@QAEXMM@Z)'
+LINK : warning LNK4217: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"public: __thiscall Mesh::~Mesh(void)" (??1Mesh@@QAE@XZ)'
+LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"public: void __thiscall Mesh::Draw(void)" (?Draw@Mesh@@QAEXXZ)'
+LINK : warning LNK4286: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"public: __thiscall Mesh::~Mesh(void)" (??1Mesh@@QAE@XZ)'
+LINK : warning LNK4286: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj' in function '"private: void __thiscall Mesh::InitBuffers(void)" (?InitBuffers@Mesh@@AAEXXZ)'
+LINK : warning LNK4286: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Texture2D.obj' in function '"public: void __thiscall Texture2D::bind(unsigned int)" (?bind@Texture2D@@QAEXI@Z)'
+LINK : warning LNK4286: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4217: symbol '___glewGenerateMipmap' defined in 'glew32s.lib(glew.obj)' is imported by 'Texture2D.obj' in function '"public: bool __thiscall Texture2D::loadTexture(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,bool)" (?loadTexture@Texture2D@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)'
+LINK : warning LNK4217: symbol '___glewBlendEquation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_SetupRenderState(struct ImDrawData *,int,int,unsigned int)" (?ImGui_ImplOpenGL3_SetupRenderState@@YAXPAUImDrawData@@HHI@Z)'
+LINK : warning LNK4217: symbol '___glewBlendFuncSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_RenderDrawData(struct ImDrawData *)" (?ImGui_ImplOpenGL3_RenderDrawData@@YAXPAUImDrawData@@@Z)'
+LINK : warning LNK4217: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewBlendEquationSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_RenderDrawData(struct ImDrawData *)" (?ImGui_ImplOpenGL3_RenderDrawData@@YAXPAUImDrawData@@@Z)'
+LINK : warning LNK4217: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewCreateShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_DestroyDeviceObjects(void)" (?ImGui_ImplOpenGL3_DestroyDeviceObjects@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewDeleteShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_DestroyDeviceObjects(void)" (?ImGui_ImplOpenGL3_DestroyDeviceObjects@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_DestroyDeviceObjects(void)" (?ImGui_ImplOpenGL3_DestroyDeviceObjects@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewGetAttribLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl CheckProgram(unsigned int,char const *)" (?CheckProgram@@YA_NIPBD@Z)'
+LINK : warning LNK4217: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl CheckProgram(unsigned int,char const *)" (?CheckProgram@@YA_NIPBD@Z)'
+LINK : warning LNK4217: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl CheckShader(unsigned int,char const *)" (?CheckShader@@YA_NIPBD@Z)'
+LINK : warning LNK4217: symbol '___glewGetShaderiv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl CheckShader(unsigned int,char const *)" (?CheckShader@@YA_NIPBD@Z)'
+LINK : warning LNK4217: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewLinkProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"bool __cdecl ImGui_ImplOpenGL3_CreateDeviceObjects(void)" (?ImGui_ImplOpenGL3_CreateDeviceObjects@@YA_NXZ)'
+LINK : warning LNK4217: symbol '___glewUniform1i' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_SetupRenderState(struct ImDrawData *,int,int,unsigned int)" (?ImGui_ImplOpenGL3_SetupRenderState@@YAXPAUImDrawData@@HHI@Z)'
+LINK : warning LNK4217: symbol '___glewUniformMatrix4fv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_SetupRenderState(struct ImDrawData *,int,int,unsigned int)" (?ImGui_ImplOpenGL3_SetupRenderState@@YAXPAUImDrawData@@HHI@Z)'
+LINK : warning LNK4217: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_RenderDrawData(struct ImDrawData *)" (?ImGui_ImplOpenGL3_RenderDrawData@@YAXPAUImDrawData@@@Z)'
+LINK : warning LNK4217: symbol '___glewDrawElementsBaseVertex' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_RenderDrawData(struct ImDrawData *)" (?ImGui_ImplOpenGL3_RenderDrawData@@YAXPAUImDrawData@@@Z)'
+LINK : warning LNK4217: symbol '___glewBindSampler' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj' in function '"void __cdecl ImGui_ImplOpenGL3_RenderDrawData(struct ImDrawData *)" (?ImGui_ImplOpenGL3_RenderDrawData@@YAXPAUImDrawData@@@Z)'
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\glew_static.pdb'; linking object as if no debug info
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
