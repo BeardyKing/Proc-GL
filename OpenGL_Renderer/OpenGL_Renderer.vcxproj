@@ -150,6 +150,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\EditorCamera.cpp" />
     <ClCompile Include="src\Components\ObjectData.cpp" />
+    <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\ComponentManager.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\Tests\test.cpp" />
     <ClCompile Include="src\Tests\test_Dock.cpp" />
     <ClCompile Include="src\Tests\test_ECS.cpp" />
+    <ClCompile Include="src\Tests\test_imguizmo.cpp" />
     <ClCompile Include="src\Tests\test_PBR.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\vendor\ImGuizmo\ImCurveEdit.cpp" />
@@ -183,6 +185,7 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Components\EditorCamera.h" />
     <ClInclude Include="src\Components\ObjectData.h" />
+    <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\ECS\Component.h" />
     <ClInclude Include="src\ECS\ComponentManager.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="src\Tests\test.h" />
     <ClInclude Include="src\Tests\test_Dock.h" />
     <ClInclude Include="src\Tests\test_ECS.h" />
+    <ClInclude Include="src\Tests\test_imguizmo.h" />
     <ClInclude Include="src\Tests\test_PBR.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\vendor\ImGuizmo\ImCurveEdit.h" />

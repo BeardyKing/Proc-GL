@@ -17,6 +17,7 @@
 #include "Tests/test_PBR.h";
 #include "Tests/test_Dock.h"
 #include "Tests/test_ECS.h"
+#include "Tests/test_imguizmo.h"
 
 #include "ECS/ECS_Manager.h"
 
@@ -76,9 +77,10 @@ int main(){
 	test::Test* currentTest = nullptr;
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
-	testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
-	testMenu->RegisterTest<test::test_Dock>("docking test");
-	testMenu->RegisterTest<test::test_ECS>("ECS test");
+	testMenu->RegisterTest<test::test_imguizmo>("imguizmo");
+	//testMenu->RegisterTest<test::test_Dock>("docking test");
+	//testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
+	//testMenu->RegisterTest<test::test_ECS>("ECS test");
 	
 	double lastTime = glfwGetTime();
 

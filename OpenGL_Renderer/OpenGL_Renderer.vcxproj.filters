@@ -40,6 +40,9 @@
     <Filter Include="Vendor\ImGuizmo">
       <UniqueIdentifier>{7c14f159-1f3c-4adf-a7ec-95ad2bec5c8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\scripts">
+      <UniqueIdentifier>{7288accc-0617-4e08-a7af-f3f968a56dec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -131,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="src\Components\EditorCamera.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tests\test_imguizmo.cpp">
+      <Filter>_Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp">
+      <Filter>Components\scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="src\Components\EditorCamera.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_imguizmo.h">
+      <Filter>_Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h">
+      <Filter>Components\scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

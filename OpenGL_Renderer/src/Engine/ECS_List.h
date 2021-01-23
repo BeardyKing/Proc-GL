@@ -7,6 +7,8 @@
 #include "../Components/Transform.h"
 #include "../Components/ObjectData.h"
 
+#include "../Components/scripts/script_simpleBehaviours.h"
+
 #include "../LightObject.h"
 #include "../Mesh.h"
 #include "../ShaderProgram.h"

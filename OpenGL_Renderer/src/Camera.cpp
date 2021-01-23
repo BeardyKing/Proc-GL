@@ -13,7 +13,7 @@ Camera::Camera()
 	mUp(glm::vec3(0.0f, 0.1f, 0.0f)),
 	mRight(0.0f, 0.0f, 0.0f),
 	WORLD_UP(0.0f, 1.0f, 0.0f),
-	mYaw(glm::pi<float>()),
+	mYaw(0.0f),
 	mPitch(0.0f),
 	mRoll(0.0f),
 	mFOV(DEFAULT_FOV)
@@ -52,6 +52,7 @@ ImGuiWindowSize(10,10)
 	//mPosition = position;
 	mYaw = yaw;
 	mPitch = pitch;
+
 }
 
 void FPSCamera::SetPosition(const glm::vec3& position){
@@ -65,6 +66,7 @@ void FPSCamera::Move(const glm::vec3& offsetPos) {
 
 void FPSCamera::OnUpdate(double deltaTime)
 {
+	Rotate(0, 0);
 	if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 	if (ImGui::IsKeyReleased('E')) { m_mouseFlag = false; }
 	if (m_mouseEnabled) { return; }
@@ -169,7 +171,7 @@ void FPSCamera::Rotate(float yaw, float pitch) {
 	mPitch += glm::radians(pitch);
 
 	// constrain pitch
-	mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
+	//mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
 	UpdateCameraVectors();
 }
 
@@ -212,7 +214,7 @@ void OrbitCamera::Rotate(float yaw, float pitch) {
 	mYaw = glm::radians(yaw);
 	mPitch = glm::radians(pitch);
 
-	mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
+	//mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
 
 	UpdateCameraVectors();
 }

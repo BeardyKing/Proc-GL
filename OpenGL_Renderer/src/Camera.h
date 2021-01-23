@@ -55,7 +55,7 @@ protected:
 //--------------------
 class FPSCamera : public Camera {
 public:
-	FPSCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -18.0f), float yaw = glm::pi<float>(), float pitch = 0.0f); // initial angle faces z 
+	FPSCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0), float yaw = 0, float pitch = 0.0f); // initial angle faces z 
 	virtual void SetPosition(const glm::vec3& position);
 	virtual void Rotate		(float yaw, float pitch);		// in degrees
 	virtual void Move		(const glm::vec3& offsetPos);

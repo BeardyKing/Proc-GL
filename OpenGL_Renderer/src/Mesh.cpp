@@ -65,10 +65,10 @@ void Mesh::OnRender(){
 
 	view = camera.GetViewMatrix();
 	if (camera.usingImGuiWindow == false) { // WINDOW
-		projection = glm::perspective(camera.getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(camera.getFOV()), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
 	}
 	else { // EDITOR
-		projection = glm::perspective(camera.getFOV(), (float)camera.ImGuiWindowSize.x / (float)camera.ImGuiWindowSize.y, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(camera.getFOV()), (float)camera.ImGuiWindowSize.x / (float)camera.ImGuiWindowSize.y, 0.1f, 100.0f);
 	}
 
 	////----------------------------------//
