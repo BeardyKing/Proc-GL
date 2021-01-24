@@ -8,7 +8,7 @@ void script_simplebehaviours::OnRender() {
 }
 void script_simplebehaviours::OnUpdate(double deltaTime) {
 	
-	entity->getComponent<Transform>().rotation = entity->getComponent<Transform>().rotation + glm::vec3(0, 180 * deltaTime, 0);
+	//entity->getComponent<Transform>().rotation = entity->getComponent<Transform>().rotation + glm::vec3(0, 180 * deltaTime, 0);
 }
 void script_simplebehaviours::OnImGuiRender() {
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);

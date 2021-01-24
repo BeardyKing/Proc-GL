@@ -17,6 +17,7 @@ EditorGUI::~EditorGUI() {
 
 }
 
+void EditorGUI::OnGizmoRender() {}
 
 void EditorGUI::RenderHierarchy() {
 	//std::cout << GetAmountOfEntities() << std::endl;
@@ -94,7 +95,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 			view = cam->getComponent<FPSCamera>().GetViewMatrix();
 			projection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
             static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
-            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::LOCAL);
+            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
 
             if (ImGui::IsKeyPressed(49))
                 mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
@@ -112,7 +113,12 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
                 mCurrentGizmoOperation = ImGuizmo::SCALE;
 
             ////entity
-            glm::mat4 target = currentEntity->getComponent<Transform>().GetTransform();
+            glm::mat4 target = glm::mat4(1.0f);
+            target = glm::translate(target, currentEntity->getComponent<Transform>().position);
+            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            target = glm::scale(target, currentEntity->getComponent<Transform>().scale);
             
             static bool useSnap(false);
             if (ImGui::IsKeyPressed(83)){
@@ -144,7 +150,9 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
                     skew, 
                     perspective);
 
-                //currentEntity->getComponent<Transform>().rotation = glm::degrees(glm::eulerAngles(orientation)); //TODO fix me still have not found out what is wrong with rotation
+                //orientation = glm::conjugate(orientation);
+
+                currentEntity->getComponent<Transform>().rotation -= glm::degrees(glm::eulerAngles(orientation)); //TODO fix me still have not found out what is wrong with rotation
 
             }
             

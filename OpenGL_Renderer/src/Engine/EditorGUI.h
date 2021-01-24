@@ -29,6 +29,7 @@ public:
 	void RenderConsole();
 	void RenderMainMenuBar();
 	void RenderActiveInspector();
+	void OnGizmoRender();
 
 	void Demo(bool &demo);
 public:

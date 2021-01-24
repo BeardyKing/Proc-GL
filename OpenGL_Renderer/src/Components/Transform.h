@@ -25,7 +25,7 @@
 			scale = _scale;
 		}
 
-		glm::mat4 GetTransform() {
+		/*glm::mat4 GetTransform() {
 			std::cout
 				<< "rot x : " << rotation.x
 				<< "rot y : " << rotation.y
@@ -56,7 +56,7 @@
 				glm::scale(model, scale);
 
 			return model;
-		}
+		}*/
 
 		void OnRender() {}
 

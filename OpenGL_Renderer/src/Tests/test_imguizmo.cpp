@@ -53,6 +53,9 @@ namespace test {
     }
 
     void test_imguizmo::OnRender() {
+
+        editor->OnGizmoRender();
+
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
         }

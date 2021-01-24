@@ -83,6 +83,9 @@ void Mesh::OnRender(){
 		glm::rotate(model, glm::radians(transform.rotation.z), glm::vec3(0, 0, 1)) *
 		glm::scale(model, transform.scale);
 
+	std::cout << "MODEL FROM MESH.CPP" << std::endl;
+	
+
 	//////----------------------------------//
 	//////				MVP					//
 	//////----------------------------------//
