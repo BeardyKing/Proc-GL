@@ -92,7 +92,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
             float windowHeight  = (float)ImGui::GetWindowHeight();
 
             static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
-            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::MODE::WORLD);
+            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::MODE::LOCAL);
             
             if (ImGui::IsKeyPressed(49)) mCurrentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;   //key "1"
             if (ImGui::IsKeyPressed(50)) mCurrentGizmoOperation = ImGuizmo::OPERATION::ROTATE;      //key "2"
@@ -107,12 +107,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 			camView = cam->getComponent<FPSCamera>().GetViewMatrix();
 			camProjection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
             
-            glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(glm::radians(currentEntityTransform.rotation))));
-            glm::mat4 targetTransformMatrix = glm::mat4(1.0f);
-
-            targetTransformMatrix = glm::translate(targetTransformMatrix, currentEntityTransform.position);
-            targetTransformMatrix *= rotation;
-            targetTransformMatrix = glm::scale(targetTransformMatrix, currentEntityTransform.scale);
+            glm::mat4 targetTransformMatrix = currentEntityTransform.GetTransformMatrix();
             
             static bool useSnap(false);
             glm::vec2 snap;
@@ -146,14 +141,14 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
                     outRotation,
                     outPosition,
                     skew, 
-                    perspective);
+                    perspective); //TODO Lighter decompose function 
 
                 outRotation = glm::conjugate(outRotation);
 
                 glm::vec3 deltaAngle = glm::radians(currentEntityTransform.rotation) - glm::eulerAngles(outRotation);
 
-                currentEntityTransform.scale = outScale;
-                currentEntityTransform.rotation -= glm::degrees(deltaAngle); // TODO ROTATIONS FOR LOCAL STILL INCORRECT
+                currentEntityTransform.scale    = outScale;
+                currentEntityTransform.rotation -= glm::degrees(deltaAngle);
                 currentEntityTransform.position = outPosition;
             }
             ImGui::End();

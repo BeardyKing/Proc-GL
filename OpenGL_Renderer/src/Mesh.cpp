@@ -75,16 +75,7 @@ void Mesh::OnRender(){
 	glm::vec3 viewPos = camera.GetPosition();
 	////----------------------------------//
 
-	model = glm::mat4(1.0f);
-	model =
-		glm::translate(model, transform.position) *
-		glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1, 0, 0)) *
-		glm::rotate(model, glm::radians(transform.rotation.y), glm::vec3(0, 1, 0)) *
-		glm::rotate(model, glm::radians(transform.rotation.z), glm::vec3(0, 0, 1)) *
-		glm::scale(model, transform.scale);
-
-	std::cout << "MODEL FROM MESH.CPP" << std::endl;
-	
+	model = transform.GetTransformMatrix();	
 
 	//////----------------------------------//
 	//////				MVP					//

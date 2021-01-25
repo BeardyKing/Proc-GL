@@ -1,8 +1,11 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "glm/gtx/transform.hpp"
+
 
 #include "../ECS/Component.h"
 #include <iostream>
@@ -25,38 +28,15 @@
 			scale = _scale;
 		}
 
-		/*glm::mat4 GetTransform() {
-			std::cout
-				<< "rot x : " << rotation.x
-				<< "rot y : " << rotation.y
-				<< "rot z : " << rotation.z
-				<< std::endl;
-
-			std::cout
-				<< "pos x : " << position.x
-				<< "pos x : " << position.y
-				<< "pos x : " << position.z
-				<< std::endl;
-
-			std::cout
-				<< "scale x : " << scale.x
-				<< "scale y : " << scale.y
-				<< "scale z : " << scale.z
-				<< std::endl;
-
-			std::cout << "---------" << std::endl;
-
-			glm::mat4 model;
-			model = glm::mat4(1.0f);
-			model =
-				glm::translate(model,position) *
-				glm::rotate(model, glm::radians(rotation.x), glm::vec3(1, 0, 0)) *
-				glm::rotate(model, glm::radians(rotation.y), glm::vec3(0, 1, 0)) *
-				glm::rotate(model, glm::radians(rotation.z), glm::vec3(0, 0, 1)) *
-				glm::scale(model, scale);
-
-			return model;
-		}*/
+		glm::mat4 GetTransformMatrix() {
+			glm::mat4 matRotation = glm::toMat4(glm::quat(glm::radians(rotation)));
+			glm::mat4 outVal = glm::mat4(1.0f);
+			outVal =
+				glm::translate(glm::mat4(1.0f), position) *
+				matRotation *
+				glm::scale(glm::mat4(1.0f), scale);
+			return outVal;
+		}
 
 		void OnRender() {}
 

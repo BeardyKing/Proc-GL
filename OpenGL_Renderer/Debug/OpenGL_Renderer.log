@@ -1,14 +1,14 @@
 ﻿  EditorGUI.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(212,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(212,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(214,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(214,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(211,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(211,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(213,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(213,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
 C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(145): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Engine\EditorGUI.cpp(144): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
 C:\dev\OpenGL_RenderingTests\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
           with
           [
