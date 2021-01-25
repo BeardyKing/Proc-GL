@@ -115,8 +115,12 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
             targetTransformMatrix = glm::scale(targetTransformMatrix, currentEntityTransform.scale);
             
             static bool useSnap(false);
+            glm::vec2 snap;
             if (ImGui::IsKeyPressed(83)){   useSnap = !useSnap; } //key "s"
-            glm::vec2 snap = glm::vec2(0.25f);
+                if (ImGuizmo::OPERATION::ROTATE)
+                    snap = glm::vec2(11.25f);
+                else
+                    snap = glm::vec2(0.25f);
 
             ImGuizmo::Manipulate(
                 glm::value_ptr(camView), 
