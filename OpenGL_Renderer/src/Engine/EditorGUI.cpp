@@ -7,17 +7,20 @@
 #include <glm/gtc/epsilon.hpp>
 #include <glm/detail/setup.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 
 
 EditorGUI::EditorGUI() {
-
 }
 
 EditorGUI::~EditorGUI() {
 
 }
 
-void EditorGUI::OnGizmoRender() {}
+void EditorGUI::OnGizmoRender() {
+
+}
 
 void EditorGUI::RenderHierarchy() {
 	//std::cout << GetAmountOfEntities() << std::endl;
@@ -52,9 +55,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 
     }
 
-
     {
-
         ImTextureID tex = (void*)renderTexture; // Texture from framebuffer
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
@@ -64,10 +65,13 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);
         ImGui::Image(tex, windowSize, uv_min, uv_max, tint_col, border_col);
 
+        //          //
+        // ImGuizmo //
+        //          //
 
-        // ImGuizmo
         Entity* currentEntity = GetManager()->GetSelectedEntity();
-        static Entity* cam;
+        auto& currentEntityTransform = currentEntity->getComponent<Transform>();
+        Entity* cam = NULL;
 
         if (!cam) {
             for (auto& m_entity : GetManager()->entities) {
@@ -83,55 +87,43 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 
             std::cout << currentEntity->getComponent<ObjectData>().GetName() << std::endl;
             std::cout << cam->getComponent<ObjectData>().GetName() << std::endl;
+            
+            float windowWidth   = (float)ImGui::GetWindowWidth();
+            float windowHeight  = (float)ImGui::GetWindowHeight();
 
+            static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
+            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::MODE::WORLD);
+            
+            if (ImGui::IsKeyPressed(49)) mCurrentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;   //key "1"
+            if (ImGui::IsKeyPressed(50)) mCurrentGizmoOperation = ImGuizmo::OPERATION::ROTATE;      //key "2"
+            if (ImGui::IsKeyPressed(51)) mCurrentGizmoOperation = ImGuizmo::OPERATION::SCALE;       //key "3"
+            if (ImGui::IsKeyPressed(52)) mCurrentGizmoOperation = ImGuizmo::OPERATION::BOUNDS;      //key "4"
+            
             ImGuizmo::SetOrthographic(false);
             ImGuizmo::SetDrawlist();
-            float windowWidth = (float)ImGui::GetWindowWidth();
-            float windowHeight = (float)ImGui::GetWindowHeight();
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-			glm::mat4 view, projection;
+			glm::mat4 camView, camProjection;
+			camView = cam->getComponent<FPSCamera>().GetViewMatrix();
+			camProjection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
+            
+            glm::mat4 rotation = glm::toMat4(glm::quat(glm::vec3(glm::radians(currentEntityTransform.rotation))));
+            glm::mat4 targetTransformMatrix = glm::mat4(1.0f);
 
-			view = cam->getComponent<FPSCamera>().GetViewMatrix();
-			projection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
-            static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
-            static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
-
-            if (ImGui::IsKeyPressed(49))
-                mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-            if (ImGui::IsKeyPressed(50))
-                mCurrentGizmoOperation = ImGuizmo::ROTATE;
-            if (ImGui::IsKeyPressed(51)) // r Key
-                mCurrentGizmoOperation = ImGuizmo::SCALE;
-            if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
-                mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-            ImGui::SameLine();
-            if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
-                mCurrentGizmoOperation = ImGuizmo::ROTATE;
-            ImGui::SameLine();
-            if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
-                mCurrentGizmoOperation = ImGuizmo::SCALE;
-
-            ////entity
-            glm::mat4 target = glm::mat4(1.0f);
-            target = glm::translate(target, currentEntity->getComponent<Transform>().position);
-            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            target = glm::rotate(target, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-            target = glm::scale(target, currentEntity->getComponent<Transform>().scale);
+            targetTransformMatrix = glm::translate(targetTransformMatrix, currentEntityTransform.position);
+            targetTransformMatrix *= rotation;
+            targetTransformMatrix = glm::scale(targetTransformMatrix, currentEntityTransform.scale);
             
             static bool useSnap(false);
-            if (ImGui::IsKeyPressed(83)){
-                useSnap = !useSnap;
-            }
+            if (ImGui::IsKeyPressed(83)){   useSnap = !useSnap; } //key "s"
             glm::vec2 snap = glm::vec2(0.25f);
 
             ImGuizmo::Manipulate(
-                glm::value_ptr(view), 
-                glm::value_ptr(projection), 
+                glm::value_ptr(camView), 
+                glm::value_ptr(camProjection), 
                 mCurrentGizmoOperation, 
                 mCurrentGizmoMode, 
-                glm::value_ptr(target),
+                glm::value_ptr(targetTransformMatrix),
                 0, 
                 useSnap ? &snap.x : NULL
             );
@@ -140,35 +132,33 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
                 glm::vec3 skew;
                 glm::vec4 perspective;
 
-                glm::quat orientation;;
+                glm::vec3 outPosition;
+                glm::quat outRotation;;
+                glm::vec3 outScale;
 
                 glm::decompose(
-                    target, 
-                    currentEntity->getComponent<Transform>().scale,
-                    orientation,
-                    currentEntity->getComponent<Transform>().position, 
+                    targetTransformMatrix, 
+                    outScale,
+                    outRotation,
+                    outPosition,
                     skew, 
                     perspective);
 
-                //orientation = glm::conjugate(orientation);
+                outRotation = glm::conjugate(outRotation);
 
-                currentEntity->getComponent<Transform>().rotation -= glm::degrees(glm::eulerAngles(orientation)); //TODO fix me still have not found out what is wrong with rotation
+                glm::vec3 deltaAngle = glm::radians(currentEntityTransform.rotation) - glm::eulerAngles(outRotation);
 
+                currentEntityTransform.scale = outScale;
+                currentEntityTransform.rotation -= glm::degrees(deltaAngle); // TODO ROTATIONS FOR LOCAL STILL INCORRECT
+                currentEntityTransform.position = outPosition;
             }
-            
-
             ImGui::End();
         }
-
-
-
         ImGui::End();
     }
 }
 
-void EditorGUI::RenderInspector() {
-
-}
+void EditorGUI::RenderInspector() {}
 
 void EditorGUI::RenderProject() {
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
@@ -237,8 +227,6 @@ void EditorGUI::RenderActiveInspector() {
 }
 
 void  EditorGUI::Demo(bool &demo) {
-
-
     if (&demo)
         ImGui::ShowDemoWindow(&demo);
 }

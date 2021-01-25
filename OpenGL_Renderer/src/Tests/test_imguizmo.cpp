@@ -27,7 +27,6 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
         GetManager()->addEntity(entity);
 
-
         for (int16_t i = 0; i < 3; i++) {
             std::string name = "basic sphere ";
             name.append(std::to_string(i));
@@ -53,25 +52,17 @@ namespace test {
     }
 
     void test_imguizmo::OnRender() {
-
         editor->OnGizmoRender();
 
-        if (editor->windowSizeChangeFlag) {
-            editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
-        }
-
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            return;
-        }
+        if (editor->windowSizeChangeFlag) {editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);}
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {return;}
 
         fbo.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         GetManager()->OnRender();
 
         fbo.UnBind();
-
     }
 
     void test_imguizmo::OnExit() {
@@ -79,7 +70,6 @@ namespace test {
     }
 
     void test_imguizmo::OnImGuiRender() {
-
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         editor->RenderScene(fbo.renderedTexture);
@@ -88,12 +78,6 @@ namespace test {
         editor->RenderConsole();
         editor->RenderMainMenuBar();
         editor->RenderActiveInspector();
-
-
-
-
-
-
     }
 }
 

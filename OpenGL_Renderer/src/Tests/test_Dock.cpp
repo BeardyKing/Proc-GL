@@ -27,7 +27,6 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
         GetManager()->addEntity(entity);
 
-
         for (size_t i = 0; i < 100; i++){
             std::string name = "basic sphere ";
             name.append(std::to_string(i));
@@ -72,11 +71,9 @@ namespace test {
         fbo.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
         GetManager()->OnRender();
 
         fbo.UnBind();
-
     }
 
     void test_Dock::OnExit() {
@@ -93,12 +90,6 @@ namespace test {
         editor->RenderConsole();
         editor->RenderMainMenuBar();
         editor->RenderActiveInspector();
-
-        
-        
-
-
-        
     }
 }
 
