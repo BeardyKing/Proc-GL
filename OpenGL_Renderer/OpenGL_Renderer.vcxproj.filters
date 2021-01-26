@@ -43,6 +43,12 @@
     <Filter Include="Components\scripts">
       <UniqueIdentifier>{7288accc-0617-4e08-a7af-f3f968a56dec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Depth Test">
+      <UniqueIdentifier>{62025bbc-1d76-497e-8ba2-d5adffc6362f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Tests\Default Test">
+      <UniqueIdentifier>{6134da60-ffcc-44e5-9ca8-bae114e040cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -140,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp">
       <Filter>Components\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tests\Default Test\test_defaultTest.cpp">
+      <Filter>_Tests\Default Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +266,9 @@
     <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h">
       <Filter>Components\scripts</Filter>
     </ClInclude>
+    <ClInclude Include="src\Tests\Default Test\test_defaultTest.h">
+      <Filter>_Tests\Default Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\basic.frag">
@@ -306,6 +318,12 @@
     </None>
     <None Include="bin\cubemap.vert">
       <Filter>Shaders\PBR</Filter>
+    </None>
+    <None Include="bin\Shaders\DepthTest\depthTest.frag">
+      <Filter>Shaders\Depth Test</Filter>
+    </None>
+    <None Include="bin\Shaders\DepthTest\depthTest.vert">
+      <Filter>Shaders\Depth Test</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

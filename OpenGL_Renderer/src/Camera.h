@@ -66,6 +66,10 @@ public:
 
 	glm::vec3 GetRotation();
 
+	inline virtual ImVec2 GetWindowSize() {
+		return ImGuiWindowSize; 
+	}
+
 	bool usingImGuiWindow = true;
 	ImVec2 ImGuiWindowSize;
 

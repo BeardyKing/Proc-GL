@@ -13,6 +13,7 @@
 
 #include "imGuiStyleSheet.h"
 
+#include "Tests/Default Test/test_defaultTest.h"
 #include "Tests/test.h"
 #include "Tests/test_PBR.h";
 #include "Tests/test_Dock.h"
@@ -77,6 +78,7 @@ int main(){
 	test::Test* currentTest = nullptr;
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
+	testMenu->RegisterTest<test::test_Default>("Default");
 	testMenu->RegisterTest<test::test_Dock>("docking test");
 	testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
 	testMenu->RegisterTest<test::test_imguizmo>("imguizmo");
@@ -201,6 +203,7 @@ bool InitOpenGL() {
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 	glEnable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_LESS);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
