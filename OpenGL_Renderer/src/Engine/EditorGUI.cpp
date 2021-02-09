@@ -49,6 +49,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 
     ImVec2 windowSize = ImGui::GetContentRegionAvail();
 
+
     if (windowSize.x != lastFrameWindowSize.x || windowSize.y != lastFrameWindowSize.y) {
         lastFrameWindowSize = windowSize;
         windowSizeChangeFlag = true;
@@ -88,8 +89,8 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
             std::cout << currentEntity->getComponent<ObjectData>().GetName() << std::endl;
             std::cout << cam->getComponent<ObjectData>().GetName() << std::endl;
             
-            float windowWidth   = (float)ImGui::GetWindowWidth();
-            float windowHeight  = (float)ImGui::GetWindowHeight();
+            float windowWidth  = (float)ImGui::GetItemRectSize().x + 8;
+            float windowHeight = (float)ImGui::GetItemRectSize().y + 8;
 
             static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
             static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::MODE::LOCAL);
@@ -105,7 +106,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
 
 			glm::mat4 camView, camProjection;
 			camView = cam->getComponent<FPSCamera>().GetViewMatrix();
-			camProjection = glm::perspective(cam->getComponent<FPSCamera>().getFOV(), windowWidth / windowHeight, 0.1f, 100.0f);
+			camProjection = glm::perspective(glm::radians(cam->getComponent<FPSCamera>().getFOV()), windowWidth / windowHeight, 0.1f, 100.0f);
             
             glm::mat4 targetTransformMatrix = currentEntityTransform.GetTransformMatrix();
             
