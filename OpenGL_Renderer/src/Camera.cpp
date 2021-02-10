@@ -25,7 +25,7 @@ glm::mat4 Camera::GetViewMatrix()const {
 	return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
 }
 
-const glm::vec3& Camera::GetLook()	const { //forward
+const glm::vec3& Camera::GetForward()	const { //forward
 	return mLook;
 }
 
@@ -118,8 +118,8 @@ void FPSCamera::OnUpdate(double deltaTime)
 		moveSpeedDelta = m_MoveSpeedDelta;
 	}
 
-	if (w) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetLook()); }
-	else if (s) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetLook()); }
+	if (w) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
+	else if (s) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
 
 	if (a) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
 	else if (d) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
