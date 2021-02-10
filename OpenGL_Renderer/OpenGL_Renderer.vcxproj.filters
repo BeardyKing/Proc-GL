@@ -150,6 +150,9 @@
     <ClCompile Include="src\Tests\Default Test\test_defaultTest.cpp">
       <Filter>_Tests\Default Test</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tests\test_shadowMap.cpp">
+      <Filter>_Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -268,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="src\Tests\Default Test\test_defaultTest.h">
       <Filter>_Tests\Default Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_shadowMap.h">
+      <Filter>_Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_List.h">
+      <Filter>_Tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,33 +3,25 @@
 
 #include "test.h"
 #include <memory>
+#include <iostream>
+#include <sstream>
+#include <vector>
 
-#include "../LightObject.h"
-#include "../ShaderProgram.h"
+#include "../Engine/ECS_List.h"
+#include "../Engine/EditorGUI.h"
+
 #include "../Texture2D.h"
-#include "../Mesh.h"
-#include "../Camera.h"
-#include "../Components/Transform.h"
-#include "../Components/ObjectData.h"
-#include "../ECS/Entity.h"
-#include "../ECS/EntityManager.h"
-
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
-#include "glm/gtc/random.hpp"
-
-#include "../LightObject.h"
-#include "../Mesh.h"
 #include "../ShaderProgram.h"
-#include "../Camera.h"
-#include "../Components/ObjectData.h"
 
 int G_GetWindowWidth();
 int G_GetWindowHeight();
 
+extern uint32_t GetAmountOfEntities();
+extern void SetManager(EntityManager* mgr);
+EntityManager* GetManager();
+
 namespace test {
-	class test_PBR : public Test
-	{
+	class test_PBR : public Test{
 	public:
 		test_PBR();
 		~test_PBR();
@@ -46,29 +38,15 @@ namespace test {
 		std::unique_ptr <Mesh> m_PBR_sphereMesh;
 		std::unique_ptr <ShaderProgram> m_PBR_sphereShader;
 		std::unique_ptr <Texture2D[]> m_PBR_sphereTexture;
-		std::unique_ptr <LightObject[]> m_pointLights;
-		
+		std::vector <Entity*> m_point_lights;		
+
+		Entity* m_pbr_cube;
+		Entity* entity;
+		FPSCamera* camRef;
+
 		int m_amountOfLights = 6;
-
-		//FPSCamera m_fpsCamera;
-
-		Transform m_pbrTransform;
-		/*glm::vec3 m_pbrSpherePosition;
-		glm::vec3 m_pbrSphereRotationAxis;
-		glm::vec3 m_pbrSphereScale;*/
-
 		float m_movingLightAngle = 90;
 
-		glm::vec2 m_lastMousePos;
-		bool m_mouseEnabled = true;
-		bool m_mouseFlag = false;
-
-		int m_ignoreForXFrames = 1;
-
-		bool w, a, s, d, l_shift;
-		
-		Entity* entity;
-		FPSCamera* camRef;	
 	};
 }
 

@@ -1,11 +1,6 @@
-#include <iostream>
 #include "test_ECS.h"
 
-
 namespace test {
-
-
-
 	test_ECS::test_ECS(){
 		editor = new EditorGUI;
 
@@ -18,9 +13,7 @@ namespace test {
 		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
 		GetManager()->addEntity(entity);
 
-
-		for (size_t i = 0; i < 100; i++)
-		{
+		for (size_t i = 0; i < 100; i++){
 			std::string name = "basic sphere ";
 			name.append(std::to_string(i));
 			entity = new Entity(name.c_str());
@@ -43,8 +36,7 @@ namespace test {
 		entity = new Entity();
 		GetManager()->addEntity(entity);
 
-
-		entity = new Entity("POINT LIGHT");
+		entity = new Entity("light");
 		entity->addComponent<LightObject>();
 		GetManager()->addEntity(entity);
 

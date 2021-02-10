@@ -13,12 +13,7 @@
 
 #include "imGuiStyleSheet.h"
 
-#include "Tests/Default Test/test_defaultTest.h"
-#include "Tests/test.h"
-#include "Tests/test_PBR.h";
-#include "Tests/test_Dock.h"
-#include "Tests/test_ECS.h"
-#include "Tests/test_imguizmo.h"
+#include "Tests/test_List.h"
 
 #include "ECS/ECS_Manager.h"
 
@@ -79,6 +74,7 @@ int main(){
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
 	testMenu->RegisterTest<test::test_Default>("Default");
+	testMenu->RegisterTest<test::test_shadowMap>("shadow map");
 	testMenu->RegisterTest<test::test_Dock>("docking test");
 	testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
 	testMenu->RegisterTest<test::test_imguizmo>("imguizmo");

@@ -1,29 +1,31 @@
-#ifndef TEST_ECS_H
-#define TEST_ECS_H
-#include "test.h"
+#ifndef TEST_SHADOWMAP_H
+#define TEST_SHADOWMAP_H
 
+#include "test.h"
 #include <iostream>
+
 #include "../Engine/ECS_List.h"
 #include "../Engine/EditorGUI.h"
-
-#include "glm/gtc/random.hpp"
+#include "../FrameBuffer.h"
 
 namespace test {
-	class test_ECS : public Test
+	class test_shadowMap : public Test
 	{
 	public:
-		test_ECS();
-		~test_ECS();
+		test_shadowMap();
+		~test_shadowMap();
 
-	private:
 		void OnUpdate(double deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
 		void OnExit()override;
-	
+
 	private:
+		FrameBuffer fbo;
+
 		Entity* entity;
 		EditorGUI* editor;
 	};
 }
-#endif // !TEST_ECS_H
+
+#endif // !TEST_SHADOWMAP_H

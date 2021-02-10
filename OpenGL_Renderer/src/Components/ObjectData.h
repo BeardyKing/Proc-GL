@@ -2,14 +2,14 @@
 #define OBJECTDATA_H
 
 #include "../ECS/Component.h"
-#include <memory>
-#include <iostream>
-#include <string>
 #include "../vendor/imgui/imgui.h"
+
+#include <memory>
+#include <string>
+#include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 
-class ObjectData : public Component
-{
+class ObjectData : public Component{
 public:
 	ObjectData();
 	ObjectData(char* _name);
@@ -32,8 +32,6 @@ private:
 	std::string name;
 	uint32_t entity_id;
 };
-
-
 #endif // !OBJECTDATA_H
 
 
