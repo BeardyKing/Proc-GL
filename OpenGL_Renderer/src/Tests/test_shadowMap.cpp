@@ -29,9 +29,10 @@ namespace test {
 
         entity = new Entity("Friendly default pipe");
         entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
+        //entity->addComponent<ShaderProgram>();
         entity->addComponent<Mesh>("mesh/pipe.obj");
-        entity->addComponent<ShaderProgram>();
         GetManager()->addEntity(entity);
+
         entity = new Entity("Ground");
         entity->addComponent<Texture2D>();
         //entity->getComponent<Texture2D>().loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png", true);

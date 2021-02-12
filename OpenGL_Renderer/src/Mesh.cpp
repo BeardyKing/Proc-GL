@@ -46,16 +46,13 @@ void Mesh::OnRender(){
 	Entity* cam = nullptr;
 	EntityManager* mgr = GetManager();
 
-		std::string name;
-		for (auto& e : mgr->entities){
-			if (e->hasComponent<FPSCamera>()){
-				cam = e->getComponent<ObjectData>().entity;
-				break;
-			}
+	std::string name;
+	for (auto& e : mgr->entities){
+		if (e->hasComponent<FPSCamera>()){
+			cam = e->getComponent<ObjectData>().entity;
+			break;
 		}
-
-		
-
+	}
 
 	FPSCamera& camera = cam->getComponent<FPSCamera>();
 	Transform& transform = entity->getComponent<Transform>();
@@ -81,11 +78,16 @@ void Mesh::OnRender(){
 	//////				MVP					//
 	//////----------------------------------//
 
-	shader.use();
-	shader.setUniform("lightCol", entity->getComponent<ShaderProgram>().GetBaseColor());
-	shader.setUniform("model", model);
-	shader.setUniform("view", view);
-	shader.setUniform("projection", projection);
+	if (&shader != NULL){
+		shader.use();
+		shader.setUniform("lightCol", entity->getComponent<ShaderProgram>().GetBaseColor());
+		shader.setUniform("model", model);
+		shader.setUniform("view", view);
+		shader.setUniform("projection", projection);
+	}
+	else {
+		std::cout << "could not find shader" << std::endl;
+	}
 
 	Draw();
 }
@@ -119,17 +121,13 @@ void Mesh::OnImGuiRender(){
 				ImGui::Text(&editor_coordinates[0]);
 			}
 			ImGui::Unindent();
-
 		}
-
 		ImGui::Separator();
 	}
 	ImGui::End();
 }
 
-void Mesh::OnExit(){
-
-}
+void Mesh::OnExit(){}
 
 bool Mesh::LoadOBJ(const std::string& fileName) {
 
