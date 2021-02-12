@@ -29,15 +29,18 @@ namespace test {
 
         entity = new Entity("Friendly default pipe");
         entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
-        //entity->addComponent<ShaderProgram>();
+        entity->addComponent<ShaderProgram>();
         entity->addComponent<Mesh>("mesh/pipe.obj");
         GetManager()->addEntity(entity);
 
         entity = new Entity("Ground");
         entity->addComponent<Texture2D>();
-        //entity->getComponent<Texture2D>().loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png", true);
+        entity->getComponent<Texture2D>().loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png", true);
         entity->getComponent<Texture2D>().loadTexture("nice.png", true);
-        entity->addComponent<ShaderProgram>("lightingMultiple.vert", "lightingMultiple.frag");
+        entity->addComponent<ShaderProgram>();
+        entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(0.2f));
+        entity->getComponent<Transform>().position = glm::vec3(0, -2, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);
         entity->addComponent<Mesh>("cube.obj");
         GetManager()->addEntity(entity);
 

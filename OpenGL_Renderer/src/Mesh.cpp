@@ -78,7 +78,21 @@ void Mesh::OnRender(){
 	//////				MVP					//
 	//////----------------------------------//
 
-	if (&shader != NULL){
+	if (&shader != NULL) {
+		if (shader.currentShader_uniform) {
+			shader.use();
+			shader.currentShader_uniform->SetUniformMVP(model, view, projection, shader);
+			shader.currentShader_uniform->SetUniformCustom(shader);
+		}
+		else {
+			std::cout << "mesh.cpp - shader.currentShader_uniform == null" << std::endl;
+		}
+	}
+	else {
+		std::cout << "mesh.cpp - shader == null" << std::endl;
+	}
+
+	/*if (&shader != NULL){
 		shader.use();
 		shader.setUniform("lightCol", entity->getComponent<ShaderProgram>().GetBaseColor());
 		shader.setUniform("model", model);
@@ -87,7 +101,7 @@ void Mesh::OnRender(){
 	}
 	else {
 		std::cout << "could not find shader" << std::endl;
-	}
+	}*/
 
 	Draw();
 }

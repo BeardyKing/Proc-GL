@@ -49,6 +49,9 @@
     <Filter Include="_Tests\Default Test">
       <UniqueIdentifier>{6134da60-ffcc-44e5-9ca8-bae114e040cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Shader_UniformSetter">
+      <UniqueIdentifier>{32a6b0a6-3801-4734-a548-9c40076c6182}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -152,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="src\Tests\test_shadowMap.cpp">
       <Filter>_Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Shader_UniformSetter.cpp">
+      <Filter>Shaders\Shader_UniformSetter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,14 +284,14 @@
     <ClInclude Include="src\Tests\test_List.h">
       <Filter>_Tests</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Shader_UniformSetter.h">
+      <Filter>Shaders\Shader_UniformSetter</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Shader_DefaultUniforms.h">
+      <Filter>Shaders\Shader_UniformSetter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\basic.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="bin\basic.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="bin\lighting.frag">
       <Filter>Shaders</Filter>
     </None>
@@ -333,6 +339,12 @@
     </None>
     <None Include="bin\Shaders\DepthTest\depthTest.vert">
       <Filter>Shaders\Depth Test</Filter>
+    </None>
+    <None Include="bin\objectDefaults\basic.frag">
+      <Filter>Shaders\LightObject_Defaults</Filter>
+    </None>
+    <None Include="bin\objectDefaults\basic.vert">
+      <Filter>Shaders\LightObject_Defaults</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

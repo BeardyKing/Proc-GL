@@ -3,19 +3,43 @@
 #include <iostream>
 #include <sstream>
 #include "glm/gtc/type_ptr.hpp"
-
-ShaderProgram::ShaderProgram() 
-	: m_Handle(0),
-	m_BaseColor(glm::vec3(300.0f, 150.0f, 150.0f))
+#include "Engine/Shader_DefaultUniforms.h"
+ShaderProgram::ShaderProgram()
+	: m_Handle(0)
+	//m_BaseColor(glm::vec3(300.0f, 150.0f, 150.0f))
 {
 	loadShaders("objectDefaults/basic.vert", "objectDefaults/basic.frag");
+	LoadShaderMenu();
+
+	currentShader_uniform = shaderMenu->SelectShader(0);
 }
+
 
 ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName)
 	: m_Handle(0)
 {
 	loadShaders(_vsFileName, _fsFileName);
+	LoadShaderMenu();
+
+	currentShader_uniform = shaderMenu->SelectShader(0);
 }
+
+ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName, const char* shader_uniform_name)
+	: m_Handle(0)
+{
+	loadShaders(_vsFileName, _fsFileName);
+	LoadShaderMenu();
+
+	currentShader_uniform = shaderMenu->SelectShader(shader_uniform_name);
+}
+
+void ShaderProgram::LoadShaderMenu() {
+	currentShader_uniform = nullptr;
+	shaderMenu = new uniform::ShaderMenu(currentShader_uniform);
+	currentShader_uniform = shaderMenu;
+	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>("basic"); // TODO ADD SHADER LIST LOADER
+}
+
 
 ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(m_Handle);
@@ -23,15 +47,19 @@ ShaderProgram::~ShaderProgram() {
 
 void ShaderProgram::OnImGuiRender()
 {
+	// shader uniform base class 
+	
+	//
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Inspector"); {
 		ImGui::Separator();
 		if (ImGui::CollapsingHeader("Shader Program", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-			ImGui::Indent();
-			if (ImGui::CollapsingHeader("Base Color", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-				ImGui::ColorPicker3("Base Color Picker", &m_BaseColor.r);
+			
+			if (currentShader_uniform) {
+				currentShader_uniform->OnImGuiRender();
 			}
+
 			if (ImGui::CollapsingHeader("Vertex Shader", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
 			ImGui::InputTextMultiline("EDITOR_VS", &editor_fragmentShader[0], editor_fragmentShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
@@ -53,7 +81,9 @@ glm::vec3 ShaderProgram::GetBaseColor(){
 }
 
 void ShaderProgram::SetBaseColor(glm::vec3 color){
-	m_BaseColor = color;
+	if (currentShader_uniform){
+		currentShader_uniform->SetBaseColor(color);
+	}
 }
 
 bool ShaderProgram::loadShaders (const char* vsFileName, const char* fsFileName) {

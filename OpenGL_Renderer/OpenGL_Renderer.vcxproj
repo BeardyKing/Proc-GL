@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -157,6 +157,7 @@
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\ECS\SystemManager.cpp" />
     <ClCompile Include="src\Engine\EditorGUI.cpp" />
+    <ClCompile Include="src\Engine\Shader_UniformSetter.cpp" />
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\imGuiStyleSheet.cpp" />
     <ClCompile Include="src\LightObject.cpp" />
@@ -197,6 +198,8 @@
     <ClInclude Include="src\ECS\SystemManager.h" />
     <ClInclude Include="src\Engine\ECS_List.h" />
     <ClInclude Include="src\Engine\EditorGUI.h" />
+    <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
+    <ClInclude Include="src\Engine\Shader_UniformSetter.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\imGuiStyleSheet.h" />
     <ClInclude Include="src\LightObject.h" />
@@ -226,8 +229,6 @@
     <ClInclude Include="src\vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\basic.frag" />
-    <None Include="bin\basic.vert" />
     <None Include="bin\cubemap.frag" />
     <None Include="bin\cubemap.vert" />
     <None Include="bin\lighting.frag" />
@@ -240,6 +241,8 @@
     <None Include="bin\lightingPoint.vert" />
     <None Include="bin\lightingSpot.frag" />
     <None Include="bin\lightingSpot.vert" />
+    <None Include="bin\objectDefaults\basic.frag" />
+    <None Include="bin\objectDefaults\basic.vert" />
     <None Include="bin\pbr.frag" />
     <None Include="bin\pbr.vert" />
     <None Include="bin\Shaders\DepthTest\depthTest.frag" />

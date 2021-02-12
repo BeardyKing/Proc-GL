@@ -48,10 +48,17 @@ const glm::vec3 Camera::GetPosition()const {
 
 FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) :
 ImGuiWindowSize(10,10)
+
 {
 	//mPosition = position;
 	mYaw = yaw;
 	mPitch = pitch;
+	mTarget = (glm::vec3(0.0f, 0.0f, 0.0f));
+	mUp = (glm::vec3(0.0f, 0.1f, 0.0f));
+	mRight = (glm::vec3(0.0f, 0.0f, 0.0f));
+	//WORLD_UP = (glm::vec3(0.0f, 1.0f, 0.0f));
+	mRoll = (0.0f);
+	mFOV = (DEFAULT_FOV);
 
 }
 

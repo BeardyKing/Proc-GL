@@ -14,6 +14,7 @@
 #include "../ShaderProgram.h"
 #include "../Camera.h"
 
+
 extern uint32_t GetAmountOfEntities();
 extern void SetManager(EntityManager* mgr);
 EntityManager* GetManager();
