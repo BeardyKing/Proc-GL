@@ -3,10 +3,23 @@
 #include "stb_image/stb_image.h"
 #include <iostream>
 
-Texture2D::Texture2D() 
-: m_Texture(0)
-{
+Texture2D::Texture2D() : m_Texture(0){}
 
+void Texture2D::OnImGuiRender(){
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+
+	ImGui::Begin("Inspector"); {
+		ImGui::Separator();
+		if (ImGui::CollapsingHeader("Texture2D", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)){
+			ImGui::Indent();
+
+			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * m_TextureHeight / m_textureWidth;
+			ImGui::Image((void*)m_Texture, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+
+			ImGui::Unindent();
+		}
+	}
+	ImGui::End();
 }
 
 Texture2D::~Texture2D() {
@@ -18,14 +31,13 @@ GLuint Texture2D::GetTexture() {
 }
 
 bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
-
-
+	unsigned char* imageData;
 	int width, height, components;
-	unsigned char* imageData = stbi_load(fileName.c_str(), &width, &height, &components, 0);
+
+	imageData = stbi_load(fileName.c_str(), &width, &height, &components, 0);
 	if (imageData){
 
 		glGenTextures(1, &m_Texture);
-		
 
 		GLenum format;
 		if (components == 1)
@@ -51,6 +63,11 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+		std::cout << "Texture loaded at path: " << fileName << std::endl;
+
+		m_textureWidth = width;
+		m_TextureHeight = height;
+
 		stbi_image_free(imageData);
 	}
 	else{
@@ -59,7 +76,7 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 		return false;
 	}
 
-	glBindTexture(GL_TEXTURE_2D, 0); // unbind
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
 }
@@ -84,6 +101,9 @@ bool Texture2D::loadHDRTexture(const std::string& fileName) {
 	else{
 		std::cout << "Failed to load HDR image at path: " << fileName << std::endl;
 	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	return false;
 }
 
@@ -111,9 +131,10 @@ bool Texture2D::loadCubemap(const std::vector<std::string> fileNames) {
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	return true;
 }
-
 
 void Texture2D::bind(GLuint texUnit) {
 	glActiveTexture(GL_TEXTURE0 + texUnit);

@@ -84,11 +84,7 @@ void EditorGUI::RenderScene(GLuint& renderTexture) {
         }
 
         if (currentEntity && cam) {
-            ImGui::Begin("Scene");
-
-            std::cout << currentEntity->getComponent<ObjectData>().GetName() << std::endl;
-            std::cout << cam->getComponent<ObjectData>().GetName() << std::endl;
-            
+            ImGui::Begin("Scene");            
             float windowWidth  = (float)ImGui::GetItemRectSize().x + 8;
             float windowHeight = (float)ImGui::GetItemRectSize().y + 8;
 

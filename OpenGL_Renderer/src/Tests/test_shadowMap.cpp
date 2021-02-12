@@ -32,6 +32,13 @@ namespace test {
         entity->addComponent<Mesh>("mesh/pipe.obj");
         entity->addComponent<ShaderProgram>();
         GetManager()->addEntity(entity);
+        entity = new Entity("Ground");
+        entity->addComponent<Texture2D>();
+        //entity->getComponent<Texture2D>().loadTexture("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png", true);
+        entity->getComponent<Texture2D>().loadTexture("nice.png", true);
+        entity->addComponent<ShaderProgram>("lightingMultiple.vert", "lightingMultiple.frag");
+        entity->addComponent<Mesh>("cube.obj");
+        GetManager()->addEntity(entity);
 
         entity = new Entity("Directional Light");
         entity->addComponent<LightObject>();

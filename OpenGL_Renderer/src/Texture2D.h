@@ -4,10 +4,15 @@
 #include "GL/glew.h"
 #include <string>
 #include <vector>
+#include "ECS/Component.h"
+#include "ECS/Entity.h"
 
-class Texture2D {
+class Texture2D : public Component {
 
 public:
+
+	void OnImGuiRender();
+
 
 	Texture2D();
 	virtual ~Texture2D();
@@ -21,6 +26,9 @@ public:
 
 
 private:
+
+	int m_textureWidth = 0;
+	int m_TextureHeight = 0;
 
 	GLuint m_Texture;
 };
