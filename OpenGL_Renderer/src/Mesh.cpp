@@ -81,7 +81,7 @@ void Mesh::OnRender(){
 	if (&shader != NULL) {
 		if (shader.currentShader_uniform) {
 			shader.use();
-			shader.currentShader_uniform->SetUniformMVP(model, view, projection, shader);
+			shader.currentShader_uniform->SetUniformMVP(model, view, projection, shader, camera);
 			shader.currentShader_uniform->SetUniformCustom(shader);
 		}
 		else {

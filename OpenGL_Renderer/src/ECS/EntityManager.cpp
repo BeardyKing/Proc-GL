@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include "../Engine/ECS_List.h"
 
 
 void EntityManager::addEntity(Entity* entity){
@@ -9,6 +10,20 @@ void EntityManager::addEntity(Entity* entity){
 void EntityManager::Editor_SetActiveEntity(uint32_t id){
 	selectedEntityID = id;
 }
+
+Entity* EntityManager::FindActiveCamera() {
+	for (auto& entity : entities){
+		if (entity->hasComponent<Camera>() || entity->hasComponent<FPSCamera>() || entity->hasComponent<OrbitCamera>()){
+			if (entity->isActive()){
+				return entity.get();
+			}
+		}
+	}
+
+	std::cout << "---WARNING : EntityManager.cpp - Could not Find Camera in scene" << std::endl;
+
+}
+
 
 #pragma region CALLBACKS
 
@@ -61,14 +76,21 @@ void EntityManager::refresh(){}
 void EntityManager::eraseEntity(Entity* entity){}
 Entity* EntityManager::cloneEntity(Entity* entity){return nullptr;}
 
-Entity* EntityManager::FindEntityWithType() {
-	/*for (auto& entity : entities){
-		if (entities[i]->hasComponent<T>()){
-			return entities[i];
+
+std::vector<Entity*> EntityManager::FindLights(){
+	std::vector<Entity*> arr;
+	for (auto& entity : entities) {
+		if (entity->hasComponent<LightObject>()) {
+			if (entity->isActive()) {
+				arr.emplace_back(entity.get());
+			}
 		}
-	}*/	
-	return NULL;
+	}
+	return arr;
 }
+
+
+
 Entity* EntityManager::GetSelectedEntity() {
 	return entities[selectedEntityID].get();
 }

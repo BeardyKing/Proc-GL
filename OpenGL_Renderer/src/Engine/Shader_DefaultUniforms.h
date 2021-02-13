@@ -9,8 +9,7 @@ namespace uniform {
 	public:
 		Shader_DefaultUniforms();
 		~Shader_DefaultUniforms();
-
-		void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader)override;
+		void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera);
 		void SetUniformCustom(ShaderProgram& _shader)override;
 		void OnImGuiRender()override;
 
@@ -23,7 +22,7 @@ namespace uniform {
 	void Shader_DefaultUniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
 
 
-	void Shader_DefaultUniforms::SetUniformMVP(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, ShaderProgram& _shader) {
+	void Shader_DefaultUniforms::SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 		_shader.setUniform("model", model);
 		_shader.setUniform("view", view);
 		_shader.setUniform("projection", projection);

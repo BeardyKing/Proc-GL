@@ -50,25 +50,23 @@ namespace test {
 		std::string name = "PBR cube ";
 		entity = new Entity(name.c_str());
 		entity->getComponent<Transform>().scale = glm::vec3(3);
+		entity->addComponent<Mesh>("cube.obj");
+		entity->addComponent<ShaderProgram>("pbr.vert", "pbr.frag", "PBR");
 		m_pbr_cube = entity;
 		GetManager()->addEntity(entity);
 
-		m_PBR_sphereMesh = std::make_unique<Mesh>();
+		/*m_PBR_sphereMesh = std::make_unique<Mesh>();
 		m_PBR_sphereMesh->LoadOBJ("cube.obj");
 
 		m_PBR_sphereShader = std::make_unique<ShaderProgram>();
-		m_PBR_sphereShader->loadShaders("pbr.vert", "pbr.frag");
+		m_PBR_sphereShader->loadShaders("pbr.vert", "pbr.frag");*/
 
-		m_PBR_sphereShader->use();
-		m_PBR_sphereShader->setUniform("albedo", glm::vec3(0.5f, 0.0f, 0.0f));
-		m_PBR_sphereShader->setUniform("ao", 1.0f);
-
-		m_PBR_sphereTexture = std::make_unique<Texture2D[]>(5);
-		m_PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png", true);	//albedo
-		m_PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png", true);		//normal
-		m_PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png", true);		//metalic
-		m_PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png", true);	//roughness
-		m_PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png", true);			//ambient occlusion 
+		//m_PBR_sphereTexture = std::make_unique<Texture2D[]>(5);
+		//m_PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png", true);	//albedo
+		//m_PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png", true);		//normal
+		//m_PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png", true);		//metalic
+		//m_PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png", true);	//roughness
+		//m_PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png", true);			//ambient occlusion 
 
 	}
 
@@ -109,7 +107,7 @@ namespace test {
 		//			PBR MATERIAL			//
 		//----------------------------------//
 
-		m_PBR_sphereShader->use();
+		/*m_PBR_sphereShader->use();
 
 		model = m_pbr_cube->getComponent<Transform>().GetTransformMatrix();
 
@@ -130,21 +128,26 @@ namespace test {
 		m_PBR_sphereShader->setUniformSampler("roughnessMap",	3);
 		m_PBR_sphereShader->setUniformSampler("aoMap",			4);
 						
-		m_PBR_sphereMesh->Draw();
+		m_PBR_sphereMesh->Draw();*/
 
 		//----------------------------------//
 		//		PBR SET LIGHT UNIFORMS		//
 		//----------------------------------//		
-
-		m_PBR_sphereShader->use();
-		m_PBR_sphereShader->setUniform("amountOfLights", m_amountOfLights);
+		LightObject t;
+		auto arr = GetManager()->FindEntitiesOfType(t);
+		//arr->FindEntitiesWithType(t);
+		for (auto& lo : arr) {
+			std::cout << lo->getComponent<ObjectData>().GetName() << std::endl;
+		}
+		m_pbr_cube->getComponent<ShaderProgram>().use();
+		m_pbr_cube->getComponent<ShaderProgram>().setUniform("amountOfLights", m_amountOfLights);
 
 		for (unsigned int i = 0; i < m_amountOfLights; ++i) {
 			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
-			m_PBR_sphereShader->setUniform(str1.c_str(), m_point_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
+			m_pbr_cube->getComponent<ShaderProgram>().setUniform(str1.c_str(), m_point_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
 
 			std::string str2 = "lightColors[" + std::to_string(i) + "]";
-			m_PBR_sphereShader->setUniform(str2.c_str(), m_point_lights[i]->getComponent<LightObject>().color);		// set shader uniform for lightColors[i]
+			m_pbr_cube->getComponent<ShaderProgram>().setUniform(str2.c_str(), m_point_lights[i]->getComponent<LightObject>().color);		// set shader uniform for lightColors[i]
 		}
 
 		GetManager()->OnRender();

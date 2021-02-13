@@ -12,6 +12,7 @@
 #include <functional>
 
 class ShaderProgram;
+class Camera;
 
 namespace uniform {
 
@@ -21,7 +22,7 @@ namespace uniform {
 		Shader_Uniforms() {}
 		virtual ~Shader_Uniforms() {}
 
-		virtual void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader) {
+		virtual void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 			std::cout << "base MVP" << std::endl;
 		}
 		virtual void SetUniformCustom(ShaderProgram& _shader) {}
