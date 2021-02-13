@@ -30,6 +30,11 @@ GLuint Texture2D::GetTexture() {
 	return m_Texture;
 }
 
+glm::vec2 Texture2D::GetTextureSize() {
+	return glm::vec2(m_textureWidth, m_TextureHeight);
+}
+
+
 bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 	unsigned char* imageData;
 	int width, height, components;

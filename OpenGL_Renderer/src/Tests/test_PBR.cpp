@@ -6,67 +6,76 @@ namespace test {
 	{
 		EntityManager* manager = new EntityManager;
 		SetManager(manager);
-
-		//----------------------------------//
-		//			  Camera				//
-		//----------------------------------//
-
-		entity = new Entity("Main Camera");
-		entity->addComponent<FPSCamera>();
-		auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
-		entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
-		camRef = &entity->getComponent<FPSCamera>();
-		GetManager()->addEntity(entity);
-
-		//----------------------------------//
-		//			  Lights				//
-		//----------------------------------//
-
-		for (size_t i = 0; i < m_amountOfLights; i++)
 		{
-			std::string name = "basic sphere ";
-			name.append(std::to_string(i));
-			entity = new Entity(name.c_str());
-			entity->addComponent<LightObject>();
-			entity->getComponent<LightObject>().lightType;
-			entity->addComponent<Mesh>();
-			entity->addComponent<ShaderProgram>();
+			//----------------------------------//
+			//			  Camera				//
+			//----------------------------------//
+
+			entity = new Entity("Main Camera");
 			GetManager()->addEntity(entity);
 
-			m_point_lights.push_back(entity);
+			entity->addComponent<FPSCamera>();
+			auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
+			entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
+			camRef = &entity->getComponent<FPSCamera>();
 		}
 
-		m_point_lights[0]->getComponent<Transform>().position = glm::vec3(0.0f, 0.0f, 0.0f)			* 0.5f;
-		m_point_lights[1]->getComponent<Transform>().position = glm::vec3(10.0f, 10.0f, 10.0f)		* 0.5f;
-		m_point_lights[2]->getComponent<Transform>().position = glm::vec3(-13.0f, 0.0f, 10.0f)		* 0.5f;
-		m_point_lights[3]->getComponent<Transform>().position = glm::vec3(7.2f, -5.2f, -13.6f)		* 0.5f;
-		m_point_lights[4]->getComponent<Transform>().position = glm::vec3(-13.0f, 10.0f, 10.0f)		* 0.5f;
-		m_point_lights[5]->getComponent<Transform>().position = glm::vec3(-13.0f, 10.0f, -10.0f)	* 0.5f;
+		{
+			//----------------------------------//
+			//			  Lights				//
+			//----------------------------------//
+			for (size_t i = 0; i < m_amountOfLights; i++) {
+				std::string name = "basic sphere ";
+				GetManager()->addEntity(entity);
 
-		//----------------------------------//
-		//			  PBR CUBE				//
-		//----------------------------------//
+				name.append(std::to_string(i));
+				entity = new Entity(name.c_str());
+				entity->addComponent<LightObject>();
+				entity->addComponent<Mesh>();
+				entity->addComponent<ShaderProgram>();
 
-		std::string name = "PBR cube ";
-		entity = new Entity(name.c_str());
-		entity->getComponent<Transform>().scale = glm::vec3(3);
-		entity->addComponent<Mesh>("cube.obj");
-		entity->addComponent<ShaderProgram>("pbr.vert", "pbr.frag", "PBR");
-		m_pbr_cube = entity;
-		GetManager()->addEntity(entity);
+				_lightRef.push_back(entity);
+			}
 
-		/*m_PBR_sphereMesh = std::make_unique<Mesh>();
-		m_PBR_sphereMesh->LoadOBJ("cube.obj");
+			_lightRef[0]->getComponent<Transform>().position = glm::vec3(0.0f, 0.0f, 0.0f) * 0.5f;
+			_lightRef[1]->getComponent<Transform>().position = glm::vec3(10.0f, 10.0f, 10.0f) * 0.5f;
+			_lightRef[2]->getComponent<Transform>().position = glm::vec3(-13.0f, 0.0f, 10.0f) * 0.5f;
+			_lightRef[3]->getComponent<Transform>().position = glm::vec3(7.2f, -5.2f, -13.6f) * 0.5f;
+			_lightRef[4]->getComponent<Transform>().position = glm::vec3(-13.0f, 10.0f, 10.0f) * 0.5f;
+			_lightRef[5]->getComponent<Transform>().position = glm::vec3(-13.0f, 10.0f, -10.0f) * 0.5f;
 
-		m_PBR_sphereShader = std::make_unique<ShaderProgram>();
-		m_PBR_sphereShader->loadShaders("pbr.vert", "pbr.frag");*/
+			for (auto& light : _lightRef) {
+				light->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(1));
+			}
+		}
 
-		//m_PBR_sphereTexture = std::make_unique<Texture2D[]>(5);
-		//m_PBR_sphereTexture[0].loadTexture("paint/Painted_metal_02_1K_Base_Color.png", true);	//albedo
-		//m_PBR_sphereTexture[1].loadTexture("paint/Painted_metal_02_1K_Normal.png", true);		//normal
-		//m_PBR_sphereTexture[2].loadTexture("paint/Painted_metal_02_1K_Metallic.png", true);		//metalic
-		//m_PBR_sphereTexture[3].loadTexture("paint/Painted_metal_02_1K_Roughness.png", true);	//roughness
-		//m_PBR_sphereTexture[4].loadTexture("paint/Painted_metal_02_1K_AO.png", true);			//ambient occlusion 
+		{
+			//----------------------------------//
+			//			  PBR CUBE				//
+			//----------------------------------//
+
+			entity = new Entity("PBR cube");
+			GetManager()->addEntity(entity);
+			m_pbr_cube = entity;
+
+			entity->getComponent<Transform>().scale = glm::vec3(3);
+			entity->addComponent<Mesh>("cube.obj");
+			entity->addComponent<ShaderProgram>("pbr.vert", "pbr.frag", "Uniform_PBR");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+			m_pbr_cube->getComponent<ShaderProgram>().LoadTextures();
+		}
+
+		{
+			std::string name = "dood ";
+			entity = new Entity(name.c_str());
+			entity->getComponent<Transform>().scale = glm::vec3(3);
+			m_pbr_cube = entity;
+			GetManager()->addEntity(entity);
+		}
 
 	}
 
@@ -84,9 +93,9 @@ namespace test {
 
 		m_movingLightAngle += (float)deltaTime * 90.0f;	// rotate lights
 
-		m_point_lights[0]->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
-		m_point_lights[0]->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
-		m_point_lights[0]->getComponent<Transform>().position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
+		_lightRef[0]->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
+		_lightRef[0]->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
+		_lightRef[0]->getComponent<Transform>().position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 
 		GetManager()->OnUpdate(deltaTime);
 	}
@@ -94,61 +103,6 @@ namespace test {
 	void test_PBR::OnRender() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//----------------------------------//
-		//				MVP					//
-		//----------------------------------//
-
-		glm::mat4 model, view, projection;
-		view = camRef->GetViewMatrix();
-		projection = glm::perspective(camRef->getFOV(), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
-		
-		//----------------------------------//
-		//			PBR MATERIAL			//
-		//----------------------------------//
-
-		/*m_PBR_sphereShader->use();
-
-		model = m_pbr_cube->getComponent<Transform>().GetTransformMatrix();
-
-		m_PBR_sphereShader->setUniform("model", model);
-		m_PBR_sphereShader->setUniform("view", view);
-		m_PBR_sphereShader->setUniform("projection", projection);
-		m_PBR_sphereShader->setUniform("camPos", camRef->GetPosition());
-
-		m_PBR_sphereTexture[0].bind(0);
-		m_PBR_sphereTexture[1].bind(1);
-		m_PBR_sphereTexture[2].bind(2);
-		m_PBR_sphereTexture[3].bind(3);
-		m_PBR_sphereTexture[4].bind(4);
-
-		m_PBR_sphereShader->setUniformSampler("albedoMap",		0);
-		m_PBR_sphereShader->setUniformSampler("normalMap",		1);
-		m_PBR_sphereShader->setUniformSampler("metallicMap",	2);
-		m_PBR_sphereShader->setUniformSampler("roughnessMap",	3);
-		m_PBR_sphereShader->setUniformSampler("aoMap",			4);
-						
-		m_PBR_sphereMesh->Draw();*/
-
-		//----------------------------------//
-		//		PBR SET LIGHT UNIFORMS		//
-		//----------------------------------//		
-		LightObject t;
-		auto arr = GetManager()->FindEntitiesOfType(t);
-		//arr->FindEntitiesWithType(t);
-		for (auto& lo : arr) {
-			std::cout << lo->getComponent<ObjectData>().GetName() << std::endl;
-		}
-		m_pbr_cube->getComponent<ShaderProgram>().use();
-		m_pbr_cube->getComponent<ShaderProgram>().setUniform("amountOfLights", m_amountOfLights);
-
-		for (unsigned int i = 0; i < m_amountOfLights; ++i) {
-			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
-			m_pbr_cube->getComponent<ShaderProgram>().setUniform(str1.c_str(), m_point_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
-
-			std::string str2 = "lightColors[" + std::to_string(i) + "]";
-			m_pbr_cube->getComponent<ShaderProgram>().setUniform(str2.c_str(), m_point_lights[i]->getComponent<LightObject>().color);		// set shader uniform for lightColors[i]
-		}
 
 		GetManager()->OnRender();
 	}
@@ -163,21 +117,19 @@ namespace test {
 	}
 
 	void test_PBR::RenderHierarchy() {
+		ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+		ImGui::Begin("ECS_Hierarchy");
 		{
-			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-			ImGui::Begin("ECS_Hierarchy");
-			{
-				for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
-					auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
-					if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
-						GetManager()->Editor_SetActiveEntity(i);
-					}
+			for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
+				auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+				if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
+					GetManager()->Editor_SetActiveEntity(i);
 				}
 			}
-
-			ImGui::SameLine();
-			ImGui::End();
 		}
+
+		ImGui::SameLine();
+		ImGui::End();
 	}
 
 }

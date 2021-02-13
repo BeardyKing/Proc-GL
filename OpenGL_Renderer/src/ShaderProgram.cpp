@@ -13,6 +13,7 @@ ShaderProgram::ShaderProgram()
 	LoadShaderMenu();
 
 	currentShader_uniform = shaderMenu->SelectShader(0);
+
 }
 
 
@@ -25,33 +26,50 @@ ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName)
 	currentShader_uniform = shaderMenu->SelectShader(0);
 }
 
-ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName, const char* shader_uniform_name)
+ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName, std::string shader_uniform_name)
 	: m_Handle(0)
 {
 	loadShaders(_vsFileName, _fsFileName);
 	LoadShaderMenu();
 
 	currentShader_uniform = shaderMenu->SelectShader(shader_uniform_name);
+	
+
+	
+	//currentShader_uniform->Uniform_Init();
+	//ShaderProgram& shader = entity->getComponent<ShaderProgram>();
+
 }
 
 void ShaderProgram::LoadShaderMenu() {
 	currentShader_uniform = nullptr;
 	shaderMenu = new uniform::ShaderMenu(currentShader_uniform);
 	currentShader_uniform = shaderMenu;
-	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>("basic"); // TODO ADD SHADER LIST LOADER
-	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>("PBR"); 
+	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>	("Uniform_basic"); // TODO ADD SHADER LIST LOADER
+	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>	("Uniform_PBR"); 
 }
 
+void ShaderProgram::AddTexturePath(std::string _textureFileName) {
+	texturePaths.emplace_back(_textureFileName);
+}
+
+void ShaderProgram::LoadTextures() {
+	currentShader_uniform->LoadTextures(*entity);
+}
+
+void ShaderProgram::AddTexturePath(std::vector<std::string> _textureFileNames) {
+	texturePaths = _textureFileNames;
+}
+
+std::vector<std::string> ShaderProgram::GetTextures() {
+	return texturePaths;
+}
 
 ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(m_Handle);
 }
 
-void ShaderProgram::OnImGuiRender()
-{
-	// shader uniform base class 
-	
-	//
+void ShaderProgram::OnImGuiRender(){
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Inspector"); {

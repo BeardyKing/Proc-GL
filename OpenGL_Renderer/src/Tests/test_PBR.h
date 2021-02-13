@@ -38,7 +38,7 @@ namespace test {
 		std::unique_ptr <Mesh> m_PBR_sphereMesh;
 		std::unique_ptr <ShaderProgram> m_PBR_sphereShader;
 		std::unique_ptr <Texture2D[]> m_PBR_sphereTexture;
-		std::vector <Entity*> m_point_lights;		
+		std::vector <Entity*> _lightRef;		
 
 		Entity* m_pbr_cube;
 		Entity* entity;

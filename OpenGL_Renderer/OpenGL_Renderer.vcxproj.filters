@@ -290,6 +290,9 @@
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h">
       <Filter>Shaders\Shader_Basic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h">
+      <Filter>Shaders\Shader_PBR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\lighting.frag">

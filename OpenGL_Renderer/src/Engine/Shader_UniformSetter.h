@@ -21,6 +21,7 @@ namespace uniform {
 	public:
 		Shader_Uniforms() {}
 		virtual ~Shader_Uniforms() {}
+		virtual void LoadTextures(Entity& _shader) {}
 
 		virtual void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 			std::cout << "base MVP" << std::endl;
@@ -31,8 +32,7 @@ namespace uniform {
 		virtual void SetBaseColor(glm::vec3 _color) {}
 
 	};
-//
-//
+
 	class ShaderMenu : public Shader_Uniforms {
 	public:
 		ShaderMenu(Shader_Uniforms*& currentShaderPointer);

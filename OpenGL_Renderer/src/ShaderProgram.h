@@ -9,17 +9,25 @@
 #include "ECS/Component.h"
 #include "ECS/Entity.h"
 #include "Engine/Shader_UniformSetter.h"
+#include <vector>
 
 class ShaderProgram : public Component
 {
 public :
 	ShaderProgram();
 	ShaderProgram(const char* _vsFileName, const char* _fsFileName);
-	ShaderProgram(const char* _vsFileName, const char* _fsFileName, const char* shader_uniform_name);
+	ShaderProgram(const char* _vsFileName, const char* _fsFileName, std::string shader_uniform_name);
 	
 	~ShaderProgram();
 
 	void LoadShaderMenu();
+
+	void AddTexturePath(std::string _textureFileName);
+	void AddTexturePath(std::vector<std::string> _textureFileNames);
+	void LoadTextures();
+	std::vector<std::string> GetTextures();
+
+
 
 	void OnImGuiRender();
 	glm::vec3 GetBaseColor();
@@ -49,6 +57,9 @@ public :
 	GLuint getProgram()const;
 
 private:
+
+	std::vector<std::string> texturePaths;
+
 
 	std::string editor_vertexShader;
 	std::string editor_fragmentShader;
