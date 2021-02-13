@@ -246,6 +246,8 @@
     <None Include="bin\objectDefaults\basic.vert" />
     <None Include="bin\pbr.frag" />
     <None Include="bin\pbr.vert" />
+    <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.frag" />
+    <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.vert" />
     <None Include="bin\Shaders\DepthTest\depthTest.frag" />
     <None Include="bin\Shaders\DepthTest\depthTest.vert" />
   </ItemGroup>

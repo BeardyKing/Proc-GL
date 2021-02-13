@@ -52,6 +52,9 @@
     <Filter Include="Shaders\Shader_PBR">
       <UniqueIdentifier>{02920ac6-cdeb-4182-8b7f-f1cd4c406920}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Blinn-Phong">
+      <UniqueIdentifier>{b33e49df-49d4-4339-a5f9-7dc6d4c3dc7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -348,6 +351,12 @@
     </None>
     <None Include="bin\objectDefaults\basic.frag">
       <Filter>Shaders\Shader_Basic</Filter>
+    </None>
+    <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.frag">
+      <Filter>Shaders\Blinn-Phong</Filter>
+    </None>
+    <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.vert">
+      <Filter>Shaders\Blinn-Phong</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
