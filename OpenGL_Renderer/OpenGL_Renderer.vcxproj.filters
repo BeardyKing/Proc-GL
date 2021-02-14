@@ -55,6 +55,9 @@
     <Filter Include="Shaders\Blinn-Phong">
       <UniqueIdentifier>{b33e49df-49d4-4339-a5f9-7dc6d4c3dc7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\shadow_Depth">
+      <UniqueIdentifier>{6f714cb8-f3a8-4923-a967-fea2d81bf356}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ShaderProgram.cpp">
@@ -296,6 +299,9 @@
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h">
       <Filter>Shaders\Shader_PBR</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h">
+      <Filter>Shaders\Blinn-Phong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\lighting.frag">
@@ -357,6 +363,12 @@
     </None>
     <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.vert">
       <Filter>Shaders\Blinn-Phong</Filter>
+    </None>
+    <None Include="bin\Shaders\ShadowMapping\shadow_depth.frag">
+      <Filter>Shaders\shadow_Depth</Filter>
+    </None>
+    <None Include="bin\Shaders\ShadowMapping\shadow_depth.vert">
+      <Filter>Shaders\shadow_Depth</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

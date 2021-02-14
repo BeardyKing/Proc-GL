@@ -5,6 +5,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Engine/Shader_DefaultUniforms.h"
 #include "Engine/Shader_PBR_Uniforms.h"
+#include "Engine/Shader_Blinn_Phong_Uniforms.h"
+
 ShaderProgram::ShaderProgram()
 	: m_Handle(0)
 	//m_BaseColor(glm::vec3(300.0f, 150.0f, 150.0f))
@@ -45,8 +47,9 @@ void ShaderProgram::LoadShaderMenu() {
 	currentShader_uniform = nullptr;
 	shaderMenu = new uniform::ShaderMenu(currentShader_uniform);
 	currentShader_uniform = shaderMenu;
-	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>	("Uniform_basic"); // TODO ADD SHADER LIST LOADER
-	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>	("Uniform_PBR"); 
+	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); // TODO ADD SHADER LIST LOADER
+	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
+	shaderMenu->RegisterShader<uniform::Shader_Blinn_Phong_Uniforms>	("Uniform_Blinn-Phong"); 
 }
 
 void ShaderProgram::AddTexturePath(std::string _textureFileName) {

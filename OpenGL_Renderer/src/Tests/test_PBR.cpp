@@ -68,6 +68,26 @@ namespace test {
 			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
 			m_pbr_cube->getComponent<ShaderProgram>().LoadTextures();
 		}
+		{
+			//----------------------------------//
+			//			  PBR CUBE				//
+			//----------------------------------//
+
+			entity = new Entity("PBR cube2");
+			GetManager()->addEntity(entity);
+			m_pbr_cube = entity;
+
+			entity->getComponent<Transform>().scale = glm::vec3(6,6,6);
+			entity->getComponent<Transform>().position = glm::vec3(0,-9,0);
+			entity->addComponent<Mesh>("cube.obj");
+			entity->addComponent<ShaderProgram>("pbr.vert", "pbr.frag", "Uniform_PBR");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+			entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+			m_pbr_cube->getComponent<ShaderProgram>().LoadTextures();
+		}
 
 		{
 			std::string name = "dood ";

@@ -26,6 +26,7 @@ namespace test {
 		Entity* entity;
 		EditorGUI* editor;
 		FPSCamera* camera;
+		ShaderProgram* debugShader;
 
 	};
 }

@@ -10,6 +10,8 @@
 #include "ECS/Entity.h"
 #include "Engine/Shader_UniformSetter.h"
 #include <vector>
+#include "FrameBuffer.h"
+
 
 class ShaderProgram : public Component
 {
@@ -26,6 +28,7 @@ public :
 	void AddTexturePath(std::vector<std::string> _textureFileNames);
 	void LoadTextures();
 	std::vector<std::string> GetTextures();
+	FrameBuffer shadowMap;
 
 
 
