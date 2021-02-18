@@ -42,6 +42,15 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
 
+        entity = new Entity("UV_Cube");
+        GetManager()->addEntity(entity);
+
+        entity->addComponent<Mesh>("cube.obj");
+        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+
+        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<Transform>().position = glm::vec3(-3, 0, 0);
 
 
         entity = new Entity("Ground");

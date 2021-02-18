@@ -38,7 +38,7 @@ glm::vec2 Texture2D::GetTextureSize() {
 bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 	unsigned char* imageData;
 	int width, height, components;
-
+	stbi_set_flip_vertically_on_load(true);
 	imageData = stbi_load(fileName.c_str(), &width, &height, &components, 0);
 	if (imageData){
 
@@ -115,7 +115,7 @@ bool Texture2D::loadHDRTexture(const std::string& fileName) {
 bool Texture2D::loadCubemap(const std::vector<std::string> fileNames) {
 	glGenTextures(1, &m_Texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_Texture);
-
+	stbi_set_flip_vertically_on_load(true);
 	int width, height, components;
 	for (unsigned int i = 0; i < fileNames.size(); i++){
 		unsigned char* imageData = stbi_load(fileNames[i].c_str(), &width, &height, &components, 0);
