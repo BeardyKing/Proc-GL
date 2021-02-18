@@ -29,8 +29,8 @@ public:
 	glm::vec3 color = glm::vec3(1);
 	glm::vec3 lookAtTarget = glm::vec3(0);
 	glm::vec3 shadowColour = glm::vec3(1);
-	float shadowIntensity = 1.0f;
-	float lightIntensity = 1.0f;
+	float shadowIntensity = 0.5f;
+	float lightIntensity = 0.75f;
 	float shadowBias = 1.0f;
 	glm::vec4 v4lightProjection = glm::vec4(-15.0f, 15.0f, -15.0f, 15.0f);
 	float near_plane = 0.01f;

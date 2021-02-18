@@ -115,6 +115,21 @@ namespace test {
         entity->getComponent<Transform>().scale = glm::vec3(24.6f);
         entity->addComponent<script_simplebehaviours>();
         
+        entity = new Entity("PBR cube");
+        GetManager()->addEntity(entity);
+
+        entity->getComponent<Transform>().scale = glm::vec3(3);
+        entity->addComponent<Mesh>("cube.obj");
+        entity->addComponent<ShaderProgram>("pbr.vert", "pbr.frag", "Uniform_PBR");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<Transform>().position = glm::vec3(5.986f, -2.940, -4.017f);
+        entity->getComponent<Transform>().scale = glm::vec3(2.0f);
+
 
         entity = new Entity("Ground");
         GetManager()->addEntity(entity);
@@ -131,9 +146,8 @@ namespace test {
 
         entity = new Entity("Directional Light");
         GetManager()->addEntity(entity);
-        entity->getComponent<Transform>().position = glm::vec3(3.671f,5.67f,-4.166f);
+        entity->getComponent<Transform>().position = glm::vec3(4.653f,5.84f,-5.234f);
         entity->addComponent<LightObject>();
-        entity->getComponent<LightObject>().lightType = entity->getComponent<LightObject>().Directional;
 
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }

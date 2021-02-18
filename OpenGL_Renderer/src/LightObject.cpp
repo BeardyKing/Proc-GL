@@ -46,8 +46,13 @@ void LightObject::OnImGuiRender(){
 			ImGui::DragFloat("Light Intensity", &lightIntensity, -0.05f, 0.05f);
 			ImGui::DragFloat("Shadow Intensity", &shadowIntensity, -0.05f, 0.05f);
 			ImGui::DragFloat3("LookAtPosition", &lookAtTarget.x);
-			ImGui::ColorPicker3("Light Color", &color.r);
-			ImGui::ColorPicker3("Light Color", &shadowColour.r);
+			if (ImGui::CollapsingHeader("Shadow Colour", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGui::ColorPicker3("Shadow Colour", &shadowColour.r);
+			}
+			if (ImGui::CollapsingHeader("Light Colour", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGui::ColorPicker3("Light Color", &color.r);
+			}
+			
 
 		}
 

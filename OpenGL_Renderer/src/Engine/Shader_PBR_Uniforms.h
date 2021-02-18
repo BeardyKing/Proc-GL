@@ -6,6 +6,8 @@
 #include "../Texture2D.h"
 #include <vector>
 
+GLuint GetShadowMap();
+bool RenderShadowMap();
 
 namespace uniform {
 	class Shader_PBR_Uniforms : public Shader_Uniforms
@@ -26,6 +28,8 @@ namespace uniform {
 		glm::vec3 _baseColor = glm::vec3(1.0f,0.38f,0.38f);
 		std::unique_ptr <Texture2D[]> _pbr_textures;
 		int numberOfTextures = 0;
+		bool castShadows = true;
+		bool recieveShadows = true;
 	};
 
 	void Shader_PBR_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
@@ -39,7 +43,8 @@ namespace uniform {
 	}
 
 	void Shader_PBR_Uniforms::SetUniformCustom(ShaderProgram& _shader){
-		
+		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
+
 		_pbr_textures[0].bind(0);
 		_pbr_textures[1].bind(1);
 		_pbr_textures[2].bind(2);
@@ -65,6 +70,28 @@ namespace uniform {
 			std::string str2 = "lightColors[" + std::to_string(i) + "]";
 			_shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);		// set shader uniform for lightColors[i]
 		}
+
+
+		glActiveTexture(GL_TEXTURE0 + 5);
+		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
+
+
+		_shader.use();
+
+		if (RenderShadowMap() && castShadows) {
+			_shader.setUniform("view", glm::mat4(1));
+			_shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
+		}
+		if (recieveShadows) {
+			_shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
+		}
+
+		_shader.setUniformSampler("diffuseTexture", 0);	// 0 = albedo
+		_shader.setUniformSampler("shadowMap", 1);		// 1 = shadow
+		_shader.setUniform("viewPos", camPos);
+		_shader.setUniform("lightPos", m_lights[0]->getComponent<Transform>().position);
+
+
 	}
 
 	void Shader_PBR_Uniforms::OnImGuiRender() {
@@ -72,6 +99,9 @@ namespace uniform {
 		ImGui::Separator();
 		if (ImGui::CollapsingHeader("Public Uniforms",ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
+			ImGui::Checkbox("cast Shadows", &castShadows);
+			ImGui::Checkbox("recieve Shadows", &recieveShadows);
+
 			for (size_t i = 0; i < numberOfTextures; i++) {
 				std::string name;
 				name = "tex : " + std::to_string(i);

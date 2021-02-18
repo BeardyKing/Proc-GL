@@ -31,6 +31,7 @@ namespace uniform {
 		int numberOfTextures = 0;
 		bool castShadows = true;
 		bool recieveShadows = true;
+		float specular = 0;
 
 	};	
 	void Shader_Blinn_Phong_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
@@ -56,6 +57,7 @@ namespace uniform {
 
 		
 		_shader.use();
+		_shader.setUniformSampler("diffuseTexture",0);	// 0 = albedo
 
 		if (RenderShadowMap() && castShadows){
 			_shader.setUniform("view", glm::mat4(1));
@@ -63,13 +65,18 @@ namespace uniform {
 		}
 		if (recieveShadows){
 			_shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
+			_shader.setUniformSampler("shadowMap",1);		// 1 = shadow
+			_shader.setUniform("viewPos", camPos);
+			_shader.setUniform("lightPos", m_lights[0]->getComponent<Transform>().position);
 		}
 
-		_shader.setUniformSampler("diffuseTexture",0);	// 0 = albedo
-		_shader.setUniformSampler("shadowMap",1);		// 1 = shadow
-		_shader.setUniform("viewPos", camPos);
-		_shader.setUniform("lightPos", m_lights[0]->getComponent<Transform>().position);
+			_shader.setUniform("_shadowIntensity", m_lights[0]->getComponent<LightObject>().shadowIntensity);
+			_shader.setUniform("_lightIntensity", m_lights[0]->getComponent<LightObject>().lightIntensity);
+			//_shader.setUniform("_lightColor", m_lights[0]->getComponent<LightObject>().color);
+			//_shader.setUniform("_spec", specular);
 
+			/*uniform vec3 _lightColor;
+			uniform float _spec;*/
 		
 
 
@@ -80,11 +87,12 @@ namespace uniform {
 	void Shader_Blinn_Phong_Uniforms::OnImGuiRender() {
 		ImGui::Indent();
 		ImGui::Separator();
-		if (ImGui::CollapsingHeader("Public Uniforms",ImGuiTreeNodeFlags_AllowItemOverlap)) {
+		if (ImGui::CollapsingHeader("Public Uniforms", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
 
 			ImGui::Checkbox("Cast Shadows", &castShadows);
 			ImGui::Checkbox("Recieve Shadows", &recieveShadows);
+			ImGui::DragFloat("Specular", &specular);
 
 			for (size_t i = 0; i < numberOfTextures; i++) {
 				std::string name;

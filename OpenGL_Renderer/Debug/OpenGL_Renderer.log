@@ -1,8 +1,14 @@
 ﻿  test_shadowMap.cpp
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(140,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(140,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(163,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(164,93): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(170,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(171,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(218,68): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(218,45): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(239,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(240,93): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(243,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(244,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(150): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
   OpenGL_Renderer.vcxproj -> C:\dev\OpenGL_RenderingTests\OpenGL_Renderer\bin\OpenGL_Renderer.exe
