@@ -14,6 +14,7 @@ extern uint32_t GetAmountOfEntities();
 
 extern void SetManager(EntityManager* mgr);
 EntityManager* GetManager();
+
 GLuint ShadowMap;
 GLuint GetShadowMap() {
     return ShadowMap;
@@ -39,7 +40,7 @@ namespace test {
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>();
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
-        entity->getComponent<Transform>().position = glm::vec3(0, 0, -18);
+        entity->getComponent<Transform>().position = glm::vec3(0, 4, -18);
         GetManager()->addEntity(entity);
 
         entity = new Entity("Friendly default pipe_0");
@@ -50,16 +51,10 @@ namespace test {
         entity->addComponent<Mesh>("mesh/pipe.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->addComponent<script_simplebehaviours>();
+        entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
 
-        entity = new Entity("Friendly default pipe_1");
-        GetManager()->addEntity(entity);
-
-        entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
-        entity->addComponent<Mesh>("mesh/pipe.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
-        entity->getComponent<ShaderProgram>().LoadTextures();
-
+        
         entity = new Entity("UV_Cube_0");
         GetManager()->addEntity(entity);
 
@@ -69,6 +64,9 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<Transform>().position = glm::vec3(-3, 0, 0);
+        entity->addComponent<script_simplebehaviours>();
+        entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
+        entity->getComponent<script_simplebehaviours>().SetRotationSpeed(-45);
 
         entity = new Entity("UV_Cube_1");
         GetManager()->addEntity(entity);
@@ -78,7 +76,38 @@ namespace test {
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<Transform>().position = glm::vec3(-3, 0, 0);
+        entity->getComponent<Transform>().position = glm::vec3(-3, 1, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(0.5f, 2.0f, 0.5f);
+        entity->addComponent<script_simplebehaviours>();
+        entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
+        entity->getComponent<script_simplebehaviours>().SetRotationSpeed(70);
+
+        entity = new Entity("UV_Cube_2");
+        GetManager()->addEntity(entity);
+
+        entity->addComponent<Mesh>("cube.obj");
+        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+
+        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<Transform>().position = glm::vec3(-1.8, 3.5f, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(3.0f, 0.5f, 0.5f);
+        entity->addComponent<script_simplebehaviours>();
+        entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
+        entity->getComponent<script_simplebehaviours>().SetRotationSpeed(70);
+
+        entity = new Entity("StanfordDragon");
+        GetManager()->addEntity(entity);
+
+        entity->addComponent<Mesh>("StanfordDragon.obj");
+        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+
+        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<Transform>().position = glm::vec3(-2, -1, -4.5);
+        entity->getComponent<Transform>().scale = glm::vec3(30);
+        entity->addComponent<script_simplebehaviours>();
+        
 
         entity = new Entity("Ground");
         GetManager()->addEntity(entity);
@@ -95,9 +124,7 @@ namespace test {
 
         entity = new Entity("Directional Light");
         GetManager()->addEntity(entity);
-        entity->getComponent<Transform>().position = glm::vec3(8,12,2);
-        entity->getComponent<Transform>().scale = glm::vec3(0.3f);
-        entity->getComponent<Transform>().rotation = glm::vec3(0,-90,-90);
+        entity->getComponent<Transform>().position = glm::vec3(3,8,2);
         entity->addComponent<LightObject>();
 
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
@@ -120,7 +147,7 @@ namespace test {
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             return;
         }
-        static const unsigned int SHADOW_WIDTH = 1024*4, SHADOW_HEIGHT = 1024 * 4;
+        static const unsigned int SHADOW_WIDTH = 1024*4, SHADOW_HEIGHT = 1024*4;
         static unsigned int depthMapFBO;
         static unsigned int depthMap;
         if (once == false) {
@@ -155,27 +182,13 @@ namespace test {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         SetRenderShadowMap(true);
 
-        // 1. render depth of scene to texture (from light's perspective)
-        // --------------------------------------------------------------
-        //glm::mat4 lightProjection, lightView;
-        //glm::mat4 lightSpaceMatrix;
-        //float near_plane = 1.0f, far_plane = 7.5f;
-        ////lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane); // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
-        //lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-        //lightView = glm::lookAt(GetManager()->FindLights()[0]->getComponent<Transform>().position, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-        //lightSpaceMatrix = lightProjection * lightView;
-        //// render scene from light's point of view
-        //depthShader->use();
-        //depthShader->setUniform("lightSpaceMatrix", lightSpaceMatrix);
-
-        glViewport(0, 0, 1024*4, 1024 * 4);
+        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
         glActiveTexture(GL_TEXTURE0);
-        glDisable(GL_CULL_FACE);
+        glCullFace(GL_NONE);
         GetManager()->OnRender();
-        glEnable(GL_CULL_FACE);        
-        //renderScene(simpleDepthShader);
+        glCullFace(GL_BACK);
         SetShadowMap(depthMap);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -184,12 +197,7 @@ namespace test {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         SetRenderShadowMap(false);
 
-        
         fbo.Bind();
-
-       
-
-        
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         GetManager()->OnRender();

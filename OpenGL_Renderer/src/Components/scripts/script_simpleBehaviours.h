@@ -22,8 +22,17 @@ public:
 	void OnImGuiRender();
 	void OnExit();
 
+	void SetRotateActive(bool b);
+	void SetRotateAxis(bool x, bool y, bool z);
+	void SetRotationSpeed(float speed);
+
 
 private:
+		float rotationSpeed = 90;
+		bool rotate = false;
+		bool rotateX = false;
+		bool rotateY = false;
+		bool rotateZ = false;
 
 };
 

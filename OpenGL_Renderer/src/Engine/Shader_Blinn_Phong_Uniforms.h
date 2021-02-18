@@ -55,11 +55,13 @@ namespace uniform {
 
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 0.3f, far_plane = 100.0f;
-
-		lightProjection = glm::ortho(-40.0f, 40.0f, -40.0f, 40.0f, near_plane, far_plane);
-		lightView = glm::lookAt(GetManager()->FindLights()[0]->getComponent<Transform>().position, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		float near_plane = 0.01f, far_plane = 7.5f * 2;
+		//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane); // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
+		lightProjection = glm::ortho(-15.0f, 15.0f, -15.0f, 15.0f, near_plane, far_plane);
+		//lightView = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f), glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightView = glm::lookAt(m_lights[0]->getComponent<Transform>().position, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
+		// render scene from light's point of view
 		// render scene from light's point of view
 		//simpleDepthShader.use();
 		_shader.use();
@@ -68,13 +70,6 @@ namespace uniform {
 			_shader.setUniform("projection", lightSpaceMatrix);
 		}
 		_shader.setUniform("lightSpaceMatrix", lightSpaceMatrix);
-
-		_shader.setUniformSampler("shadowMap", 1);// 0 = albedo
-		_shader.setUniform("near_plane", near_plane);
-		_shader.setUniform("far_plane", far_plane);
-		//std::cout << "HERE" << std::endl;
-
-
 		_shader.setUniformSampler("diffuseTexture",0);// 0 = albedo
 		_shader.setUniformSampler("shadowMap",1);// 0 = albedo
 
