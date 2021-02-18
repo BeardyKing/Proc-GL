@@ -6,6 +6,7 @@
 #include "Engine/Shader_DefaultUniforms.h"
 #include "Engine/Shader_PBR_Uniforms.h"
 #include "Engine/Shader_Blinn_Phong_Uniforms.h"
+#include "Engine/Shader_ShadowDepth.h"
 
 ShaderProgram::ShaderProgram()
 	: m_Handle(0)
@@ -36,7 +37,7 @@ ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName, s
 
 	currentShader_uniform = shaderMenu->SelectShader(shader_uniform_name);
 	
-
+	
 	
 	//currentShader_uniform->Uniform_Init();
 	//ShaderProgram& shader = entity->getComponent<ShaderProgram>();
@@ -50,6 +51,7 @@ void ShaderProgram::LoadShaderMenu() {
 	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); // TODO ADD SHADER LIST LOADER
 	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
 	shaderMenu->RegisterShader<uniform::Shader_Blinn_Phong_Uniforms>	("Uniform_Blinn-Phong"); 
+	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
 }
 
 void ShaderProgram::AddTexturePath(std::string _textureFileName) {

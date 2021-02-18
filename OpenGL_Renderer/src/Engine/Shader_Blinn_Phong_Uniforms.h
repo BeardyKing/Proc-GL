@@ -7,6 +7,8 @@
 #include <vector>
 
 GLuint GetShadowMap();
+bool RenderShadowMap();
+
 
 namespace uniform {
 	class Shader_Blinn_Phong_Uniforms : public Shader_Uniforms
@@ -37,7 +39,11 @@ namespace uniform {
 		glm::mat4 _newModel = glm::mat4(1.0f);
 		_shader.setUniform("model", model);
 		_shader.setUniform("view", view);
-		_shader.setUniform("projection", projection);	}
+		_shader.setUniform("projection", projection);	
+		
+	
+	}
+	
 	void Shader_Blinn_Phong_Uniforms::SetUniformCustom(ShaderProgram& _shader){
 
 		auto m_lights = GetManager()->FindLights();
@@ -46,24 +52,30 @@ namespace uniform {
 		_pbr_textures[0].bind(0);
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
-		
-		/*if (ImGui::CollapsingHeader("Render Texture of DepthBuffer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-			ImGui::Image((void*)GetShadowMap(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
-		}*/
-		
+
 		glm::mat4 lightProjection, lightView;
-        glm::mat4 lightSpaceMatrix;
-        float near_plane = 1.0f, far_plane = 7.5f;
-       
-        lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-        lightView = glm::lookAt(GetManager()->FindLights()[0]->getComponent<Transform>().position, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-        lightSpaceMatrix = lightProjection * lightView;
-        // render scene from light's point of view
-        //simpleDepthShader.use();
+		glm::mat4 lightSpaceMatrix;
+		float near_plane = 0.3f, far_plane = 100.0f;
+
+		lightProjection = glm::ortho(-40.0f, 40.0f, -40.0f, 40.0f, near_plane, far_plane);
+		lightView = glm::lookAt(GetManager()->FindLights()[0]->getComponent<Transform>().position, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightSpaceMatrix = lightProjection * lightView;
+		// render scene from light's point of view
+		//simpleDepthShader.use();
+		_shader.use();
+		if (RenderShadowMap()){
+			_shader.setUniform("view", glm::mat4(1));
+			_shader.setUniform("projection", lightSpaceMatrix);
+		}
 		_shader.setUniform("lightSpaceMatrix", lightSpaceMatrix);
 
-		_shader.setUniformSampler("albedoMap",0);// 0 = albedo
+		_shader.setUniformSampler("shadowMap", 1);// 0 = albedo
+		_shader.setUniform("near_plane", near_plane);
+		_shader.setUniform("far_plane", far_plane);
+		//std::cout << "HERE" << std::endl;
+
+
+		_shader.setUniformSampler("diffuseTexture",0);// 0 = albedo
 		_shader.setUniformSampler("shadowMap",1);// 0 = albedo
 
 

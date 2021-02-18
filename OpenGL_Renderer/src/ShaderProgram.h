@@ -29,7 +29,7 @@ public :
 	void LoadTextures();
 	std::vector<std::string> GetTextures();
 	FrameBuffer shadowMap;
-
+	bool renderShadowMap = false;
 
 
 	void OnImGuiRender();
