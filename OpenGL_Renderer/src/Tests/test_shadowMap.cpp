@@ -38,15 +38,16 @@ namespace test {
         SetManager(manager);
 
         entity = new Entity("Main Camera");
-        entity->addComponent<FPSCamera>();
+        entity->addComponent<FPSCamera>(glm::vec3(0), 4.781f, -0.549f);
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
-        entity->getComponent<Transform>().position = glm::vec3(0, 4, -18);
+        entity->getComponent<Transform>().position = glm::vec3(17, 11, -.01f);
         GetManager()->addEntity(entity);
 
         entity = new Entity("Friendly default pipe_0");
         GetManager()->addEntity(entity);
 
-        entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
+        entity->getComponent<Transform>().position = glm::vec3(1.736f, 3.163, 4.234);
+        entity->getComponent<Transform>().rotation = glm::vec3(0, 66.5, 0);
         entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");       
         entity->addComponent<Mesh>("mesh/pipe.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
@@ -63,7 +64,10 @@ namespace test {
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<Transform>().position = glm::vec3(-3, 0, 0);
+        entity->getComponent<Transform>().position = glm::vec3(1, 0, 6.5);
+        entity->getComponent<Transform>().rotation = glm::vec3(0, 6, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(0.67f);
+
         entity->addComponent<script_simplebehaviours>();
         entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
         entity->getComponent<script_simplebehaviours>().SetRotationSpeed(-45);
@@ -76,8 +80,9 @@ namespace test {
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<Transform>().position = glm::vec3(-3, 1, 0);
-        entity->getComponent<Transform>().scale = glm::vec3(0.5f, 2.0f, 0.5f);
+        entity->getComponent<Transform>().position = glm::vec3(1.183f, 1.1f, 3.525f);
+        entity->getComponent<Transform>().rotation = glm::vec3(0, 17.5, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(1, 2, 2);
         entity->addComponent<script_simplebehaviours>();
         entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
         entity->getComponent<script_simplebehaviours>().SetRotationSpeed(70);
@@ -90,8 +95,9 @@ namespace test {
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<Transform>().position = glm::vec3(-1.8, 3.5f, 0);
-        entity->getComponent<Transform>().scale = glm::vec3(3.0f, 0.5f, 0.5f);
+        entity->getComponent<Transform>().position = glm::vec3(4.337f, 1, -1.3525f);
+        entity->getComponent<Transform>().rotation = glm::vec3(0, 65.5, 0);
+        entity->getComponent<Transform>().scale = glm::vec3(2);
         entity->addComponent<script_simplebehaviours>();
         entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
         entity->getComponent<script_simplebehaviours>().SetRotationSpeed(70);
@@ -104,8 +110,9 @@ namespace test {
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<Transform>().position = glm::vec3(-2, -1, -4.5);
-        entity->getComponent<Transform>().scale = glm::vec3(30);
+        entity->getComponent<Transform>().position = glm::vec3(4.683f,2.865, -1.686f);
+        entity->getComponent<Transform>().rotation = glm::vec3(-180, 65, -180);
+        entity->getComponent<Transform>().scale = glm::vec3(24.6f);
         entity->addComponent<script_simplebehaviours>();
         
 
@@ -124,8 +131,9 @@ namespace test {
 
         entity = new Entity("Directional Light");
         GetManager()->addEntity(entity);
-        entity->getComponent<Transform>().position = glm::vec3(3,8,2);
+        entity->getComponent<Transform>().position = glm::vec3(3.671f,5.67f,-4.166f);
         entity->addComponent<LightObject>();
+        entity->getComponent<LightObject>().lightType = entity->getComponent<LightObject>().Directional;
 
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
