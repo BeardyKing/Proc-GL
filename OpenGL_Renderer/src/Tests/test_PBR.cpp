@@ -116,7 +116,6 @@ namespace test {
 		_lightRef[0]->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
 		_lightRef[0]->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
 		_lightRef[0]->getComponent<Transform>().position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
-
 		GetManager()->OnUpdate(deltaTime);
 	}
 

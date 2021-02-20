@@ -26,13 +26,19 @@ public:
 	void SetRotateAxis(bool x, bool y, bool z);
 	void SetRotationSpeed(float speed);
 
+	void SetOrbitActive(bool b);
 
 private:
-		float rotationSpeed = 90;
 		bool rotate = false;
+		float rotationSpeed = 90;
 		bool rotateX = false;
 		bool rotateY = false;
 		bool rotateZ = false;
+
+		bool orbit = false;
+		float m_movingLightAngle = 90;
+		glm::vec3 centre;
+
 
 };
 

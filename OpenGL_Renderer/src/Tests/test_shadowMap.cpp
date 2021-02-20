@@ -148,6 +148,7 @@ namespace test {
         GetManager()->addEntity(entity);
         entity->getComponent<Transform>().position = glm::vec3(4.653f,5.84f,-5.234f);
         entity->addComponent<LightObject>();
+        entity->addComponent<script_simplebehaviours>();
 
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
