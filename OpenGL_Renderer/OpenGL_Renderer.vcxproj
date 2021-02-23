@@ -152,6 +152,7 @@
     <ClCompile Include="src\Components\ObjectData.cpp" />
     <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\DepthBuffer.cpp" />
     <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\ComponentManager.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="src\Components\ObjectData.h" />
     <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h" />
     <ClInclude Include="src\Components\Transform.h" />
+    <ClInclude Include="src\DepthBuffer.h" />
     <ClInclude Include="src\ECS\Component.h" />
     <ClInclude Include="src\ECS\ComponentManager.h" />
     <ClInclude Include="src\ECS\ECS.h" />

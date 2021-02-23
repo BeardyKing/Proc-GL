@@ -165,6 +165,9 @@
     <ClCompile Include="src\Engine\Shader_UniformSetter.cpp">
       <Filter>Shaders\Shader_UniformSetter</Filter>
     </ClCompile>
+    <ClCompile Include="src\DepthBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ShaderProgram.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h">
       <Filter>Shaders\Blinn-Phong</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DepthBuffer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

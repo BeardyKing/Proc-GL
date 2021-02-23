@@ -7,6 +7,7 @@
 #include "../Engine/ECS_List.h"
 #include "../Engine/EditorGUI.h"
 #include "../FrameBuffer.h"
+#include "../DepthBuffer.h"
 
 namespace test {
 	class test_shadowMap : public Test
@@ -22,6 +23,7 @@ namespace test {
 
 	private:
 		FrameBuffer fbo;
+		DepthBuffer depthBuffer;
 
 		Entity* entity;
 		EditorGUI* editor;
