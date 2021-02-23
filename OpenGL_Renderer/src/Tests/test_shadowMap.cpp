@@ -151,7 +151,13 @@ namespace test {
         entity->addComponent<script_simplebehaviours>();
 
 
-        depthBuffer.GenerateDepthBuffer(1024 * 4, 1024 * 4);
+        std::vector<Entity*> lights = manager->FindLights();
+
+        DepthBuffer d(1024 * 4, 1024 * 4);
+        DepthBuffer s(1024 * 4, 1024 * 4);
+        depthBuffers.emplace_back(d);
+        depthBuffers.emplace_back(s);
+        
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
 
@@ -172,12 +178,16 @@ namespace test {
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             return;
         }
+        depthTexturesThisFrame.clear();
+        for (auto& buffer : depthBuffers) {
+            buffer.Bind();
+            GetManager()->OnRender();
+            SetShadowMap(buffer.depthMap); // this needs to become list/array
+            depthTexturesThisFrame.emplace_back(buffer.depthMap);
+            buffer.UnBind();
+        }
 
-
-        depthBuffer.Bind();
-        GetManager()->OnRender();
-        SetShadowMap(depthBuffer.depthMap);
-        depthBuffer.UnBind();
+        std::cout << "Amount Of Depth Textures : " << depthTexturesThisFrame.size() << std::endl;
 
         fbo.Bind();
 
@@ -195,10 +205,19 @@ namespace test {
        
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
         ImGui::Begin("Debug_FrameBuffers");
-        if (ImGui::CollapsingHeader("FBO_DepthBuffer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-            int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)GetShadowMap(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+
+        int counter = 0;
+        for (auto& buffer : depthTexturesThisFrame) {
+            std::string name = "DEPTH TEXTURE ";
+            name.append(std::to_string(counter));
+            if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                ImGui::Image((void*)GetShadowMap(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            }
+            counter++;
         }
+
+
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
             ImGui::Image((void*)fbo.renderedTexture, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));

@@ -8,6 +8,7 @@ class DepthBuffer
 {
 public:
 	DepthBuffer();
+	DepthBuffer(int x, int y);
 	~DepthBuffer();
 
 	void Bind();

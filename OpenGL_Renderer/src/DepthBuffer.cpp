@@ -14,6 +14,12 @@ DepthBuffer::DepthBuffer() :
     
 }
 
+DepthBuffer::DepthBuffer(int x, int y) :
+    SHADOW_WIDTH(x), SHADOW_HEIGHT(y), depthMapFBO(0), depthMap(0)
+{
+    GenerateDepthBuffer(x, y);
+}
+
 DepthBuffer::~DepthBuffer() {
 
 }

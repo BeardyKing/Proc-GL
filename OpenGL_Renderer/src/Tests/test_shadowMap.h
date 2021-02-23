@@ -23,7 +23,8 @@ namespace test {
 
 	private:
 		FrameBuffer fbo;
-		DepthBuffer depthBuffer;
+		std::vector<DepthBuffer> depthBuffers;
+		std::vector<GLuint> depthTexturesThisFrame;
 
 		Entity* entity;
 		EditorGUI* editor;
