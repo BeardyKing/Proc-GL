@@ -150,6 +150,8 @@ namespace test {
         entity->addComponent<LightObject>();
         entity->addComponent<script_simplebehaviours>();
 
+
+        depthBuffer.GenerateDepthBuffer(1024 * 4, 1024 * 4);
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
 
@@ -170,11 +172,7 @@ namespace test {
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             return;
         }
-        
-        if (once == false) {
-            once = true;
-            depthBuffer.GenerateDepthBuffer(1024 * 4, 1024 * 4);
-        }
+
 
         depthBuffer.Bind();
         GetManager()->OnRender();
