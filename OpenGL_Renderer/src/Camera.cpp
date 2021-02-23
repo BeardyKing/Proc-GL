@@ -70,31 +70,30 @@ void FPSCamera::Move(const glm::vec3& offsetPos) {
 	entity->getComponent<Transform>().position += offsetPos;
 	UpdateCameraVectors();
 }
-
 void FPSCamera::OnUpdate(double deltaTime)
 {
-	Rotate(0, 0);
+	//Rotate(0, 0);
 	if (ImGui::IsKeyDown('E') && m_mouseFlag == false) { m_mouseEnabled = !m_mouseEnabled; m_mouseFlag = true; }
 	if (ImGui::IsKeyReleased('E')) { m_mouseFlag = false; }
-	if (m_mouseEnabled) { return; }
 
-	if (m_ignoreForXFrames > 0) {
-		m_ignoreForXFrames--;
-		if (m_ignoreForXFrames == 0) {
-			m_lastMousePos.x = ImGui::GetMousePos().x;
-			m_lastMousePos.y = ImGui::GetMousePos().y;
-		}
-		return;
+	if (m_mouseEnabled) {
+		_cameraFocusFlag = true;
+		return; 
 	}
 
 	//----------------------------------//
 	//			MOUSE					//
 	//----------------------------------//
+
 	glm::vec2 currentMousePos;
-
-
 	currentMousePos.x = ImGui::GetMousePos().x;
 	currentMousePos.y = ImGui::GetMousePos().y;
+
+	if (_cameraFocusFlag){
+		_cameraFocusFlag = !_cameraFocusFlag;
+		m_lastMousePos = currentMousePos;
+		std::cout << " UPDATED POS : "<< std::endl;
+	}
 
 	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
 	if (mouseDelta.x != 0 || mouseDelta.y != 0){
@@ -110,13 +109,16 @@ void FPSCamera::OnUpdate(double deltaTime)
 	if (ImGui::IsKeyDown('A')) { a = true; }
 	if (ImGui::IsKeyDown('S')) { s = true; }
 	if (ImGui::IsKeyDown('D')) { d = true; }
-	if (ImGui::IsKeyDown('L')) { d = true; }
+	if (ImGui::IsKeyDown('R')) { r = true; }
+	if (ImGui::IsKeyDown('F')) { f = true; }
 	if (ImGui::IsKeyDown(GLFW_KEY_LEFT_SHIFT)) { l_shift = true; }
 
 	if (ImGui::IsKeyReleased('W')) { w = false; }
 	if (ImGui::IsKeyReleased('A')) { a = false; }
 	if (ImGui::IsKeyReleased('S')) { s = false; }
 	if (ImGui::IsKeyReleased('D')) { d = false; }
+	if (ImGui::IsKeyReleased('R')) { r = false; }
+	if (ImGui::IsKeyReleased('F')) { f = false; }
 	if (ImGui::IsKeyReleased(GLFW_KEY_LEFT_SHIFT)) { l_shift = false; }
 
 	float moveSpeed = m_MoveSpeed;
@@ -125,11 +127,14 @@ void FPSCamera::OnUpdate(double deltaTime)
 		moveSpeedDelta = m_MoveSpeedDelta;
 	}
 
-	if (w) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
-	else if (s) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
+	if (w) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
+	else if (s) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
 
-	if (a) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
-	else if (d) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
+	if (a) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
+	else if (d) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
+
+	if (r) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetUp()); }
+	else if (f) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetUp()); }
 
 	m_lastMousePos = currentMousePos;
 }

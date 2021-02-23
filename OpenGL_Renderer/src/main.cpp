@@ -18,8 +18,8 @@
 #include "ECS/ECS_Manager.h"
 
 const char* APP_TITLE = "OpenGL - Tests";
-static int gWindowWidth = 1024;
-static int gWindowHeight = 768;
+static int gWindowWidth = 1280;
+static int gWindowHeight = 720;
 static bool gWindowResizedFlag = false;
 
 static EntityManager* ecs_manager;
@@ -44,16 +44,14 @@ void SetManager(EntityManager* mgr) {
 
 GLFWwindow* gWindow = NULL;
 
-bool gFullscreen = false;	// to be deprecated
-bool glWireframe = false;	// to be deprecated
-bool gCursorEnabled = true; // to be deprecated
+bool gFullscreen = false;		// to be deprecated
+bool glWireframe = false;		// to be deprecated
+bool gCursorEnabled = true;		// to be deprecated
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height);
 void glfw_OnMouseMove(GLFWwindow* window, double posX, double posY);
 void glfw_OnMouseScroll(GLFWwindow* window, double deltaX, double deltaY);
-
-void Update(double eleapsedTime);
 
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
@@ -66,19 +64,15 @@ int main(){
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
 	test::Test* currentTest = nullptr;
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
-	testMenu->RegisterTest<test::test_Default>("Default");
-	testMenu->RegisterTest<test::test_shadowMap>("shadow map");
-	testMenu->RegisterTest<test::test_Dock>("docking test");
-	testMenu->RegisterTest<test::test_PBR>("PBR 5 point light");
-	testMenu->RegisterTest<test::test_imguizmo>("imguizmo");
-	testMenu->RegisterTest<test::test_ECS>("ECS test");
+	testMenu->RegisterTest<test::test_Default>		("Default");
+	testMenu->RegisterTest<test::test_shadowMap>	("shadow map");
+	testMenu->RegisterTest<test::test_Dock>			("docking test");
+	testMenu->RegisterTest<test::test_PBR>			("PBR 5 point light");
+	testMenu->RegisterTest<test::test_imguizmo>		("imguizmo");
+	testMenu->RegisterTest<test::test_ECS>			("ECS test");
 	
 	double lastTime = glfwGetTime();
 
@@ -268,12 +262,11 @@ void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height) {
 
 	gWindowResizedFlag = true;
 
-	glViewport(0, 0, gWindowWidth, gWindowHeight);
+	//glViewport(0, 0, gWindowWidth, gWindowHeight);
 }
 
 void glfw_OnMouseMove(GLFWwindow* window, double posX, double posY) {}
 void glfw_OnMouseScroll(GLFWwindow* window, double deltaZ, double deltaY) {}
-void Update(double elapsedTime) {}
 
 void showFPS(GLFWwindow* window) {
 	static double previousSecond = 0.0;
