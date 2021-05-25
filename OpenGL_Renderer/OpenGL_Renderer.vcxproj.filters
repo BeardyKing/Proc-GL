@@ -93,12 +93,6 @@
     <ClCompile Include="src\Components\Transform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ComponentManager.cpp">
-      <Filter>ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ECS\SystemManager.cpp">
-      <Filter>ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\ECS\EntityManager.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
@@ -226,12 +220,6 @@
     </ClInclude>
     <ClInclude Include="src\Components\Transform.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\ComponentManager.h">
-      <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\SystemManager.h">
-      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\EntityManager.h">
       <Filter>ECS</Filter>

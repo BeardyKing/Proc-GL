@@ -33,6 +33,9 @@ private:
 	int m_TextureHeight = 0;
 
 	GLuint m_Texture;
+public:
+	bool AnisotropicFilteringEnabled = true;
+
 };
 
 #endif // ! TEXTURE2D_H
