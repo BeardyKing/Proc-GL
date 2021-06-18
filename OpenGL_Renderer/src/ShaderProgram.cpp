@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "glm/gtc/type_ptr.hpp"
+#include "Engine/Shader_Standard_Lit_Uniforms.h"
 #include "Engine/Shader_DefaultUniforms.h"
 #include "Engine/Shader_PBR_Uniforms.h"
 #include "Engine/Shader_Blinn_Phong_Uniforms.h"
@@ -47,11 +48,12 @@ ShaderProgram::ShaderProgram(const char* _vsFileName, const char* _fsFileName, s
 void ShaderProgram::LoadShaderMenu() {
 	currentShader_uniform = nullptr;
 	shaderMenu = new uniform::ShaderMenu(currentShader_uniform);
-	currentShader_uniform = shaderMenu;
-	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); // TODO ADD SHADER LIST LOADER
+	currentShader_uniform = shaderMenu;	// TODO ADD SHADER LIST LOADER
+	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); 
 	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
-	shaderMenu->RegisterShader<uniform::Shader_Blinn_Phong_Uniforms>	("Uniform_Blinn-Phong"); 
+	//shaderMenu->RegisterShader<uniform::Shader_Blinn_Phong_Uniforms>	("Uniform_Blinn-Phong"); 
 	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
+	shaderMenu->RegisterShader<uniform::Shader_Standard_Lit_Uniform>	("Uniform_Standard_Lit");
 }
 
 void ShaderProgram::AddTexturePath(std::string _textureFileName) {
@@ -87,12 +89,12 @@ void ShaderProgram::OnImGuiRender(){
 
 			if (ImGui::CollapsingHeader("Vertex Shader", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
-			ImGui::InputTextMultiline("EDITOR_VS", &editor_fragmentShader[0], editor_fragmentShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
+			ImGui::InputTextMultiline("EDITOR_VS", &editor_vertexShader[0], editor_vertexShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
 			}
 
 			if (ImGui::CollapsingHeader("Fragment Shader",ImGuiTreeNodeFlags_AllowItemOverlap)) {
 				ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
-				ImGui::InputTextMultiline("EDITOR_FS", &editor_vertexShader[0], editor_vertexShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
+				ImGui::InputTextMultiline("EDITOR_FS", &editor_fragmentShader[0], editor_fragmentShader.size(), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), flags);
 			}
 			ImGui::Unindent();
 		}

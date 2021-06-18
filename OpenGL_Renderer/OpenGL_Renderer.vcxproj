@@ -199,6 +199,7 @@
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />
+    <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_UniformSetter.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\imGuiStyleSheet.h" />
@@ -251,6 +252,8 @@
     <None Include="bin\Shaders\DepthTest\depthTest.vert" />
     <None Include="bin\Shaders\ShadowMapping\shadow_depth.frag" />
     <None Include="bin\Shaders\ShadowMapping\shadow_depth.vert" />
+    <None Include="bin\Shaders\Standard_Lit\Standard_Lit.frag" />
+    <None Include="bin\Shaders\Standard_Lit\Standard_Lit.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\vendor\imgui\LICENSE.txt" />

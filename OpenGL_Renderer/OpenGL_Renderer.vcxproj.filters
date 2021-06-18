@@ -43,12 +43,6 @@
     <Filter Include="_Tests\Default Test">
       <UniqueIdentifier>{6134da60-ffcc-44e5-9ca8-bae114e040cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\Shader_UniformSetter">
-      <UniqueIdentifier>{32a6b0a6-3801-4734-a548-9c40076c6182}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\Shader_Basic">
-      <UniqueIdentifier>{679c55cc-23ea-4580-b5a5-f83028b7bacc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders\Shader_PBR">
       <UniqueIdentifier>{02920ac6-cdeb-4182-8b7f-f1cd4c406920}</UniqueIdentifier>
     </Filter>
@@ -57,6 +51,15 @@
     </Filter>
     <Filter Include="Shaders\shadow_Depth">
       <UniqueIdentifier>{6f714cb8-f3a8-4923-a967-fea2d81bf356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Standard_Lit">
+      <UniqueIdentifier>{eabb6a21-949a-4817-bd56-30209c219f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Standard_Unlit">
+      <UniqueIdentifier>{679c55cc-23ea-4580-b5a5-f83028b7bacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\_Shader_UniformSetter">
+      <UniqueIdentifier>{32a6b0a6-3801-4734-a548-9c40076c6182}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +160,7 @@
       <Filter>_Tests</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Shader_UniformSetter.cpp">
-      <Filter>Shaders\Shader_UniformSetter</Filter>
+      <Filter>Shaders\_Shader_UniformSetter</Filter>
     </ClCompile>
     <ClCompile Include="src\DepthBuffer.cpp">
       <Filter>Source Files</Filter>
@@ -282,10 +285,10 @@
       <Filter>_Tests</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Shader_UniformSetter.h">
-      <Filter>Shaders\Shader_UniformSetter</Filter>
+      <Filter>Shaders\_Shader_UniformSetter</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h">
-      <Filter>Shaders\Shader_Basic</Filter>
+      <Filter>Shaders\Standard_Unlit</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h">
       <Filter>Shaders\Shader_PBR</Filter>
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="src\DepthBuffer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h">
+      <Filter>Shaders\Standard_Lit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,10 +353,10 @@
       <Filter>Shaders\Depth Test</Filter>
     </None>
     <None Include="bin\objectDefaults\basic.vert">
-      <Filter>Shaders\Shader_Basic</Filter>
+      <Filter>Shaders\Standard_Unlit</Filter>
     </None>
     <None Include="bin\objectDefaults\basic.frag">
-      <Filter>Shaders\Shader_Basic</Filter>
+      <Filter>Shaders\Standard_Unlit</Filter>
     </None>
     <None Include="bin\Shaders\Blinn-Phong\Blinn-Phong.frag">
       <Filter>Shaders\Blinn-Phong</Filter>
@@ -363,6 +369,12 @@
     </None>
     <None Include="bin\Shaders\ShadowMapping\shadow_depth.vert">
       <Filter>Shaders\shadow_Depth</Filter>
+    </None>
+    <None Include="bin\Shaders\Standard_Lit\Standard_Lit.frag">
+      <Filter>Shaders\Standard_Lit</Filter>
+    </None>
+    <None Include="bin\Shaders\Standard_Lit\Standard_Lit.vert">
+      <Filter>Shaders\Standard_Lit</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

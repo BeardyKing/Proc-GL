@@ -1,122 +1,17 @@
-﻿  script_simpleBehaviours.cpp
-  DepthBuffer.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\DepthBuffer.cpp(20,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\DepthBuffer.cpp(20,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\DepthBuffer.cpp(49,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\DepthBuffer.cpp(49,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-  EntityManager.cpp
-  EditorGUI.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(208,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(208,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(210,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(210,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(141): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(194,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(201,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(202,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(209,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(211,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(217,54): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(220,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  FrameBuffer.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(26,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(26,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(29,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(29,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(31,25): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(31,22): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(41,47): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\FrameBuffer.cpp(41,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-  LightObject.cpp
-  Mesh.cpp
-  ShaderProgram.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(105,25): warning C4018: '<': signed/unsigned mismatch
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(110,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(123,24): warning C4018: '<': signed/unsigned mismatch
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(97,25): warning C4018: '<': signed/unsigned mismatch
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(101,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(102,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(115,24): warning C4018: '<': signed/unsigned mismatch
-C:\dev\Proc-GL\OpenGL_Renderer\src\ShaderProgram.cpp(244,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ShaderProgram.cpp(245,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ShaderProgram.cpp(250,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ShaderProgram.cpp(251,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-  test_defaultTest.cpp
-  test_Dock.cpp
-  test_ECS.cpp
+﻿  test_shadowMap.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(215,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(216,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(223,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(224,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_ECS.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(151): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
           [
               T=LightObject
           ]
-  test_PBR.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(27,25): warning C4018: '<': signed/unsigned mismatch
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(33): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
-  test_imguizmo.cpp
-  test_shadowMap.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(214,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(215,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(222,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(223,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(150): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
-  Texture2D.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Texture2D.cpp(16,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Texture2D.cpp(17,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  main.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  11 of 3594 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  1 of 3601 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     65 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

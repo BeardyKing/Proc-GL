@@ -48,7 +48,7 @@ namespace test {
 
         entity->getComponent<Transform>().position = glm::vec3(1.736f, 3.163, 4.234);
         entity->getComponent<Transform>().rotation = glm::vec3(0, 66.5, 0);
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");       
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
         entity->addComponent<Mesh>("mesh/pipe.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
@@ -60,7 +60,7 @@ namespace test {
         GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("cube.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
@@ -76,7 +76,7 @@ namespace test {
         GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("cube.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
@@ -91,7 +91,7 @@ namespace test {
         GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("cube.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
@@ -105,8 +105,8 @@ namespace test {
         entity = new Entity("StanfordDragon");
         GetManager()->addEntity(entity);
 
-        entity->addComponent<Mesh>("StanfordDragon.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+        entity->addComponent<Mesh>("TheStanfordDragon_83k.obj");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
@@ -135,11 +135,10 @@ namespace test {
         GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("cube.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Blinn-Phong/Blinn-Phong.vert", "Shaders/Blinn-Phong/Blinn-Phong.frag", "Uniform_Blinn-Phong");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/Brushed_Metal_Tiles_04_1K_AO.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-
         entity->getComponent<Transform>().position = glm::vec3(0, -2, 0);
         entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);
 

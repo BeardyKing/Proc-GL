@@ -51,7 +51,7 @@ namespace uniform {
 		_pbr_textures[3].bind(3);
 		_pbr_textures[4].bind(4);
 
-		_shader.setUniformSampler("albedoMap",		0);// 0 = albedo
+		_shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		_shader.setUniformSampler("normalMap",		1);		// 1 = normal
 		_shader.setUniformSampler("metallicMap",	2);		// 2 = metalic
 		_shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
