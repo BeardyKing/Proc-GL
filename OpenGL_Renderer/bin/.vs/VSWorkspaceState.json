@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\objectDefaults",
+    "\\Shaders",
+    "\\Shaders\\Blinn-Phong",
+    "\\Shaders\\ShadowMapping"
+  ],
+  "SelectedNode": "\\Shaders\\Blinn-Phong\\Blinn-Phong.vert",
+  "PreviewInSolutionExplorer": false
+}

@@ -31,6 +31,15 @@ namespace test {
 			std::cout << "register test" << name << std::endl;
 			m_tests.push_back(std::make_pair(name, []() {return new T(); }));
 		}
+
+		void DEBUG_SetActiveTest(const std::string& testName) {
+			for (auto& test : m_tests) {
+				if (test.first == testName){
+					m_CurrentTest = test.second();
+					break;
+				}
+			}
+		}
 	private:
 		Test*& m_CurrentTest;
 		std::vector<std::pair<std::string, std::function<Test* ()>>> m_tests;

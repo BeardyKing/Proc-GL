@@ -140,11 +140,11 @@ namespace test {
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_BaseColor.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Normal.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Height.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Roughness_e.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_AO.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_BaseColor.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Height.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Roughness_e.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
         entity->getComponent<Transform>().position = glm::vec3(0, -2, 0);

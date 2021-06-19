@@ -74,6 +74,8 @@ int main(){
 	testMenu->RegisterTest<test::test_imguizmo>		("imguizmo");
 	testMenu->RegisterTest<test::test_ECS>			("ECS test");
 	
+	testMenu->DEBUG_SetActiveTest("shadow map");
+	
 	double lastTime = glfwGetTime();
 
 	// Main loop
@@ -92,6 +94,7 @@ int main(){
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
+		ImGui::ShowDemoWindow();
 		if (currentTest) {
 
 			currentTest->OnUpdate(deltaTime);
