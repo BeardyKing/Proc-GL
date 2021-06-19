@@ -194,7 +194,7 @@ namespace test {
             buffer.UnBind();
         }
 
-        std::cout << "Amount Of Depth Textures : " << depthTexturesThisFrame.size() << std::endl;
+        //std::cout << "Amount Of Depth Textures : " << depthTexturesThisFrame.size() << std::endl;
 
         fbo.Bind();
 

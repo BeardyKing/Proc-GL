@@ -20,6 +20,8 @@ public:
 	bool loadTexture(const std::string& fileName, bool generateMipMaps = true);
 	bool loadHDRTexture(const std::string& fileName);
 	bool loadCubemap(const std::vector<std::string> fileNames);
+	void generateFallbackTexture();
+
 	void bind(GLuint texUint = 0);
 	void unbind(GLuint texUnit = 0);
 

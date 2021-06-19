@@ -35,6 +35,13 @@ namespace uniform {
 		bool castShadows = true;
 		bool recieveShadows = true;
 		float specular = 0;
+
+		glm::vec4 albedo_color	= glm::vec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
+		float normal_scalar		= 1.0f;
+		float metallic_scalar	= 1.0f;
+		float roughness_scalar	= 1.0f;
+		float occlusion_scalar	= 1.0f;
+
 	};
 
 	void Shader_Standard_Lit_Uniform::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
@@ -47,13 +54,11 @@ namespace uniform {
 		_shader.setUniform("view", view);
 		_shader.setUniform("projection", projection);
 		_shader.setUniform("camPos", _camera.GetPosition());
-
-
 	}
 
 	void Shader_Standard_Lit_Uniform::SetUniformCustom(ShaderProgram& _shader) {
 
-auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
+		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
 		_shader.use();
 
@@ -62,6 +67,23 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 		_pbr_textures[2].bind(2);
 		_pbr_textures[3].bind(3);
 		_pbr_textures[4].bind(4);
+		glActiveTexture(GL_TEXTURE0 + 5);
+		glBindTexture(GL_TEXTURE_2D, GetShadowMap()); // bind shadowmap texture(s)
+
+		auto m_lights = GetManager()->FindLights();
+
+		_shader.setUniform("amountOfLights",		(GLint)m_lights.size());
+		_shader.setUniform("textureScale",			m_TextureTiling);
+		_shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity);
+		_shader.setUniform("_lightIntensity",		m_lights[0]->getComponent<LightObject>().lightIntensity);
+		_shader.setUniform("_lightColor",			m_lights[0]->getComponent<LightObject>().color);
+		_shader.setUniform("viewPos",				camPos);
+
+		_shader.setUniform("albedo_color",		albedo_color);
+		_shader.setUniform("normal_color",		normal_scalar);
+		_shader.setUniform("metallic_color",	metallic_scalar);
+		_shader.setUniform("roughness_color",	roughness_scalar);
+		_shader.setUniform("occlusion_color",	occlusion_scalar);
 
 		_shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		_shader.setUniformSampler("normalMap",		1);		// 1 = normal
@@ -69,16 +91,7 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 		_shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
 		_shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
 		_shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
-		//glActiveTexture(GL_TEXTURE0 + 5);
-		//glBindTexture(GL_TEXTURE_2D, GetShadowMap());
 
-		auto m_lights = GetManager()->FindLights();
-
-		_shader.setUniform("amountOfLights", (GLint)m_lights.size());
-		_shader.setUniform("textureScale", m_TextureTiling);
-		_shader.setUniform("_shadowIntensity", m_lights[0]->getComponent<LightObject>().shadowIntensity);
-		_shader.setUniform("_lightIntensity", m_lights[0]->getComponent<LightObject>().lightIntensity);
-		_shader.setUniform("_lightColor", m_lights[0]->getComponent<LightObject>().color);
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
 		//<< m_lights[0]->getComponent<LightObject>().color.y << " , " 
@@ -89,13 +102,8 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 			_shader.setUniform(str1.c_str(), m_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
 
 			std::string str2 = "lightColors[" + std::to_string(i) + "]";
-			_shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);		// set shader uniform for lightColors[i]
+			_shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);	// set shader uniform for lightColors[i]
 		}
-
-
-
-
-		_shader.use();
 
 		if (RenderShadowMap() && castShadows) {
 			_shader.setUniform("view", glm::mat4(1));
@@ -105,12 +113,12 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 			_shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
 
-		//_shader.setUniformSampler("diffuseTexture", 0);	// 0 = albedo
-		_shader.setUniform("viewPos", camPos);
-		//_shader.setUniform("lightPos", m_lights[0]->getComponent<Transform>().position);
 	}
 
 	void Shader_Standard_Lit_Uniform::OnImGuiRender() {
+		
+	#pragma region EDITOR_SURFACE_INPUTS
+
 		ImGui::SetNextTreeNodeOpen(true, ImGuiTreeNodeFlags_DefaultOpen);
 		if (ImGui::TreeNode("Surface Options")){
 			ImGui::Columns(2, "Surface_Options_Columns", false);
@@ -130,20 +138,15 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 
 		}
 		ImGui::Separator();
-		static ImVec4 albedo_color = ImVec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
-		static ImVec4 normal_color = ImVec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
-		static ImVec4 metallic_color = ImVec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
-		static ImVec4 roughness_color = ImVec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
-		static ImVec4 occlusion_color = ImVec4(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
+
+	#pragma endregion
+
+	#pragma region EDITOR_SURFACE_INPUTS
 
 		ImGui::SetNextTreeNodeOpen(true, ImGuiTreeNodeFlags_DefaultOpen);
 		if (ImGui::TreeNode("Surface Inputs")) {
+
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
-			//albedoMap",	
-			//	normalMap",	
-			//	metallicMap",
-			//	roughnessMap"
-			//	aoMap",		
 			//--------------Albedo Map--------------//
 			static uint16_t albedoMap_Image_Scalar = 1;
 			if(ImGui::ImageButton((void*)_pbr_textures[0].GetTexture(), ImVec2(12 * albedoMap_Image_Scalar, 12 * albedoMap_Image_Scalar))) {
@@ -152,7 +155,7 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 			ImGui::SameLine();
 			ImGui::Selectable("Albedo Map");
 			ImGui::NextColumn();
-			if (ImGui::ColorButton("albedo_color", albedo_color)) {
+			if (ImGui::ColorButton("albedo_color", ImVec4(albedo_color.x, albedo_color.y, albedo_color.z, albedo_color.w))) {
 				ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x - 320, ImGui::GetMousePos().y - 120));
 				ImGui::OpenPopup("albedo_color_picker");
 			}
@@ -161,75 +164,60 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 				ImGui::EndPopup();
 			}
 			ImGui::NextColumn();
+
+
 			//--------------Normal Map--------------//
 			 static uint16_t normalMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)_pbr_textures[1].GetTexture(), ImVec2(12 * normalMap_Image_Scalar, 12 * normalMap_Image_Scalar))) {
 				normalMap_Image_Scalar = (normalMap_Image_Scalar == 1) ? 10 : 1;
 			}
+
 			ImGui::SameLine();
 			ImGui::Selectable("Normal Map");
+
 			ImGui::NextColumn();
-			if (ImGui::ColorButton("Normal_color", normal_color)) {
-				ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x - 320, ImGui::GetMousePos().y - 120));
-				ImGui::OpenPopup("Normal_color_picker");
-			}
-			if (ImGui::BeginPopup("Normal_color_picker", ImGuiSelectableFlags_DontClosePopups)) {
-				ImGui::ColorPicker4("##picker", &normal_color.x, ImGuiColorEditFlags_None, NULL);
-				ImGui::EndPopup();
-			}
+			ImGui::SliderFloat("##normal_scalar", &normal_scalar, -1.0f, 1.0f);
 			ImGui::NextColumn();
+
 			//--------------Metallic Map--------------//
 			static uint16_t metallicMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)_pbr_textures[2].GetTexture(), ImVec2(12 * metallicMap_Image_Scalar, 12 * metallicMap_Image_Scalar))) {
 				metallicMap_Image_Scalar = (metallicMap_Image_Scalar == 1) ? 10 : 1;
 			}
+
 			ImGui::SameLine();
 			ImGui::Selectable("Metallic Map");
+
 			ImGui::NextColumn();
-			if (ImGui::ColorButton("Metallic_color", metallic_color)) {
-				ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x - 320, ImGui::GetMousePos().y - 120));
-				ImGui::OpenPopup("Metallic_color_picker");
-			}
-			if (ImGui::BeginPopup("Metallic_color_picker", ImGuiSelectableFlags_DontClosePopups)) {
-				ImGui::ColorPicker4("##picker", &metallic_color.x, ImGuiColorEditFlags_None, NULL);
-				ImGui::EndPopup();
-			}
+			ImGui::SliderFloat("##Metallic_scalar", &metallic_scalar, -1.0f, 1.0f);
 			ImGui::NextColumn();
+
 			//--------------Roughness Map--------------//
 			static uint16_t RoughnessMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)_pbr_textures[3].GetTexture(), ImVec2(12 * RoughnessMap_Image_Scalar, 12 * RoughnessMap_Image_Scalar))) {
 				RoughnessMap_Image_Scalar = (RoughnessMap_Image_Scalar == 1) ? 10 : 1;
 			}
+
 			ImGui::SameLine();
 			ImGui::Selectable("Roughness Map");
 
 			ImGui::NextColumn();
-			if (ImGui::ColorButton("Roughness_color", roughness_color)) {
-				ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x - 320, ImGui::GetMousePos().y - 120));
-				ImGui::OpenPopup("Roughness_color_picker");
-			}
-			if (ImGui::BeginPopup("Roughness_color_picker", ImGuiSelectableFlags_DontClosePopups)) {
-				ImGui::ColorPicker4("##picker", &roughness_color.x, ImGuiColorEditFlags_None, NULL);
-				ImGui::EndPopup();
-			}
+			ImGui::SliderFloat("##Roughness_scalar", &roughness_scalar, -1.0f, 1.0f);
 			ImGui::NextColumn();
+
 			//--------------Occlusion Map--------------//
 			static uint16_t OcclusionMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)_pbr_textures[4].GetTexture(), ImVec2(12 * OcclusionMap_Image_Scalar, 12 * OcclusionMap_Image_Scalar))) {
 				OcclusionMap_Image_Scalar = (OcclusionMap_Image_Scalar == 1) ? 10 : 1;
 			}
+
 			ImGui::SameLine();
 			ImGui::Selectable("Occlusion Map");
+
 			ImGui::NextColumn();
-			if (ImGui::ColorButton("Occlusion", occlusion_color)) {
-				ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x - 320, ImGui::GetMousePos().y - 120));
-				ImGui::OpenPopup("Occlusion_color_picker");
-			}
-			if (ImGui::BeginPopup("Occlusion_color_picker", ImGuiSelectableFlags_DontClosePopups)) {
-				ImGui::ColorPicker4("##picker", &occlusion_color.x, ImGuiColorEditFlags_None, NULL);
-				ImGui::EndPopup();
-			}
+			ImGui::SliderFloat("##Occlusion_scalar", &occlusion_scalar, -1.0f, 1.0f);
 			ImGui::NextColumn();
+
 			//--------------Shadow Map--------------// // TODO Update to support multiple shadowmaps
 			static uint16_t ShadowMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)GetShadowMap(), ImVec2(12 * ShadowMap_Image_Scalar, 12 * ShadowMap_Image_Scalar))) {
@@ -238,12 +226,14 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 			ImGui::SameLine();
 			ImGui::Selectable("Shadow Map");
 
-
-
 			ImGui::Columns(1);
 			ImGui::TreePop();
 		}
 		ImGui::Separator();
+
+	#pragma endregion
+
+	#pragma region EDITOR_ADVANCED_OPTIONS
 
 		ImGui::SetNextTreeNodeOpen(true, ImGuiTreeNodeFlags_DefaultOpen);
 		if (ImGui::TreeNode("Advanced_Options")) {
@@ -257,25 +247,10 @@ auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().positi
 			ImGui::TreePop();
 
 		}
-			ImGui::Separator();
-		//ImGui::Indent();
-		//ImGui::Separator();
-		//if (ImGui::CollapsingHeader("Public Uniforms", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		//	ImGui::Indent();
-		//
-		//
-		//
-		//	for (size_t i = 0; i < numberOfTextures; i++) {
-		//		std::string name;
-		//		name = "tex : " + std::to_string(i);
-		//		if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		//			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-		//			ImGui::Image((void*)_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
-		//		}
-		//	}
-		//	ImGui::Unindent();
-		//}
-		//ImGui::Unindent();
+		ImGui::Separator();
+
+	#pragma endregion
+
 	}
 
 	void Shader_Standard_Lit_Uniform::LoadTextures(Entity& _shader) {

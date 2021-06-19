@@ -15,15 +15,20 @@ uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D shadowMap;
 
+uniform vec4 albedo_color; 
+uniform vec4 normal_color;
+uniform vec4 metallic_color;
+uniform vec4 roughness_color;
+uniform vec4 occlusion_color;
 
 uniform vec3 lightPositions[128];
 uniform vec3 lightColors[128];
-uniform int amountOfLights;
+uniform int  amountOfLights;
 uniform vec3 viewPos;
 
 uniform float _shadowIntensity;
 uniform float _lightIntensity;
-uniform vec3 _lightColor;
+uniform vec3  _lightColor;
 uniform float _spec;
 
 uniform float shadowBias;
@@ -132,10 +137,13 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
 void main()
 {		
-    vec3 albedo     = pow(texture(albedoMap, fs_in.TexCoords).rgb, vec3(2.2));
+    vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color;
+    vec3 albedo     = pow(v4_albedo.rgb, vec3(2.2));
     float metallic  = texture(metallicMap, fs_in.TexCoords).r;
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;
     float ao        = texture(aoMap, fs_in.TexCoords).r;
+
+
 
     vec3 N = getNormalFromMap();
     vec3 V = normalize(viewPos - WorldPos);

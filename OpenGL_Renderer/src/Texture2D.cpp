@@ -84,13 +84,40 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 	}
 	else{
 		std::cout << "Texture failed to load at path: " << fileName << std::endl;
+		generateFallbackTexture();
 		stbi_image_free(imageData);
-		return false;
+		std::cout << "WARNING: LOADED FALLBACK TEXTURE" << fileName << std::endl;
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
+}
+
+void Texture2D::generateFallbackTexture() {
+	
+
+	glGenTextures(1, &m_Texture);
+
+	GLenum format;
+	format = GL_RGBA;
+	GLubyte texData[] = { 255, 255, 255, 255 };			// Generate white single pixel texture with full alpha
+	unsigned char* imageData = (unsigned char*)texData;
+
+	glBindTexture(GL_TEXTURE_2D, m_Texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, format, 1, 1, 0, format, GL_UNSIGNED_BYTE, imageData);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	std::cout << "generated fallback texture: " << std::endl;
+
 }
 
 bool Texture2D::loadHDRTexture(const std::string& fileName) {
