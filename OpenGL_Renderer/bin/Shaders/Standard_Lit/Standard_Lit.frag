@@ -16,10 +16,10 @@ uniform sampler2D aoMap;
 uniform sampler2D shadowMap;
 
 uniform vec4 albedo_color; 
-uniform vec4 normal_color;
-uniform vec4 metallic_color;
-uniform vec4 roughness_color;
-uniform vec4 occlusion_color;
+uniform float normal_scalar;
+uniform float metallic_scalar;
+uniform float roughness_scalar;
+uniform float occlusion_scalar;
 
 uniform vec3 lightPositions[128];
 uniform vec3 lightColors[128];
@@ -42,14 +42,14 @@ const float PI = 3.14159265359;
     vec3 WorldPos = fs_in.FragPos;
 vec3 getNormalFromMap()
 {
-    vec3 tangentNormal = texture(normalMap, fs_in.TexCoords).xyz * 2.0 - 1.0;
-
+    vec3 tangentNormal = texture(normalMap, fs_in.TexCoords).xyz * 2.0 - 1.0 ;
+    
     vec3 Q1  = dFdx(WorldPos);
     vec3 Q2  = dFdy(WorldPos);
     vec2 st1 = dFdx(fs_in.TexCoords);
     vec2 st2 = dFdy(fs_in.TexCoords);
 
-    vec3 N   = normalize(fs_in.Normal);
+    vec3 N   = normalize(fs_in.Normal) * vec3(normal_scalar);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
     vec3 B  = -normalize(cross(N, T));
     mat3 TBN = mat3(T, B, N);
@@ -143,7 +143,9 @@ void main()
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;
     float ao        = texture(aoMap, fs_in.TexCoords).r;
 
-
+    metallic  = metallic * metallic_scalar;
+    roughness = roughness * roughness_scalar;
+    ao        = ao * occlusion_scalar;
 
     vec3 N = getNormalFromMap();
     vec3 V = normalize(viewPos - WorldPos);

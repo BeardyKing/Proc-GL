@@ -79,11 +79,11 @@ namespace uniform {
 		_shader.setUniform("_lightColor",			m_lights[0]->getComponent<LightObject>().color);
 		_shader.setUniform("viewPos",				camPos);
 
-		_shader.setUniform("albedo_color",		albedo_color);
-		_shader.setUniform("normal_color",		normal_scalar);
-		_shader.setUniform("metallic_color",	metallic_scalar);
-		_shader.setUniform("roughness_color",	roughness_scalar);
-		_shader.setUniform("occlusion_color",	occlusion_scalar);
+		_shader.setUniform("albedo_color",			albedo_color);
+		_shader.setUniform("normal_scalar",			normal_scalar);
+		_shader.setUniform("metallic_scalar",		metallic_scalar);
+		_shader.setUniform("roughness_scalar",		roughness_scalar);
+		_shader.setUniform("occlusion_scalar",		occlusion_scalar);
 
 		_shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		_shader.setUniformSampler("normalMap",		1);		// 1 = normal
@@ -176,7 +176,7 @@ namespace uniform {
 			ImGui::Selectable("Normal Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##normal_scalar", &normal_scalar, -1.0f, 1.0f);
+			ImGui::SliderFloat("##normal_scalar", &normal_scalar, 0.3f, 15.0f);
 			ImGui::NextColumn();
 
 			//--------------Metallic Map--------------//
@@ -189,7 +189,7 @@ namespace uniform {
 			ImGui::Selectable("Metallic Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##Metallic_scalar", &metallic_scalar, -1.0f, 1.0f);
+			ImGui::SliderFloat("##Metallic_scalar", &metallic_scalar, 0.0f, 1.0f);
 			ImGui::NextColumn();
 
 			//--------------Roughness Map--------------//
@@ -202,7 +202,7 @@ namespace uniform {
 			ImGui::Selectable("Roughness Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##Roughness_scalar", &roughness_scalar, -1.0f, 1.0f);
+			ImGui::SliderFloat("##Roughness_scalar", &roughness_scalar, 0.0f, 4.0f);
 			ImGui::NextColumn();
 
 			//--------------Occlusion Map--------------//
