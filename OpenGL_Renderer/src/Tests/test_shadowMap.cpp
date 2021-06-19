@@ -42,19 +42,6 @@ namespace test {
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
         entity->getComponent<Transform>().position = glm::vec3(17, 11, -.01f);
         GetManager()->addEntity(entity);
-
-        entity = new Entity("Friendly default pipe_0");
-        GetManager()->addEntity(entity);
-
-        entity->getComponent<Transform>().position = glm::vec3(1.736f, 3.163, 4.234);
-        entity->getComponent<Transform>().rotation = glm::vec3(0, 66.5, 0);
-        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-        entity->addComponent<Mesh>("mesh/pipe.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("mesh/polygon_texture.png");
-        entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->addComponent<script_simplebehaviours>();
-        entity->getComponent<script_simplebehaviours>().SetRotateActive(true);
-
         
         entity = new Entity("UV_Cube_0");
         GetManager()->addEntity(entity);
@@ -62,7 +49,11 @@ namespace test {
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<Transform>().position = glm::vec3(1, 0, 6.5);
         entity->getComponent<Transform>().rotation = glm::vec3(0, 6, 0);
@@ -78,7 +69,11 @@ namespace test {
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<Transform>().position = glm::vec3(1.183f, 1.1f, 3.525f);
         entity->getComponent<Transform>().rotation = glm::vec3(0, 17.5, 0);
@@ -93,7 +88,11 @@ namespace test {
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<Transform>().position = glm::vec3(4.337f, 1, -1.3525f);
         entity->getComponent<Transform>().rotation = glm::vec3(0, 65.5, 0);
@@ -108,7 +107,11 @@ namespace test {
         entity->addComponent<Mesh>("TheStanfordDragon_83k.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("UV.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<Transform>().position = glm::vec3(4.683f,2.865, -1.686f);
         entity->getComponent<Transform>().rotation = glm::vec3(-180, 65, -180);
@@ -137,8 +140,13 @@ namespace test {
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/Brushed_Metal_Tiles_04_1K_Base_Color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_BaseColor.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Height.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_Roughness_e.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_4K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
         entity->getComponent<Transform>().position = glm::vec3(0, -2, 0);
         entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);
 

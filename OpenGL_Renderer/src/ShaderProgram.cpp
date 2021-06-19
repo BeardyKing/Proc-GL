@@ -113,6 +113,12 @@ void ShaderProgram::SetBaseColor(glm::vec3 color){
 	}
 }
 
+void ShaderProgram::SetTextureScale(glm::vec2 scale) {
+	if (currentShader_uniform){
+		currentShader_uniform->SetTextureScale(scale);
+	}
+}
+
 bool ShaderProgram::loadShaders (const char* vsFileName, const char* fsFileName) {
 	std::string vsString = fileToString(vsFileName);
 	std::string fsString = fileToString(fsFileName);

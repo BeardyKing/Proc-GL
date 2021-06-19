@@ -30,6 +30,7 @@ namespace uniform {
 
 	public://helper functions
 		virtual void SetBaseColor(glm::vec3 _color) {}
+		virtual void SetTextureScale(glm::vec2 _scale) {}
 
 	};
 
@@ -59,6 +60,8 @@ namespace uniform {
 			std::cout << "--- ERROR : Shader_UniformSetter.cpp - Setting Shader_Uniform to basic fallback" << std::endl;
 			return _shader_uniform[0].second();
 		}
+
+
 
 	private:
 		Shader_Uniforms*& m_CurrentShader;

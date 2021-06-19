@@ -36,6 +36,9 @@ public :
 	glm::vec3 GetBaseColor();
 	void SetBaseColor(glm::vec3 color);
 
+	void SetTextureScale(glm::vec2 scale);
+	glm::vec2 GetTextureScale();
+
 	enum ShaderType {
 		VERTEX,
 		FRAGMENT,

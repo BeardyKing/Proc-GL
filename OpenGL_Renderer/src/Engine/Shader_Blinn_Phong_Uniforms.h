@@ -71,7 +71,6 @@ namespace uniform {
 		}
 
 			_shader.setUniform("_shadowIntensity", m_lights[0]->getComponent<LightObject>().shadowIntensity);
-			_shader.setUniform("_lightIntensity", m_lights[0]->getComponent<LightObject>().lightIntensity);
 			//_shader.setUniform("_lightColor", m_lights[0]->getComponent<LightObject>().color);
 			//_shader.setUniform("_spec", specular);
 

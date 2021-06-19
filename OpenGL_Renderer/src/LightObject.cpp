@@ -4,7 +4,7 @@
 
 LightObject::LightObject() :
 	lightType(LightType::Point),
-	color(glm::vec3(300.0f, 150.0f, 150.0f))
+	color(glm::vec3(255.0f, 241.0f, 224.0f))
 {}
 
 LightObject::~LightObject() {}
