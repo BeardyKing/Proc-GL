@@ -103,8 +103,18 @@ void ShaderProgram::OnImGuiRender(){
 	ImGui::End();
 }
 
-glm::vec3 ShaderProgram::GetBaseColor(){
-	return m_BaseColor;
+//glm::vec3 ShaderProgram::GetBaseColor(){
+//	return m_BaseColor;
+//}
+
+void ShaderProgram::SetColour(const glm::vec4& value, const std::string& name) {
+	currentShader_uniform->SetColour(value, name);
+}
+void ShaderProgram::SetFloat(const float& value, const std::string& name) {
+	currentShader_uniform->SetFloat(value, name);
+}
+void ShaderProgram::SetInt(const int& value, const std::string& name) {
+	currentShader_uniform->SetInt(value, name);
 }
 
 void ShaderProgram::SetBaseColor(glm::vec3 color){

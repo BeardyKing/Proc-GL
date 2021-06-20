@@ -34,7 +34,7 @@ public:
 	float shadowBias = 1.0f;
 	glm::vec4 v4lightProjection = glm::vec4(-15.0f, 15.0f, -15.0f, 15.0f);
 	float near_plane = 0.01f;
-	float far_plane = 20.0f;
+	float far_plane = 35.0f;
 };
 
 #endif // !LIGHTOBJECT_H

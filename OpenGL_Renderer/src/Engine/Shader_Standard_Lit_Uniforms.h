@@ -26,6 +26,10 @@ namespace uniform {
 	public: //helperFunction
 		void SetBaseColor(glm::vec3 _colour) override;
 		void SetTextureScale(glm::vec2 _scale) override;
+		void SetColour(const glm::vec4& value, const std::string& name) override;
+		void SetFloat(const float& value, const std::string& name) override;
+		void SetInt(const int& value, const std::string& name) override;
+
 	private:
 		std::unique_ptr <Texture2D[]> _pbr_textures;
 		int numberOfTextures = 0;
@@ -41,11 +45,41 @@ namespace uniform {
 		float metallic_scalar	= 1.0f;
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
-
 	};
 
 	void Shader_Standard_Lit_Uniform::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
 	void Shader_Standard_Lit_Uniform::SetTextureScale(glm::vec2 _scale) { m_TextureTiling = _scale; }
+
+	 void Shader_Standard_Lit_Uniform::SetColour(const glm::vec4& value, const std::string& name) {
+		 if (name == "albedo_color"){
+			 albedo_color = value;
+		 }
+		 else{
+			 std::cout << " could not find uniform with name " << name << " of type glm::vec4 "<< std::endl;
+		 }
+	 }
+	 
+	 void Shader_Standard_Lit_Uniform::SetFloat(const float& value, const std::string& name) {
+		if (name == "normal_scalar") {	 normal_scalar = value;
+		}
+		else if (name == "metallic_scalar"){	 
+			metallic_scalar = value;
+		}
+		else if (name == "roughness_scalar"){	 
+			roughness_scalar = value;
+		}
+		else if (name == "occlusion_scalar"){	 
+			occlusion_scalar = value;
+		}
+		else {	 
+			std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
+		}
+	 }
+
+	 void Shader_Standard_Lit_Uniform::SetInt(const int& value, const std::string& name) {
+		std::cout << " could not find uniform with name " << name << " of type int " << std::endl;
+	 }
+
 
 	void Shader_Standard_Lit_Uniform::SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 		//glm::vec3 cameraPosition = GetManager()->FindActiveCamera()->getComponent<Transform>().position; // Also viable
@@ -57,6 +91,7 @@ namespace uniform {
 	}
 
 	void Shader_Standard_Lit_Uniform::SetUniformCustom(ShaderProgram& _shader) {
+
 
 		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
@@ -215,7 +250,7 @@ namespace uniform {
 			ImGui::Selectable("Occlusion Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##Occlusion_scalar", &occlusion_scalar, -1.0f, 1.0f);
+			ImGui::SliderFloat("##Occlusion_scalar", &occlusion_scalar, 0.0f, 10.0f);
 			ImGui::NextColumn();
 
 			//--------------Shadow Map--------------// // TODO Update to support multiple shadowmaps

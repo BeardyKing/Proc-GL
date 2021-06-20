@@ -32,6 +32,9 @@ namespace uniform {
 		virtual void SetBaseColor(glm::vec3 _color) {}
 		virtual void SetTextureScale(glm::vec2 _scale) {}
 
+		virtual void SetColour(const glm::vec4& value, const std::string& name) {}
+		virtual void SetFloat(const float& value, const std::string& name) {}
+		virtual void SetInt(const int& value, const std::string& name) {}
 	};
 
 	class ShaderMenu : public Shader_Uniforms {

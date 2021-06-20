@@ -33,11 +33,16 @@ public :
 
 
 	void OnImGuiRender();
-	glm::vec3 GetBaseColor();
-	void SetBaseColor(glm::vec3 color);
 
+	void SetBaseColor(glm::vec3 color);
 	void SetTextureScale(glm::vec2 scale);
+
+	void SetColour(const glm::vec4& value, const std::string& name);
+	void SetFloat(const float& value, const std::string& name);
+	void SetInt(const int& value, const std::string& name);
+
 	glm::vec2 GetTextureScale();
+	glm::vec3 GetBaseColor();
 
 	enum ShaderType {
 		VERTEX,
@@ -69,8 +74,6 @@ private:
 
 	std::string editor_vertexShader;
 	std::string editor_fragmentShader;
-
-	glm::vec3 m_BaseColor;
 
 	std::string fileToString(const std::string& fileName);
 	void checkCompileErrors(GLuint shader, ShaderType type);
