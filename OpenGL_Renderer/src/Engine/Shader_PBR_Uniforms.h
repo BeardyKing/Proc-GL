@@ -3,10 +3,10 @@
 
 #include "../Engine/ECS_List.h"
 #include "../Engine/Engine_Core.h"
+#include "../Engine/Engine_UtilityFunctions.h"
+
 #include <vector>
 
-GLuint GetShadowMap();
-bool RenderShadowMap();
 
 namespace uniform {
 	class Shader_PBR_Uniforms : public Shader_Uniforms
@@ -72,12 +72,12 @@ namespace uniform {
 
 
 		glActiveTexture(GL_TEXTURE0 + 5);
-		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
+		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap());
 
 
 		_shader.use();
 
-		if (RenderShadowMap() && castShadows) {
+		if (G_RenderShadowMap() && castShadows) {
 			_shader.setUniform("view", glm::mat4(1));
 			_shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}

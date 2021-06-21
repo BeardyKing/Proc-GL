@@ -199,6 +199,7 @@
     <ClInclude Include="src\Engine\EditorGUI.h" />
     <ClInclude Include="src\Engine\Engine_Core.h" />
     <ClInclude Include="src\Editor\Engine_Editor.h" />
+    <ClInclude Include="src\Engine\Engine_UtilityFunctions.h" />
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />

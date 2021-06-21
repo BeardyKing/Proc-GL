@@ -2,6 +2,8 @@
 #define SHADER_SHADOWDEPTH_H
 #include "Shader_UniformSetter.h"
 #include "../Engine/ECS_List.h"
+#include "../Engine/Engine_UtilityFunctions.h"
+
 
 namespace uniform {
 	class Shader_ShadowDepth : public Shader_Uniforms
@@ -31,7 +33,7 @@ namespace uniform {
 	void Shader_ShadowDepth::SetUniformCustom(ShaderProgram& _shader){
 
 		glActiveTexture(GL_TEXTURE0 + 1);
-		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
+		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap());
 
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;

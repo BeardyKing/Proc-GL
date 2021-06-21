@@ -3,7 +3,7 @@
 
 
 FrameBuffer::FrameBuffer():
-    m_framebuffer(0),
+    m_frameBuffer(0),
     m_renderBuffer(0),
     m_depthBuffer(0)
 {
@@ -15,7 +15,7 @@ FrameBuffer::~FrameBuffer() {
 }
 
 void FrameBuffer::Bind() {
-    glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 }
 
 void FrameBuffer::UnBind() {
@@ -23,7 +23,7 @@ void FrameBuffer::UnBind() {
 }
 
 GLuint FrameBuffer::GetFrameBuffer() {
-    return m_framebuffer;
+    return m_frameBuffer;
 }
 
 GLuint FrameBuffer::GetRenderBuffer() {
@@ -31,7 +31,7 @@ GLuint FrameBuffer::GetRenderBuffer() {
 }
 
 void FrameBuffer::DeleteFrameBuffer() {
-    glDeleteBuffers(GL_FRAMEBUFFER, &m_framebuffer);
+    glDeleteBuffers(GL_FRAMEBUFFER, &m_frameBuffer);
 }
 
 void FrameBuffer::UpdateFrameBufferTextureSize(float screen_width, float screen_height) {
@@ -45,9 +45,9 @@ void FrameBuffer::UpdateFrameBufferTextureSize(float screen_width, float screen_
 }
 
 void FrameBuffer::GenerateFrameBuffer(float screen_width, float screen_height) {
-    m_framebuffer = 0;
-    glGenFramebuffers(1, &m_framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+    m_frameBuffer = 0;
+    glGenFramebuffers(1, &m_frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
     glGenTextures(1, &m_renderBuffer);
     glBindTexture(GL_TEXTURE_2D, m_renderBuffer);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, screen_width, screen_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);

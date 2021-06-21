@@ -1,17 +1,17 @@
 #include "test_shadowMap.h"
+#include "../Engine/Engine_UtilityFunctions.h"
 
-extern uint32_t GetAmountOfEntities();
-extern void SetManager(EntityManager* mgr);
-EntityManager* GetManager();
+
+
 
 GLuint ShadowMap;
-GLuint GetShadowMap() {return ShadowMap;}
-
-void SetShadowMap(GLuint tex) {ShadowMap = tex;}
-
+GLuint G_GetShadowMap() {return ShadowMap;}
+void G_SetShadowMap(GLuint tex) {ShadowMap = tex;}
 bool renderShadowMap = false;
-bool RenderShadowMap() { return renderShadowMap;}
-void SetRenderShadowMap( bool b) {renderShadowMap = b;}
+bool G_RenderShadowMap() { return renderShadowMap;}
+void G_SetRenderShadowMap( bool b) {renderShadowMap = b;}
+//TODO -- Move this whole global thing to a class -- //TODO
+
 
 namespace test {
     test_shadowMap::test_shadowMap(){
@@ -111,8 +111,8 @@ namespace test {
         for (auto& buffer : depthBuffers) {
             buffer.Bind();
             GetManager()->OnRender();
-            SetShadowMap(buffer.depthMap); // this needs to become list/array
-            depthTexturesThisFrame.emplace_back(buffer.depthMap);
+            G_SetShadowMap(buffer.GetDepthBuffer()); // this needs to become list/array
+            depthTexturesThisFrame.emplace_back(buffer.GetDepthBuffer());
             buffer.UnBind();
         }
 
@@ -141,7 +141,7 @@ namespace test {
             name.append(std::to_string(counter));
             if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
                 int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-                ImGui::Image((void*)GetShadowMap(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+                ImGui::Image((void*)G_GetShadowMap(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
             }
             counter++;
         }

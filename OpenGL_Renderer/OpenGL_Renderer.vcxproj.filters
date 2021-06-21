@@ -314,6 +314,9 @@
     <ClInclude Include="src\Editor\Engine_Editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Engine_UtilityFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\lighting.frag">

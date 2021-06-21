@@ -1,17 +1,56 @@
-﻿  Texture2D.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(16,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(17,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  DepthBuffer.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(54,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(54,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  ShaderProgram.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(183,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(183,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(202,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(202,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(215,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(215,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(228,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(228,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(241,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(241,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(254,91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(254,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(292,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(104,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(108,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(122,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(93,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(97,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(98,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(111,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(262,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(263,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(268,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(269,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(47,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(56): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
+  test_shadowMap.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(143,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(144,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(151,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(152,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(79): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  20 of 3945 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  10 of 3947 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     3 functions were new in current compilation
-    103 functions had inline decision re-evaluated but remain unchanged
+    101 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
+LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture2D' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
-LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'

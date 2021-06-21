@@ -1,29 +1,29 @@
 #ifndef DEPTHBUFFER_H
 #define DEPTHBUFFER_H
 
-//#define GLEW_STATIC
 #include <GL/glew.h>
 
-class DepthBuffer
-{
+class DepthBuffer{
 public:
-	DepthBuffer();
-	DepthBuffer(int x, int y);
+	DepthBuffer(GLuint texture_width, GLuint texture_height);
 	~DepthBuffer();
 
 	void Bind();
 	void UnBind();
-	void GenerateDepthBuffer(float x, float y);
-	void UpdateDepthBufferTextureSize(float x, float y);
+	void GenerateDepthBuffer(GLuint texture_width, GLuint texture_height);
+	void DeleteDepthBuffer();
+
+	GLuint GetDepthBuffer();
+	GLuint GetFrameBuffer();
 
 private:
+	void ResetViewport();
 
-public :
-	unsigned int SHADOW_WIDTH, SHADOW_HEIGHT;
-	unsigned int depthMapFBO;
-	unsigned int depthMap;
+private:
+	GLuint m_textureWidth	= 0;
+	GLuint m_textureHeight	= 0;
+	GLuint m_frameBuffer	= 0;
+	GLuint m_depthBuffer	= 0;
 };
-
-
 
 #endif // !DEPTHBUFFER_H

@@ -2,12 +2,9 @@
 #define SHADER_STANDARD_LIT_UNIFORMS_H
 
 #include "Engine_Core.h"
+#include "Engine_UtilityFunctions.h"
 
 #include <vector>
-
-GLuint GetShadowMap();
-bool RenderShadowMap();
-
 
 namespace uniform {
 	class Shader_Standard_Lit_Uniform : public Shader_Uniforms
@@ -102,7 +99,7 @@ namespace uniform {
 		_pbr_textures[3].Bind(3);
 		_pbr_textures[4].Bind(4);
 		glActiveTexture(GL_TEXTURE0 + 5);
-		glBindTexture(GL_TEXTURE_2D, GetShadowMap()); // bind shadowmap texture(s)
+		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap()); // bind shadowmap texture(s)
 
 		auto m_lights = GetManager()->FindLights();
 
@@ -139,7 +136,7 @@ namespace uniform {
 			_shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);	// set shader uniform for lightColors[i]
 		}
 
-		if (RenderShadowMap() && castShadows) {
+		if (G_RenderShadowMap() && castShadows) {
 			_shader.setUniform("view", glm::mat4(1));
 			_shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
@@ -254,7 +251,7 @@ namespace uniform {
 
 			//--------------Shadow Map--------------// // TODO Update to support multiple shadowmaps
 			static uint16_t ShadowMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)GetShadowMap(), ImVec2(12 * ShadowMap_Image_Scalar, 12 * ShadowMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)G_GetShadowMap(), ImVec2(12 * ShadowMap_Image_Scalar, 12 * ShadowMap_Image_Scalar))) {
 				ShadowMap_Image_Scalar = (ShadowMap_Image_Scalar == 1) ? 10 : 1;
 			}
 			ImGui::SameLine();

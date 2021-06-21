@@ -3,11 +3,9 @@
 
 #include "../Engine/ECS_List.h"
 #include "../Engine/Engine_Core.h"
+#include "../Engine/Engine_UtilityFunctions.h"
+
 #include <vector>
-
-GLuint GetShadowMap();
-bool RenderShadowMap();
-
 
 namespace uniform {
 	class Shader_Blinn_Phong_Uniforms : public Shader_Uniforms
@@ -52,13 +50,13 @@ namespace uniform {
 
 		_pbr_textures[0].Bind(0);
 		glActiveTexture(GL_TEXTURE0 + 1);
-		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
+		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap());
 
 		
 		_shader.use();
 		_shader.setUniformSampler("diffuseTexture",0);	// 0 = albedo
 
-		if (RenderShadowMap() && castShadows){
+		if (G_RenderShadowMap() && castShadows){
 			_shader.setUniform("view", glm::mat4(1));
 			_shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
