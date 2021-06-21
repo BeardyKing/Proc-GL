@@ -96,11 +96,11 @@ namespace uniform {
 
 		_shader.use();
 
-		_pbr_textures[0].bind(0);
-		_pbr_textures[1].bind(1);
-		_pbr_textures[2].bind(2);
-		_pbr_textures[3].bind(3);
-		_pbr_textures[4].bind(4);
+		_pbr_textures[0].Bind(0);
+		_pbr_textures[1].Bind(1);
+		_pbr_textures[2].Bind(2);
+		_pbr_textures[3].Bind(3);
+		_pbr_textures[4].Bind(4);
 		glActiveTexture(GL_TEXTURE0 + 5);
 		glBindTexture(GL_TEXTURE_2D, GetShadowMap()); // bind shadowmap texture(s)
 
@@ -293,7 +293,7 @@ namespace uniform {
 		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
 		for (size_t i = 0; i < numberOfTextures; i++) {
-			_pbr_textures[i].loadTexture(tex[i], true);
+			_pbr_textures[i].LoadTexture(tex[i], true);
 		}
 	}
 

@@ -52,7 +52,6 @@ void ShaderProgram::LoadShaderMenu() {
 	currentShader_uniform = shaderMenu;	// TODO ADD SHADER LIST LOADER
 	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); 
 	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
-	//shaderMenu->RegisterShader<uniform::Shader_Blinn_Phong_Uniforms>	("Uniform_Blinn-Phong"); 
 	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Lit_Uniform>	("Uniform_Standard_Lit");
 }

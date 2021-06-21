@@ -3,7 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
 
-Texture2D::Texture2D() : m_Texture(0){}
 
 void Texture2D::OnImGuiRender(){
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
@@ -13,8 +12,8 @@ void Texture2D::OnImGuiRender(){
 		if (ImGui::CollapsingHeader("Texture2D", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)){
 			ImGui::Indent();
 
-			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * m_TextureHeight / m_textureWidth;
-			ImGui::Image((void*)m_Texture, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * m_textureHeight / m_textureWidth;
+			ImGui::Image((void*)m_texture, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
 
 			ImGui::Unindent();
 		}
@@ -23,26 +22,26 @@ void Texture2D::OnImGuiRender(){
 }
 
 Texture2D::~Texture2D() {
-	glDeleteTextures(sizeof(m_Texture), &m_Texture);
+	glDeleteTextures(sizeof(m_texture), &m_texture);
 }
 
 GLuint Texture2D::GetTexture() {
-	return m_Texture;
+	return m_texture;
 }
 
 glm::vec2 Texture2D::GetTextureSize() {
-	return glm::vec2(m_textureWidth, m_TextureHeight);
+	return glm::vec2(m_textureWidth, m_textureHeight);
 }
 
 
-bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
+bool Texture2D::LoadTexture(const std::string& fileName, bool generateMipMaps) {
 	unsigned char* imageData;
 	int width, height, components;
 	stbi_set_flip_vertically_on_load(true);
 	imageData = stbi_load(fileName.c_str(), &width, &height, &components, 0);
 	if (imageData){
 
-		glGenTextures(1, &m_Texture);
+		glGenTextures(1, &m_texture);
 
 		GLenum format;
 		if (components == 1)
@@ -52,17 +51,18 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 		else if (components == 4)
 			format = GL_RGBA;
 
-		glBindTexture(GL_TEXTURE_2D, m_Texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, imageData);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 
-		if (AnisotropicFilteringEnabled){
-			GLfloat anisotropicMaxAmount;
-			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisotropicMaxAmount);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropicMaxAmount);
+		if (m_anisotropicFilteringEnabled){
+			if (m_useAnisotropicMaxAmount){
+				glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &m_anisotropicMaxAmount);
+			}
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, m_anisotropicMaxAmount);
 		}
 
 		if (generateMipMaps){
@@ -78,13 +78,13 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 		std::cout << "Texture loaded at path: " << fileName << std::endl;
 
 		m_textureWidth = width;
-		m_TextureHeight = height;
+		m_textureHeight = height;
 
 		stbi_image_free(imageData);
 	}
 	else{
 		std::cout << "Texture failed to load at path: " << fileName << std::endl;
-		generateFallbackTexture();
+		GenerateFallbackTexture();
 		stbi_image_free(imageData);
 		std::cout << "WARNING: LOADED FALLBACK TEXTURE" << fileName << std::endl;
 	}
@@ -94,17 +94,15 @@ bool Texture2D::loadTexture(const std::string& fileName, bool generateMipMaps) {
 	return true;
 }
 
-void Texture2D::generateFallbackTexture() {
-	
-
-	glGenTextures(1, &m_Texture);
+void Texture2D::GenerateFallbackTexture() {
+	glGenTextures(1, &m_texture);
 
 	GLenum format;
 	format = GL_RGBA;
 	GLubyte texData[] = { 255, 255, 255, 255 };			// Generate white single pixel texture with full alpha
 	unsigned char* imageData = (unsigned char*)texData;
 
-	glBindTexture(GL_TEXTURE_2D, m_Texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, format, 1, 1, 0, format, GL_UNSIGNED_BYTE, imageData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -112,21 +110,20 @@ void Texture2D::generateFallbackTexture() {
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	std::cout << "generated fallback texture: " << std::endl;
-
 }
 
-bool Texture2D::loadHDRTexture(const std::string& fileName) {
+bool Texture2D::LoadHDRTexture(const std::string& fileName) {
 	stbi_set_flip_vertically_on_load(true);
+
 	int width, height, components;
 	float* imageData = stbi_loadf(fileName.c_str(), &width, &height, &components, 0);
+
 	if (imageData){
-		glGenTextures(1, &m_Texture);
-		glBindTexture(GL_TEXTURE_2D, m_Texture);
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, imageData);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -147,9 +144,9 @@ bool Texture2D::loadHDRTexture(const std::string& fileName) {
 	return false;
 }
 
-bool Texture2D::loadCubemap(const std::vector<std::string> fileNames) {
-	glGenTextures(1, &m_Texture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, m_Texture);
+bool Texture2D::LoadCubemap(const std::vector<std::string> fileNames) {
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
 	stbi_set_flip_vertically_on_load(true);
 	int width, height, components;
 	for (unsigned int i = 0; i < fileNames.size(); i++){
@@ -176,37 +173,12 @@ bool Texture2D::loadCubemap(const std::vector<std::string> fileNames) {
 	return true;
 }
 
-void Texture2D::bind(GLuint texUnit) {
+void Texture2D::Bind(GLuint texUnit) {
 	glActiveTexture(GL_TEXTURE0 + texUnit);
-	glBindTexture(GL_TEXTURE_2D, m_Texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
-void Texture2D::unbind(GLuint texUnit) {
+void Texture2D::Unbind(GLuint texUnit) {
 	glActiveTexture(GL_TEXTURE0 + texUnit);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-
-
-
-
-//int widthInBytes = width * 4; 
-//unsigned char* top = NULL;
-//unsigned char* bottom = NULL;
-//unsigned char temp = 0;
-//int halfHeight = height / 2;
-//
-//for (int row = 0; row < halfHeight; row++)
-//{
-//	top = imageData + row * widthInBytes;
-//	bottom = imageData + (height - row - 1) * widthInBytes;
-//
-//	for (int col = 0; col < widthInBytes; col++)
-//	{
-//		temp = *top;
-//		*top = *bottom;
-//		*bottom = temp;
-//		top++;
-//		bottom++;
-//	}
-//}
-

@@ -50,7 +50,7 @@ namespace uniform {
 		auto m_lights = GetManager()->FindLights();
 		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
-		_pbr_textures[0].bind(0);
+		_pbr_textures[0].Bind(0);
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_2D, GetShadowMap());
 
@@ -111,7 +111,7 @@ namespace uniform {
 		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
 		for (size_t i = 0; i < numberOfTextures; i++){
-			_pbr_textures[i].loadTexture(tex[i], true);	  
+			_pbr_textures[i].LoadTexture(tex[i], true);	  
 		}
 	}
 
