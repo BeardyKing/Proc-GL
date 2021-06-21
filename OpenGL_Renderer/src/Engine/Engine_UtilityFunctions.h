@@ -8,9 +8,9 @@ extern GLuint G_GetShadowMap();
 extern void G_SetShadowMap(GLuint tex);
 extern bool G_RenderShadowMap();
 
-extern EntityManager* GetManager();
+extern EntityManager* G_GetManager();
 extern uint32_t GetAmountOfEntities();
-extern void SetManager(EntityManager* mgr);
+extern void G_SetManager(EntityManager* mgr);
 
 
 #endif // !ENGINE_UTILITYFUNCTIONS_H

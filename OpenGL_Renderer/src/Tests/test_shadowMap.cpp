@@ -17,16 +17,16 @@ namespace test {
     test_shadowMap::test_shadowMap(){
         editor = new EditorGUI;
         EntityManager* manager = new EntityManager;
-        SetManager(manager);
+        G_SetManager(manager);
 
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>(glm::vec3(0), 4.781f, -0.549f);
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
         entity->getComponent<Transform>().position = glm::vec3(17, 11, -.01f);
-        GetManager()->addEntity(entity);
+        G_GetManager()->addEntity(entity);
         
         entity = new Entity("StanfordDragon");
-        GetManager()->addEntity(entity);
+        G_GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("TheStanfordDragon_83k.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
@@ -53,7 +53,7 @@ namespace test {
         entity->getComponent<script_simplebehaviours>().SetRotateAxis(false, true, false);
 
         entity = new Entity("Ground");
-        GetManager()->addEntity(entity);
+        G_GetManager()->addEntity(entity);
 
         entity->addComponent<Mesh>("cube.obj");
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
@@ -74,7 +74,7 @@ namespace test {
 
 
         entity = new Entity("Directional Light");
-        GetManager()->addEntity(entity);
+        G_GetManager()->addEntity(entity);
         entity->getComponent<Transform>().position = glm::vec3(8.0f,4.5f,-1.93f);
         entity->addComponent<LightObject>();
         entity->addComponent<script_simplebehaviours>();
@@ -96,7 +96,7 @@ namespace test {
     }
 
 	void test_shadowMap::OnUpdate(double deltaTime) {
-        GetManager()->OnUpdate(deltaTime);
+        G_GetManager()->OnUpdate(deltaTime);
     }
     bool once = false;
 	void test_shadowMap::OnRender() {
@@ -110,7 +110,7 @@ namespace test {
         depthTexturesThisFrame.clear();
         for (auto& buffer : depthBuffers) {
             buffer.Bind();
-            GetManager()->OnRender();
+            G_GetManager()->OnRender();
             G_SetShadowMap(buffer.GetDepthBuffer()); // this needs to become list/array
             depthTexturesThisFrame.emplace_back(buffer.GetDepthBuffer());
             buffer.UnBind();
@@ -121,13 +121,13 @@ namespace test {
         fbo.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        GetManager()->OnRender();
+        G_GetManager()->OnRender();
         
         fbo.UnBind();
     }
 
     void test_shadowMap::OnExit() {
-        GetManager()->OnExit();
+        G_GetManager()->OnExit();
     }
 
     void test_shadowMap::OnImGuiRender() {

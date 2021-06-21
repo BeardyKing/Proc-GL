@@ -3,26 +3,26 @@
 
 extern uint32_t GetAmountOfEntities();
 
-extern void SetManager(EntityManager* mgr);
-EntityManager* GetManager();
+extern void G_SetManager(EntityManager* mgr);
+EntityManager* G_GetManager();
 
 namespace test {
     test_imguizmo::test_imguizmo() {
         editor = new EditorGUI;
         EntityManager* manager = new EntityManager;
-        SetManager(manager);
+        G_SetManager(manager);
 
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>();
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
         entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
-        GetManager()->addEntity(entity);
+        G_GetManager()->addEntity(entity);
 
         for (int16_t i = 0; i < 3; i++) {
             std::string name = "basic sphere ";
             name.append(std::to_string(i));
             entity = new Entity(name.c_str());
-            GetManager()->addEntity(entity);
+            G_GetManager()->addEntity(entity);
             entity->addComponent<ShaderProgram>();
             entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(3 / (i + 1), 0, 0));
             entity->addComponent<Mesh>("mesh/pipe.obj");
@@ -39,7 +39,7 @@ namespace test {
     }
 
     void test_imguizmo::OnUpdate(double deltaTime) {
-        GetManager()->OnUpdate(deltaTime);
+        G_GetManager()->OnUpdate(deltaTime);
     }
 
     void test_imguizmo::OnRender() {
@@ -51,13 +51,13 @@ namespace test {
         fbo.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        GetManager()->OnRender();
+        G_GetManager()->OnRender();
 
         fbo.UnBind();
     }
 
     void test_imguizmo::OnExit() {
-        GetManager()->OnExit();
+        G_GetManager()->OnExit();
     }
 
     void test_imguizmo::OnImGuiRender() {

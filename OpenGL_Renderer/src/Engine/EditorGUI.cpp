@@ -23,9 +23,9 @@ void EditorGUI::RenderHierarchy() {
 	ImGui::Begin("ECS_Hierarchy");
 	{
 		for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
-			auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
-			if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
-				GetManager()->Editor_SetActiveEntity(i);
+			auto label = G_GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+			if (ImGui::Selectable(label, G_GetManager()->Editor_GetActiveEntity() == i)) {
+				G_GetManager()->Editor_SetActiveEntity(i);
 			}
 		}
 	}
@@ -65,12 +65,12 @@ void EditorGUI::RenderScene(const GLuint& renderTexture) {
         // ImGuizmo //
         //          //
 
-        Entity* currentEntity = GetManager()->GetSelectedEntity();
+        Entity* currentEntity = G_GetManager()->GetSelectedEntity();
         auto& currentEntityTransform = currentEntity->getComponent<Transform>();
         Entity* cam = NULL;
 
         if (!cam) {
-            for (auto& m_entity : GetManager()->entities) {
+            for (auto& m_entity : G_GetManager()->entities) {
                 if (m_entity->hasComponent<FPSCamera>()) {
                     cam = m_entity.get();
                     break;
@@ -205,7 +205,7 @@ void EditorGUI::UpdateFrameBufferTextureSize(GLuint renderTexture) {
     glViewport(0, 0, lastFrameWindowSize.x, lastFrameWindowSize.y);
 
     //GetComponent FPSCamera
-    for (auto& entity : GetManager()->entities) {
+    for (auto& entity : G_GetManager()->entities) {
         if (entity->hasComponent<FPSCamera>()) {
             auto& cam = entity->getComponent<FPSCamera>();
             cam.ImGuiWindowSize = lastFrameWindowSize;
@@ -214,7 +214,7 @@ void EditorGUI::UpdateFrameBufferTextureSize(GLuint renderTexture) {
 }
 
 void EditorGUI::RenderActiveInspector() {
-    GetManager()->Editor_RenderActiveInspector();
+    G_GetManager()->Editor_RenderActiveInspector();
 }
 
 void  EditorGUI::Demo(bool &demo) {

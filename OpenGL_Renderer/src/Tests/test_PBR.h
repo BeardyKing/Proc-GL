@@ -14,8 +14,8 @@ int G_GetWindowWidth();
 int G_GetWindowHeight();
 
 extern uint32_t GetAmountOfEntities();
-extern void SetManager(EntityManager* mgr);
-EntityManager* GetManager();
+extern void G_SetManager(EntityManager* mgr);
+EntityManager* G_GetManager();
 
 namespace test {
 	class test_PBR : public Test{

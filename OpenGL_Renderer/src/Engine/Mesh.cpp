@@ -11,7 +11,7 @@
 int G_GetWindowWidth();
 int G_GetWindowHeight();
 bool G_GetWindowResizeFlag();
-extern EntityManager* GetManager();
+extern EntityManager* G_GetManager();
 
 std::vector<std::string> split(std::string s, std::string t) {
 	std::vector<std::string> res;
@@ -46,7 +46,7 @@ Mesh::~Mesh() {
 
 void Mesh::OnRender(){
 	Entity* cam = nullptr;
-	EntityManager* mgr = GetManager();
+	EntityManager* mgr = G_GetManager();
 
 	std::string name;
 	for (auto& e : mgr->entities){

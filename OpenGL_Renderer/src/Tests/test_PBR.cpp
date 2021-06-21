@@ -5,14 +5,14 @@ namespace test {
 		m_amountOfLights(6)
 	{
 		EntityManager* manager = new EntityManager;
-		SetManager(manager);
+		G_SetManager(manager);
 		{
 			//----------------------------------//
 			//			  Camera				//
 			//----------------------------------//
 
 			entity = new Entity("Main Camera");
-			GetManager()->addEntity(entity);
+			G_GetManager()->addEntity(entity);
 
 			entity->addComponent<FPSCamera>();
 			auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = false;
@@ -26,7 +26,7 @@ namespace test {
 			//----------------------------------//
 			for (size_t i = 0; i < m_amountOfLights; i++) {
 				std::string name = "basic sphere ";
-				GetManager()->addEntity(entity);
+				G_GetManager()->addEntity(entity);
 
 				name.append(std::to_string(i));
 				entity = new Entity(name.c_str());
@@ -55,7 +55,7 @@ namespace test {
 			//----------------------------------//
 
 			entity = new Entity("PBR cube");
-			GetManager()->addEntity(entity);
+			G_GetManager()->addEntity(entity);
 			m_pbr_cube = entity;
 
 			entity->getComponent<Transform>().scale = glm::vec3(3);
@@ -74,7 +74,7 @@ namespace test {
 			//----------------------------------//
 
 			entity = new Entity("PBR cube2");
-			GetManager()->addEntity(entity);
+			G_GetManager()->addEntity(entity);
 			m_pbr_cube = entity;
 
 			entity->getComponent<Transform>().scale = glm::vec3(6,6,6);
@@ -94,7 +94,7 @@ namespace test {
 			entity = new Entity(name.c_str());
 			entity->getComponent<Transform>().scale = glm::vec3(3);
 			m_pbr_cube = entity;
-			GetManager()->addEntity(entity);
+			G_GetManager()->addEntity(entity);
 		}
 
 	}
@@ -116,23 +116,23 @@ namespace test {
 		_lightRef[0]->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
 		_lightRef[0]->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
 		_lightRef[0]->getComponent<Transform>().position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
-		GetManager()->OnUpdate(deltaTime);
+		G_GetManager()->OnUpdate(deltaTime);
 	}
 
 	void test_PBR::OnRender() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		GetManager()->OnRender();
+		G_GetManager()->OnRender();
 	}
 
 	void test_PBR::OnImGuiRender() {
 		RenderHierarchy();
-		GetManager()->Editor_RenderActiveInspector();
+		G_GetManager()->Editor_RenderActiveInspector();
 	}
 
 	void test_PBR::OnExit() {
-		GetManager()->OnExit();
+		G_GetManager()->OnExit();
 	}
 
 	void test_PBR::RenderHierarchy() {
@@ -140,9 +140,9 @@ namespace test {
 		ImGui::Begin("ECS_Hierarchy");
 		{
 			for (uint32_t i = 0; i < GetAmountOfEntities(); i++) {
-				auto label = GetManager()->entities[i]->getComponent<ObjectData>().GetName();
-				if (ImGui::Selectable(label, GetManager()->Editor_GetActiveEntity() == i)) {
-					GetManager()->Editor_SetActiveEntity(i);
+				auto label = G_GetManager()->entities[i]->getComponent<ObjectData>().GetName();
+				if (ImGui::Selectable(label, G_GetManager()->Editor_GetActiveEntity() == i)) {
+					G_GetManager()->Editor_SetActiveEntity(i);
 				}
 			}
 		}

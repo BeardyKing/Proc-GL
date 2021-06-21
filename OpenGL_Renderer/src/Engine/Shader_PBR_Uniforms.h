@@ -34,7 +34,7 @@ namespace uniform {
 	void Shader_PBR_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
 
 	void Shader_PBR_Uniforms::SetUniformMVP(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, ShaderProgram& _shader, Camera& _camera) {
-		//glm::vec3 cameraPosition = GetManager()->FindActiveCamera()->getComponent<Transform>().position; // Also viable
+		//glm::vec3 cameraPosition = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position; // Also viable
 		_shader.setUniform("model", model);
 		_shader.setUniform("view", view);
 		_shader.setUniform("projection", projection);
@@ -42,7 +42,7 @@ namespace uniform {
 	}
 
 	void Shader_PBR_Uniforms::SetUniformCustom(ShaderProgram& _shader){
-		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
+		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
 		_pbr_textures[0].Bind(0);
 		_pbr_textures[1].Bind(1);
@@ -57,7 +57,7 @@ namespace uniform {
 		_shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
 
 
-		auto m_lights = GetManager()->FindLights();
+		auto m_lights = G_GetManager()->FindLights();
 
 		_shader.use();
 		_shader.setUniform("amountOfLights", (GLint)m_lights.size());

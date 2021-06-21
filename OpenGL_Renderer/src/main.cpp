@@ -10,27 +10,23 @@
 #include <sstream>
 #include <vector>
 
-
-const char* APP_TITLE			= "Proc_GL";
-static int gWindowWidth			= 1280;
-static int gWindowHeight		= 720;
-static bool gWindowResizedFlag	= false;
+const char* APP_TITLE					= "Proc_GL";
+static int gWindowWidth					= 1280;
+static int gWindowHeight				= 720;
+static bool gWindowResizedFlag			= false;
 
 static EntityManager* ecs_manager;
 
-bool G_GetWindowResizeFlag()	{return gWindowResizedFlag;}
-int G_GetWindowWidth()			{return gWindowWidth;}
-int G_GetWindowHeight()			{return gWindowHeight;}
+bool G_GetWindowResizeFlag()			{return gWindowResizedFlag;}
+int G_GetWindowWidth()					{return gWindowWidth;}
+int G_GetWindowHeight()					{return gWindowHeight;}
+EntityManager* G_GetManager()			{return ecs_manager;}
+void G_SetManager(EntityManager* mgr)	{ecs_manager = mgr;}
 
-EntityManager* GetManager()		{return ecs_manager;}
-void SetManager(EntityManager* mgr) {ecs_manager = mgr;}
-
-
-GLFWwindow* gWindow = NULL;
-
-bool gFullscreen = false;		// to be deprecated
-bool glWireframe = false;		// to be deprecated
-bool gCursorEnabled = true;		// to be deprecated
+GLFWwindow* g_Window = NULL;
+bool g_Fullscreen = false;			// to be deprecated
+bool g_lWireframe = false;			// to be deprecated
+bool g_CursorEnabled = true;		// to be deprecated
 
 void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode);
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height);
@@ -63,9 +59,9 @@ int main(){
 	double lastTime = glfwGetTime();
 
 	// Main loop
-	while (!glfwWindowShouldClose(gWindow))
+	while (!glfwWindowShouldClose(g_Window))
 	{
-		showFPS(gWindow);
+		showFPS(g_Window);
 
 		double currentTime = glfwGetTime();
 		double deltaTime = currentTime - lastTime; 
@@ -109,7 +105,7 @@ int main(){
 			glfwMakeContextCurrent(backup_current_context);
 		}
 
-		glfwSwapBuffers(gWindow);
+		glfwSwapBuffers(g_Window);
 		lastTime = currentTime;
 		gWindowResizedFlag = false;
 	}
@@ -119,7 +115,7 @@ int main(){
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 
-	glfwDestroyWindow(gWindow);
+	glfwDestroyWindow(g_Window);
 	glfwTerminate();
 	return 0;
 }
@@ -137,29 +133,29 @@ bool InitOpenGL() {
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	const char* glsl_version = "#version 330";
 
-	if (gFullscreen) {
+	if (g_Fullscreen) {
 		GLFWmonitor* pMonitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* pVmode = glfwGetVideoMode(pMonitor);
 		if (pVmode != NULL) {
-			gWindow = glfwCreateWindow(pVmode->width, pVmode->height, APP_TITLE, pMonitor, NULL);
+			g_Window = glfwCreateWindow(pVmode->width, pVmode->height, APP_TITLE, pMonitor, NULL);
 		}
 	}
 	else {
-		gWindow = glfwCreateWindow(gWindowWidth, gWindowHeight, APP_TITLE, NULL, NULL);
+		g_Window = glfwCreateWindow(gWindowWidth, gWindowHeight, APP_TITLE, NULL, NULL);
 	}
 
-	if (gWindow == NULL) {
+	if (g_Window == NULL) {
 		std::cerr << "GLFW Window Did not init" << std::endl;
 		glfwTerminate();
 		return false;
 	}
-	glfwMakeContextCurrent(gWindow);
+	glfwMakeContextCurrent(g_Window);
 
 	// input
-	glfwSetKeyCallback(gWindow, glfw_onKey);
-	glfwSetCursorPosCallback(gWindow, glfw_OnMouseMove);
-	glfwSetScrollCallback(gWindow, glfw_OnMouseScroll);
-	glfwSetFramebufferSizeCallback(gWindow, glfw_OnFrameBufferSize);
+	glfwSetKeyCallback(g_Window, glfw_onKey);
+	glfwSetCursorPosCallback(g_Window, glfw_OnMouseMove);
+	glfwSetScrollCallback(g_Window, glfw_OnMouseScroll);
+	glfwSetFramebufferSizeCallback(g_Window, glfw_OnFrameBufferSize);
 
 	glewExperimental = GL_TRUE;
 
@@ -206,7 +202,7 @@ bool InitOpenGL() {
     //io.ConfigViewportsNoTaskBarIcon = true;
 
 	// Setup Platform/Renderer bindings
-	ImGui_ImplGlfw_InitForOpenGL(gWindow, true);
+	ImGui_ImplGlfw_InitForOpenGL(g_Window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	imGuiStyleSheet style;
@@ -222,8 +218,8 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 	}
 
 	if (key == GLFW_KEY_Q && action == GLFW_PRESS){
-		glWireframe = !glWireframe;
-		if (glWireframe){
+		g_lWireframe = !g_lWireframe;
+		if (g_lWireframe){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		}
 		else {
@@ -231,14 +227,14 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 		}
 	}
 
-	if (glfwGetKey(gWindow, GLFW_KEY_E) == GLFW_PRESS) {
-		gCursorEnabled = !gCursorEnabled;
-		if (gCursorEnabled) {
-			glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	if (glfwGetKey(g_Window, GLFW_KEY_E) == GLFW_PRESS) {
+		g_CursorEnabled = !g_CursorEnabled;
+		if (g_CursorEnabled) {
+			glfwSetInputMode(g_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 		else {
-			glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			glfwSetCursorPos(gWindow, 0, 0);
+			glfwSetInputMode(g_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetCursorPos(g_Window, 0, 0);
 		}
 	}
 }

@@ -34,7 +34,7 @@ namespace uniform {
 	void Shader_Blinn_Phong_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
 
 	void Shader_Blinn_Phong_Uniforms::SetUniformMVP(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, ShaderProgram& _shader, Camera& _camera) {
-		//glm::vec3 cameraPosition = GetManager()->FindActiveCamera()->getComponent<Transform>().position; // Also viable
+		//glm::vec3 cameraPosition = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position; // Also viable
 		glm::mat4 _newModel = glm::mat4(1.0f);
 		_shader.setUniform("model", model);
 		_shader.setUniform("view", view);
@@ -45,8 +45,8 @@ namespace uniform {
 	
 	void Shader_Blinn_Phong_Uniforms::SetUniformCustom(ShaderProgram& _shader){
 
-		auto m_lights = GetManager()->FindLights();
-		auto camPos = GetManager()->FindActiveCamera()->getComponent<Transform>().position;
+		auto m_lights = G_GetManager()->FindLights();
+		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
 		_pbr_textures[0].Bind(0);
 		glActiveTexture(GL_TEXTURE0 + 1);
