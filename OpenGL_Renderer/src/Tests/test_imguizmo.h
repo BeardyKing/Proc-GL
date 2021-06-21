@@ -2,16 +2,16 @@
 #define TEST_IMGUIZMO
 
 #include "test.h"
+
+#include <GL/glew.h>
+#include "../Engine/Engine_Core.h"
+#include "../Math/Engine_Math.h"
+
+
 #include <iostream>
+#include <sstream>
+#include <vector>
 
-#include "../Engine/ECS_List.h"
-#include "../Engine/EditorGUI.h"
-
-#include "../FrameBuffer.h"
-
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
-#include "glm/gtc/random.hpp"
 
 namespace test {
 	class test_imguizmo : public Test

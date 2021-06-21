@@ -2,11 +2,12 @@
 #define TEST_ECS_H
 #include "test.h"
 
-#include <iostream>
-#include "../Engine/ECS_List.h"
-#include "../Engine/EditorGUI.h"
+#include "../Engine/Engine_Core.h"
+#include "../Math/Engine_Math.h"
 
-#include "glm/gtc/random.hpp"
+
+#include <iostream>
+
 
 namespace test {
 	class test_ECS : public Test

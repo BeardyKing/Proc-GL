@@ -7,11 +7,8 @@
 #include <sstream>
 #include <vector>
 
-#include "../Engine/ECS_List.h"
-#include "../Engine/EditorGUI.h"
+#include "../Engine/Engine_Core.h"
 
-#include "../Texture2D.h"
-#include "../ShaderProgram.h"
 
 int G_GetWindowWidth();
 int G_GetWindowHeight();

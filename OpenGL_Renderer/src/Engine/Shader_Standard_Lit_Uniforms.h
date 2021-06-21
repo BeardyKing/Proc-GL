@@ -1,9 +1,8 @@
 #ifndef SHADER_STANDARD_LIT_UNIFORMS_H
 #define SHADER_STANDARD_LIT_UNIFORMS_H
 
-#include "Shader_UniformSetter.h"
-#include "../Engine/ECS_List.h"
-#include "../Texture2D.h"
+#include "Engine_Core.h"
+
 #include <vector>
 
 GLuint GetShadowMap();

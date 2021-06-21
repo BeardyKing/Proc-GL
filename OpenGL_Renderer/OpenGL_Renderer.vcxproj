@@ -147,22 +147,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Components\Camera.cpp" />
     <ClCompile Include="src\Components\EditorCamera.cpp" />
     <ClCompile Include="src\Components\ObjectData.cpp" />
     <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
-    <ClCompile Include="src\DepthBuffer.cpp" />
+    <ClCompile Include="src\Engine\Buffers\DepthBuffer.cpp" />
     <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\Engine\EditorGUI.cpp" />
     <ClCompile Include="src\Engine\Shader_UniformSetter.cpp" />
-    <ClCompile Include="src\FrameBuffer.cpp" />
-    <ClCompile Include="src\imGuiStyleSheet.cpp" />
-    <ClCompile Include="src\LightObject.cpp" />
+    <ClCompile Include="src\Engine\Buffers\FrameBuffer.cpp" />
+    <ClCompile Include="src\Editor\imGuiStyleSheet.cpp" />
+    <ClCompile Include="src\Components\LightObject.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\ShaderProgram.cpp" />
+    <ClCompile Include="src\Engine\Mesh.cpp" />
+    <ClCompile Include="src\Engine\ShaderProgram.cpp" />
     <ClCompile Include="src\Tests\Default Test\test_defaultTest.cpp" />
     <ClCompile Include="src\Tests\test.cpp" />
     <ClCompile Include="src\Tests\test_Dock.cpp" />
@@ -170,7 +170,7 @@
     <ClCompile Include="src\Tests\test_imguizmo.cpp" />
     <ClCompile Include="src\Tests\test_PBR.cpp" />
     <ClCompile Include="src\Tests\test_shadowMap.cpp" />
-    <ClCompile Include="src\Texture2D.cpp" />
+    <ClCompile Include="src\Engine\Texture2D.cpp" />
     <ClCompile Include="src\vendor\ImGuizmo\ImCurveEdit.cpp" />
     <ClCompile Include="src\vendor\ImGuizmo\ImGradient.cpp" />
     <ClCompile Include="src\vendor\ImGuizmo\ImGuizmo.cpp" />
@@ -184,28 +184,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\EditorCamera.h" />
     <ClInclude Include="src\Components\ObjectData.h" />
     <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h" />
     <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\DepthBuffer.h" />
+    <ClInclude Include="src\ECS\Engine_ECS.h" />
+    <ClInclude Include="src\Engine\Buffers\DepthBuffer.h" />
     <ClInclude Include="src\ECS\Component.h" />
     <ClInclude Include="src\ECS\ECS.h" />
     <ClInclude Include="src\ECS\Entity.h" />
     <ClInclude Include="src\ECS\EntityManager.h" />
     <ClInclude Include="src\Engine\ECS_List.h" />
     <ClInclude Include="src\Engine\EditorGUI.h" />
+    <ClInclude Include="src\Engine\Engine_Core.h" />
+    <ClInclude Include="src\Editor\Engine_Editor.h" />
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_UniformSetter.h" />
-    <ClInclude Include="src\FrameBuffer.h" />
-    <ClInclude Include="src\imGuiStyleSheet.h" />
-    <ClInclude Include="src\LightObject.h" />
-    <ClInclude Include="src\Mesh.h" />
-    <ClInclude Include="src\ShaderProgram.h" />
+    <ClInclude Include="src\Engine\Buffers\FrameBuffer.h" />
+    <ClInclude Include="src\Editor\imGuiStyleSheet.h" />
+    <ClInclude Include="src\Components\LightObject.h" />
+    <ClInclude Include="src\Math\Engine_Math.h" />
+    <ClInclude Include="src\Engine\Mesh.h" />
+    <ClInclude Include="src\Engine\ShaderProgram.h" />
     <ClInclude Include="src\Tests\Default Test\test_defaultTest.h" />
     <ClInclude Include="src\Tests\test.h" />
     <ClInclude Include="src\Tests\test_Dock.h" />
@@ -214,7 +218,7 @@
     <ClInclude Include="src\Tests\test_List.h" />
     <ClInclude Include="src\Tests\test_PBR.h" />
     <ClInclude Include="src\Tests\test_shadowMap.h" />
-    <ClInclude Include="src\Texture2D.h" />
+    <ClInclude Include="src\Engine\Texture2D.h" />
     <ClInclude Include="src\vendor\ImGuizmo\ImCurveEdit.h" />
     <ClInclude Include="src\vendor\ImGuizmo\ImGradient.h" />
     <ClInclude Include="src\vendor\ImGuizmo\ImGuizmo.h" />

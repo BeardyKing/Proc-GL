@@ -2,15 +2,18 @@
 #define TEST_DEFAULT_H
 
 #include "../test.h"
+
+#include "../../Engine/Engine_Core.h"
+
 #include <iostream>
+#include <sstream>
+#include <vector>
 
-#include "../../Engine/ECS_List.h"
-#include "../../Engine/EditorGUI.h"
-
-#include "../../FrameBuffer.h"
+#include <GL/glew.h>
 
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
+
 #include "glm/gtc/random.hpp"
 
 namespace test {

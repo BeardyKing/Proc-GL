@@ -1,19 +1,38 @@
-﻿  test_shadowMap.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(161,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(162,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(169,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(170,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(97): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  ShaderProgram.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(186,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(186,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(205,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(205,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(218,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(218,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(231,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(231,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(244,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(244,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(257,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(257,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(295,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(104,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(108,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(122,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(95,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(99,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(100,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(113,24): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(263,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(264,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(269,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(270,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(47,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(57): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
+  main.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  1 of 3944 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 3944 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    103 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
@@ -30,29 +49,34 @@ LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.
 LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
+LINK : warning LNK4286: symbol '___glewUniform4f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewLinkProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewDeleteShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniformMatrix4fv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform1f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform2f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform1i' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCreateShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetShaderiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCheckFramebufferStatus' defined in 'glew32s.lib(glew.obj)' is imported by 'test_defaultTest.obj'
 LINK : warning LNK4286: symbol '___glewGenerateMipmap' defined in 'glew32s.lib(glew.obj)' is imported by 'Texture2D.obj'
-LINK : warning LNK4286: symbol '___glewLinkProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewDeleteShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewUniformMatrix4fv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendEquationSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendEquation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendFuncSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewUniform1i' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewCreateShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewGetAttribLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewGetShaderiv' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewDrawElementsBaseVertex' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBindSampler' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\dev\Proc-GL\OpenGL_Renderer\bin\glew_static.pdb'; linking object as if no debug info
   OpenGL_Renderer.vcxproj -> C:\dev\Proc-GL\OpenGL_Renderer\bin\OpenGL_Renderer.exe

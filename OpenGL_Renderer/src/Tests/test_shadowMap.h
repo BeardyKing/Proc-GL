@@ -2,12 +2,13 @@
 #define TEST_SHADOWMAP_H
 
 #include "test.h"
-#include <iostream>
 
-#include "../Engine/ECS_List.h"
-#include "../Engine/EditorGUI.h"
-#include "../FrameBuffer.h"
-#include "../DepthBuffer.h"
+#include "../Engine/Engine_Core.h"
+#include "../Math/Engine_Math.h"
+
+#include <iostream>
+#include <sstream>
+#include <vector>
 
 namespace test {
 	class test_shadowMap : public Test

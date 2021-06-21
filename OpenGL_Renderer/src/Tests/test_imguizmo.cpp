@@ -1,15 +1,6 @@
 #include "test_imguizmo.h"
 
-#include <iostream>
-#include <sstream>
-#include <vector>
 
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
 extern uint32_t GetAmountOfEntities();
 
 extern void SetManager(EntityManager* mgr);

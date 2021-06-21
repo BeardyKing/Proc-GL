@@ -4,14 +4,11 @@
 #include "test.h"
 #include <iostream>
 
-#include "../Engine/ECS_List.h"
-#include "../Engine/EditorGUI.h"
+#include <GL/glew.h>
 
-#include "../FrameBuffer.h"
+#include "../Engine/Engine_Core.h"
+#include "../Math/Engine_Math.h"
 
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
-#include "glm/gtc/random.hpp"
 
 namespace test {
 	class test_Dock : public Test

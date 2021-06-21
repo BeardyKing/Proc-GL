@@ -1,9 +1,7 @@
 #ifndef SHADER_UNIFORMSETTER_H
 #define SHADER_UNIFORMSETTER_H
 
-#include "../ECS/Component.h"
-#include "../ECS/Entity.h"
-//#include "ECS_List.h"
+#include "../ECS/Engine_ECS.h"
 
 
 #include <iostream>

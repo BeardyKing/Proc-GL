@@ -1,36 +1,18 @@
 #include "test_shadowMap.h"
 
-#include <iostream>
-#include <sstream>
-#include <vector>
-
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
 extern uint32_t GetAmountOfEntities();
-
 extern void SetManager(EntityManager* mgr);
 EntityManager* GetManager();
 
 GLuint ShadowMap;
-GLuint GetShadowMap() {
-    return ShadowMap;
-}
+GLuint GetShadowMap() {return ShadowMap;}
 
-void SetShadowMap(GLuint tex) {
-     ShadowMap = tex;
-}
+void SetShadowMap(GLuint tex) {ShadowMap = tex;}
 
 bool renderShadowMap = false;
-bool RenderShadowMap() {
-    return renderShadowMap;
-}
-void SetRenderShadowMap(bool b) {
-    renderShadowMap = b;
-}
+bool RenderShadowMap() { return renderShadowMap;}
+void SetRenderShadowMap( bool b) {renderShadowMap = b;}
+
 namespace test {
     test_shadowMap::test_shadowMap(){
         editor = new EditorGUI;

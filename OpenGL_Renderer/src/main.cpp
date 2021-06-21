@@ -1,46 +1,30 @@
-#include <iostream>
-#include <sstream>
-#include <vector>
-
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "vendor/imgui/imgui.h"
-#include "vendor/imgui/imgui_impl_glfw.h"
-#include "vendor/imgui/imgui_impl_opengl3.h"
-#include "vendor/ImGuizmo/ImGuizmo.h"
-
-#include "imGuiStyleSheet.h"
-
 #include "Tests/test_List.h"
+#include "ECS/Engine_ECS.h"
+#include "Editor/Engine_Editor.h"
 
-#include "ECS/ECS_Manager.h"
+#include <iostream>
+#include <sstream>
+#include <vector>
 
-const char* APP_TITLE = "OpenGL - Tests";
-static int gWindowWidth = 1280;
-static int gWindowHeight = 720;
-static bool gWindowResizedFlag = false;
+
+const char* APP_TITLE			= "Proc_GL";
+static int gWindowWidth			= 1280;
+static int gWindowHeight		= 720;
+static bool gWindowResizedFlag	= false;
 
 static EntityManager* ecs_manager;
 
-bool G_GetWindowResizeFlag() {
-	return gWindowResizedFlag;
-}
-int G_GetWindowWidth() {
-	return gWindowWidth;
-}
-int G_GetWindowHeight() {
-	return gWindowHeight;
-}
+bool G_GetWindowResizeFlag()	{return gWindowResizedFlag;}
+int G_GetWindowWidth()			{return gWindowWidth;}
+int G_GetWindowHeight()			{return gWindowHeight;}
 
-EntityManager* GetManager() {
-	return ecs_manager;
-}
+EntityManager* GetManager()		{return ecs_manager;}
+void SetManager(EntityManager* mgr) {ecs_manager = mgr;}
 
-void SetManager(EntityManager* mgr) {
-	ecs_manager = mgr;
-}
 
 GLFWwindow* gWindow = NULL;
 

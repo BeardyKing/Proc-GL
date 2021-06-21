@@ -3,10 +3,7 @@
 script_simplebehaviours::script_simplebehaviours() {}
 script_simplebehaviours::~script_simplebehaviours() {}
 
-void script_simplebehaviours::OnRender() {
-
-
-}
+void script_simplebehaviours::OnRender() {}
 
 void script_simplebehaviours::OnUpdate(double deltaTime) {
 	if (rotate){
@@ -20,7 +17,6 @@ void script_simplebehaviours::OnUpdate(double deltaTime) {
 	}
 
 	if (orbit){
-
 		m_movingLightAngle += (float)deltaTime * 90.0f;	// rotate lights
 
 
