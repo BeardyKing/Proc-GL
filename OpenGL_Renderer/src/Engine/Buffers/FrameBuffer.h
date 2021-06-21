@@ -13,12 +13,14 @@ public:
 	void UnBind();
 	void GenerateFrameBuffer(float x, float y);
 	void UpdateFrameBufferTextureSize(float x, float y);
+	void DeleteFrameBuffer();
+
+	GLuint GetFrameBuffer();
+	GLuint GetRenderBuffer();
 
 private:
-
-public :
-	GLuint FramebufferName;
-	GLuint renderedTexture;
-	GLuint depthTexture;
+	GLuint m_framebuffer;
+	GLuint m_depthBuffer;
+	GLuint m_renderBuffer;
 };
 #endif // !FRAMEBUFFER_H

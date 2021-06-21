@@ -22,7 +22,7 @@ public:
 
 	void UpdateFrameBufferTextureSize(GLuint renderTexture);
 	void RenderHierarchy();
-	void RenderScene(GLuint& renderTexture);
+	void RenderScene(const GLuint& renderTexture);
 	void RenderInspector();
 	void RenderProject();
 	void RenderConsole();

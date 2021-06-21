@@ -3,42 +3,54 @@
 
 
 FrameBuffer::FrameBuffer():
-	FramebufferName(0),
-	renderedTexture(0)
+    m_framebuffer(0),
+    m_renderBuffer(0),
+    m_depthBuffer(0)
 {
     
 }
 
 FrameBuffer::~FrameBuffer() {
-
+    //DeleteFrameBuffer(); // causes crash on "test" change
 }
 
 void FrameBuffer::Bind() {
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
 }
 
 void FrameBuffer::UnBind() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBuffer::UpdateFrameBufferTextureSize(float x, float y) {
-    glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, x, y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-	
-    glViewport(0, 0, x, y);
+GLuint FrameBuffer::GetFrameBuffer() {
+    return m_framebuffer;
 }
 
-void FrameBuffer::GenerateFrameBuffer(float x, float y) {
+GLuint FrameBuffer::GetRenderBuffer() {
+    return m_renderBuffer;
+}
 
-    FramebufferName = 0;
-    glGenFramebuffers(1, &FramebufferName);
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
-    glGenTextures(1, &renderedTexture);
-    glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+void FrameBuffer::DeleteFrameBuffer() {
+    glDeleteBuffers(GL_FRAMEBUFFER, &m_framebuffer);
+}
+
+void FrameBuffer::UpdateFrameBufferTextureSize(float screen_width, float screen_height) {
+    glBindTexture(GL_TEXTURE_2D, m_renderBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, screen_width, screen_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	glBindTexture(GL_TEXTURE_2D, m_depthBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, screen_width, screen_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	
+    glViewport(0, 0, screen_width, screen_height);
+}
+
+void FrameBuffer::GenerateFrameBuffer(float screen_width, float screen_height) {
+    m_framebuffer = 0;
+    glGenFramebuffers(1, &m_framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+    glGenTextures(1, &m_renderBuffer);
+    glBindTexture(GL_TEXTURE_2D, m_renderBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, screen_width, screen_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -46,20 +58,19 @@ void FrameBuffer::GenerateFrameBuffer(float x, float y) {
     GLint m_viewport[4];
     glGetIntegerv(GL_VIEWPORT, m_viewport);
 
-    //std::cout << "VIEW PORT SIZE : " << m_viewport[2] << std::endl;
-    //std::cout << "VIEW PORT SIZE : " << m_viewport[3] << std::endl;
-
-	glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glGenTextures(1, &m_depthBuffer);
+	glBindTexture(GL_TEXTURE_2D, m_depthBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_viewport[2]*2, m_viewport[3]*2, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_renderBuffer, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depthBuffer, 0);
 
     GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
+    glBindBuffer(GL_FRAMEBUFFER, 0);
 }

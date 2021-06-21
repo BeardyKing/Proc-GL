@@ -1,4 +1,73 @@
-﻿  ShaderProgram.cpp
+﻿  LightObject.cpp
+  script_simpleBehaviours.cpp
+  EntityManager.cpp
+  DepthBuffer.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(20,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(20,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(49,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\DepthBuffer.cpp(49,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  FrameBuffer.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(39,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(39,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(42,69): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(42,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(44,36): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(44,22): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(53,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(53,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  EditorGUI.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(203,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(203,63): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(205,64): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(205,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(136): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(194,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(201,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(202,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(209,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(211,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(217,54): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(220,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Mesh.cpp
+  ShaderProgram.cpp
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(186,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(186,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Standard_Lit_Uniforms.h(205,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -26,26 +95,55 @@ C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(269,14): warning C42
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(270,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(47,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
 C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(57): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
+  test_defaultTest.cpp
+  test_Dock.cpp
+  test_ECS.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_ECS.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+  test_PBR.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(27,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(33): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+  test_imguizmo.cpp
+  test_shadowMap.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(143,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(144,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(151,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(152,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(32,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(79): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
   main.cpp
 C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  0 of 3944 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  5 of 3945 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    106 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture2D' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
+LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
-LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
+LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'FrameBuffer.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'

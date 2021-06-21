@@ -1,4 +1,4 @@
-#ifndef ECS_LIST_H
+#ifndef ECS_LIST_H //TODO RENAME TO COMPONENT LIST
 #define ECS_LIST_H
 
 //#include "../ECS/Entity.h"

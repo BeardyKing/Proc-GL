@@ -52,7 +52,7 @@ namespace test {
 
 	void test_Dock::OnRender() {
         if (editor->windowSizeChangeFlag){
-            editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
+            editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
         }
         
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -75,7 +75,7 @@ namespace test {
     
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        editor->RenderScene(fbo.renderedTexture);
+        editor->RenderScene(fbo.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

@@ -2,12 +2,7 @@
 
 #include "ECS_List.h"
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/matrix_decompose.hpp>
-#include <glm/gtc/epsilon.hpp>
-#include <glm/detail/setup.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/quaternion.hpp>
+#include "../Math/Engine_Math.h"
 
 
 
@@ -39,7 +34,7 @@ void EditorGUI::RenderHierarchy() {
 	ImGui::End();
 }
 
-void EditorGUI::RenderScene(GLuint& renderTexture) {
+void EditorGUI::RenderScene(const GLuint& renderTexture) {
     if (G_GetWindowResizeFlag()) {
         UpdateFrameBufferTextureSize(renderTexture);
     }

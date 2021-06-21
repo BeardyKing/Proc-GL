@@ -45,7 +45,7 @@ namespace test {
     void test_imguizmo::OnRender() {
         editor->OnGizmoRender();
 
-        if (editor->windowSizeChangeFlag) {editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);}
+        if (editor->windowSizeChangeFlag) {editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());}
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {return;}
 
         fbo.Bind();
@@ -63,7 +63,7 @@ namespace test {
     void test_imguizmo::OnImGuiRender() {
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        editor->RenderScene(fbo.renderedTexture);
+        editor->RenderScene(fbo.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

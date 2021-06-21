@@ -101,7 +101,7 @@ namespace test {
     bool once = false;
 	void test_shadowMap::OnRender() {
         if (editor->windowSizeChangeFlag) {
-            editor->UpdateFrameBufferTextureSize(fbo.renderedTexture);
+            editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
         }
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -149,11 +149,11 @@ namespace test {
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)fbo.renderedTexture, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            ImGui::Image((void*)fbo.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
         ImGui::End();
 
-        editor->RenderScene(fbo.renderedTexture);
+        editor->RenderScene(fbo.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();
