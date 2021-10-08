@@ -43,3 +43,10 @@ OpenGL_Renderer/Release/*
 OpenGL_Renderer/Release/
 #Log File
 *.tlog
+*.pdb
+*.log
+*.lastbuildstate
+OpenGL_Renderer/Release/vc142.pdb
+*.log
+*.iobj
+*.db
