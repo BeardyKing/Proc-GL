@@ -54,7 +54,7 @@ int main(){
 	testMenu->RegisterTest<test::test_imguizmo>		("imguizmo");
 	testMenu->RegisterTest<test::test_ECS>			("ECS test");
 	
-	testMenu->DEBUG_SetActiveTest("shadow map");
+	testMenu->DEBUG_SetActiveTest("Default");
 	
 	double lastTime = glfwGetTime();
 

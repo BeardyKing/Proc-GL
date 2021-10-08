@@ -1,7 +1,9 @@
 #include "script_simpleBehaviours.h"
 
 script_simplebehaviours::script_simplebehaviours() {}
-script_simplebehaviours::~script_simplebehaviours() {}
+script_simplebehaviours::~script_simplebehaviours() {
+	std::cout << "Deleted - script_simplebehaviours" << std::endl;
+}
 
 void script_simplebehaviours::OnRender() {}
 
@@ -18,7 +20,6 @@ void script_simplebehaviours::OnUpdate(double deltaTime) {
 
 	if (orbit){
 		m_movingLightAngle += (float)deltaTime * 90.0f;	// rotate lights
-
 
 		entity->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
 		entity->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));

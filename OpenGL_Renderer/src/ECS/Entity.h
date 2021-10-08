@@ -56,6 +56,20 @@ public:
 		return compBitset[getComponentTypeID<T>()];
 	}
 
+	template<typename T>
+	inline void removeComponent() {
+		if (hasComponent<T>()){			
+			auto target = compList[getComponentTypeID<T>()];
+			for (size_t i = 0; i < components.size(); i++){
+				if (components[i].get() == target){
+					std::cout << "target found" << std::endl;
+					components.erase(components.begin() + i);
+				}
+			}
+		}
+		std::cout << "Removed component" << std::endl;
+	}
+
 	inline bool isActive() const {
 		return active;
 	}

@@ -22,7 +22,10 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(0, 0, 0);
         entity->addComponent<Mesh>("mesh/pipe.obj");
         entity->addComponent<ShaderProgram>();
+		entity->addComponent<script_simplebehaviours>();
         G_GetManager()->addEntity(entity);
+
+		entity->removeComponent<script_simplebehaviours>();
 
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
     }
