@@ -37,9 +37,9 @@
 #VS
 .vs/
 .vs/*
-
+OpenGL_Renderer/bin/.vs/
 OpenGL_Renderer/bin/.vs/*
 OpenGL_Renderer/Release/*
-
+OpenGL_Renderer/Release/
 #Log File
 *.tlog
