@@ -9,7 +9,7 @@ public:
 	Component() = default;
 	Component(Entity& e);
 	
-	~Component() = default;
+	virtual ~Component() = default;
 
 	Entity* entity;
 
