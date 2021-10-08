@@ -22,10 +22,6 @@ public:
 		this->addComponent<Transform>();
 	};
 
-	/*Entity(std::string _name) {
-		this->addComponent<ObjectData>(_name);
-		this->addComponent<Transform>();
-	};*/
 	virtual ~Entity() = default;
 
 	template<typename T, typename... TArgs>
@@ -62,12 +58,11 @@ public:
 			auto target = compList[getComponentTypeID<T>()];
 			for (size_t i = 0; i < components.size(); i++){
 				if (components[i].get() == target){
-					std::cout << "target found" << std::endl;
 					components.erase(components.begin() + i);
 				}
 			}
 		}
-		std::cout << "Removed component" << std::endl;
+		//std::cout << "Removed component" << std::endl;
 	}
 
 	inline bool isActive() const {
@@ -112,10 +107,7 @@ private:
 	ComponentBitset compBitset;
 
 	std::vector<std::unique_ptr<Component>> components;
-
 };
-
-
 
 #endif // !ENTITY_H
 
