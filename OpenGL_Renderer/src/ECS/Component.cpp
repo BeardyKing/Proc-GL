@@ -1,8 +1,4 @@
 #include "Component.h"
-Component::Component()
-{
-
-}
 
 Component::Component(Entity& e) :
 	entity(&e)

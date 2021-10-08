@@ -51,7 +51,7 @@ void DepthBuffer::UnBind() {
 void DepthBuffer::ResetViewport() {
     glCullFace(GL_BACK);
     auto& cam = G_GetManager()->FindActiveCamera()->getComponent<FPSCamera>();
-    glViewport(0, 0, cam.ImGuiWindowSize.x, cam.ImGuiWindowSize.y);
+    glViewport(0, 0, static_cast<int>(cam.ImGuiWindowSize.x), static_cast<int>(cam.ImGuiWindowSize.y));
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     G_SetRenderShadowMap(false);
 }

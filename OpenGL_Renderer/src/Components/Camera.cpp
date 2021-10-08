@@ -98,7 +98,7 @@ void FPSCamera::OnUpdate(double deltaTime)
 	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
 	if (mouseDelta.x != 0 || mouseDelta.y != 0){
 		std::cout << mouseDelta.x << "  " << mouseDelta.y << std::endl;
-		Rotate(mouseDelta.x * deltaTime * 30, mouseDelta.y * deltaTime * 30);
+		Rotate(mouseDelta.x * static_cast<float>(deltaTime) * 30, mouseDelta.y * static_cast<float>(deltaTime) * 30);
 	}
 
 	//----------------------------------//
@@ -152,7 +152,7 @@ void FPSCamera::OnImGuiRender()
 			ImGui::DragFloat("Move Speed", &m_MoveSpeed,0.01f);
 			ImGui::DragFloat("Move Speed Delta", &m_MoveSpeedDelta,0.01f);
 
-			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05, 0.05);
+			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05f, 0.05f);
 			ImGui::Unindent();
 			glm::vec3 rot;
 

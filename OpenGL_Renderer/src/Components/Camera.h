@@ -32,7 +32,7 @@ protected:
 	Camera();
 
 	virtual void UpdateCameraVectors() {}
-	Transform* ptr;
+	Transform* ptr = nullptr;
 	glm::vec3 mPosition;
 	glm::vec3 mTarget;
 	glm::vec3 mUp;

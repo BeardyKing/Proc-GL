@@ -200,9 +200,9 @@ void EditorGUI::RenderMainMenuBar() {
 
 void EditorGUI::UpdateFrameBufferTextureSize(GLuint renderTexture) {
     glBindTexture(GL_TEXTURE_2D, renderTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lastFrameWindowSize.x, lastFrameWindowSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<int>(lastFrameWindowSize.x), static_cast<int>(lastFrameWindowSize.y), 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
     windowSizeChangeFlag = false;
-    glViewport(0, 0, lastFrameWindowSize.x, lastFrameWindowSize.y);
+    glViewport(0, 0, static_cast<int>(lastFrameWindowSize.x), static_cast<int>(lastFrameWindowSize.y));
 
     //GetComponent FPSCamera
     for (auto& entity : G_GetManager()->entities) {
