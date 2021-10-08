@@ -26,16 +26,14 @@ public:
 
 	template<typename T, typename... TArgs>
 	inline T& addComponent(TArgs&&... args) {
-		T* comp(new T(std::forward<TArgs>(args)...));
+		T* new_component(new T(std::forward<TArgs>(args)...));
+		components.emplace_back( new_component );
 
-		std::unique_ptr<Component> uptr{ comp };
-		components.emplace_back( std::move(uptr) );
-
-		if (comp->init()){
-			compList[getComponentTypeID<T>()] = comp;
-			compBitset[getComponentTypeID<T>()] = true;
-			comp->entity = this;
-			return *comp;
+		if (new_component->init()){
+			component_array[getComponentTypeID<T>()] = new_component;
+			component_bitset[getComponentTypeID<T>()] = true;
+			new_component->entity = this;
+			return *new_component;
 		}
 
 		return *static_cast<T*>(nullptr);
@@ -43,26 +41,25 @@ public:
 
 	template<typename T>
 	inline T& getComponent() const {
-		auto ptr(compList[getComponentTypeID<T>()]);
+		auto ptr(component_array[getComponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);
 	}
 
 	template<typename T>
 	inline bool hasComponent() const {
-		return compBitset[getComponentTypeID<T>()];
+		return component_bitset[getComponentTypeID<T>()];
 	}
 
 	template<typename T>
 	inline void removeComponent() {
 		if (hasComponent<T>()){			
-			auto target = compList[getComponentTypeID<T>()];
+			auto target = component_array[getComponentTypeID<T>()];
 			for (size_t i = 0; i < components.size(); i++){
 				if (components[i].get() == target){
 					components.erase(components.begin() + i);
 				}
 			}
 		}
-		//std::cout << "Removed component" << std::endl;
 	}
 
 	inline bool isActive() const {
@@ -74,37 +71,37 @@ public:
 	}
 
 	inline void OnRender() {
-		for (auto& comp : components) {
-			comp->OnRender();
+		for (auto& component : components) {
+			component->OnRender();
 		}
 	}
 
 	inline void OnUpdate(double deltaTime) {
-		for (auto& comp : components) {
-			comp->OnUpdate(deltaTime);
+		for (auto& component : components) {
+			component->OnUpdate(deltaTime);
 		}
 	}
 
 	inline void OnExit() {
-		for (auto& comp : components) {
-			comp->OnExit();
+		for (auto& component : components) {
+			component->OnExit();
 		}
 	}
 
 	inline void OnImGuiRender() {
-		for (auto& comp : components){
-			comp->OnImGuiRender();
+		for (auto& component : components){
+			component->OnImGuiRender();
 		}
 	}
 
 	inline ComponentBitset GetBitSet() {
-		return compBitset;
+		return component_bitset;
 	}
 
 private:
 	bool active = true;
-	ComponentList compList;
-	ComponentBitset compBitset;
+	ComponentList component_array;
+	ComponentBitset component_bitset;
 
 	std::vector<std::unique_ptr<Component>> components;
 };

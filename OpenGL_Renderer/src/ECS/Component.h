@@ -11,7 +11,7 @@ public:
 	
 	virtual ~Component() = default;
 
-	Entity* entity;
+	Entity* entity = nullptr;
 
 
 
@@ -21,10 +21,6 @@ public:
 	virtual void OnUpdate(double deltaTime);
 	virtual void OnImGuiRender();
 	virtual void OnExit();
-
-
-
-private:
 
 };
 
