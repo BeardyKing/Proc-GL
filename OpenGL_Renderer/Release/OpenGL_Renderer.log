@@ -1,22 +1,17 @@
-﻿  Texture2D.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(15,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(16,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  test_shadowMap.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(196,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(197,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(204,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(205,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(119): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  ShaderProgram.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(98,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(264,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(265,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(270,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(271,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(47,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(56): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  2 of 4091 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 4069 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    104 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'

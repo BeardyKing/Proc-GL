@@ -92,12 +92,10 @@ void FPSCamera::OnUpdate(double deltaTime)
 	if (_cameraFocusFlag){
 		_cameraFocusFlag = !_cameraFocusFlag;
 		m_lastMousePos = currentMousePos;
-		std::cout << " UPDATED POS : "<< std::endl;
 	}
 
 	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
 	if (mouseDelta.x != 0 || mouseDelta.y != 0){
-		std::cout << mouseDelta.x << "  " << mouseDelta.y << std::endl;
 		Rotate(mouseDelta.x * static_cast<float>(deltaTime) * 30, mouseDelta.y * static_cast<float>(deltaTime) * 30);
 	}
 

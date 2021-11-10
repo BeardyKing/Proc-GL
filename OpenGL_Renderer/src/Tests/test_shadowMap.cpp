@@ -27,8 +27,6 @@ namespace test {
 
 
 #pragma region Cubemap
-
-
         std::vector<std::string> faces = 
         {
             "skybox/right.jpg",
@@ -61,12 +59,7 @@ namespace test {
         e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[4]);
         e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[5]);
         e_skybox->getComponent<ShaderProgram>().LoadTextures(); 
-        //Texture2D sky_tex;
-        //sky_tex.LoadCubemap(faces);
-        //ShaderProgram sky_shader("Shaders/skybox/skybox.vert","Shaders/skybox/skybox.frag");
-
-
-        //unsigned int cubemapTexture = loadCubemap(faces);
+        
 #pragma endregion
         entity = new Entity("Afrodta Statue");
         G_GetManager()->addEntity(entity);
@@ -77,9 +70,9 @@ namespace test {
         // 3 = roughness
         // 4 = ambient 
 
-        /*entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
         
-        entity->addComponent<Mesh>("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_2.obj");
+        entity->addComponent<Mesh>("Afrodta_Statue/Rz_123_Afrodyta_z_Melos.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_albedo.jpg");
         entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_normal.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
@@ -110,13 +103,14 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(9.817f, "occlusion_scalar");
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
         entity->getComponent<Transform>().position = glm::vec3(0, -1, 0);
-        entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);*/
+        entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);
 
 
         entity = new Entity("Directional Light");
         G_GetManager()->addEntity(entity);
-        entity->getComponent<Transform>().position = glm::vec3(8.0f,4.5f,-1.93f);
+        entity->getComponent<Transform>().position = glm::vec3(0.8f,15.0f,-7.2f);
         entity->addComponent<LightObject>();
+        //entity->getComponent<LightObject>().color = glm::vec3(216.0f / 255.0f, 243.0f / 255.0f, 255.0f / 255.0f);
         entity->addComponent<script_simplebehaviours>();
 
 
@@ -162,15 +156,6 @@ namespace test {
         //std::cout << "Amount Of Depth Textures : " << depthTexturesThisFrame.size() << std::endl;
 
         fbo.Bind();
-
-        glDepthMask(GL_FALSE);
-        //e_skybox->getComponent<ShaderProgram>().use();
-        //glBindTexture(GL_TEXTURE_CUBE_MAP, e_skybox->getComponent<Texture2D>().GetTexture());
-        ////e_skybox->getComponent<Mesh>().OnRender();
-
-        //e_skybox->OnRender();
-
-        //glDepthMask(GL_TRUE);
 
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -52,7 +52,6 @@ void ShaderProgram::LoadShaderMenu() {
 	shaderMenu = new uniform::ShaderMenu(currentShader_uniform);
 	currentShader_uniform = shaderMenu;	// TODO ADD SHADER LIST LOADER
 	shaderMenu->RegisterShader<uniform::Shader_DefaultUniforms>			("Uniform_basic"); 
-	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
 	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Lit_Uniform>	("Uniform_Standard_Lit");
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Skybox_Uniforms>("Uniform_Skybox");

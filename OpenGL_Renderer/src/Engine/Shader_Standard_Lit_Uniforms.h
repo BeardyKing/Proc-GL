@@ -180,7 +180,7 @@ namespace uniform {
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
 			//--------------Albedo Map--------------//
 			static uint16_t albedoMap_Image_Scalar = 1;
-			if(ImGui::ImageButton((void*)_pbr_textures[0].GetTexture(), ImVec2(12 * albedoMap_Image_Scalar, 12 * albedoMap_Image_Scalar))) {
+			if(ImGui::ImageButton((void*)_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
 				albedoMap_Image_Scalar = (albedoMap_Image_Scalar == 1) ? 10 : 1;
 			}
 			ImGui::SameLine();
@@ -199,7 +199,7 @@ namespace uniform {
 
 			//--------------Normal Map--------------//
 			 static uint16_t normalMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[1].GetTexture(), ImVec2(12 * normalMap_Image_Scalar, 12 * normalMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)_pbr_textures[1].GetTexture(), ImVec2(12.0f * normalMap_Image_Scalar, 12.0f * normalMap_Image_Scalar))) {
 				normalMap_Image_Scalar = (normalMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -212,7 +212,7 @@ namespace uniform {
 
 			//--------------Metallic Map--------------//
 			static uint16_t metallicMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[2].GetTexture(), ImVec2(12 * metallicMap_Image_Scalar, 12 * metallicMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)_pbr_textures[2].GetTexture(), ImVec2(12.0f * metallicMap_Image_Scalar, 12.0f * metallicMap_Image_Scalar))) {
 				metallicMap_Image_Scalar = (metallicMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -225,7 +225,7 @@ namespace uniform {
 
 			//--------------Roughness Map--------------//
 			static uint16_t RoughnessMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[3].GetTexture(), ImVec2(12 * RoughnessMap_Image_Scalar, 12 * RoughnessMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)_pbr_textures[3].GetTexture(), ImVec2(12.0f * RoughnessMap_Image_Scalar, 12.0f * RoughnessMap_Image_Scalar))) {
 				RoughnessMap_Image_Scalar = (RoughnessMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -238,7 +238,7 @@ namespace uniform {
 
 			//--------------Occlusion Map--------------//
 			static uint16_t OcclusionMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[4].GetTexture(), ImVec2(12 * OcclusionMap_Image_Scalar, 12 * OcclusionMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)_pbr_textures[4].GetTexture(), ImVec2(12.0f * OcclusionMap_Image_Scalar, 12.0f * OcclusionMap_Image_Scalar))) {
 				OcclusionMap_Image_Scalar = (OcclusionMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -251,7 +251,7 @@ namespace uniform {
 
 			//--------------Shadow Map--------------// // TODO Update to support multiple shadowmaps
 			static uint16_t ShadowMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)G_GetShadowMap(), ImVec2(12 * ShadowMap_Image_Scalar, 12 * ShadowMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)G_GetShadowMap(), ImVec2(12.0f * ShadowMap_Image_Scalar, 12.0f * ShadowMap_Image_Scalar))) {
 				ShadowMap_Image_Scalar = (ShadowMap_Image_Scalar == 1) ? 10 : 1;
 			}
 			ImGui::SameLine();
@@ -289,7 +289,7 @@ namespace uniform {
 		numberOfTextures = tex.size();
 		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
-		for (size_t i = 0; i < numberOfTextures; i++) {
+		for (int i = 0; i < numberOfTextures; i++) {
 			_pbr_textures[i].LoadTexture(tex[i], true);
 		}
 	}

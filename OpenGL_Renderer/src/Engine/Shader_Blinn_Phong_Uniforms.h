@@ -90,11 +90,11 @@ namespace uniform {
 			ImGui::Checkbox("Recieve Shadows", &recieveShadows);
 			ImGui::DragFloat("Specular", &specular);
 
-			for (size_t i = 0; i < numberOfTextures; i++) {
+			for (int i = 0; i < numberOfTextures; i++) {
 				std::string name;
 				name = "tex : " + std::to_string(i);
 				if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-					int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+					int adjustedWidth = (int)ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
 					ImGui::Image((void*)_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
 				}
 			}
@@ -108,7 +108,7 @@ namespace uniform {
 		numberOfTextures = tex.size();
 		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
-		for (size_t i = 0; i < numberOfTextures; i++){
+		for (int i = 0; i < numberOfTextures; i++){
 			_pbr_textures[i].LoadTexture(tex[i], true);	  
 		}
 	}
