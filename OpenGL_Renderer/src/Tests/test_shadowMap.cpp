@@ -31,13 +31,22 @@ namespace test {
 
         std::vector<std::string> faces = 
         {
-                "skybox/right.jpg   "  ,
-                "skybox/left.jpg    ",
-                "skybox/top.jpg     "        ,
-                "skybox/bottom.jpg  ",
-                "skybox/front.jpg   ",
-                "skybox/back.jpg    "
+            "skybox/right.jpg",
+            "skybox/left.jpg",
+            "skybox/top.jpg",
+            "skybox/bottom.jpg",
+            "skybox/front.jpg",
+            "skybox/back.jpg"
         };
+        /*std::vector<std::string> faces =  {
+            "skybox/rusted_west.jpg", 
+            "skybox/rusted_east.jpg",
+            "skybox/rusted_up.jpg", 
+            "skybox/rusted_down.jpg",
+            "skybox/rusted_south.jpg", 
+            "skybox/rusted_north.jpg",
+        };*/
+
         e_skybox = new Entity("Skybox");
         G_GetManager()->addEntity(e_skybox);
 
@@ -45,12 +54,12 @@ namespace test {
         e_skybox->addComponent<Texture2D>();
         e_skybox->getComponent<Texture2D>().LoadCubemap(faces);
         e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag","Uniform_Skybox");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/right.jpg");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/left.jpg");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/top.jpg");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/bottom.jpg");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/front.jpg");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath("skybox/back.jpg");
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[0]);
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[1]);
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[2]);
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[3]);
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[4]);
+        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[5]);
         e_skybox->getComponent<ShaderProgram>().LoadTextures(); 
         //Texture2D sky_tex;
         //sky_tex.LoadCubemap(faces);
