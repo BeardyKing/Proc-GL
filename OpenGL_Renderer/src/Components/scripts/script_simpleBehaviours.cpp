@@ -23,7 +23,7 @@ void script_simplebehaviours::OnUpdate(double deltaTime) {
 
 		entity->getComponent<Transform>().position.x = 1.5f + 10 * sinf(glm::radians(m_movingLightAngle));
 		entity->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
-		entity->getComponent<Transform>().position.y = 3 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
+		entity->getComponent<Transform>().position.y = 8 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 	}
 }
 void script_simplebehaviours::OnImGuiRender() {

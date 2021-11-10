@@ -54,7 +54,7 @@ int main(){
 	testMenu->RegisterTest<test::test_imguizmo>		("imguizmo");
 	testMenu->RegisterTest<test::test_ECS>			("ECS test");
 	
-	testMenu->DEBUG_SetActiveTest("Default");
+	testMenu->DEBUG_SetActiveTest("shadow map");
 	
 	double lastTime = glfwGetTime();
 
@@ -126,7 +126,7 @@ bool InitOpenGL() {
 		return false;
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.6);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
