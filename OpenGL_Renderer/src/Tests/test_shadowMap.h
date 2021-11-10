@@ -32,6 +32,8 @@ namespace test {
 		FPSCamera* camera;
 		ShaderProgram* depthShader;
 
+		//SKYBOX TEST
+		Entity* e_skybox;
 	};
 }
 

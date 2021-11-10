@@ -204,6 +204,7 @@
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h" />
+    <ClInclude Include="src\Engine\Shader_Standard_Skybox_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_UniformSetter.h" />
     <ClInclude Include="src\Engine\Buffers\FrameBuffer.h" />
     <ClInclude Include="src\Editor\imGuiStyleSheet.h" />

@@ -1,19 +1,11 @@
-﻿  test_shadowMap.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(168,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(169,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(176,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(177,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(104): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  Texture2D.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(15,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Texture2D.cpp(16,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  3 of 4037 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    103 functions had inline decision re-evaluated but remain unchanged
+  3 of 4091 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    107 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'

@@ -145,6 +145,7 @@ bool Texture2D::LoadHDRTexture(const std::string& fileName) {
 }
 
 bool Texture2D::LoadCubemap(const std::vector<std::string> fileNames) {
+
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
 	stbi_set_flip_vertically_on_load(true);

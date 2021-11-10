@@ -9,6 +9,7 @@
 #include "Shader_PBR_Uniforms.h"
 #include "Shader_Blinn_Phong_Uniforms.h"
 #include "Shader_ShadowDepth.h"
+#include "Shader_Standard_Skybox_Uniforms.h"
 
 ShaderProgram::ShaderProgram()
 	: m_Handle(0)
@@ -54,6 +55,8 @@ void ShaderProgram::LoadShaderMenu() {
 	shaderMenu->RegisterShader<uniform::Shader_PBR_Uniforms>			("Uniform_PBR"); 
 	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Lit_Uniform>	("Uniform_Standard_Lit");
+	shaderMenu->RegisterShader<uniform::Shader_Standard_Skybox_Uniforms>("Uniform_Skybox");
+
 }
 
 void ShaderProgram::AddTexturePath(std::string _textureFileName) {
