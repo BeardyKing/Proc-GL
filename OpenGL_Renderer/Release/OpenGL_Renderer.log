@@ -1,5 +1,4 @@
-﻿  script_simpleBehaviours.cpp
-  test_shadowMap.cpp
+﻿  test_shadowMap.cpp
 C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(168,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(169,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(176,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
