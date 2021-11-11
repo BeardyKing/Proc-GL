@@ -276,14 +276,9 @@ bool Mesh::LoadTerrain(VertexData vertexData){
 void Mesh::Draw() {
 	if (!mLoaded) { return; }
 
-	//glBindVertexArray(mVAO);
-	//glDrawArrays(GL_TRIANGLES, 0, mVertices.size()); // check model has index buffer and draw
-	//glBindVertexArray(0);
-
 	glBindVertexArray(mVAO);
 	if (!mIndices.empty()) {
 		glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, 0);
-		std::cout << "WORKING" << std::endl;
 	}
 	else {
 		glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
@@ -304,18 +299,18 @@ void Mesh::InitBuffers() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL); //3 = vec3
 	glEnableVertexAttribArray(0);
 
-	//normals attrib
+	// normals attrib
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(3 * sizeof(GLfloat)));//2 = vec2 // 3 * sizeof(GLfloat) is the offset
 	glEnableVertexAttribArray(1);
 	// tex Coord 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(6 * sizeof(GLfloat)));//3 = vec3 //6 * sizeof(GLfloat) is the offset 
 	glEnableVertexAttribArray(2);
 
+	// Index buffer 
 	if (!mIndices.empty()) {
 		glGenBuffers(1, &mIBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), &mIndices[0], GL_STATIC_DRAW);
-		
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

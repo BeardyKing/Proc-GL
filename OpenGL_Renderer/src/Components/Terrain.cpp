@@ -10,8 +10,6 @@ struct Vertex {
 	glm::vec4 tangents;
 };
 
-
-
 Terrain::Terrain()
 {
 	std::string fileName = "island_test_3.png";
@@ -73,7 +71,6 @@ Terrain::Terrain()
 
 	int triCount = GetTriCount();
 
-
 	for (int i = 0; i < triCount; ++i) {
 		unsigned int a = 0;
 		unsigned int b = 0;
@@ -88,10 +85,6 @@ Terrain::Terrain()
 	for (GLuint i = 0; i < numVertices; ++i) {
 		glm::normalize(normals[i]);
 	}
-
-	//heightmapSize.x = vertexScale.x * (iWidth - 1);
-	//heightmapSize.y = vertexScale.y * 255.0f;// each height is a byte !
-	//heightmapSize.z = vertexScale.z * (iHeight - 1);
 
 	Vertex temp;
 	for (size_t i = 0; i < numVertices; i++){

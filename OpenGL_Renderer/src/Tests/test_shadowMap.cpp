@@ -67,10 +67,22 @@ namespace test {
         entity->addComponent<Terrain>();
         entity->addComponent<Mesh>();
         entity->getComponent<Mesh>().LoadTerrain(entity->getComponent<Terrain>().GetVertexData());
-        entity->addComponent<ShaderProgram>();
-        entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(1));
-        entity->getComponent<Transform>().scale = glm::vec3(0.001f);
-        entity->getComponent<Transform>().position = glm::vec3(-8,1,-8);
+        
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_BaseColor.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Height.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Roughness_e.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_AO.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(0.723f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.207f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.199f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(9.817f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
+
+        entity->getComponent<Transform>().scale = glm::vec3(0.01f);
+        entity->getComponent<Transform>().position = glm::vec3(-80,-1.5f,-60);
 
 
 #pragma endregion
@@ -97,26 +109,6 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
-
-        entity = new Entity("Ground");
-        G_GetManager()->addEntity(entity);
-
-        entity->addComponent<Mesh>("cube.obj");
-        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_BaseColor.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Normal.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Height.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Roughness_e.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_AO.png");
-        entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetFloat(0.723f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.207f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.199f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(9.817f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
-        entity->getComponent<Transform>().position = glm::vec3(0, -1, 0);
-        entity->getComponent<Transform>().scale = glm::vec3(10, 1, 10);
 
 
         entity = new Entity("Directional Light");
