@@ -1,5 +1,6 @@
 #include "test_shadowMap.h"
 #include "../Engine/Engine_UtilityFunctions.h"
+#include "../Components/Terrain.h"
 
 
 
@@ -60,6 +61,18 @@ namespace test {
         e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[5]);
         e_skybox->getComponent<ShaderProgram>().LoadTextures(); 
         
+        entity = new Entity("Terrain");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<Terrain>();
+        entity->addComponent<Mesh>();
+        entity->getComponent<Mesh>().LoadTerrain(entity->getComponent<Terrain>().GetVertexData());
+        entity->addComponent<ShaderProgram>();
+        entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3(1));
+        entity->getComponent<Transform>().scale = glm::vec3(0.001f);
+        entity->getComponent<Transform>().position = glm::vec3(-8,1,-8);
+
+
 #pragma endregion
         entity = new Entity("Afrodta Statue");
         G_GetManager()->addEntity(entity);

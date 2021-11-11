@@ -16,7 +16,10 @@ struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 texCoords;
+	glm::vec4 tangents;
 };
+
+struct VertexData;
 
 class Mesh : public Component
 {
@@ -32,6 +35,8 @@ public:
 	void OnExit();
 
 	bool LoadOBJ(const std::string& fileName);
+	bool LoadTerrain(const std::string& fileName);
+	bool LoadTerrain(VertexData vertexData);
 	void Draw();
 
 private:
@@ -39,6 +44,7 @@ private:
 
 	bool mLoaded;
 	std::vector<Vertex> mVertices;
+	std::vector<GLuint> indices;
 	GLuint mVBO, mVAO; // vertex buffer obj //vertex array obj
 
 };

@@ -13,6 +13,11 @@ int G_GetWindowHeight();
 bool G_GetWindowResizeFlag();
 extern EntityManager* G_GetManager();
 
+struct VertexData {
+	std::vector<Vertex> vData;
+	std::vector<GLuint> indices;
+};
+
 std::vector<std::string> split(std::string s, std::string t) {
 	std::vector<std::string> res;
 	while (1){
@@ -260,11 +265,17 @@ bool Mesh::LoadOBJ(const std::string& fileName) {
 	return false;
 }
 
+bool Mesh::LoadTerrain(VertexData vertexData){
+	mVertices = vertexData.vData;
+	InitBuffers();
+	return true;
+}
+
 void Mesh::Draw() {
 	if (!mLoaded) { return; }
 
 	glBindVertexArray(mVAO);
-	glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+	glDrawArrays(GL_TRIANGLES, 0, mVertices.size()); // check model has index buffer and draw
 	glBindVertexArray(0);
 }
 
