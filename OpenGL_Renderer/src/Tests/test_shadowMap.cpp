@@ -2,9 +2,6 @@
 #include "../Engine/Engine_UtilityFunctions.h"
 #include "../Components/Terrain.h"
 
-
-
-
 GLuint ShadowMap;
 GLuint G_GetShadowMap() {return ShadowMap;}
 void G_SetShadowMap(GLuint tex) {ShadowMap = tex;}
@@ -15,21 +12,28 @@ void G_SetRenderShadowMap( bool b) {renderShadowMap = b;}
 
 namespace test {
     test_shadowMap::test_shadowMap(){
+    
+    #pragma region ECS
+
         editor = new EditorGUI;
         EntityManager* manager = new EntityManager;
         G_SetManager(manager);
+
+    #pragma endregion
+
+    #pragma region Camera
 
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>(glm::vec3(0), 4.781f, -0.549f);
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
         entity->getComponent<Transform>().position = glm::vec3(17, 11, -.01f);
         G_GetManager()->addEntity(entity);
+
+    #pragma endregion
         
+    #pragma region Cubemap
 
-
-#pragma region Cubemap
-        std::vector<std::string> faces = 
-        {
+        std::vector<std::string> faces = {
             "skybox/right.jpg",
             "skybox/left.jpg",
             "skybox/top.jpg",
@@ -37,14 +41,6 @@ namespace test {
             "skybox/front.jpg",
             "skybox/back.jpg"
         };
-        /*std::vector<std::string> faces =  {
-            "skybox/rusted_west.jpg", 
-            "skybox/rusted_east.jpg",
-            "skybox/rusted_up.jpg", 
-            "skybox/rusted_down.jpg",
-            "skybox/rusted_south.jpg", 
-            "skybox/rusted_north.jpg",
-        };*/
 
         e_skybox = new Entity("Skybox");
         G_GetManager()->addEntity(e_skybox);
@@ -61,6 +57,10 @@ namespace test {
         e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[5]);
         e_skybox->getComponent<ShaderProgram>().LoadTextures(); 
         
+    #pragma endregion
+
+    #pragma region Terrain
+
         entity = new Entity("Terrain");
         G_GetManager()->addEntity(entity);
 
@@ -84,8 +84,12 @@ namespace test {
         entity->getComponent<Transform>().scale = glm::vec3(0.01f);
         entity->getComponent<Transform>().position = glm::vec3(-80,-1.5f,-60);
 
+    #pragma endregion
 
-#pragma endregion
+    #pragma region Statue
+
+
+
         entity = new Entity("Afrodta Statue");
         G_GetManager()->addEntity(entity);
 
@@ -110,16 +114,21 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
 
+    #pragma endregion
+
+    #pragma region Directional_Light
 
         entity = new Entity("Directional Light");
         G_GetManager()->addEntity(entity);
         entity->getComponent<Transform>().position = glm::vec3(0.8f,15.0f,-7.2f);
         entity->addComponent<LightObject>();
-        //entity->getComponent<LightObject>().color = glm::vec3(216.0f / 255.0f, 243.0f / 255.0f, 255.0f / 255.0f);
         entity->addComponent<script_simplebehaviours>();
 
-
         std::vector<Entity*> lights = manager->FindLights();
+
+    #pragma endregion
+
+    #pragma region Frame Buffer (imGUI Image)
 
         DepthBuffer d(1024 * 4, 1024 * 4);
         DepthBuffer s(1024 * 4, 1024 * 4);
@@ -128,9 +137,17 @@ namespace test {
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
+    #pragma endregion
+
     }
 
     test_shadowMap::~test_shadowMap() {
+        delete entity;
+        delete editor;
+        delete camera;
+        delete depthShader;
+        delete e_skybox;
+
         fbo.UnBind();
         glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());
     }
@@ -148,7 +165,6 @@ namespace test {
             return;
         }
 
-
         depthTexturesThisFrame.clear();
         for (auto& buffer : depthBuffers) {
             buffer.Bind();
@@ -158,10 +174,7 @@ namespace test {
             buffer.UnBind();
         }
 
-        //std::cout << "Amount Of Depth Textures : " << depthTexturesThisFrame.size() << std::endl;
-
         fbo.Bind();
-
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         G_GetManager()->OnRender();
@@ -188,7 +201,6 @@ namespace test {
             }
             counter++;
         }
-
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;

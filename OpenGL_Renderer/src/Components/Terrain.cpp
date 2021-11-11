@@ -101,6 +101,7 @@ Terrain::Terrain()
 
 Terrain::~Terrain(){
 	delete[] indices;
+	delete weightIndices;
 }
 
 std::vector<Vertex> Terrain::GetVertices() {
