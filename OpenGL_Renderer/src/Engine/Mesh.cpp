@@ -267,6 +267,8 @@ bool Mesh::LoadOBJ(const std::string& fileName) {
 
 bool Mesh::LoadTerrain(VertexData vertexData){
 	mVertices = vertexData.vData;
+	mIndices = vertexData.indices;
+
 	InitBuffers();
 	return true;
 }
@@ -274,9 +276,20 @@ bool Mesh::LoadTerrain(VertexData vertexData){
 void Mesh::Draw() {
 	if (!mLoaded) { return; }
 
+	//glBindVertexArray(mVAO);
+	//glDrawArrays(GL_TRIANGLES, 0, mVertices.size()); // check model has index buffer and draw
+	//glBindVertexArray(0);
+
 	glBindVertexArray(mVAO);
-	glDrawArrays(GL_TRIANGLES, 0, mVertices.size()); // check model has index buffer and draw
+	if (!mIndices.empty()) {
+		glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, 0);
+		std::cout << "WORKING" << std::endl;
+	}
+	else {
+		glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+	}
 	glBindVertexArray(0);
+
 }
 
 void Mesh::InitBuffers() {
@@ -298,5 +311,14 @@ void Mesh::InitBuffers() {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(6 * sizeof(GLfloat)));//3 = vec3 //6 * sizeof(GLfloat) is the offset 
 	glEnableVertexAttribArray(2);
 
+	if (!mIndices.empty()) {
+		glGenBuffers(1, &mIBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), &mIndices[0], GL_STATIC_DRAW);
+		
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
 }

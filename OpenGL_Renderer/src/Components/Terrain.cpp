@@ -101,9 +101,9 @@ Terrain::Terrain()
 
 		mVertexData.vData.emplace_back(temp);
 	}
-	/*for (size_t i = 0; i < numIndices; i++){
+	for (size_t i = 0; i < numIndices; i++){
 		mVertexData.indices.emplace_back(indices[i]);
-	}*/
+	}
 }
 
 Terrain::~Terrain(){

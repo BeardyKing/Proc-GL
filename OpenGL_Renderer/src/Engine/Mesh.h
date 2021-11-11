@@ -44,8 +44,8 @@ private:
 
 	bool mLoaded;
 	std::vector<Vertex> mVertices;
-	std::vector<GLuint> indices;
-	GLuint mVBO, mVAO; // vertex buffer obj //vertex array obj
+	std::vector<GLuint> mIndices;
+	GLuint mVBO, mVAO, mIBO; // vertex buffer obj //vertex array obj // index buffer object
 
 };
 
