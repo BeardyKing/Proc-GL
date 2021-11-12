@@ -127,9 +127,12 @@ void Mesh::OnImGuiRender(){
 			ImGui::Indent();
 			ImGui::Text("Vertex Size");
 			std::string str;
-			str = std::to_string(sizeof(Vertex));
+			str = std::to_string(16 * sizeof(GLfloat));
 			ImGui::Text(&str[0]);
-			if (ImGui::CollapsingHeader("Layout", ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Text("Using Index Buffer");
+			ImGui::Text(!mIndices.empty() ? "True" : "False");
+
+			if (ImGui::CollapsingHeader("Layout / offsets", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 				ImGui::Text("Position");
 				ImGui::Text("0");
 
@@ -140,6 +143,10 @@ void Mesh::OnImGuiRender(){
 				ImGui::Text("Texture coordinates");
 				std::string editor_coordinates = std::to_string((6 * sizeof(GLfloat)));
 				ImGui::Text(&editor_coordinates[0]);
+
+				ImGui::Text("Tangent");
+				std::string editor_Tangent = std::to_string((4 * sizeof(GLfloat)));
+				ImGui::Text(&editor_Tangent[0]);
 			}
 			ImGui::Unindent();
 		}
@@ -300,11 +307,15 @@ void Mesh::InitBuffers() {
 	glEnableVertexAttribArray(0);
 
 	// normals attrib
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(3 * sizeof(GLfloat)));//2 = vec2 // 3 * sizeof(GLfloat) is the offset
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vertex::normal)));//2 = vec2 // 3 * sizeof(GLfloat) is the offset
 	glEnableVertexAttribArray(1);
 	// tex Coord 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(6 * sizeof(GLfloat)));//3 = vec3 //6 * sizeof(GLfloat) is the offset 
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(3 * sizeof(Vertex::texCoords)));//3 = vec3 //6 * sizeof(GLfloat) is the offset 
 	glEnableVertexAttribArray(2);
+
+	// tangents attrib
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vertex::tangents)));//4 = vec4 //4 * sizeof(GLfloat) is the offset 
+	glEnableVertexAttribArray(3);
 
 	// Index buffer 
 	if (!mIndices.empty()) {
