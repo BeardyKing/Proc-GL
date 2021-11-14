@@ -86,6 +86,30 @@ namespace test {
 
     #pragma endregion
 
+    #pragma region island_rocks
+
+        entity = new Entity("marble ground");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/island_rocks/island_rocks.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_BC_SM.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_N.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("T_beech_forest_stones_01_MT_AO_SM.tga");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+
+    #pragma endregion
+
+
     #pragma region Marble_Ground
         entity = new Entity("marble ground");
         G_GetManager()->addEntity(entity);
@@ -97,7 +121,7 @@ namespace test {
         entity->addComponent<Mesh>("8502_Assets/marble_ground/Marble_Ground.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
