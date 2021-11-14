@@ -1,9 +1,102 @@
-﻿  Mesh.cpp
+﻿  Camera.cpp
+  LightObject.cpp
+  script_simpleBehaviours.cpp
+  EntityManager.cpp
+  DepthBuffer.cpp
+  EditorGUI.cpp
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(189,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\EditorGUI.cpp(136): message : see reference to function template instantiation 'bool glm::decompose<float,glm::highp>(const glm::tmat4x4<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tquat<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec3<float,glm::highp> &,glm::tvec4<float,glm::highp> &)' being compiled
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(193,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(194,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(201,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(202,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(209,55): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(211,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(217,54): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\Proc-GL\common\includes\glm\gtx\matrix_decompose.inl(220,13): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Mesh.cpp
+  ShaderProgram.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(98,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(264,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(265,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(270,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(271,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(47,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(56): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
+  test_defaultTest.cpp
+  test_Dock.cpp
+  test_ECS.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_ECS.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+  test_PBR.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(27,25): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_PBR.cpp(33): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+  test_imguizmo.cpp
+  test_shadowMap.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(223,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(224,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(230,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(231,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(148): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+  main.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\dev\Proc-GL\OpenGL_Renderer\src\main.cpp(129,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  1 of 4173 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    102 functions had inline decision re-evaluated but remain unchanged
+  3 of 4177 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    103 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'

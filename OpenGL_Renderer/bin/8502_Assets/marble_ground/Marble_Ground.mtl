@@ -1,0 +1,28 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl MarbleFloor
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.849057 0.849057 0.849057
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -bm 0.568468 C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_nor_1k.png
+map_Kd C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_diff_1k.png
+map_d C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_diff_1k.png
+
+newmtl ground
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.849057 0.849057 0.849057
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -bm 0.568468 C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_nor_1k.png
+map_Kd C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_diff_1k.png
+map_d C:\\dev\\Unity_layout_8502\\My project\\Assets\\Nokobot\\GreekTemple - Vases (Free)\\04_Textures\\Marble Floor\\marble_01_diff_1k.png

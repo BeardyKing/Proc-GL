@@ -28,6 +28,12 @@ public:
 	float getFOV() const	{ return mFOV; }
 	void  setFOV(float fov) { mFOV = fov; } // in Degrees
 
+	void SetZNear(float z) { zNear = z; }
+	void SetZFar(float z) { zFar = z; }
+
+	float GetZNear() { return zNear; }
+	float GetZFar() { return zFar; }
+
 protected:
 	Camera();
 
@@ -50,6 +56,9 @@ protected:
 	float m_MoveSpeed = 5;
 	float m_MoveSpeedDelta = 4;
 	glm::vec2 m_mouseSpeedDelta = glm::vec2(2);
+
+	float zNear { 0.1f };
+	float zFar{ 200.0f };
 
 
 };

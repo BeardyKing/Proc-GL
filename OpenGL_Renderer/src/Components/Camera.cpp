@@ -145,6 +145,10 @@ void FPSCamera::OnImGuiRender()
 
 		if (ImGui::CollapsingHeader("Camera - FPS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
+			ImGui::Text("Clipping plane");
+			ImGui::DragFloat("Near plane", &zNear, 0.01f);
+			ImGui::DragFloat("Far plane", &zFar, 0.01f);
+			ImGui::Spacing();
 			ImGui::Checkbox("usingImGuiWindow",&usingImGuiWindow);
 			ImGui::DragFloat("FOV", &mFOV,0.01f);
 			ImGui::DragFloat("Move Speed", &m_MoveSpeed,0.01f);

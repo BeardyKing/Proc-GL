@@ -82,9 +82,33 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
 
         entity->getComponent<Transform>().scale = glm::vec3(0.01f);
-        entity->getComponent<Transform>().position = glm::vec3(-80,-1.5f,-60);
+        entity->getComponent<Transform>().position = glm::vec3(-80,-10,-60);
 
     #pragma endregion
+
+    #pragma region Marble_Ground
+        entity = new Entity("marble ground");
+        G_GetManager()->addEntity(entity);
+
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/marble_ground/Marble_Ground.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_albedo.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+    #pragma endregion
+
 
     #pragma region Statue
 
