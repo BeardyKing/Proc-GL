@@ -151,6 +151,7 @@
     <ClCompile Include="src\Components\EditorCamera.cpp" />
     <ClCompile Include="src\Components\ObjectData.cpp" />
     <ClCompile Include="src\Components\scripts\script_simpleBehaviours.cpp" />
+    <ClCompile Include="src\Components\SkyBox.cpp" />
     <ClCompile Include="src\Components\Terrain.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Engine\Buffers\DepthBuffer.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="src\Components\EditorCamera.h" />
     <ClInclude Include="src\Components\ObjectData.h" />
     <ClInclude Include="src\Components\scripts\script_simpleBehaviours.h" />
+    <ClInclude Include="src\Components\SkyBox.h" />
     <ClInclude Include="src\Components\Terrain.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\ECS\Engine_ECS.h" />

@@ -44,7 +44,7 @@ public:
 	std::vector<Entity*> FindLights();
 public: // template classes
 	template<class T>
-	std::vector<Entity*> FindEntitiesOfType(T) {
+	std::vector<Entity*> FindEntitiesWithType() {
 		std::vector<Entity*> arr;
 		for (auto& entity : entities) {
 			if (entity->hasComponent<T>()) {
@@ -61,7 +61,7 @@ public: // template classes
 	}
 
 	template<class T>
-	Entity* FindEntityOfType(T) {
+	Entity* FindEntityWithType() {
 		for (auto& entity : entities) {
 			if (entity->hasComponent<T>()) {
 				if (entity->isActive()) {

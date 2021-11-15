@@ -45,10 +45,16 @@ namespace uniform {
 
 
 		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
-
-		shader.use();
+		auto sb = G_GetManager()->FindEntityWithType<SkyBox>();
 		
-		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.GetTexture()); // instead of _shader.bind
+		shader.use();
+		if (sb != nullptr){
+			glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
+		}
+		else {
+			glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.GetTexture());
+			std::cout << "Err @ Shader_Standard_Skybox_Uniform.h : Using fallback skybox instead of entity skybox reference" << std::endl;
+		}
 
 	}
 
@@ -66,7 +72,6 @@ namespace uniform {
 
 		skybox.LoadCubemap(tex);
 		std::cout << "Loaded cubemap" << std::endl;
-
 	}
 
 	Shader_Standard_Skybox_Uniforms::Shader_Standard_Skybox_Uniforms() {}

@@ -47,16 +47,8 @@ namespace test {
         G_GetManager()->addEntity(e_skybox);
 
         e_skybox->addComponent<Mesh>("cube.obj");
-        e_skybox->addComponent<Texture2D>();
-        e_skybox->getComponent<Texture2D>().LoadCubemap(faces);
+        e_skybox->addComponent<SkyBox>(faces);
         e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag","Uniform_Skybox");
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[0]);
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[1]);
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[2]);
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[3]);
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[4]);
-        e_skybox->getComponent<ShaderProgram>().AddTexturePath(faces[5]);
-        e_skybox->getComponent<ShaderProgram>().LoadTextures(); 
         
     #pragma endregion
 

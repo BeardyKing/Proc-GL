@@ -13,6 +13,7 @@
 
 #include "../Components/LightObject.h"
 #include "../Components/Camera.h"
+#include "../Components/SkyBox.h"
 
 
 
