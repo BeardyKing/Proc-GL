@@ -492,6 +492,8 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
 
+        entity->isActive(false);
+
     #pragma endregion
     #pragma region Directional_Light
 

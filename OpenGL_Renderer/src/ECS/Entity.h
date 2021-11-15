@@ -17,8 +17,8 @@ public:
 		this->addComponent<Transform>();
 	};
 
-	Entity(const char* _name) {
-		this->addComponent<ObjectData>(_name);
+	Entity(const char* name) {
+		this->addComponent<ObjectData>(name);
 		this->addComponent<Transform>();
 	};
 
@@ -66,17 +66,31 @@ public:
 		return active;
 	}
 
+	inline void isActive(bool setActive){
+		active = setActive;
+	}
+
+	inline bool* isActiveRawPtr(){
+		return &active;
+	}
+
 	inline void destroy() {
-		active = false;
+		active = false; // TODO remove from ECS instead of set active to false
 	}
 
 	inline void OnRender() {
+		if (!active){
+			return;
+		}
 		for (auto& component : components) {
 			component->OnRender();
 		}
 	}
 
 	inline void OnUpdate(double deltaTime) {
+		if (!active) {
+			return;
+		}
 		for (auto& component : components) {
 			component->OnUpdate(deltaTime);
 		}

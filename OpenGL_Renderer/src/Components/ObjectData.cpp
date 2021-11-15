@@ -1,5 +1,8 @@
 #include "ObjectData.h"
+#include "../Engine/ECS_List.h"
+
 static uint32_t G_idCounter = 0;
+extern EntityManager* G_GetManager();
 
 uint32_t GetAmountOfEntities() {
 	return G_idCounter;
@@ -35,6 +38,7 @@ void ObjectData::OnRender(){}
 void ObjectData::OnUpdate(double deltaTime){}
 
 void ObjectData::OnImGuiRender(){
+
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 	ImGui::Begin("Inspector");{
 		char label[128] = "";
@@ -46,6 +50,7 @@ void ObjectData::OnImGuiRender(){
 
 		ImGui::InputText(label, char_arr, (int)(sizeof(char_arr) / sizeof(*(char_arr))));
 		ImGui::Separator();
+		ImGui::Checkbox("isActive", entity->isActiveRawPtr());
 	}
 	ImGui::End();
 }
