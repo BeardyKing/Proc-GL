@@ -1,9 +1,19 @@
-﻿  ObjectData.cpp
+﻿  test_shadowMap.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(605,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(606,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(612,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(613,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(529): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  1 of 4195 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 4196 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    102 functions had inline decision re-evaluated but remain unchanged
+    103 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'

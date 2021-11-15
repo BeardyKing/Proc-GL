@@ -24,9 +24,10 @@ namespace test {
     #pragma region Camera
 
         entity = new Entity("Main Camera");
-        entity->addComponent<FPSCamera>(glm::vec3(0), 4.781f, -0.549f);
+        entity->addComponent<FPSCamera>();
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
-        entity->getComponent<Transform>().position = glm::vec3(17, 11, -.01f);
+        entity->getComponent<Transform>().position = glm::vec3(-82, 10, -44);
+        entity->getComponent<FPSCamera>().Rotate(60.0f,-15.0f);
         G_GetManager()->addEntity(entity);
 
     #pragma endregion
@@ -423,6 +424,30 @@ namespace test {
 
     #pragma endregion
 
+#pragma region Water
+        entity = new Entity("Water");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/water/water.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Normals 1.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+
+        entity->getComponent<ShaderProgram>().SetColour(glm::vec4(91.0f/255.0f, 171.0f /255.0f, 255.0f /255.0f, 255.0f /255.0f), "albedo_color");
+        entity->getComponent<ShaderProgram>().SetFloat(1.5f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.336f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.227f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(50));
+#pragma endregion
+
     #pragma region Tree_box_Temp_Shaders
         entity = new Entity("Tree_Box");
         G_GetManager()->addEntity(entity);
@@ -445,7 +470,7 @@ namespace test {
     #pragma endregion
     
     #pragma region Tree 
-        entity = new Entity("Tree_Box");
+        entity = new Entity("tree");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
@@ -495,6 +520,7 @@ namespace test {
         entity->isActive(false);
 
     #pragma endregion
+
     #pragma region Directional_Light
 
         entity = new Entity("Directional Light");
@@ -506,6 +532,7 @@ namespace test {
         std::vector<Entity*> lights = manager->FindLights();
 
     #pragma endregion
+
 
     #pragma region Frame Buffer (imGUI Image)
 
