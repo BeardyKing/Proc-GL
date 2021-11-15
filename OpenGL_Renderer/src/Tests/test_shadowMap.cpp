@@ -350,48 +350,8 @@ namespace test {
 
     #pragma endregion
 
-    #pragma region Tree_box_Temp_Shaders
-        entity = new Entity("Tree_Box");
-        G_GetManager()->addEntity(entity);
-
-        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-
-        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-
-        entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
-        entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    #pragma endregion
        
     //TODO ALPHA CUTOFF SHADER FOR TREE // TODO fix backface culling on object
-    #pragma region Tree 
-        entity = new Entity("Tree_Box");
-        G_GetManager()->addEntity(entity);
-
-        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-
-        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-
-        entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
-        entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    #pragma endregion
 
     #pragma region Marble_Railings_TEMP
         entity = new Entity("Marble_Railings_TEMP");
@@ -435,11 +395,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
     #pragma endregion
 
-
     #pragma region Statue
-
-
-
         entity = new Entity("Afrodta Statue");
         G_GetManager()->addEntity(entity);
 
@@ -467,6 +423,76 @@ namespace test {
 
     #pragma endregion
 
+    #pragma region Tree_box_Temp_Shaders
+        entity = new Entity("Tree_Box");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+    #pragma endregion
+    
+    #pragma region Tree 
+        entity = new Entity("Tree_Box");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+    #pragma endregion
+
+    #pragma region Tree_Glass_box
+
+        entity = new Entity("glass_tree_box");
+        G_GetManager()->addEntity(entity);
+
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->addComponent<Mesh>("8502_Assets/tree_glass_box/tree_glass_box.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_basemap.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+
+        entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
+
+    #pragma endregion
     #pragma region Directional_Light
 
         entity = new Entity("Directional Light");
