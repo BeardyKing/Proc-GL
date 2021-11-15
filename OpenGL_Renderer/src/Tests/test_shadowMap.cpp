@@ -256,9 +256,9 @@ namespace test {
 
     #pragma endregion
 
-#pragma region Vases
+    #pragma region Vases
 
-#pragma region Vase_Amphora
+    #pragma region Vase_Amphora
         entity = new Entity("Vase_Amphora");
         G_GetManager()->addEntity(entity);
 
@@ -278,9 +278,9 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
-#pragma endregion
+    #pragma endregion
 
-#pragma region Vase_Hydria
+    #pragma region Vase_Hydria
         entity = new Entity("Vase_Hydria");
         G_GetManager()->addEntity(entity);
 
@@ -300,9 +300,9 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
-#pragma endregion
+    #pragma endregion
 
-#pragma region Vase_Amphora
+    #pragma region Vase_Amphora
         entity = new Entity("Vase_VoluteKrater");
         G_GetManager()->addEntity(entity);
 
@@ -322,10 +322,10 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
-#pragma endregion
+    #pragma endregion
 
 
-#pragma endregion
+    #pragma endregion
 
     #pragma region island_rocks
 
@@ -350,7 +350,7 @@ namespace test {
 
     #pragma endregion
 
-#pragma region Tree_box_Temp_Shaders
+    #pragma region Tree_box_Temp_Shaders
         entity = new Entity("Tree_Box");
         G_GetManager()->addEntity(entity);
 
@@ -369,9 +369,31 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-#pragma endregion
+    #pragma endregion
+       
+    //TODO ALPHA CUTOFF SHADER FOR TREE // TODO fix backface culling on object
+    #pragma region Tree 
+        entity = new Entity("Tree_Box");
+        G_GetManager()->addEntity(entity);
 
-#pragma region Marble_Railings_TEMP
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+    #pragma endregion
+
+    #pragma region Marble_Railings_TEMP
         entity = new Entity("Marble_Railings_TEMP");
         G_GetManager()->addEntity(entity);
 
@@ -390,7 +412,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-#pragma endregion
+    #pragma endregion
 
     #pragma region Marble_Ground
         entity = new Entity("marble ground");
@@ -426,15 +448,16 @@ namespace test {
         // 2 = metalic
         // 3 = roughness
         // 4 = ambient 
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
         
-        entity->addComponent<Mesh>("Afrodta_Statue/Rz_123_Afrodyta_z_Melos.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_albedo.jpg");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Afrodta_Statue/Rz_123_Afrodyta_z_Melos_normal.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+        entity->addComponent<Mesh>("8502_Assets/afrodta_statues/afrodta_Statues.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_albedo1k.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_normal1k.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_AO.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         
         entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
