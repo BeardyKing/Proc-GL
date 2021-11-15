@@ -1,19 +1,19 @@
 ﻿  test_shadowMap.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(435,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(436,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(442,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(443,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(482,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(483,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(489,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(490,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(360): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(407): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
           [
               T=LightObject
           ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\EntityManager.cpp(25): warning C4715: 'EntityManager::FindActiveCamera': not all control paths return a value
-  All 4187 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  3 of 4191 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    103 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
