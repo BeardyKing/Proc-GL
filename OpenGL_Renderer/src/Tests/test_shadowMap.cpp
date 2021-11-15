@@ -114,7 +114,7 @@ namespace test {
 
     #pragma endregion
 
-    #pragma region gold_coins
+    #pragma region bars
         entity = new Entity("gold_bars");
         G_GetManager()->addEntity(entity);
 
@@ -278,6 +278,27 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
     #pragma endregion
+
+#pragma region Marble_Railings_TEMP
+        entity = new Entity("Marble_Railings_TEMP");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/railing_temp/railing_temp.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+#pragma endregion
 
     #pragma region Marble_Ground
         entity = new Entity("marble ground");
