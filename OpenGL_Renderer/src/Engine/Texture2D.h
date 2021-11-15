@@ -33,8 +33,8 @@ private:
 	int m_textureHeight = 0;
 
 	bool m_anisotropicFilteringEnabled = true;
-	bool m_useAnisotropicMaxAmount = true;
-	GLfloat m_anisotropicMaxAmount = 2;
+	bool m_useAnisotropicMaxAmount = false;
+	GLfloat m_anisotropicMaxAmount = 1;
 
 	GLuint m_texture;
 };
