@@ -279,19 +279,20 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
 #pragma endregion
-#pragma region Vase_Amphora
-        entity = new Entity("Vase_Amphora");
+
+#pragma region Vase_Hydria
+        entity = new Entity("Vase_Hydria");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_Amphora/Vase_Amphora.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora/Vase_Amphora_AlbedoTransparency.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora/Vase_Amphora_Normal.png");
+        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_Hydria/Vase_Hydria.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_AlbedoTransparency.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_Normal.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora/Vase_Amphora_MetallicSmoothness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_MetallicSmoothness.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
@@ -300,6 +301,29 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
 #pragma endregion
+
+#pragma region Vase_Amphora
+        entity = new Entity("Vase_VoluteKrater");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_AlbedoTransparency.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_MetallicSmoothness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+
+#pragma endregion
+
 
 #pragma endregion
 
