@@ -86,6 +86,35 @@ namespace test {
 
     #pragma endregion
 
+    #pragma region gold_columns
+        entity = new Entity("gold_columns");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
+
+        entity->addComponent<Mesh>("8502_Assets/gold_columns/gold_columns.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/gold_coin_normals.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/gold_coin_Specular.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+
+    #pragma endregion
+
+
     #pragma region island_rocks
 
         entity = new Entity("marble ground");
@@ -100,7 +129,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_N.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.tga");
-        entity->getComponent<ShaderProgram>().AddTexturePath("T_beech_forest_stones_01_MT_AO_SM.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_MT_AO_SM.tga");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
