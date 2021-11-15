@@ -64,6 +64,8 @@ public :
 	void setUniform(const GLchar* name, const GLint& i);
 
 	void setUniformSampler(const GLchar* name, const GLint& slot);
+	void setUniformSamplerCube(const GLchar* name, const GLint& i);
+
 
 	GLuint getProgram()const;
 

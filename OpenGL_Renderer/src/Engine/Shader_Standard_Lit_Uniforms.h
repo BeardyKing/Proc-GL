@@ -27,7 +27,7 @@ namespace uniform {
 		void SetInt(const int& value, const std::string& name) override;
 
 	private:
-		std::unique_ptr <Texture2D[]> _pbr_textures;
+		std::unique_ptr <Texture2D[]> m_pbr_textures;
 		int numberOfTextures = 0;
 	public:
 		glm::vec3 m_baseColor = glm::vec3(1.0f, 0.38f, 0.38f);
@@ -86,42 +86,45 @@ namespace uniform {
 		_shader.setUniform("camPos", _camera.GetPosition());
 	}
 
-	void Shader_Standard_Lit_Uniform::SetUniformCustom(ShaderProgram& _shader) {
+	void Shader_Standard_Lit_Uniform::SetUniformCustom(ShaderProgram& shader) {
 
 
 		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
-		_shader.use();
+		shader.use();
 
-		_pbr_textures[0].Bind(0);
-		_pbr_textures[1].Bind(1);
-		_pbr_textures[2].Bind(2);
-		_pbr_textures[3].Bind(3);
-		_pbr_textures[4].Bind(4);
+		m_pbr_textures[0].Bind(0);
+		m_pbr_textures[1].Bind(1);
+		m_pbr_textures[2].Bind(2);
+		m_pbr_textures[3].Bind(3);
+		m_pbr_textures[4].Bind(4);
 		glActiveTexture(GL_TEXTURE0 + 5);
 		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap()); // bind shadowmap texture(s)
 
 		auto m_lights = G_GetManager()->FindLights();
+		auto sb = G_GetManager()->FindEntityWithType<SkyBox>();
 
-		_shader.setUniform("amountOfLights",		(GLint)m_lights.size());
-		_shader.setUniform("textureScale",			m_TextureTiling);
-		_shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity);
-		_shader.setUniform("_lightIntensity",		m_lights[0]->getComponent<LightObject>().lightIntensity);
-		_shader.setUniform("_lightColor",			m_lights[0]->getComponent<LightObject>().color);
-		_shader.setUniform("viewPos",				camPos);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
 
-		_shader.setUniform("albedo_color",			albedo_color);
-		_shader.setUniform("normal_scalar",			normal_scalar);
-		_shader.setUniform("metallic_scalar",		metallic_scalar);
-		_shader.setUniform("roughness_scalar",		roughness_scalar);
-		_shader.setUniform("occlusion_scalar",		occlusion_scalar);
+		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
+		shader.setUniform("textureScale",			m_TextureTiling);
+		shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity);
+		shader.setUniform("_lightIntensity",		m_lights[0]->getComponent<LightObject>().lightIntensity);
+		shader.setUniform("_lightColor",			m_lights[0]->getComponent<LightObject>().color);
+		shader.setUniform("viewPos",				camPos);
 
-		_shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
-		_shader.setUniformSampler("normalMap",		1);		// 1 = normal
-		_shader.setUniformSampler("metallicMap",	2);		// 2 = metalic
-		_shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
-		_shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
-		_shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
+		shader.setUniform("albedo_color",			albedo_color);
+		shader.setUniform("normal_scalar",			normal_scalar);
+		shader.setUniform("metallic_scalar",		metallic_scalar);
+		shader.setUniform("roughness_scalar",		roughness_scalar);
+		shader.setUniform("occlusion_scalar",		occlusion_scalar);
+
+		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
+		shader.setUniformSampler("normalMap",		1);		// 1 = normal
+		shader.setUniformSampler("metallicMap",	2);		// 2 = metalic
+		shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
+		shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
+		shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
 
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
@@ -130,18 +133,18 @@ namespace uniform {
 		
 		for (unsigned int i = 0; i < m_lights.size(); ++i) {
 			std::string str1 = "lightPositions[" + std::to_string(i) + "]";
-			_shader.setUniform(str1.c_str(), m_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
+			shader.setUniform(str1.c_str(), m_lights[i]->getComponent<Transform>().position);	// set shader uniform for lightPosition[i]
 
 			std::string str2 = "lightColors[" + std::to_string(i) + "]";
-			_shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);	// set shader uniform for lightColors[i]
+			shader.setUniform(str2.c_str(), m_lights[i]->getComponent<LightObject>().color);	// set shader uniform for lightColors[i]
 		}
 
 		if (G_RenderShadowMap() && castShadows) {
-			_shader.setUniform("view", glm::mat4(1));
-			_shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
+			shader.setUniform("view", glm::mat4(1));
+			shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
 		if (recieveShadows) {
-			_shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
+			shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
 
 	}
@@ -180,7 +183,7 @@ namespace uniform {
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
 			//--------------Albedo Map--------------//
 			static uint16_t albedoMap_Image_Scalar = 1;
-			if(ImGui::ImageButton((void*)_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
+			if(ImGui::ImageButton((void*)m_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
 				albedoMap_Image_Scalar = (albedoMap_Image_Scalar == 1) ? 10 : 1;
 			}
 			ImGui::SameLine();
@@ -199,7 +202,7 @@ namespace uniform {
 
 			//--------------Normal Map--------------//
 			 static uint16_t normalMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[1].GetTexture(), ImVec2(12.0f * normalMap_Image_Scalar, 12.0f * normalMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)m_pbr_textures[1].GetTexture(), ImVec2(12.0f * normalMap_Image_Scalar, 12.0f * normalMap_Image_Scalar))) {
 				normalMap_Image_Scalar = (normalMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -212,7 +215,7 @@ namespace uniform {
 
 			//--------------Metallic Map--------------//
 			static uint16_t metallicMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[2].GetTexture(), ImVec2(12.0f * metallicMap_Image_Scalar, 12.0f * metallicMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)m_pbr_textures[2].GetTexture(), ImVec2(12.0f * metallicMap_Image_Scalar, 12.0f * metallicMap_Image_Scalar))) {
 				metallicMap_Image_Scalar = (metallicMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -225,7 +228,7 @@ namespace uniform {
 
 			//--------------Roughness Map--------------//
 			static uint16_t RoughnessMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[3].GetTexture(), ImVec2(12.0f * RoughnessMap_Image_Scalar, 12.0f * RoughnessMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)m_pbr_textures[3].GetTexture(), ImVec2(12.0f * RoughnessMap_Image_Scalar, 12.0f * RoughnessMap_Image_Scalar))) {
 				RoughnessMap_Image_Scalar = (RoughnessMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -238,7 +241,7 @@ namespace uniform {
 
 			//--------------Occlusion Map--------------//
 			static uint16_t OcclusionMap_Image_Scalar = 1;
-			if (ImGui::ImageButton((void*)_pbr_textures[4].GetTexture(), ImVec2(12.0f * OcclusionMap_Image_Scalar, 12.0f * OcclusionMap_Image_Scalar))) {
+			if (ImGui::ImageButton((void*)m_pbr_textures[4].GetTexture(), ImVec2(12.0f * OcclusionMap_Image_Scalar, 12.0f * OcclusionMap_Image_Scalar))) {
 				OcclusionMap_Image_Scalar = (OcclusionMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
@@ -287,10 +290,10 @@ namespace uniform {
 	void Shader_Standard_Lit_Uniform::LoadTextures(Entity& _shader) {
 		auto tex = _shader.getComponent<ShaderProgram>().GetTextures();
 		numberOfTextures = tex.size();
-		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
+		m_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
 		for (int i = 0; i < numberOfTextures; i++) {
-			_pbr_textures[i].LoadTexture(tex[i], true);
+			m_pbr_textures[i].LoadTexture(tex[i], true);
 		}
 	}
 

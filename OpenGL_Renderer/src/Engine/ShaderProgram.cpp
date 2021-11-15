@@ -271,8 +271,13 @@ void ShaderProgram::setUniformSampler(const GLchar* name, const GLint& slot) {
 	glUniform1i(loc, slot);
 }
 
+void ShaderProgram::setUniformSamplerCube(const GLchar* name, const GLint& i) {
+	glBindTexture(GL_TEXTURE_CUBE_MAP, i);
+}
+
 void ShaderProgram::setUniform(const GLchar* name, const GLint& i) {
 	GLint loc = getUniformLocation(name);
 	glUniform1i(loc, i);
 }
+
 
