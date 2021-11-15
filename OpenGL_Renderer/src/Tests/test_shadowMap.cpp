@@ -114,6 +114,33 @@ namespace test {
 
     #pragma endregion
 
+    #pragma region gold_coins
+        entity = new Entity("gold_bars");
+        G_GetManager()->addEntity(entity);
+
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
+
+        entity->addComponent<Mesh>("8502_Assets/gold_bars/gold_bars.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_color.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_normals.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+
+    #pragma endregion
 
     #pragma region dock
 
