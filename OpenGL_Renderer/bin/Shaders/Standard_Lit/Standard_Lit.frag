@@ -149,9 +149,9 @@ void main()
 {	
     
     //------------Skybox Reflection Test------------
-    // vec3 I = normalize(fs_in.FragPos - viewPos); 
-    // vec3 R = reflect(I, normalize(fs_in.Normal));
-    // FragColor = vec4(texture(skybox, R).rgb, 1.0);
+    vec3 I = normalize(fs_in.FragPos - viewPos); 
+    vec3 R = reflect(I, normalize(fs_in.Normal));
+    FragColor = vec4(texture(skybox, R).rgb, 1.0);
     //-----------------------------------------------
 
     vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color;
