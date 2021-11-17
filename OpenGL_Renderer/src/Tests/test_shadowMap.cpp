@@ -29,6 +29,7 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(-82, 10, -44);
         entity->getComponent<FPSCamera>().Rotate(60.0f,-15.0f);
         G_GetManager()->addEntity(entity);
+        camera = &entity->getComponent<FPSCamera>();
 
     #pragma endregion
         
@@ -591,6 +592,7 @@ namespace test {
 			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			//G_SetRenderShadowMap(true);
+            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 			//glActiveTexture(GL_TEXTURE0);
@@ -630,7 +632,7 @@ namespace test {
 
         if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)fbo_cam_depth.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            ImGui::Image((void*)fbo_cam_depth.GetDepthBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {

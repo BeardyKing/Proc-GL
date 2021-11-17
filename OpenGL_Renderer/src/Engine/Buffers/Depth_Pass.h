@@ -17,10 +17,11 @@ public:
 
 	GLuint GetFrameBuffer();
 	GLuint GetRenderBuffer();
-
+	GLuint GetDepthBuffer();
 private:
 	GLuint m_frameBuffer;
 	GLuint m_depthBuffer;
 	GLuint m_renderBuffer;
+
 };
 #endif // !FRAMEBUFFER_H

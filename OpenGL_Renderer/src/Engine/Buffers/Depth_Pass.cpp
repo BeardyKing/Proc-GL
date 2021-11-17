@@ -26,6 +26,10 @@ GLuint DepthPass::GetFrameBuffer() {
 	return m_frameBuffer;
 }
 
+GLuint DepthPass::GetDepthBuffer() {
+	return m_depthBuffer;
+}
+
 GLuint DepthPass::GetRenderBuffer() {
 	return m_renderBuffer;
 }
@@ -60,7 +64,8 @@ void DepthPass::GenerateFrameBuffer(float screen_width, float screen_height) {
 
 	glGenTextures(1, &m_depthBuffer);
 	glBindTexture(GL_TEXTURE_2D, m_depthBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_viewport[2] * 2, m_viewport[3] * 2, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_viewport[2], m_viewport[3], 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
