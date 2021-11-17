@@ -205,6 +205,9 @@ bool InitOpenGL() {
 	ImGui_ImplGlfw_InitForOpenGL(g_Window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	imGuiStyleSheet style;
 
 	return true;

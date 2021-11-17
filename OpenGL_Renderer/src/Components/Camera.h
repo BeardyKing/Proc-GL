@@ -58,7 +58,7 @@ protected:
 	glm::vec2 m_mouseSpeedDelta = glm::vec2(2);
 
 	float zNear { 0.1f };
-	float zFar{ 200.0f };
+	float zFar{ 800.0f };
 
 
 };

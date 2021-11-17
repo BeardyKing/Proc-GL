@@ -6,6 +6,8 @@ in VS_OUT {
     vec3 Normal;
     vec2 TexCoords;
     vec4 FragPosLightSpace;
+    vec4 depthPosPreviousRender;
+    vec4 depthPosThisRender;
 } fs_in;
 
 uniform samplerCube skybox;

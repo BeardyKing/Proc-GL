@@ -10,6 +10,8 @@
 #include "Shader_Blinn_Phong_Uniforms.h"
 #include "Shader_ShadowDepth.h"
 #include "Shader_Standard_Skybox_Uniforms.h"
+#include "Shader_Terrain_Uniforms.h"
+#include "Shader_Water_Uniforms.h"
 
 ShaderProgram::ShaderProgram()
 	: m_Handle(0)
@@ -55,6 +57,8 @@ void ShaderProgram::LoadShaderMenu() {
 	shaderMenu->RegisterShader<uniform::Shader_ShadowDepth>				("Uniform_ShadowDepth"); 
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Lit_Uniform>	("Uniform_Standard_Lit");
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Skybox_Uniforms>("Uniform_Skybox");
+	shaderMenu->RegisterShader<uniform::Shader_Terrain_Uniforms>		("Uniform_Standard_Terrain");
+	shaderMenu->RegisterShader<uniform::Shader_Water_Uniforms>			("Uniform_Standard_Water");
 
 }
 

@@ -5,6 +5,7 @@
 
 #include "../Engine/Engine_Core.h"
 #include "../Math/Engine_Math.h"
+#include "../Engine/Buffers/Depth_Pass.h"
 
 #include <iostream>
 #include <sstream>
@@ -24,6 +25,7 @@ namespace test {
 
 	private:
 		FrameBuffer fbo;
+		DepthPass fbo_cam_depth;
 		std::vector<DepthBuffer> depthBuffers;
 		std::vector<GLuint> depthTexturesThisFrame;
 

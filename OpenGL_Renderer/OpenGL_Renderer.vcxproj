@@ -157,6 +157,7 @@
     <ClCompile Include="src\Engine\Buffers\DepthBuffer.cpp" />
     <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
+    <ClCompile Include="src\Engine\Buffers\Depth_Pass.cpp" />
     <ClCompile Include="src\Engine\EditorGUI.cpp" />
     <ClCompile Include="src\Engine\Shader_UniformSetter.cpp" />
     <ClCompile Include="src\Engine\Buffers\FrameBuffer.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="src\ECS\ECS.h" />
     <ClInclude Include="src\ECS\Entity.h" />
     <ClInclude Include="src\ECS\EntityManager.h" />
+    <ClInclude Include="src\Engine\Buffers\Depth_Pass.h" />
     <ClInclude Include="src\Engine\ECS_List.h" />
     <ClInclude Include="src\Engine\EditorGUI.h" />
     <ClInclude Include="src\Engine\Engine_Core.h" />
@@ -209,10 +211,12 @@
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Skybox_Uniforms.h" />
+    <ClInclude Include="src\Engine\Shader_Terrain_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_UniformSetter.h" />
     <ClInclude Include="src\Engine\Buffers\FrameBuffer.h" />
     <ClInclude Include="src\Editor\imGuiStyleSheet.h" />
     <ClInclude Include="src\Components\LightObject.h" />
+    <ClInclude Include="src\Engine\Shader_Water_Uniforms.h" />
     <ClInclude Include="src\Math\Engine_Math.h" />
     <ClInclude Include="src\Engine\Mesh.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />

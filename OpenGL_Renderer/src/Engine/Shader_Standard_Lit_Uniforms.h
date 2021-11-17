@@ -144,6 +144,7 @@ namespace uniform {
 			shader.setUniform("view", glm::mat4(1));
 			shader.setUniform("projection", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
+
 		if (recieveShadows) {
 			shader.setUniform("lightSpaceMatrix", m_lights[0]->getComponent<LightObject>().LightSpaceMatrix());
 		}
