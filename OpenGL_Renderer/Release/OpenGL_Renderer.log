@@ -1,24 +1,21 @@
 ﻿  test_shadowMap.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(620,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(621,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(627,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(628,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(625,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(626,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(632,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(633,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(633,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(637,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(638,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
 H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(529): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
           [
               T=LightObject
           ]
-  main.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-H:\Dev\Proc-GL\OpenGL_Renderer\src\main.cpp(129,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  11 of 4267 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  1 of 4267 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    103 functions had inline decision re-evaluated but remain unchanged
+    107 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'

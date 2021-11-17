@@ -10,8 +10,6 @@ out VS_OUT {
     vec3 Normal;
     vec2 TexCoords;
     vec4 FragPosLightSpace;
-    vec4 depthPosPreviousRender;
-    vec4 depthPosThisRender;
 } vs_out;
 
 uniform mat4 projection;
@@ -20,21 +18,11 @@ uniform mat4 model;
 uniform mat4 lightSpaceMatrix;
 uniform vec2 textureScale;
 
-float near = 0.1; 
-float far  = 100.0; 
-  
-float LinearizeDepth(float depth) 
-{
-    float z = depth * 2.0 - 1.0; // back to NDC 
-    return (2.0 * near * far) / (far + near - z * (far - near));	
-}
-
 void main()
 {
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.Normal = transpose(inverse(mat3(model))) * aNormal;
     vs_out.TexCoords = vec2(aTexCoords.x * textureScale.x, aTexCoords.y * textureScale.y);
     vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
-    vs_out.depthPosThisRender = LinearizeDepth(gl_FragCoord.z) / far; 
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 }

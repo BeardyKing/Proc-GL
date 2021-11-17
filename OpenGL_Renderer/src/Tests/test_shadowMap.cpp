@@ -546,7 +546,7 @@ namespace test {
         //depthBuffers.emplace_back(s);
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
-		fbo_cam_depth.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        fbo_cam_depth.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
     #pragma endregion
 
@@ -570,7 +570,7 @@ namespace test {
 	void test_shadowMap::OnRender() {
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
-			editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
+            editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -587,11 +587,16 @@ namespace test {
         }
 
         {
-			fbo_cam_depth.Bind();
-
+            fbo_cam_depth.Bind();
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			//G_SetRenderShadowMap(true);
+
+			glClear(GL_DEPTH_BUFFER_BIT);
+			//glActiveTexture(GL_TEXTURE0);
+			glCullFace(GL_NONE);
+
             G_GetManager()->OnRender();
-			
             fbo_cam_depth.UnBind();
         }
 
@@ -624,8 +629,8 @@ namespace test {
         }
 
         if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-			ImGui::Image((void*)fbo_cam_depth.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+            ImGui::Image((void*)fbo_cam_depth.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
