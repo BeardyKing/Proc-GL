@@ -98,6 +98,7 @@ namespace uniform {
 		m_pbr_textures[2].Bind(2);
 		m_pbr_textures[3].Bind(3);
 		m_pbr_textures[4].Bind(4);
+
 		glActiveTexture(GL_TEXTURE0 + 5);
 		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap()); // bind shadowmap texture(s)
 
@@ -108,7 +109,7 @@ namespace uniform {
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
-		shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity);
+		shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity); // todo write fallback for if no lights
 		shader.setUniform("_lightIntensity",		m_lights[0]->getComponent<LightObject>().lightIntensity);
 		shader.setUniform("_lightColor",			m_lights[0]->getComponent<LightObject>().color);
 		shader.setUniform("viewPos",				camPos);
