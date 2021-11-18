@@ -41,6 +41,8 @@ namespace uniform {
 		float metallic_scalar	= 1.0f;
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
+
+		float alpha_end_blend_distance = 5.0f;
 	};
 
 	void Shader_Water_Uniforms::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
@@ -109,6 +111,7 @@ namespace uniform {
 		
 		glActiveTexture(GL_TEXTURE0 + 6);
 		glBindTexture(GL_TEXTURE_2D, G_GetCamDepth()); // bind depth pass texture(s)
+		shader.setUniform("waterDepthBlend",			alpha_end_blend_distance);
 		
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
@@ -172,6 +175,12 @@ namespace uniform {
 			ImGui::Selectable("Recieve Shadows");
 			ImGui::NextColumn();
 			ImGui::Checkbox("##Recieve Shadows", &recieveShadows);
+			ImGui::NextColumn();
+			
+			ImGui::Selectable("Edge Blend Distance");
+			ImGui::NextColumn();
+			ImGui::SliderFloat("##Edge Blend Distance", &alpha_end_blend_distance, 0.0f, 30.0f);
+
 			
 			ImGui::Columns(1);
 			ImGui::TreePop();
@@ -205,7 +214,6 @@ namespace uniform {
 			}
 			ImGui::NextColumn();
 
-
 			//--------------Normal Map--------------//
 			 static uint16_t normalMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)m_pbr_textures[1].GetTexture(), ImVec2(12.0f * normalMap_Image_Scalar, 12.0f * normalMap_Image_Scalar))) {
@@ -216,7 +224,7 @@ namespace uniform {
 			ImGui::Selectable("Normal Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##normal_scalar", &normal_scalar, 0.3f, 15.0f);
+			ImGui::SliderFloat("##normal_scalar", &normal_scalar, 0.3f, 90.0f);
 			ImGui::NextColumn();
 
 			//--------------Metallic Map--------------//
