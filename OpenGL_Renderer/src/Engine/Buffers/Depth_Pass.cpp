@@ -2,7 +2,7 @@
 #include "Depth_Pass.h"
 
 
-DepthPass::DepthPass() :
+RenderPass::RenderPass() :
 	m_frameBuffer(0),
 	m_renderBuffer(0),
 	m_depthBuffer(0)
@@ -10,35 +10,35 @@ DepthPass::DepthPass() :
 
 }
 
-DepthPass::~DepthPass() {
+RenderPass::~RenderPass() {
 	//DeleteFrameBuffer(); // causes crash on "test" change
 }
 
-void DepthPass::Bind() {
+void RenderPass::Bind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 }
 
-void DepthPass::UnBind() {
+void RenderPass::UnBind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-GLuint DepthPass::GetFrameBuffer() {
+GLuint RenderPass::GetFrameBuffer() {
 	return m_frameBuffer;
 }
 
-GLuint DepthPass::GetDepthBuffer() {
+GLuint RenderPass::GetDepthBuffer() {
 	return m_depthBuffer;
 }
 
-GLuint DepthPass::GetRenderBuffer() {
+GLuint RenderPass::GetRenderBuffer() {
 	return m_renderBuffer;
 }
 
-void DepthPass::DeleteFrameBuffer() {
+void RenderPass::DeleteFrameBuffer() {
 	glDeleteBuffers(GL_FRAMEBUFFER, &m_frameBuffer);
 }
 
-void DepthPass::UpdateFrameBufferTextureSize(float screen_width, float screen_height) {
+void RenderPass::UpdateFrameBufferTextureSize(float screen_width, float screen_height) {
 	glBindTexture(GL_TEXTURE_2D, m_renderBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, screen_width, screen_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
@@ -48,7 +48,7 @@ void DepthPass::UpdateFrameBufferTextureSize(float screen_width, float screen_he
 	glViewport(0, 0, screen_width, screen_height);
 }
 
-void DepthPass::GenerateFrameBuffer(float screen_width, float screen_height) {
+void RenderPass::GenerateFrameBuffer(float screen_width, float screen_height) {
 	m_frameBuffer = 0;
 	glGenFramebuffers(1, &m_frameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);

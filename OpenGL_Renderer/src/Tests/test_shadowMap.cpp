@@ -3,9 +3,9 @@
 #include "../Components/Terrain.h"
 
 
-GLuint camDepth;
-GLuint G_GetCamDepth() {return camDepth;}
-void G_SetCamDepth(GLuint tex) {camDepth = tex;}
+RenderPass fbo_render_pass;
+RenderPass G_GetRenderPass() {return fbo_render_pass;}
+void G_SetRenderPass(RenderPass tex) { fbo_render_pass = tex;}
 
 GLuint ShadowMap;
 GLuint G_GetShadowMap() {return ShadowMap;}
@@ -599,7 +599,7 @@ entity = new Entity("SPHERE");
         //depthBuffers.emplace_back(s);
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
-        fbo_cam_depth.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        fbo_render_pass.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
     #pragma endregion
 
@@ -623,7 +623,7 @@ entity = new Entity("SPHERE");
 	void test_shadowMap::OnRender() {
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
-            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
+            fbo_render_pass.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
@@ -641,7 +641,7 @@ entity = new Entity("SPHERE");
         }
 
         {
-            fbo_cam_depth.Bind();
+            fbo_render_pass.Bind();
             if (e_water != nullptr){
                 e_water->isActive(false);
             }
@@ -651,11 +651,11 @@ entity = new Entity("SPHERE");
 			glDepthFunc(GL_LESS);     // We want to get the nearest pixels
 
             G_GetManager()->OnRender();
-            G_SetCamDepth(fbo_cam_depth.GetDepthBuffer());
+            G_SetRenderPass(fbo_render_pass);
 			if (e_water != nullptr) {
 				e_water->isActive(true);
 			}
-            fbo_cam_depth.UnBind();
+            fbo_render_pass.UnBind();
         }
 
 		glEnable(GL_DEPTH_TEST);  // We still want depth test
@@ -691,7 +691,7 @@ entity = new Entity("SPHERE");
 
         if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)G_GetCamDepth(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            ImGui::Image((void*)G_GetRenderPass().GetDepthBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {

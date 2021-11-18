@@ -3,11 +3,11 @@
 
 #include <GL/glew.h>
 
-class DepthPass
+class RenderPass
 {
 public:
-	DepthPass();
-	~DepthPass();
+	RenderPass();
+	~RenderPass();
 
 	void Bind();
 	void UnBind();

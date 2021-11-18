@@ -2,9 +2,10 @@
 #define ENGINE_UTILITYFUNCTIONS_H
 
 #include "../Engine/Engine_Core.h"
+#include "../Engine/Buffers/Depth_Pass.h"
 
-extern GLuint G_GetCamDepth();
-extern void G_SetCamDepth(GLuint tex);
+RenderPass G_GetRenderPass();
+void G_SetRenderPass(RenderPass tex);
 
 extern void G_SetRenderShadowMap(bool b);
 extern GLuint G_GetShadowMap();

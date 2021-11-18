@@ -110,7 +110,7 @@ namespace uniform {
 		glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
 		
 		glActiveTexture(GL_TEXTURE0 + 6);
-		glBindTexture(GL_TEXTURE_2D, G_GetCamDepth()); // bind depth pass texture(s)
+		glBindTexture(GL_TEXTURE_2D, G_GetRenderPass().GetDepthBuffer()); // bind depth pass texture(s)
 		shader.setUniform("waterDepthBlend",			alpha_end_blend_distance);
 		
 
