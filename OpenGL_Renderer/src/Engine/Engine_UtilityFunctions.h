@@ -4,8 +4,8 @@
 #include "../Engine/Engine_Core.h"
 #include "../Engine/Buffers/Depth_Pass.h"
 
-RenderPass G_GetRenderPass();
-void G_SetRenderPass(RenderPass tex);
+RenderPass G_GetRenderPass(); // NO TRANSPARENT OBJECTS 
+void G_SetRenderPass(RenderPass tex); // NO TRANSPARENT OBJECTS 
 
 extern void G_SetRenderShadowMap(bool b);
 extern GLuint G_GetShadowMap();

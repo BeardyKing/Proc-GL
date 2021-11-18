@@ -10,7 +10,8 @@ in VS_OUT {
 } fs_in;
 
 uniform samplerCube skybox;
-uniform sampler2D depthMap;
+uniform sampler2D cameraDepthRenderPass;
+uniform sampler2D cameraColorRenderPass;
 uniform float waterDepthBlend;
 
 uniform sampler2D albedoMap;
@@ -168,7 +169,7 @@ void main()
     float near = 0.5; // TODO GET DATA FROM CAMERA IN UNIFROM
     float far = 800.0;// TODO GET DATA FROM CAMERA IN UNIFORM
 
-    float depth = texture(depthMap,refractTexCoords).r;
+    float depth = texture(cameraDepthRenderPass,refractTexCoords).r;
     float floorDistance = 2.0 * near * far / (far + near - (2.0 * depth - 1.0) * (far - near));
 
     depth = gl_FragCoord.z;
@@ -258,6 +259,7 @@ void main()
     vec4 out_color = vec4(vec3(color), alpha_depth);
 
     FragColor = out_color;
+    //FragColor = texture(cameraColorRenderPass, fs_in.TexCoords); // check that they colour render pass is working (it is) 
   
 
 }

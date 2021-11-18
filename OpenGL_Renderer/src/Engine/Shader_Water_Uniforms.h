@@ -109,10 +109,16 @@ namespace uniform {
 
 		glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
 		
+		// renderpass Depth
 		glActiveTexture(GL_TEXTURE0 + 6);
 		glBindTexture(GL_TEXTURE_2D, G_GetRenderPass().GetDepthBuffer()); // bind depth pass texture(s)
-		shader.setUniform("waterDepthBlend",			alpha_end_blend_distance);
-		
+
+		// renderpass colour
+		glActiveTexture(GL_TEXTURE0 + 7);
+		glBindTexture(GL_TEXTURE_2D, G_GetRenderPass().GetRenderBuffer()); // bind depth pass texture(s)
+
+
+		shader.setUniform("waterDepthBlend",alpha_end_blend_distance);
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
@@ -127,13 +133,14 @@ namespace uniform {
 		shader.setUniform("roughness_scalar",		roughness_scalar);
 		shader.setUniform("occlusion_scalar",		occlusion_scalar);
 
-		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
-		shader.setUniformSampler("normalMap",		1);		// 1 = normal
-		shader.setUniformSampler("metallicMap",		2);		// 2 = metalic
-		shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
-		shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
-		shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
-		shader.setUniformSampler("depthMap",		6);
+		shader.setUniformSampler("albedoMap",				0);		// 0 = albedo
+		shader.setUniformSampler("normalMap",				1);		// 1 = normal
+		shader.setUniformSampler("metallicMap",				2);		// 2 = metalic
+		shader.setUniformSampler("roughnessMap",			3);		// 3 = roughness
+		shader.setUniformSampler("aoMap",					4);		// 4 = ambient 
+		shader.setUniformSampler("shadowMap",				5);		// 5 = shadow
+		shader.setUniformSampler("cameraDepthRenderPass",	6);
+		shader.setUniformSampler("cameraColorRenderPass",	7);
 
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
