@@ -36,6 +36,7 @@ namespace test {
 
 		//SKYBOX TEST
 		Entity* e_skybox;
+		Entity* e_water;;
 	};
 }
 

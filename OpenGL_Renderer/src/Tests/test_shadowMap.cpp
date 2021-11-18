@@ -33,6 +33,7 @@ namespace test {
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
         entity->getComponent<Transform>().position = glm::vec3(-82, 10, -44);
         entity->getComponent<FPSCamera>().Rotate(60.0f,-15.0f);
+        entity->getComponent<FPSCamera>().SetZNear(0.5f);
         G_GetManager()->addEntity(entity);
         camera = &entity->getComponent<FPSCamera>();
 
@@ -525,6 +526,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.091f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(5.985f, "occlusion_scalar");
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(30));
+        e_water = entity;
 #pragma endregion
 
     #pragma region point_Light
@@ -576,7 +578,8 @@ namespace test {
 	void test_shadowMap::OnRender() {
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
-            editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
+            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
+            //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -594,15 +597,19 @@ namespace test {
 
         {
             fbo_cam_depth.Bind();
-
+            if (e_water != nullptr){
+                e_water->isActive(false);
+            }
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             
 			glEnable(GL_DEPTH_TEST);  // We want depth test !
 			glDepthFunc(GL_LESS);     // We want to get the nearest pixels
 
             G_GetManager()->OnRender();
             G_SetCamDepth(fbo_cam_depth.GetDepthBuffer());
+			if (e_water != nullptr) {
+				e_water->isActive(true);
+			}
             fbo_cam_depth.UnBind();
         }
 

@@ -230,26 +230,28 @@ void main()
         // FragColor = vec4(reflectTex, 1.0) + vec4(ambient, 1.0);
     FragColor = vec4(color, 0.8f);
 
-    vec2 ndc = (fs_in.ClipSpace.xy/fs_in.ClipSpace.w);
+    vec4 clip_pos = fs_in.ClipSpace;
+    vec2 ndc = (clip_pos.xy / clip_pos.w) / 2 + 0.5;
+    //vec2 ndc = (fs_in.ClipSpace.xy/fs_in.ClipSpace.w);
     //vec2 ndc = (fs_in.ClipSpace.xy/fs_in.ClipSpace.w)/2.0 + 0.5;
 
 
     vec2 refractTexCoords = vec2(ndc.x, ndc.y);
     vec2 reflectTexCoords = vec2(ndc.x, -ndc.y);
 
-    float near = 0.1;
+    float near = 0.5;
     float far = 800.0;
 
     float depth = texture(depthMap,refractTexCoords).r;
     float floorDistance = 2.0 * near * far / (far + near - (2.0 * depth - 1.0) * (far - near));
 
-    float depth2 = gl_FragCoord.z;
-    float waterDistance = 2.0 * near * far / (far + near - (2.0 * depth2 - 1.0) * (far - near));
+    depth = gl_FragCoord.z;
+    float waterDistance = 2.0 * near * far / (far + near - (2.0 * depth - 1.0) * (far - near));
 
     float waterDepth = floorDistance - waterDistance;
     
     // vec3 dep = vec3(texture(depthMap, fs_in.TexCoords));
     //  FragColor = vec4(vec3(floorDistance),1.0);
-     FragColor = vec4(vec3(waterDepth / 25.0),1.0);
+     FragColor = vec4(vec3(waterDepth / 50.0),1.0);
 
 }
