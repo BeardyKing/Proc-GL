@@ -3,6 +3,9 @@
 
 #include "../Engine/Engine_Core.h"
 
+extern GLuint G_GetCamDepth();
+extern void G_SetCamDepth(GLuint tex);
+
 extern void G_SetRenderShadowMap(bool b);
 extern GLuint G_GetShadowMap();
 extern void G_SetShadowMap(GLuint tex);

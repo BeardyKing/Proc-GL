@@ -2,6 +2,11 @@
 #include "../Engine/Engine_UtilityFunctions.h"
 #include "../Components/Terrain.h"
 
+
+GLuint camDepth;
+GLuint G_GetCamDepth() {return camDepth;}
+void G_SetCamDepth(GLuint tex) {camDepth = tex;}
+
 GLuint ShadowMap;
 GLuint G_GetShadowMap() {return ShadowMap;}
 void G_SetShadowMap(GLuint tex) {ShadowMap = tex;}
@@ -589,18 +594,20 @@ namespace test {
 
         {
             fbo_cam_depth.Bind();
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			//G_SetRenderShadowMap(true);
-            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
 
-			glClear(GL_DEPTH_BUFFER_BIT);
-			//glActiveTexture(GL_TEXTURE0);
-			glCullFace(GL_NONE);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            fbo_cam_depth.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
+            
+			glEnable(GL_DEPTH_TEST);  // We want depth test !
+			glDepthFunc(GL_LESS);     // We want to get the nearest pixels
 
             G_GetManager()->OnRender();
+            G_SetCamDepth(fbo_cam_depth.GetDepthBuffer());
             fbo_cam_depth.UnBind();
         }
+
+		glEnable(GL_DEPTH_TEST);  // We still want depth test
+		glDepthFunc(GL_LEQUAL);   // EQUAL should work, too. (Only draw pixels if they are the closest ones)
 
         fbo.Bind();
 
@@ -632,7 +639,7 @@ namespace test {
 
         if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)fbo_cam_depth.GetDepthBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            ImGui::Image((void*)G_GetCamDepth(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
 
         if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {

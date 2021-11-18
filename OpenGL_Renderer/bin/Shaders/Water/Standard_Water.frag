@@ -6,9 +6,11 @@ in VS_OUT {
     vec3 Normal;
     vec2 TexCoords;
     vec4 FragPosLightSpace;
+    vec4 ClipSpace;
 } fs_in;
 
 uniform samplerCube skybox;
+uniform sampler2D depthMap;
 
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
@@ -145,6 +147,8 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 //     vec4 FragPosLightSpace;
 // } fs_in;
 
+
+
 void main()
 {	
     vec3 N = getNormalFromMap();
@@ -224,7 +228,28 @@ void main()
     color = pow(color, vec3(1.0/2.2)); 
     // FragColor = vec4(color, 1.0);
         // FragColor = vec4(reflectTex, 1.0) + vec4(ambient, 1.0);
-        FragColor = vec4(color, 0.8f);
+    FragColor = vec4(color, 0.8f);
 
+    vec2 ndc = (fs_in.ClipSpace.xy/fs_in.ClipSpace.w);
+    //vec2 ndc = (fs_in.ClipSpace.xy/fs_in.ClipSpace.w)/2.0 + 0.5;
+
+
+    vec2 refractTexCoords = vec2(ndc.x, ndc.y);
+    vec2 reflectTexCoords = vec2(ndc.x, -ndc.y);
+
+    float near = 0.1;
+    float far = 800.0;
+
+    float depth = texture(depthMap,refractTexCoords).r;
+    float floorDistance = 2.0 * near * far / (far + near - (2.0 * depth - 1.0) * (far - near));
+
+    float depth2 = gl_FragCoord.z;
+    float waterDistance = 2.0 * near * far / (far + near - (2.0 * depth2 - 1.0) * (far - near));
+
+    float waterDepth = floorDistance - waterDistance;
+    
+    // vec3 dep = vec3(texture(depthMap, fs_in.TexCoords));
+    //  FragColor = vec4(vec3(floorDistance),1.0);
+     FragColor = vec4(vec3(waterDepth / 25.0),1.0);
 
 }

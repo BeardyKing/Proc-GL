@@ -106,6 +106,10 @@ namespace uniform {
 		auto sb = G_GetManager()->FindEntityWithType<SkyBox>();
 
 		glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
+		
+		glActiveTexture(GL_TEXTURE0 + 6);
+		glBindTexture(GL_TEXTURE_2D, G_GetCamDepth()); // bind depth pass texture(s)
+		
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
@@ -122,10 +126,11 @@ namespace uniform {
 
 		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		shader.setUniformSampler("normalMap",		1);		// 1 = normal
-		shader.setUniformSampler("metallicMap",	2);		// 2 = metalic
+		shader.setUniformSampler("metallicMap",		2);		// 2 = metalic
 		shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
 		shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
 		shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
+		shader.setUniformSampler("depthMap",		6);
 
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
