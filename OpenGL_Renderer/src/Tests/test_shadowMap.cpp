@@ -548,11 +548,12 @@ entity = new Entity("SPHERE");
 
         //entity->getComponent<ShaderProgram>().SetColour(glm::vec4(91.0f/255.0f, 171.0f /255.0f, 255.0f /255.0f, 255.0f /255.0f), "albedo_color");
         entity->getComponent<ShaderProgram>().SetColour(glm::vec4(1.0f), "albedo_color");
-        entity->getComponent<ShaderProgram>().SetFloat(0.634f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.144f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.091f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(5.985f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(30));
+        entity->getComponent<ShaderProgram>().SetFloat(0.630f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.460f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.162f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.875f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(15.0f, "waterDepthBlend");
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(70));
         e_water = entity;
 #pragma endregion
 

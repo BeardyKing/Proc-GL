@@ -42,7 +42,7 @@ namespace uniform {
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
 
-		float alpha_end_blend_distance = 5.0f;
+		float waterDepthBlend = 5.0f;
 	};
 
 	void Shader_Water_Uniforms::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
@@ -68,6 +68,9 @@ namespace uniform {
 		}
 		else if (name == "occlusion_scalar"){	 
 			occlusion_scalar = value;
+		}
+		else if (name == "waterDepthBlend") {
+			waterDepthBlend = value;
 		}
 		else {	 
 			std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
@@ -118,7 +121,7 @@ namespace uniform {
 		glBindTexture(GL_TEXTURE_2D, G_GetRenderPass().GetRenderBuffer()); // bind depth pass texture(s)
 
 
-		shader.setUniform("waterDepthBlend",alpha_end_blend_distance);
+		shader.setUniform("waterDepthBlend",waterDepthBlend);
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
@@ -186,7 +189,7 @@ namespace uniform {
 			
 			ImGui::Selectable("Edge Blend Distance");
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##Edge Blend Distance", &alpha_end_blend_distance, 0.0f, 30.0f);
+			ImGui::SliderFloat("##Edge Blend Distance", &waterDepthBlend, 0.0f, 30.0f);
 
 			
 			ImGui::Columns(1);
