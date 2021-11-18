@@ -330,28 +330,28 @@ namespace test {
 
     //#pragma endregion
 
-    //#pragma region island_rocks
+   /* #pragma region island_rocks
 
-    //    entity = new Entity("marble ground");
-    //    G_GetManager()->addEntity(entity);
+        entity = new Entity("marble ground");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    entity->addComponent<Mesh>("8502_Assets/island_rocks/island_rocks.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_BC_SM.tga");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_N.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.tga");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_MT_AO_SM.tga");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/island_rocks/island_rocks.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_BC_SM.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_N.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_MT_AO_SM.tga");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion*/
 
     //   
     ////TODO ALPHA CUTOFF SHADER FOR TREE // TODO fix backface culling on object
@@ -500,6 +500,33 @@ namespace test {
     //#pragma endregion
     //#pragma endregion
 
+entity = new Entity("SPHERE");
+	G_GetManager()->addEntity(entity);
+
+	// 0 = albedo
+	// 1 = normal
+	// 2 = metalic
+	// 3 = roughness
+	// 4 = ambient 
+	entity->getComponent<Transform>().position = glm::vec3(0, -12, 0);
+	entity->getComponent<Transform>().scale = glm::vec3(7);
+
+	entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+
+	entity->addComponent<Mesh>("sphere64_64.obj");
+	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
+	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
+	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
+	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
+	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
+	entity->getComponent<ShaderProgram>().LoadTextures();
+
+	entity->getComponent<ShaderProgram>().SetFloat(0.342f, "normal_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(1.177f, "roughness_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
+
+
     #pragma endregion
 
     #pragma region Water
@@ -531,15 +558,33 @@ namespace test {
 
     #pragma region point_Light
 
-        entity = new Entity("Point Light");
+        entity = new Entity("Point Light Shadow");
+		G_GetManager()->addEntity(entity);
+		entity->getComponent<Transform>().position = glm::vec3(44, 40, 72);
+		entity->addComponent<LightObject>();
+		entity->getComponent<LightObject>().lightType = LightObject::Point;
+		entity->getComponent<LightObject>().far_plane = 200;
+		entity->getComponent<LightObject>().near_plane = 43;
+		entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-45, 45, -45, 45);
+		entity->addComponent<script_simplebehaviours>();
+
+		entity = new Entity("Point Light1");
         G_GetManager()->addEntity(entity);
-        entity->getComponent<Transform>().position = glm::vec3(44,40,72);
+		entity->getComponent<Transform>().position = glm::vec3(-20, -10, -15);
         entity->addComponent<LightObject>();
         entity->getComponent<LightObject>().lightType = LightObject::Point;
-        entity->getComponent<LightObject>().far_plane = 145;
+        entity->getComponent<LightObject>().far_plane = 200;
         entity->getComponent<LightObject>().near_plane = 43;
-        entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-45,45,-45,45);
         entity->addComponent<script_simplebehaviours>();
+
+		entity = new Entity("Point Light2");
+		G_GetManager()->addEntity(entity);
+		entity->getComponent<Transform>().position = glm::vec3(10, -6, 9);
+		entity->addComponent<LightObject>();
+		entity->getComponent<LightObject>().lightType = LightObject::Point;
+		entity->getComponent<LightObject>().far_plane = 200;
+		entity->getComponent<LightObject>().near_plane = 43;
+		entity->addComponent<script_simplebehaviours>();
 
         std::vector<Entity*> lights = manager->FindLights();
 
