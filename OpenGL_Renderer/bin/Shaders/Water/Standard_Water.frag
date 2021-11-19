@@ -45,22 +45,23 @@ uniform float _spec;
 uniform float shadowBias;
 
 // forward declare // SSR
-vec3 PositionFromDepth(float depth);
-vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth);
-vec4 RayCast(vec3 dir, inout vec3 hitCoord, out float dDepth);
-vec3 fresnelSchlick(float cosTheta, vec3 F0);
-vec3 hash(vec3 a);
+// vec3 PositionFromDepth(float depth);
+// vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth);
+// vec4 RayCast(vec3 dir, inout vec3 hitCoord, out float dDepth);
+// vec3 fresnelSchlick(float cosTheta, vec3 F0);
+// vec3 hash(vec3 a);
 
-const float step = 5;
+const float rayStep = 0.25;
 const float minRayStep = 0.1;
-const float maxSteps = 300;
+const float maxSteps = 200;
+const float searchDist = 5;
+const float searchDistInv = 0.2;
 const int numBinarySearchSteps = 5;
+const float maxDDepth = 1.0;
+const float maxDDepthInv = 1.0;
+
+
 const float reflectionSpecularFalloffExponent = 3.0;
-
-#define Scale vec3(.8, .8, .8)
-#define K 19.19
-
-float Metallic;
 
 //forward declare //Edge Blending
 float CalculateWaterDepth();
@@ -96,11 +97,78 @@ vec3 ColorCorrection(vec3 color){
 }
 
 
-bool isUsingCubemapReflections  = true;
-bool isUsingWaterDepth          = true;
-bool isUsingBRDF                = true;
-bool isUsingSSR                 = false;
+bool isUsingCubemapReflections  = false;
+bool isUsingWaterDepth          = false;
+bool isUsingBRDF                = false;
+bool isUsingSSR                 = true;
 
+vec3 BinarySearch(vec3 dir, inout vec3 hitCoord, out float dDepth)
+{
+    float depth;
+
+
+    for(int i = 0; i < numBinarySearchSteps; i++)
+    {
+        vec4 projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+        projectedCoord.xy /= projectedCoord.w;
+        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+
+
+        depth = texture2D(cameraDepthRenderPass, projectedCoord.xy).z;
+
+
+        dDepth = hitCoord.z - depth;
+
+
+        if(dDepth > 0.0)
+            hitCoord += dir;
+
+
+        dir *= 0.5;
+        hitCoord -= dir;    
+    }
+
+
+    vec4 projectedCoord = fs_in.projection * vec4(hitCoord, 1.0); 
+    projectedCoord.xy /= projectedCoord.w;
+    projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+
+
+    return vec3(projectedCoord.xy, depth);
+}
+
+
+vec4 RayCast(vec3 dir, inout vec3 hitCoord, out float dDepth)
+{
+    dir *= rayStep;
+
+
+    float depth;
+
+
+    for(int i = 0; i < maxSteps; i++)
+    {
+        hitCoord += dir;
+
+
+        vec4 projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+        projectedCoord.xy /= projectedCoord.w;
+        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+
+
+        depth = texture2D(cameraDepthRenderPass, projectedCoord.xy).z;
+
+
+        dDepth = hitCoord.z - depth;
+
+
+        if(dDepth < 0.0)
+            return vec4(BinarySearch(dir, hitCoord, dDepth), 1.0);
+    }
+
+
+    return vec4(0.0, 0.0, 0.0, 0.0);
+}
 
 void main()
 {	
@@ -127,57 +195,49 @@ void main()
     vec4 out_color = vec4(vec3(color), alpha_depth);
     
     if(isUsingSSR){
-        vec2 MetallicEmmissive = texture2D(metallicMap, fs_in.TexCoords).rg;
-        // vec2 MetallicEmmissive = texture2D(gExtraComponents, fs_in.TexCoords).rg;
-        Metallic = MetallicEmmissive.r;
-        //TODO FIND BETTER METALLIC MAP;
-        Metallic = 1;
-
-        if(Metallic < 0.01)
-            discard;
-    
-        // vec3 viewNormal = vec3(texture2D(gNormal, fs_in.TexCoords) * fs_in.invView);
-        vec3 viewNormal = vec3(texture2D(normalMap, fs_in.TexCoords) * fs_in.invView);
-        // vec3 viewPos = textureLod(gPosition, fs_in.TexCoords, 2).xyz;
-        vec3 viewPos1 = textureLod(cameraDepthRenderPass, fs_in.TexCoords, 2).xyz;
-        // vec3 albedo = texture(gFinalImage, fs_in.TexCoords).rgb;
-        vec3 albedo = texture(cameraColorRenderPass, fs_in.TexCoords).rgb;
-
-        // float spec = texture(ColorBuffer, fs_in.TexCoords).w;
-        float spec = texture(roughnessMap, fs_in.TexCoords).w;
-
-        vec3 F0 = vec3(0.04); 
-        F0      = mix(F0, albedo, Metallic);
-        vec3 Fresnel = fresnelSchlick(max(dot(normalize(viewNormal), normalize(viewPos1)), 0.0), F0);
-
-        // Reflection vector
-        vec3 reflected = normalize(reflect(normalize(viewPos1), normalize(viewNormal)));
+        vec2 gTexCoord = gl_FragCoord.xy * vec2(1280,720);
 
 
-        vec3 hitPos = viewPos1;
-        float dDepth;
-    
-        vec3 wp = vec3(vec4(viewPos1, 1.0) * fs_in.invView);
-        vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
-        vec4 coords = RayMarch((vec3(jitt) + reflected * max(minRayStep, -viewPos1.z)), hitPos, dDepth);
-    
-    
-        vec2 dCoords = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - coords.xy));
-    
-    
-        float screenEdgefactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0, 1.0);
+    // Samples
+    float specular = texture2D(roughnessMap, gTexCoord).a;
+    specular = 0.5;
 
-        float ReflectionMultiplier = pow(Metallic, reflectionSpecularFalloffExponent) * 
-                    screenEdgefactor * 
-                    -reflected.z;
-    
-        // Get color
-        vec3 SSR = textureLod(cameraColorRenderPass, coords.xy, 0).rgb * clamp(ReflectionMultiplier, 0.0, 0.9) * Fresnel;  
-        // vec3 SSR = textureLod(gFinalImage, coords.xy, 0).rgb * clamp(ReflectionMultiplier, 0.0, 0.9) * Fresnel;  
-
-        // out_color = vec4(SSR, Metallic);
-        out_color *= vec4(SSR, Metallic + 0.85);
+    if(specular == 0.0){
+        out_color = vec4(0.0, 0.0, 0.0, 0.0);
+        return;
     }
+
+
+    vec3 viewNormal = texture2D(normalMap, gTexCoord).xyz;
+    vec3 viewPos = texture2D(cameraDepthRenderPass, gTexCoord).xyz;
+
+
+    // Reflection vector
+    vec3 reflected = normalize(reflect(normalize(viewPos), normalize(viewNormal)));
+
+
+    // Ray cast
+    vec3 hitPos = viewPos;
+    float dDepth;
+
+
+    vec4 coords = RayCast(reflected * max(minRayStep, -viewPos.z), hitPos, dDepth);
+
+
+    vec2 dCoords = abs(vec2(0.5, 0.5) - coords.xy);
+
+
+    float screenEdgefactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0, 1.0);
+
+
+    // Get color
+    out_color = vec4(texture2D(cameraColorRenderPass, coords.xy).rgb,
+
+        pow(specular, reflectionSpecularFalloffExponent) *
+        screenEdgefactor * clamp(-reflected.z, 0.0, 1.0) *
+        clamp((searchDist - length(viewPos - hitPos)) * searchDistInv, 0.0, 1.0) * coords.w);
+    }
+    out_color.a = 1.0;
 
     // out
     FragColor = out_color;
@@ -188,102 +248,102 @@ void main()
 
 //SSR
 
-vec3 PositionFromDepth(float depth) {
-    float z = depth * 2.0 - 1.0;
+// vec3 PositionFromDepth(float depth) {
+//     float z = depth * 2.0 - 1.0;
 
-    vec4 clipSpacePosition = vec4(fs_in.TexCoords * 2.0 - 1.0, z, 1.0);
-    vec4 viewSpacePosition = fs_in.invprojection * clipSpacePosition;
+//     vec4 clipSpacePosition = vec4(fs_in.TexCoords * 2.0 - 1.0, z, 1.0);
+//     vec4 viewSpacePosition = fs_in.invprojection * clipSpacePosition;
 
-    // Perspective division
-    viewSpacePosition /= viewSpacePosition.w;
+//     // Perspective division
+//     viewSpacePosition /= viewSpacePosition.w;
 
-    return viewSpacePosition.xyz;
-}
+//     return viewSpacePosition.xyz;
+// }
 
-vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth)
-{
-    float depth;
+// vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth)
+// {
+//     float depth;
 
-    vec4 projectedCoord;
+//     vec4 projectedCoord;
  
-    for(int i = 0; i < numBinarySearchSteps; i++)
-    {
+//     for(int i = 0; i < numBinarySearchSteps; i++)
+//     {
 
-        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
-        projectedCoord.xy /= projectedCoord.w;
-        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+//         projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+//         projectedCoord.xy /= projectedCoord.w;
+//         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
  
-        depth = textureLod(cameraDepthRenderPass, projectedCoord.xy, 2).z;
-        // depth = textureLod(gPosition, projectedCoord.xy, 2).z;
-
- 
-        dDepth = hitCoord.z - depth;
-
-        dir *= 0.5;
-        if(dDepth > 0.0)
-            hitCoord += dir;
-        else
-            hitCoord -= dir;    
-    }
-
-        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
-        projectedCoord.xy /= projectedCoord.w;
-        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
- 
-    return vec3(projectedCoord.xy, depth);
-}
-
-vec4 RayMarch(vec3 dir, inout vec3 hitCoord, out float dDepth)
-{
-
-    dir *= step;
- 
- 
-    float depth;
-    int steps;
-    vec4 projectedCoord;
+//         depth = textureLod(cameraDepthRenderPass, projectedCoord.xy, 2).z;
+//         // depth = textureLod(gPosition, projectedCoord.xy, 2).z;
 
  
-    for(int i = 0; i < maxSteps; i++)
-    {
-        hitCoord += dir;
- 
-        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
-        projectedCoord.xy /= projectedCoord.w;
-        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
- 
-        depth = textureLod(cameraDepthRenderPass, projectedCoord.xy, 2).z;
-        // depth = textureLod(gPosition, projectedCoord.xy, 2).z;
-        if(depth > 1000.0)
-            continue;
- 
-        dDepth = hitCoord.z - depth;
+//         dDepth = hitCoord.z - depth;
 
-        if((dir.z - dDepth) < 1.2)
-        {
-            if(dDepth <= 0.0)
-            {   
-                vec4 Result;
-                Result = vec4(BinarySearch(dir, hitCoord, dDepth), 1.0);
+//         dir *= 0.5;
+//         if(dDepth > 0.0)
+//             hitCoord += dir;
+//         else
+//             hitCoord -= dir;    
+//     }
 
-                return Result;
-            }
-        }
+//         projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+//         projectedCoord.xy /= projectedCoord.w;
+//         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+ 
+//     return vec3(projectedCoord.xy, depth);
+// }
+
+// vec4 RayMarch(vec3 dir, inout vec3 hitCoord, out float dDepth)
+// {
+
+//     dir *= step;
+ 
+ 
+//     float depth;
+//     int steps;
+//     vec4 projectedCoord;
+
+ 
+//     for(int i = 0; i < maxSteps; i++)
+//     {
+//         hitCoord += dir;
+ 
+//         projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+//         projectedCoord.xy /= projectedCoord.w;
+//         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+ 
+//         depth = textureLod(cameraDepthRenderPass, projectedCoord.xy, 2).z;
+//         // depth = textureLod(gPosition, projectedCoord.xy, 2).z;
+//         if(depth > 1000.0)
+//             continue;
+ 
+//         dDepth = hitCoord.z - depth;
+
+//         if((dir.z - dDepth) < 1.2)
+//         {
+//             if(dDepth <= 0.0)
+//             {   
+//                 vec4 Result;
+//                 Result = vec4(BinarySearch(dir, hitCoord, dDepth), 1.0);
+
+//                 return Result;
+//             }
+//         }
         
-        steps++;
-    }
+//         steps++;
+//     }
  
     
-    return vec4(projectedCoord.xy, depth, 0.0);
-}
+//     return vec4(projectedCoord.xy, depth, 0.0);
+// }
 
 
-vec3 hash(vec3 a)
-{
-    a = fract(a * Scale);
-    a += dot(a, a.yxz + K);
-    return fract((a.xxy + a.yxx)*a.zyx);
-}
+// vec3 hash(vec3 a)
+// {
+//     a = fract(a * Scale);
+//     a += dot(a, a.yxz + K);
+//     return fract((a.xxy + a.yxx)*a.zyx);
+// }
 
 // REFLECTION CUBEMAP
 vec4 GetReflectionFromCubemap(vec3 N){
