@@ -16,6 +16,7 @@ out VS_OUT {
     mat4 projection;
     mat4 invView;
     mat4 invprojection;
+    vec2 textureScale;
 
 } vs_out;
 
@@ -27,6 +28,7 @@ uniform vec2 textureScale;
 
 void main()
 {
+    vs_out.textureScale = textureScale;
     vs_out.view = view;
     vs_out.projection = projection;
     vs_out.invView = transpose(inverse(view));

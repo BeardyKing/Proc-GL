@@ -31,8 +31,8 @@ namespace test {
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>();
         auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
-        entity->getComponent<Transform>().position = glm::vec3(-82, 10, -44);
-        entity->getComponent<FPSCamera>().Rotate(60.0f,-15.0f);
+        entity->getComponent<Transform>().position = glm::vec3(35, 9, 6);
+        entity->getComponent<FPSCamera>().Rotate(260.0f,-45.0f);
         entity->getComponent<FPSCamera>().SetZNear(0.5f);
         G_GetManager()->addEntity(entity);
         camera = &entity->getComponent<FPSCamera>();
@@ -556,7 +556,7 @@ entity = new Entity("SPHERE");
         entity->getComponent<ShaderProgram>().SetFloat(0.460f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.162f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.875f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(15.0f, "waterDepthBlend");
+        entity->getComponent<ShaderProgram>().SetFloat(3.0f, "waterDepthBlend");
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(70));
         e_water = entity;
 #pragma endregion
@@ -646,10 +646,10 @@ entity = new Entity("SPHERE");
         }
 
         {
-            fbo_render_pass.Bind();
-            /*if (e_water != nullptr){
-                e_water->isActive(false);
-            }*/
+            fbo_render_pass.Bind(); // DISABLED FOR SSR TESTING
+			/*if (e_water != nullptr) {
+				e_water->isActive(false);
+			}*/
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
 			glEnable(GL_DEPTH_TEST);  // We want depth test !

@@ -12,6 +12,8 @@ in VS_OUT {
     mat4 projection;
     mat4 invView;
     mat4 invprojection;
+    vec2 textureScale;
+
 } fs_in;
 
 uniform samplerCube skybox;
@@ -51,12 +53,12 @@ uniform float shadowBias;
 // vec3 fresnelSchlick(float cosTheta, vec3 F0);
 // vec3 hash(vec3 a);
 
-const float rayStep = 0.25;
+const float rayStep = 0.1;
 const float minRayStep = 0.1;
-const float maxSteps = 200;
-const float searchDist = 5;
+const float maxSteps = 1600;
+const float searchDist = 30;
 const float searchDistInv = 0.2;
-const int numBinarySearchSteps = 5;
+const int numBinarySearchSteps = 30;
 const float maxDDepth = 1.0;
 const float maxDDepthInv = 1.0;
 
@@ -129,7 +131,7 @@ vec3 BinarySearch(vec3 dir, inout vec3 hitCoord, out float dDepth)
     }
 
 
-    vec4 projectedCoord = fs_in.projection * vec4(hitCoord, 1.0); 
+    vec4 projectedCoord = fs_in.invprojection * vec4(hitCoord, 1.0); 
     projectedCoord.xy /= projectedCoord.w;
     projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
@@ -185,7 +187,51 @@ void main()
         color = BRDF();
         color = ColorCorrection(color);
     }
-    
+    // SSR
+    if(isUsingSSR){
+        vec2 gTexCoord = fs_in.TexCoords / fs_in.textureScale;
+
+
+        // Samples
+        float specular = texture2D(roughnessMap, gTexCoord).a;
+        specular = 0.5;
+
+        // if(specular == 0.0){
+        //     color = color;
+        //     return;
+        // }
+
+
+        vec3 viewNormal = texture2D(normalMap, gTexCoord).xyz;
+        vec3 l_viewPos = texture2D(cameraDepthRenderPass, gTexCoord).xyz;
+
+
+        // Reflection vector
+        vec3 reflected = normalize(reflect(normalize(l_viewPos), normalize(viewNormal)));
+
+
+        // Ray cast
+        vec3 hitPos = viewPos;
+        float dDepth;
+
+
+        vec4 coords = RayCast(reflected * max(minRayStep, -l_viewPos.z), hitPos, dDepth);
+
+
+        vec2 dCoords = abs(vec2(0.5, 0.5) - coords.xy);
+
+
+        float screenEdgefactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0, 1.0);
+
+
+        // Get color
+        vec4 color_ssr  = vec4(texture2D(cameraColorRenderPass, coords.xy).rgb,
+            pow(specular, reflectionSpecularFalloffExponent) *
+            screenEdgefactor * clamp(-reflected.z, 0.0, 1.0) *
+            clamp((searchDist - length(l_viewPos - hitPos)) * searchDistInv, 0.0, 1.0) * coords.w);
+            color *= color_ssr.rgb;
+            
+    }
     //------------ Edge Depth ----------------
     float alpha_depth = 1;
     if(isUsingWaterDepth){
@@ -194,50 +240,6 @@ void main()
     }
     vec4 out_color = vec4(vec3(color), alpha_depth);
     
-    if(isUsingSSR){
-        vec2 gTexCoord = gl_FragCoord.xy * vec2(1280,720);
-
-
-    // Samples
-    float specular = texture2D(roughnessMap, gTexCoord).a;
-    specular = 0.5;
-
-    if(specular == 0.0){
-        out_color = vec4(0.0, 0.0, 0.0, 0.0);
-        return;
-    }
-
-
-    vec3 viewNormal = texture2D(normalMap, gTexCoord).xyz;
-    vec3 viewPos = texture2D(cameraDepthRenderPass, gTexCoord).xyz;
-
-
-    // Reflection vector
-    vec3 reflected = normalize(reflect(normalize(viewPos), normalize(viewNormal)));
-
-
-    // Ray cast
-    vec3 hitPos = viewPos;
-    float dDepth;
-
-
-    vec4 coords = RayCast(reflected * max(minRayStep, -viewPos.z), hitPos, dDepth);
-
-
-    vec2 dCoords = abs(vec2(0.5, 0.5) - coords.xy);
-
-
-    float screenEdgefactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0, 1.0);
-
-
-    // Get color
-    out_color = vec4(texture2D(cameraColorRenderPass, coords.xy).rgb,
-
-        pow(specular, reflectionSpecularFalloffExponent) *
-        screenEdgefactor * clamp(-reflected.z, 0.0, 1.0) *
-        clamp((searchDist - length(viewPos - hitPos)) * searchDistInv, 0.0, 1.0) * coords.w);
-    }
-    out_color.a = 1.0;
 
     // out
     FragColor = out_color;
