@@ -51,6 +51,17 @@ vec4 RayCast(vec3 dir, inout vec3 hitCoord, out float dDepth);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 vec3 hash(vec3 a);
 
+const float step = 0.1;
+const float minRayStep = 0.1;
+const float maxSteps = 30;
+const int numBinarySearchSteps = 5;
+const float reflectionSpecularFalloffExponent = 3.0;
+
+#define Scale vec3(.8, .8, .8)
+#define K 19.19
+
+float Metallic;
+
 //forward declare //Edge Blending
 float CalculateWaterDepth();
 
@@ -84,25 +95,40 @@ vec3 ColorCorrection(vec3 color){
 }
 
 
-
+bool isUsingCubemapReflections  = true;
+bool isUsingWaterDepth          = true;
+bool isUsingBRDF                = true;
+bool isUsingSSR                 = true;
 
 
 void main()
 {	
     //------------Skybox Reflection ------------
-    vec3 N = getNormalFromMap();
-    reflectTex = GetReflectionFromCubemap(N);
+    reflectTex = vec4(1);
+    if(isUsingCubemapReflections){
+        vec3 N = getNormalFromMap();
+        reflectTex = GetReflectionFromCubemap(N);
+    }
 
-    //------------DEPTH PASS-----------------
-    float waterDepth = CalculateWaterDepth();
-    
     //------------BRDF-----------------
-    vec3 color = BRDF();
-    color = ColorCorrection(color);
+    vec3 color = albedo_color.rgb;
+    if(isUsingBRDF){
+        color = BRDF();
+        color = ColorCorrection(color);
+    }
+    
     //------------ Edge Depth ----------------
-    float alpha_depth = clamp( waterDepth / waterDepthBlend, 0.0, 1.0);
+    float alpha_depth = 1;
+    if(isUsingWaterDepth){
+        float waterDepth = CalculateWaterDepth();
+        alpha_depth = clamp( waterDepth / waterDepthBlend, 0.0, 1.0);
+    }
     vec4 out_color = vec4(vec3(color), alpha_depth);
     
+    if(isUsingSSR){
+
+    }
+    // out
     FragColor = out_color;
     //FragColor = texture(cameraColorRenderPass, fs_in.TexCoords); // check that they colour render pass is working (it is) 
   
