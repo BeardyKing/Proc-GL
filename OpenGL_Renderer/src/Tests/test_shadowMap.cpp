@@ -647,9 +647,9 @@ entity = new Entity("SPHERE");
 
         {
             fbo_render_pass.Bind(); // DISABLED FOR SSR TESTING
-			/*if (e_water != nullptr) {
+			if (e_water != nullptr) {
 				e_water->isActive(false);
-			}*/
+			}
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
 			glEnable(GL_DEPTH_TEST);  // We want depth test !
@@ -657,9 +657,9 @@ entity = new Entity("SPHERE");
 
             G_GetManager()->OnRender();
             G_SetRenderPass(fbo_render_pass);
-			/*if (e_water != nullptr) {
+			if (e_water != nullptr) {
 				e_water->isActive(true);
-			}*/
+			}
             fbo_render_pass.UnBind();
         }
 

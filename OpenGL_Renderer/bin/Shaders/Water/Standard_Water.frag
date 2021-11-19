@@ -99,10 +99,10 @@ vec3 ColorCorrection(vec3 color){
 }
 
 
-bool isUsingCubemapReflections  = false;
-bool isUsingWaterDepth          = false;
-bool isUsingBRDF                = false;
-bool isUsingSSR                 = true;
+bool isUsingCubemapReflections  = true;
+bool isUsingWaterDepth          = true;
+bool isUsingBRDF                = true;
+bool isUsingSSR                 = false;
 
 vec3 BinarySearch(vec3 dir, inout vec3 hitCoord, out float dDepth)
 {
@@ -131,7 +131,7 @@ vec3 BinarySearch(vec3 dir, inout vec3 hitCoord, out float dDepth)
     }
 
 
-    vec4 projectedCoord = fs_in.invprojection * vec4(hitCoord, 1.0); 
+    vec4 projectedCoord = fs_in.projection * vec4(hitCoord, 1.0); 
     projectedCoord.xy /= projectedCoord.w;
     projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
@@ -184,9 +184,9 @@ void main()
     //------------BRDF-----------------
     vec3 color = albedo_color.rgb;
     if(isUsingBRDF){
+    }
         color = BRDF();
         color = ColorCorrection(color);
-    }
     // SSR
     if(isUsingSSR){
         vec2 gTexCoord = fs_in.TexCoords / fs_in.textureScale;
