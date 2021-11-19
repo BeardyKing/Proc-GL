@@ -15,7 +15,7 @@ out VS_OUT {
     mat4 view;
     mat4 projection;
     mat4 invView;
-    mat4 invProjection;
+    mat4 invprojection;
 
 } vs_out;
 
@@ -30,7 +30,7 @@ void main()
     vs_out.view = view;
     vs_out.projection = projection;
     vs_out.invView = transpose(inverse(view));
-    vs_out.invProjection = transpose(inverse(projection));
+    vs_out.invprojection = transpose(inverse(projection));
 
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.Normal = transpose(inverse(mat3(model))) * aNormal;

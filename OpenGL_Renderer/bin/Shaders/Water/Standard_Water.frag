@@ -11,7 +11,7 @@ in VS_OUT {
     mat4 view;
     mat4 projection;
     mat4 invView;
-    mat4 invProjection;
+    mat4 invprojection;
 } fs_in;
 
 uniform samplerCube skybox;
@@ -82,6 +82,7 @@ float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 float ShadowCalculation(vec4 fragPosLightSpace);
+vec4 RayMarch(vec3 dir, inout vec3 hitCoord, out float dDepth);
 
 vec3 BRDF();
 
@@ -126,13 +127,151 @@ void main()
     vec4 out_color = vec4(vec3(color), alpha_depth);
     
     if(isUsingSSR){
+        vec2 MetallicEmmissive = texture2D(gExtraComponents, fs_in.TexCoords).rg;
+        Metallic = MetallicEmmissive.r;
 
+        if(Metallic < 0.01)
+            discard;
+    
+        vec3 viewNormal = vec3(texture2D(gNormal, fs_in.TexCoords) * fs_in.invView);
+        vec3 viewPos = textureLod(gPosition, fs_in.TexCoords, 2).xyz;
+        vec3 albedo = texture(gFinalImage, fs_in.TexCoords).rgb;
+
+        float spec = texture(ColorBuffer, fs_in.TexCoords).w;
+
+        vec3 F0 = vec3(0.04); 
+        F0      = mix(F0, albedo, Metallic);
+        vec3 Fresnel = fresnelSchlick(max(dot(normalize(viewNormal), normalize(viewPos)), 0.0), F0);
+
+        // Reflection vector
+        vec3 reflected = normalize(reflect(normalize(viewPos), normalize(viewNormal)));
+
+
+        vec3 hitPos = viewPos;
+        float dDepth;
+    
+        vec3 wp = vec3(vec4(viewPos, 1.0) * fs_in.invView);
+        vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
+        vec4 coords = RayMarch((vec3(jitt) + reflected * max(minRayStep, -viewPos.z)), hitPos, dDepth);
+    
+    
+        vec2 dCoords = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - coords.xy));
+    
+    
+        float screenEdgefactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0, 1.0);
+
+        float ReflectionMultiplier = pow(Metallic, reflectionSpecularFalloffExponent) * 
+                    screenEdgefactor * 
+                    -reflected.z;
+    
+        // Get color
+        vec3 SSR = textureLod(gFinalImage, coords.xy, 0).rgb * clamp(ReflectionMultiplier, 0.0, 0.9) * Fresnel;  
+
+        out_color = vec4(SSR, Metallic);
     }
+
     // out
     FragColor = out_color;
     //FragColor = texture(cameraColorRenderPass, fs_in.TexCoords); // check that they colour render pass is working (it is) 
   
 
+}
+
+//SSR
+
+vec3 PositionFromDepth(float depth) {
+    float z = depth * 2.0 - 1.0;
+
+    vec4 clipSpacePosition = vec4(fs_in.TexCoords * 2.0 - 1.0, z, 1.0);
+    vec4 viewSpacePosition = fs_in.invprojection * clipSpacePosition;
+
+    // Perspective division
+    viewSpacePosition /= viewSpacePosition.w;
+
+    return viewSpacePosition.xyz;
+}
+
+vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth)
+{
+    float depth;
+
+    vec4 projectedCoord;
+ 
+    for(int i = 0; i < numBinarySearchSteps; i++)
+    {
+
+        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+        projectedCoord.xy /= projectedCoord.w;
+        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+ 
+        depth = textureLod(gPosition, projectedCoord.xy, 2).z;
+
+ 
+        dDepth = hitCoord.z - depth;
+
+        dir *= 0.5;
+        if(dDepth > 0.0)
+            hitCoord += dir;
+        else
+            hitCoord -= dir;    
+    }
+
+        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+        projectedCoord.xy /= projectedCoord.w;
+        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+ 
+    return vec3(projectedCoord.xy, depth);
+}
+
+vec4 RayMarch(vec3 dir, inout vec3 hitCoord, out float dDepth)
+{
+
+    dir *= step;
+ 
+ 
+    float depth;
+    int steps;
+    vec4 projectedCoord;
+
+ 
+    for(int i = 0; i < maxSteps; i++)
+    {
+        hitCoord += dir;
+ 
+        projectedCoord = fs_in.projection * vec4(hitCoord, 1.0);
+        projectedCoord.xy /= projectedCoord.w;
+        projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
+ 
+        depth = textureLod(gPosition, projectedCoord.xy, 2).z;
+        if(depth > 1000.0)
+            continue;
+ 
+        dDepth = hitCoord.z - depth;
+
+        if((dir.z - dDepth) < 1.2)
+        {
+            if(dDepth <= 0.0)
+            {   
+                vec4 Result;
+                Result = vec4(BinarySearch(dir, hitCoord, dDepth), 1.0);
+
+                return Result;
+            }
+        }
+        
+        steps++;
+    }
+ 
+    
+    return vec4(projectedCoord.xy, depth, 0.0);
+}
+
+
+vec3 hash(vec3 a)
+{
+    a = fract(a * Scale);
+    a += dot(a, a.yxz + K);
+    return fract((a.xxy + a.yxx)*a.zyx);
 }
 
 // REFLECTION CUBEMAP
