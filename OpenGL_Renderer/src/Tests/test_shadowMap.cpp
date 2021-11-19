@@ -530,7 +530,11 @@ entity = new Entity("SPHERE");
     #pragma endregion
 
     #pragma region Water
-
+    // 0 = albedo
+    // 1 = normal
+    // 2 = metalic
+    // 3 = roughness
+    // 4 = ambient 
         entity = new Entity("Water");
         G_GetManager()->addEntity(entity);
 
@@ -541,7 +545,7 @@ entity = new Entity("SPHERE");
         entity->addComponent<Mesh>("8502_Assets/water/water.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Normals 1.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_DISP.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
         entity->getComponent<ShaderProgram>().LoadTextures();
