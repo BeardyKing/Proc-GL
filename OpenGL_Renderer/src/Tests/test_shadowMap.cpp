@@ -665,11 +665,11 @@ entity = new Entity("SPHERE");
 	void test_shadowMap::OnUpdate(double deltaTime) {
         G_GetManager()->OnUpdate(deltaTime);
 
-		frameTime -= (float)deltaTime;
+		/*frameTime -= (float)deltaTime;
 		while (frameTime < 0.0f) {
 			currentFrame = (currentFrame + 1) % e_animated_mesh->getComponent<MeshAnimation>().GetFrameCount();
 			frameTime += 1.0f / e_animated_mesh->getComponent<MeshAnimation>().GetFrameRate();
-		}
+		}*/
 
     }
     bool once = false;

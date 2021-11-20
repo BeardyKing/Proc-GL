@@ -105,6 +105,21 @@ void Anim_Mesh::OnRender(){
 
 	//Draw();
 
+	const glm::mat4* invBindPose = GetInverseBindPose();
+	const glm::mat4* frameData = entity->getComponent<MeshAnimation>().GetJointData(currentFrame);
+
+	vector <glm::mat4> frameMatrices;
+
+
+	for (unsigned int i = 0; i < GetJointCount(); ++i) {
+		frameMatrices.emplace_back(frameData[i] * invBindPose[i]);
+	}
+
+	int j = glGetUniformLocation(shader.getProgram(), "joints"); 
+	std::cout << frameMatrices.size() << std::endl;
+	glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
+
+
 	for (int i = 0; i < GetSubMeshCount(); ++i) {
 		glm::vec2 m_TextureTiling = glm::vec2(1);
 		shader.setUniform("textureScale", m_TextureTiling);
@@ -115,8 +130,12 @@ void Anim_Mesh::OnRender(){
 	}
 }
 
-void Anim_Mesh::OnUpdate(double deltaTime)
-{
+void Anim_Mesh::OnUpdate(double deltaTime){
+	frameTime -= (float)deltaTime;
+	while (frameTime < 0.0f) {
+		currentFrame = (currentFrame + 1) % entity->getComponent<MeshAnimation>().GetFrameCount();
+		frameTime += 1.0f / entity->getComponent<MeshAnimation>().GetFrameCount();
+	}
 }
 
 void Anim_Mesh::OnImGuiRender(){

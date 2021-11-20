@@ -41,9 +41,6 @@ namespace test {
 		std::vector<GLuint> matTextures;
 
 
-
-		int currentFrame;
-		float frameTime;
 	};
 }
 

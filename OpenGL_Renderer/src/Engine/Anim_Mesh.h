@@ -34,6 +34,9 @@ _-_-_-_-_-_-_-""  ""
 #include "../ECS/Engine_ECS.h"
 #include "../Engine/Texture2D.h"
 
+#include "../Engine/Mesh_Material.h"
+#include "../Engine/Mesh_Animator.h"
+
 //A handy enumerator, to determine which member of the bufferObject array
 //holds which data
 
@@ -111,6 +114,10 @@ public:
 
 	std::vector<GLuint> matTextures;
 	std::vector<Texture2D*> textures;
+
+
+	int currentFrame;
+	float frameTime;
 
 protected:
 	void	BufferData();
