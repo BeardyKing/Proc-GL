@@ -13,6 +13,120 @@ int G_GetWindowHeight();
 bool G_GetWindowResizeFlag();
 extern EntityManager* G_GetManager();
 
+#pragma region global_functions
+void ReadTextFloats(std::ifstream& file, std::vector<glm::vec2>& element, int numVertices) {
+	for (int i = 0; i < numVertices; ++i) {
+		glm::vec2 temp;
+		file >> temp.x;
+		file >> temp.y;
+		element.emplace_back(temp);
+	}
+}
+
+void ReadTextFloats(std::ifstream& file, std::vector<glm::vec3>& element, int numVertices) {
+	for (int i = 0; i < numVertices; ++i) {
+		glm::vec3 temp;
+		file >> temp.x;
+		file >> temp.y;
+		file >> temp.z;
+		element.emplace_back(temp);
+	}
+}
+
+void ReadTextFloats(std::ifstream& file, std::vector<glm::vec4>& element, int numVertices) {
+	for (int i = 0; i < numVertices; ++i) {
+		glm::vec4 temp;
+		file >> temp.x;
+		file >> temp.y;
+		file >> temp.z;
+		file >> temp.w;
+		element.emplace_back(temp);
+	}
+}
+
+void ReadTextVertexIndices(std::ifstream& file, std::vector<int>& element, int numVertices) {
+	for (int i = 0; i < numVertices; ++i) {
+		int indices[4];
+		file >> indices[0];
+		file >> indices[1];
+		file >> indices[2];
+		file >> indices[3];
+		element.emplace_back(indices[0]);
+		element.emplace_back(indices[1]);
+		element.emplace_back(indices[2]);
+		element.emplace_back(indices[3]);
+	}
+}
+
+void ReadIndices(std::ifstream& file, std::vector<unsigned int>& elements, int numIndices) {
+	for (int i = 0; i < numIndices; ++i) {
+		unsigned int temp;
+		file >> temp;
+		elements.emplace_back(temp);
+	}
+}
+
+void ReadJointParents(std::ifstream& file, std::vector<int>& dest) {
+	int jointCount = 0;
+	file >> jointCount;
+
+	for (int i = 0; i < jointCount; ++i) {
+		int id = -1;
+		file >> id;
+		dest.emplace_back(id);
+	}
+}
+
+void ReadJointNames(std::ifstream& file, std::vector<std::string>& dest) {
+	int jointCount = 0;
+	file >> jointCount;
+	for (int i = 0; i < jointCount; ++i) {
+		std::string jointName;
+		file >> jointName;
+		dest.emplace_back(jointName);
+	}
+}
+
+void ReadRigPose(std::ifstream& file, glm::mat4** into) {
+	int matCount = 0;
+	file >> matCount;
+
+	*into = new glm::mat4[matCount];
+
+	for (int i = 0; i < matCount; ++i) {
+		glm::mat4 mat;
+		float arr[16]{};
+		for (int i = 0; i < 16; ++i) {
+			file >> arr[i];
+		}
+		mat = glm::make_mat4(arr);
+		(*into)[i] = mat;
+	}
+}
+
+void ReadSubMeshes(std::ifstream& file, int count, std::vector<Mesh::SubMesh>& subMeshes) {
+	for (int i = 0; i < count; ++i) {
+		Mesh::SubMesh m;
+		file >> m.start;
+		file >> m.count;
+		subMeshes.emplace_back(m);
+	}
+}
+
+void ReadSubMeshNames(std::ifstream& file, int count, std::vector<std::string>& names) {
+	std::string scrap;
+	std::getline(file, scrap);
+
+	for (int i = 0; i < count; ++i) {
+		std::string meshName;
+		std::getline(file, meshName);
+		names.emplace_back(meshName);
+	}
+}
+
+#pragma endregion
+
+
 struct VertexData {
 	std::vector<Vertex> vData;
 	std::vector<GLuint> indices;
@@ -99,17 +213,6 @@ void Mesh::OnRender(){
 		std::cout << "mesh.cpp - shader == null" << std::endl;
 	}
 
-	/*if (&shader != NULL){
-		shader.use();
-		shader.setUniform("lightCol", entity->getComponent<ShaderProgram>().GetBaseColor());
-		shader.setUniform("model", model);
-		shader.setUniform("view", view);
-		shader.setUniform("projection", projection);
-	}
-	else {
-		std::cout << "could not find shader" << std::endl;
-	}*/
-
 	Draw();
 }
 
@@ -127,7 +230,7 @@ void Mesh::OnImGuiRender(){
 			ImGui::Indent();
 			ImGui::Text("Vertex Size");
 			std::string str;
-			str = std::to_string(16 * sizeof(GLfloat));
+			str = std::to_string((20 * sizeof(GLfloat)) + (4 * sizeof(GLuint)));
 			ImGui::Text(&str[0]);
 			ImGui::Text("Using Index Buffer");
 			ImGui::Text(!mIndices.empty() ? "True" : "False");
@@ -147,6 +250,14 @@ void Mesh::OnImGuiRender(){
 				ImGui::Text("Tangent");
 				std::string editor_Tangent = std::to_string((4 * sizeof(GLfloat)));
 				ImGui::Text(&editor_Tangent[0]);
+				
+				ImGui::Text("Bone ID");
+				std::string editor_BoneID = std::to_string((4 * sizeof(GLuint)));
+				ImGui::Text(&editor_BoneID[0]);
+				
+				ImGui::Text("Bone Weight");
+				std::string editor_Bone_Weight = std::to_string((4 * sizeof(GLfloat)));
+				ImGui::Text(&editor_Bone_Weight[0]);
 			}
 			ImGui::Unindent();
 		}
@@ -316,6 +427,14 @@ void Mesh::InitBuffers() {
 	// tangents attrib
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vertex::tangents)));//4 = vec4 //4 * sizeof(GLfloat) is the offset 
 	glEnableVertexAttribArray(3);
+	
+	// bone ID
+	glEnableVertexAttribArray(4);
+	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)sizeof(Vertex::boneIds));
+	
+	// Bone Weight
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vertex::weights));
 
 	// Index buffer 
 	if (!mIndices.empty()) {

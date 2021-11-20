@@ -9,11 +9,7 @@
 #include <vector>
 #include <iostream>
 
-//struct Vertex {
-//	glm::vec3 position;
-//	glm::vec3 normal;
-//	glm::vec2 texCoords;
-//};
+
 struct Vertex;
 
 struct VertexData {

@@ -1,21 +1,9 @@
-﻿  test_shadowMap.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(691,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(692,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(698,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(699,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(703,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(704,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(569): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  Mesh.cpp
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\EntityManager.cpp(25): warning C4715: 'EntityManager::FindActiveCamera': not all control paths return a value
-  All 4280 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  0 of 4284 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
@@ -26,6 +14,7 @@ LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew
 LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
+LINK : warning LNK4286: symbol '___glewVertexAttribIPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
 LINK : warning LNK4286: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
