@@ -90,7 +90,11 @@ namespace test {
 #pragma region AnimMesh
 		entity = new Entity("Animated Mesh");
 		G_GetManager()->addEntity(entity);
-        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/anim_model/anim_model.vert", "Shaders/anim_model/anim_model.frag", "Uniform_Standard_Lit");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->addComponent<Anim_Mesh>();
