@@ -177,6 +177,9 @@
     <ClCompile Include="src\Engine\Anim_Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Mesh_Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\ShaderProgram.h">
@@ -348,6 +351,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Anim_Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Mesh_Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

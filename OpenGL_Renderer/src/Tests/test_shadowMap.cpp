@@ -2,6 +2,7 @@
 #include "../Engine/Engine_UtilityFunctions.h"
 #include "../Components/Terrain.h"
 #include "../Engine/Anim_Mesh.h"
+#include "../Engine/Mesh_Material.h"
 
 
 RenderPass fbo_render_pass;
@@ -98,8 +99,10 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->addComponent<Anim_Mesh>();
+        entity->getComponent<Anim_Mesh>().LoadFromMeshFile("8502_Assets/animation/Role_T.msh");
+        entity->addComponent<MeshMaterial>("8502_Assets/animation/Role_T.mat");
+        //entity->getComponent<Anim_Mesh>().GenerateQuad();
 
-        entity->getComponent<Anim_Mesh>().GenerateQuad();
 #pragma endregion
 
 
