@@ -73,6 +73,7 @@ namespace test {
         
         entity->addComponent<ShaderProgram>("Shaders/Terrain/Standard_Terrain.vert", "Shaders/Terrain/Standard_Terrain.frag", "Uniform_Standard_Terrain");
         entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_BaseColor.png");
+		//entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/animation//RealisticCharacter/Role/head.tga");
         entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Normal.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Height.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Roughness_e.png");
@@ -93,15 +94,34 @@ namespace test {
 		entity = new Entity("Animated Mesh");
 		G_GetManager()->addEntity(entity);
         entity->addComponent<ShaderProgram>("Shaders/anim_model/anim_model.vert", "Shaders/anim_model/anim_model.frag", "Uniform_Standard_Lit");
+        /*entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");*/
         entity->addComponent<Anim_Mesh>();
         entity->getComponent<Anim_Mesh>().LoadFromMeshFile("8502_Assets/animation/Role_T.msh");
         entity->addComponent<MeshMaterial>("8502_Assets/animation/Role_T.mat");
+        entity->addComponent<MeshAnimation>("8502_Assets/animation/Role_T.anm");
+        
+        
+        // MAT SETUP START
+		for (int i = 0; i < entity->getComponent<Anim_Mesh>().GetSubMeshCount(); ++i) {
+			const MeshMaterialEntry* matEntry = entity->getComponent<MeshMaterial>().GetMaterialForLayer(i);
+			const string* filename = nullptr;
+			matEntry->GetEntry("Diffuse", &filename);
+			string path = "8502_Assets/animation/" + *filename;
+			//GLuint texID = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
+            Texture2D* tex = new Texture2D();
+            tex->LoadTexture(path.c_str(), true);
+            entity->getComponent<Anim_Mesh>().textures.emplace_back(tex);
+		}
+        
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        // MAT SETUP END
+
+
+        e_animated_mesh = entity;
+        
         //entity->getComponent<Anim_Mesh>().GenerateQuad();
 
 #pragma endregion
@@ -644,6 +664,13 @@ entity = new Entity("SPHERE");
 
 	void test_shadowMap::OnUpdate(double deltaTime) {
         G_GetManager()->OnUpdate(deltaTime);
+
+		frameTime -= (float)deltaTime;
+		while (frameTime < 0.0f) {
+			currentFrame = (currentFrame + 1) % e_animated_mesh->getComponent<MeshAnimation>().GetFrameCount();
+			frameTime += 1.0f / e_animated_mesh->getComponent<MeshAnimation>().GetFrameRate();
+		}
+
     }
     bool once = false;
 	void test_shadowMap::OnRender() {
@@ -724,6 +751,14 @@ entity = new Entity("SPHERE");
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
             ImGui::Image((void*)fbo.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
         }
+
+        for (auto& t : e_animated_mesh->getComponent<Anim_Mesh>().textures) {
+		    if (ImGui::CollapsingHeader("TEXTURE CHECK", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			    int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+			    ImGui::Image((void*)t->GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), 512));
+		    }
+        }
+
         ImGui::End();
 
         editor->RenderScene(fbo.GetRenderBuffer());

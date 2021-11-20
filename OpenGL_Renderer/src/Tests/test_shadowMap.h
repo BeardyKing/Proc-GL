@@ -36,7 +36,14 @@ namespace test {
 
 		//SKYBOX TEST
 		Entity* e_skybox;
-		Entity* e_water;;
+		Entity* e_water;
+		Entity* e_animated_mesh;
+		std::vector<GLuint> matTextures;
+
+
+
+		int currentFrame;
+		float frameTime;
 	};
 }
 

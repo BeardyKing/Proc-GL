@@ -32,6 +32,7 @@ _-_-_-_-_-_-_-""  ""
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../ECS/Engine_ECS.h"
+#include "../Engine/Texture2D.h"
 
 //A handy enumerator, to determine which member of the bufferObject array
 //holds which data
@@ -107,6 +108,9 @@ public:
 
 	bool GetSubMesh(int i, const SubMesh* s) const;
 	bool GetSubMesh(const std::string& name, const SubMesh* s) const;
+
+	std::vector<GLuint> matTextures;
+	std::vector<Texture2D*> textures;
 
 protected:
 	void	BufferData();

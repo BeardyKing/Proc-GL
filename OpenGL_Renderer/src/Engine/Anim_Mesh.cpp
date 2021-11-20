@@ -43,6 +43,11 @@ Anim_Mesh::~Anim_Mesh(void) {
 	delete[]	colours;
 	delete[]	weights;
 	delete[]	weightIndices;
+	
+	for (auto tex_ptr : textures){
+		delete tex_ptr;
+	}
+	textures.clear();
 }
 
 void Anim_Mesh::OnRender(){
@@ -85,7 +90,10 @@ void Anim_Mesh::OnRender(){
 		if (shader.currentShader_uniform) {
 			shader.use();
 			shader.currentShader_uniform->SetUniformMVP(model, view, projection, shader, camera);
-			shader.currentShader_uniform->SetUniformCustom(shader);
+			//shader.currentShader_uniform->SetUniformCustom(shader);
+			//glUniform1i ( glGetUniformLocation ( shader -> GetProgram () ,"diffuseTex") , 0);
+			shader.setUniformSampler("albedoMap", 0);		// 0 = albedo
+			shader.setUniform("albedo_color", glm::vec4(1, 1, 1, 1));
 		}
 		else {
 			std::cout << "mesh.cpp - shader.currentShader_uniform == null" << std::endl;
@@ -95,11 +103,14 @@ void Anim_Mesh::OnRender(){
 		std::cout << "mesh.cpp - shader == null" << std::endl;
 	}
 
-	Draw();
-	
+	//Draw();
+
 	for (int i = 0; i < GetSubMeshCount(); ++i) {
-		/*glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, matTextures[i]);*/
+		glm::vec2 m_TextureTiling = glm::vec2(1);
+		shader.setUniform("textureScale", m_TextureTiling);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[i]->GetTexture());
+
 		DrawSubMesh(i);
 	}
 }
