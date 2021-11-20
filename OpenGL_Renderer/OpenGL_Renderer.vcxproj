@@ -160,6 +160,7 @@
     <ClCompile Include="src\ECS\EntityManager.cpp" />
     <ClCompile Include="src\Engine\Buffers\Depth_Pass.cpp" />
     <ClCompile Include="src\Engine\EditorGUI.cpp" />
+    <ClCompile Include="src\Engine\Mesh_Animator.cpp" />
     <ClCompile Include="src\Engine\Mesh_Material.cpp" />
     <ClCompile Include="src\Engine\Shader_UniformSetter.cpp" />
     <ClCompile Include="src\Engine\Buffers\FrameBuffer.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\Engine\Engine_Core.h" />
     <ClInclude Include="src\Editor\Engine_Editor.h" />
     <ClInclude Include="src\Engine\Engine_UtilityFunctions.h" />
+    <ClInclude Include="src\Engine\Mesh_Animator.h" />
     <ClInclude Include="src\Engine\Mesh_Material.h" />
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />

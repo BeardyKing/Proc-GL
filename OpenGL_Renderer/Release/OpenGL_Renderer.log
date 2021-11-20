@@ -1,21 +1,17 @@
-﻿  test_shadowMap.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(711,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(712,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(718,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(719,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(723,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(724,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(589): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  Anim_Mesh.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(336,33): warning C4316: 'glm::tmat4x4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(380,38): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(401,39): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(418,39): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(506,45): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(516,46): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(530,45): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(635,40): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\EntityManager.cpp(25): warning C4715: 'EntityManager::FindActiveCamera': not all control paths return a value
-  All 4665 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 4683 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    108 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
@@ -63,5 +59,5 @@ LINK : warning LNK4286: symbol '___glewBlendFuncSeparate' defined in 'glew32s.li
 LINK : warning LNK4286: symbol '___glewGetAttribLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewDrawElementsBaseVertex' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBindSampler' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'H:\Dev\Proc-GL\OpenGL_Renderer\bin\glew_static.pdb'; linking object as if no debug info
+glew32s.lib(glew.obj) : warning LNK4099: PDB '' was not found with 'glew32s.lib(glew.obj)' or at ''; linking object as if no debug info
   OpenGL_Renderer.vcxproj -> H:\Dev\Proc-GL\OpenGL_Renderer\bin\OpenGL_Renderer.exe

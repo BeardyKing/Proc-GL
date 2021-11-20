@@ -3,6 +3,7 @@
 #include "../Components/Terrain.h"
 #include "../Engine/Anim_Mesh.h"
 #include "../Engine/Mesh_Material.h"
+#include "../Engine/Mesh_Animator.h"
 
 
 RenderPass fbo_render_pass;

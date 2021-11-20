@@ -63,3 +63,29 @@ const MeshMaterialEntry* MeshMaterial::GetMaterialForLayer(int i) const {
 	}
 	return meshLayers[i];
 }
+
+void MeshMaterial::OnUpdate(double deltaTime)
+{
+}
+
+
+void MeshMaterial::OnRender()
+{
+}
+
+void MeshMaterial::OnImGuiRender() {
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+
+	ImGui::Begin("Inspector"); {
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("MESH_MATERIALS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Indent();
+			ImGui::Text("MESH_MATERIALS DATA");
+
+			ImGui::Unindent();
+		}
+		ImGui::Separator();
+	}
+	ImGui::End();
+}

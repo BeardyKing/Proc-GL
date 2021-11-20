@@ -114,9 +114,9 @@ void Anim_Mesh::OnImGuiRender(){
 	ImGui::Begin("Inspector"); {
 		ImGui::Separator();
 
-		if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+		if (ImGui::CollapsingHeader("ANIM_MESH", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
-			ImGui::Text("MESH DATA");
+			ImGui::Text("ANIM_MESH DATA");
 			std::string str{ "ATTRIB SIZE (NOT YET SET) : "};
 			str += std::to_string((20 * sizeof(GLfloat)) + (4 * sizeof(GLuint)));
 			ImGui::Text(&str[0]);

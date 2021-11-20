@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MESHMATERIAL_H
+#define MESHMATERIAL_H
+
 #include <string>
 #include <map>
 #include <vector>
@@ -27,12 +29,19 @@ public:
 class MeshMaterial : public Component
 {
 public:
+
 	MeshMaterial(const std::string& filename);
 	~MeshMaterial() {}
 	const MeshMaterialEntry* GetMaterialForLayer(int i) const;
+	
+	void OnUpdate(double deltaTime);
+	void OnRender();
+	void OnImGuiRender();
 
 protected:
 	std::vector<MeshMaterialEntry>	materialLayers;
 	std::vector<MeshMaterialEntry*> meshLayers;
 };
+
+#endif
 
