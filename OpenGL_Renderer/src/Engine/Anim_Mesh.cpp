@@ -4,6 +4,11 @@ using std::string;
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
 
+#include "../ECS/Engine_ECS.h"
+#include "../Engine/ECS_List.h"
+
+#include "ShaderProgram.h"
+
 Anim_Mesh::Anim_Mesh(void) {
 	glGenVertexArrays(1, &arrayObject);
 
@@ -38,6 +43,95 @@ Anim_Mesh::~Anim_Mesh(void) {
 	delete[]	colours;
 	delete[]	weights;
 	delete[]	weightIndices;
+}
+
+void Anim_Mesh::OnRender(){
+	Entity* cam = nullptr;
+	EntityManager* mgr = G_GetManager();
+
+	std::string name;
+	for (auto& e : mgr->entities) {
+		if (e->hasComponent<FPSCamera>()) {
+			cam = e->getComponent<ObjectData>().entity;
+			break;
+		}
+	}
+
+	FPSCamera& camera = cam->getComponent<FPSCamera>();
+	Transform& transform = entity->getComponent<Transform>();
+	ShaderProgram& shader = entity->getComponent<ShaderProgram>();
+
+	glm::mat4 model, view, projection;
+
+	view = camera.GetViewMatrix();
+	if (camera.usingImGuiWindow == false) { // WINDOW
+		projection = glm::perspective(glm::radians(camera.getFOV()), (float)G_GetWindowWidth() / (float)G_GetWindowHeight(), 0.1f, 100.0f);
+	}
+	else { // EDITOR
+		projection = glm::perspective(glm::radians(camera.getFOV()), (float)camera.ImGuiWindowSize.x / (float)camera.ImGuiWindowSize.y, camera.GetZNear(), camera.GetZFar());
+	}
+
+	////----------------------------------//
+	glm::vec3 viewPos = camera.GetPosition();
+	////----------------------------------//
+
+	model = transform.GetTransformMatrix();
+
+	//////----------------------------------//
+	//////				MVP					//
+	//////----------------------------------//
+
+	if(&shader != NULL) {
+		if (shader.currentShader_uniform) {
+			shader.use();
+			shader.currentShader_uniform->SetUniformMVP(model, view, projection, shader, camera);
+			shader.currentShader_uniform->SetUniformCustom(shader);
+		}
+		else {
+			std::cout << "mesh.cpp - shader.currentShader_uniform == null" << std::endl;
+		}
+	}
+	else {
+		std::cout << "mesh.cpp - shader == null" << std::endl;
+	}
+
+	Draw();
+	
+	for (int i = 0; i < GetSubMeshCount(); ++i) {
+		/*glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, matTextures[i]);*/
+		DrawSubMesh(i);
+	}
+}
+
+void Anim_Mesh::OnUpdate(double deltaTime)
+{
+}
+
+void Anim_Mesh::OnImGuiRender(){
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+
+	ImGui::Begin("Inspector"); {
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Indent();
+			ImGui::Text("MESH DATA");
+			std::string str{ "ATTRIB SIZE (NOT YET SET) : "};
+			str += std::to_string((20 * sizeof(GLfloat)) + (4 * sizeof(GLuint)));
+			ImGui::Text(&str[0]);
+			ImGui::Text("Using Index Buffer");
+			ImGui::Text(indices > 0 ? "True" : "False");
+
+			if (ImGui::CollapsingHeader("Layout / offsets", ImGuiTreeNodeFlags_AllowItemOverlap)) {
+				ImGui::Text("LAYOUR HERE");
+			}
+
+			ImGui::Unindent();
+		}
+		ImGui::Separator();
+	}
+	ImGui::End();
 }
 
 void Anim_Mesh::Draw() {
@@ -275,64 +369,96 @@ void ReadSubMeshNames(std::ifstream& file, int count, std::vector<std::string>& 
 
 Anim_Mesh* Anim_Mesh::GenerateTriangle()
 {
-	Anim_Mesh* m = new  Anim_Mesh();
-	m->numVertices = 3;
-	m->type = GL_TRIANGLES;
+	numVertices = 3;
+	type = GL_TRIANGLES;
 
-	m->vertices = new  glm::vec3[m->numVertices];
-	m->vertices[0] = glm::vec3(0.0f, 0.5f, 0.0f);
-	m->vertices[1] = glm::vec3(0.5f, -0.5f, 0.0f);
-	m->vertices[2] = glm::vec3(-0.5f, -0.5f, 0.0f);
+	vertices = new  glm::vec3[numVertices];
+	vertices[0] = glm::vec3(0.0f, 0.5f, 0.0f);
+	vertices[1] = glm::vec3(0.5f, -0.5f, 0.0f);
+	vertices[2] = glm::vec3(-0.5f, -0.5f, 0.0f);
 
-	m->colours = new	glm::vec4[m->numVertices];
-	m->colours[0] =		glm::vec4(rand(), 0.0f, 0.0f, 1.0f);
-	m->colours[1] =		glm::vec4(rand(), 1.0f, 0.0f, 1.0f);
-	m->colours[2] =		glm::vec4(rand(), 0.0f, 1.0f, 1.0f);
+	colours = new	glm::vec4[numVertices];
+	colours[0] =		glm::vec4(rand(), 0.0f, 0.0f, 1.0f);
+	colours[1] =		glm::vec4(rand(), 1.0f, 0.0f, 1.0f);
+	colours[2] =		glm::vec4(rand(), 0.0f, 1.0f, 1.0f);
 
-	m->textureCoords = new	glm::vec2[m->numVertices];
-	m->textureCoords[0] =	glm::vec2(0.5f, 0.0f);
-	m->textureCoords[1] =	glm::vec2(1.0f, 1.0f);
-	m->textureCoords[2] =	glm::vec2(0.0f, 1.0f);
+	textureCoords = new	glm::vec2[numVertices];
+	textureCoords[0] =	glm::vec2(0.5f, 0.0f);
+	textureCoords[1] =	glm::vec2(1.0f, 1.0f);
+	textureCoords[2] =	glm::vec2(0.0f, 1.0f);
 
 
-	m->BufferData();
-	return m;
+	BufferData();
+	return this;
 }
 
 Anim_Mesh* Anim_Mesh::GenerateQuad() {
-	Anim_Mesh* m = new Anim_Mesh();
-	m->numVertices = 4;
-	m->type = GL_TRIANGLE_STRIP;
+	//Anim_Mesh* m = new Anim_Mesh();
+	//m->numVertices = 4;
+	//m->type = GL_TRIANGLE_STRIP;
 
-	m->vertices = new		glm::vec3[m->numVertices];
-	m->textureCoords = new	glm::vec2[m->numVertices];
-	m->colours = new		glm::vec4[m->numVertices];
+	//m->vertices = new		glm::vec3[m->numVertices];
+	//m->textureCoords = new	glm::vec2[m->numVertices];
+	//m->colours = new		glm::vec4[m->numVertices];
 
-	m->vertices[0] = glm::vec3(-1.0f, 1.0f, 0.0f);
-	m->vertices[1] = glm::vec3(-1.0f, -1.0f, 0.0f);
-	m->vertices[2] = glm::vec3(1.0f, 1.0f, 0.0f);
-	m->vertices[3] = glm::vec3(1.0f, -1.0f, 0.0f);
+	//m->vertices[0] = glm::vec3(-1.0f, 1.0f, 0.0f);
+	//m->vertices[1] = glm::vec3(-1.0f, -1.0f, 0.0f);
+	//m->vertices[2] = glm::vec3(1.0f, 1.0f, 0.0f);
+	//m->vertices[3] = glm::vec3(1.0f, -1.0f, 0.0f);
 
-	m->textureCoords[0] = glm::vec2(0.0f, 1.0f);
-	m->textureCoords[1] = glm::vec2(0.0f, 0.0f);
-	m->textureCoords[2] = glm::vec2(1.0f, 1.0f);
-	m->textureCoords[3] = glm::vec2(1.0f, 0.0f);
+	//m->textureCoords[0] = glm::vec2(0.0f, 1.0f);
+	//m->textureCoords[1] = glm::vec2(0.0f, 0.0f);
+	//m->textureCoords[2] = glm::vec2(1.0f, 1.0f);
+	//m->textureCoords[3] = glm::vec2(1.0f, 0.0f);
+
+	//for (int i = 0; i < 4; ++i) {
+	//	m->colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	//}
+
+	//m->normals = new glm::vec3[m->numVertices]; // Init new var !
+	//m->tangents = new glm::vec4[m->numVertices]; // Init new var !
+
+	//for (int i = 0; i < 4; ++i) {
+	//	m->colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	//	m->normals[i] = glm::vec3(0.0f, 0.0f, -1.0f); // New !
+	//	m->tangents[i] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f); // New !
+	//}
+
+	//m->BufferData();
+	//return m;
+
+	numVertices = 4;
+	type = GL_TRIANGLE_STRIP;
+
+	vertices = new		glm::vec3[numVertices];
+	textureCoords = new	glm::vec2[numVertices];
+	colours = new		glm::vec4[numVertices];
+
+	vertices[0] = glm::vec3(-1.0f, 1.0f, 0.0f);
+	vertices[1] = glm::vec3(-1.0f, -1.0f, 0.0f);
+	vertices[2] = glm::vec3(1.0f, 1.0f, 0.0f);
+	vertices[3] = glm::vec3(1.0f, -1.0f, 0.0f);
+
+	textureCoords[0] = glm::vec2(0.0f, 1.0f);
+	textureCoords[1] = glm::vec2(0.0f, 0.0f);
+	textureCoords[2] = glm::vec2(1.0f, 1.0f);
+	textureCoords[3] = glm::vec2(1.0f, 0.0f);
 
 	for (int i = 0; i < 4; ++i) {
-		m->colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-	m->normals = new glm::vec3[m->numVertices]; // Init new var !
-	m->tangents = new glm::vec4[m->numVertices]; // Init new var !
+	normals = new glm::vec3[numVertices]; // Init new var !
+	tangents = new glm::vec4[numVertices]; // Init new var !
 
 	for (int i = 0; i < 4; ++i) {
-		m->colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-		m->normals[i] = glm::vec3(0.0f, 0.0f, -1.0f); // New !
-		m->tangents[i] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f); // New !
+		colours[i] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		normals[i] = glm::vec3(0.0f, 0.0f, -1.0f); // New !
+		tangents[i] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f); // New !
 	}
 
-	m->BufferData();
-	return m;
+	BufferData();
+	return this;
 }
 
 Anim_Mesh* Anim_Mesh::LoadFromMeshFile(const string& name) {

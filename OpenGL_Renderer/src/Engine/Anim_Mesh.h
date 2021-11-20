@@ -51,7 +51,7 @@ enum MeshBuffer {
 	MAX_BUFFER
 };
 
-class Anim_Mesh {
+class Anim_Mesh : public Component {
 public:
 	struct SubMesh {
 		int start;
@@ -61,13 +61,19 @@ public:
 	Anim_Mesh(void);
 	~Anim_Mesh(void);
 
+	Anim_Mesh* m_MeshData;
+
+	void OnRender();
+	void OnUpdate(double deltaTime);
+	void OnImGuiRender();
+
 	void Draw();
 	void DrawSubMesh(int i);
 
-	static Anim_Mesh* GenerateQuad();
-	static Anim_Mesh* GenerateTriangle();
+	Anim_Mesh* GenerateQuad();
+	Anim_Mesh* GenerateTriangle();
 
-	static Anim_Mesh* LoadFromMeshFile(const std::string& name);
+	Anim_Mesh* LoadFromMeshFile(const std::string& name);
 
 	unsigned int GetTriCount() const {
 		int primCount = indices ? numIndices : numVertices;

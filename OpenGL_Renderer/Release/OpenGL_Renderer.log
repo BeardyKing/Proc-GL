@@ -1,9 +1,30 @@
-﻿  Mesh.cpp
+﻿  Anim_Mesh.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(336,33): warning C4316: 'glm::tmat4x4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(380,38): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(435,39): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(452,39): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(540,45): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(550,46): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(564,45): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Anim_Mesh.cpp(669,40): warning C4316: 'glm::tvec4<float,glm::highp>': object allocated on the heap may not be aligned 16
+  test_shadowMap.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(704,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(705,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(711,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(712,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(716,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(717,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(582): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\EntityManager.cpp(25): warning C4715: 'EntityManager::FindActiveCamera': not all control paths return a value
-  All 4284 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  4 of 4331 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    107 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
@@ -22,8 +43,6 @@ LINK : warning LNK4286: symbol '___glewFramebufferTexture2D' defined in 'glew32s
 LINK : warning LNK4286: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
-LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
-LINK : warning LNK4286: symbol '___glewUniform2f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewUniform1i' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
@@ -42,6 +61,8 @@ LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(gl
 LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewUniform1f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform2f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewCheckFramebufferStatus' defined in 'glew32s.lib(glew.obj)' is imported by 'test_defaultTest.obj'
 LINK : warning LNK4286: symbol '___glewGenerateMipmap' defined in 'glew32s.lib(glew.obj)' is imported by 'Texture2D.obj'
 LINK : warning LNK4286: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'

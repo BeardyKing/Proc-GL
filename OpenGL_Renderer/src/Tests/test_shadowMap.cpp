@@ -1,6 +1,7 @@
 #include "test_shadowMap.h"
 #include "../Engine/Engine_UtilityFunctions.h"
 #include "../Components/Terrain.h"
+#include "../Engine/Anim_Mesh.h"
 
 
 RenderPass fbo_render_pass;
@@ -85,6 +86,18 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(-80,-25,-60);
 
     #pragma endregion
+
+#pragma region AnimMesh
+		entity = new Entity("Animated Mesh");
+		G_GetManager()->addEntity(entity);
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->addComponent<Anim_Mesh>();
+
+        entity->getComponent<Anim_Mesh>().GenerateQuad();
+#pragma endregion
+
 
     #pragma region TODO Write bespoke shaders
 
