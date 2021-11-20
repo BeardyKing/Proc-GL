@@ -154,6 +154,7 @@
     <ClCompile Include="src\Components\SkyBox.cpp" />
     <ClCompile Include="src\Components\Terrain.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Engine\Anim_Mesh.cpp" />
     <ClCompile Include="src\Engine\Buffers\DepthBuffer.cpp" />
     <ClCompile Include="src\ECS\Component.cpp" />
     <ClCompile Include="src\ECS\EntityManager.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\Components\Terrain.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\ECS\Engine_ECS.h" />
+    <ClInclude Include="src\Engine\Anim_Mesh.h" />
     <ClInclude Include="src\Engine\Buffers\DepthBuffer.h" />
     <ClInclude Include="src\ECS\Component.h" />
     <ClInclude Include="src\ECS\ECS.h" />
