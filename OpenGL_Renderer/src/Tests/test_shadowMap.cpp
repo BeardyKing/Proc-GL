@@ -580,6 +580,7 @@ entity = new Entity("SPHERE");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_DISP.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_SPEC.jpg");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
 
         //entity->getComponent<ShaderProgram>().SetColour(glm::vec4(91.0f/255.0f, 171.0f /255.0f, 255.0f /255.0f, 255.0f /255.0f), "albedo_color");

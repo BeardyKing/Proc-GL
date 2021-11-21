@@ -46,6 +46,7 @@ namespace uniform {
 		float metallic_scalar	= 1.0f;
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
+		float DuDv_scalar = 1.0f;
 
 		float waterDepthBlend = 5.0f;
 		glm::vec2 texture_offset = glm::vec2(0);
@@ -84,6 +85,9 @@ namespace uniform {
 		}
 		else if (name == "occlusion_scalar"){	 
 			occlusion_scalar = value;
+		}
+		else if (name == "DuDv_scalar") {
+			DuDv_scalar = value;
 		}
 		else if (name == "waterDepthBlend") {
 			waterDepthBlend = value;
@@ -136,11 +140,12 @@ namespace uniform {
 		glActiveTexture(GL_TEXTURE0 + 7);
 		glBindTexture(GL_TEXTURE_2D, G_GetRenderPass().GetRenderBuffer()); // bind depth pass texture(s)
 
+		m_pbr_textures[5].Bind(8); // dudv map
 
-		shader.setUniform("waterDepthBlend",waterDepthBlend);
-		shader.setUniform("texture_offset", texture_offset);
+		shader.setUniform("waterDepthBlend",		waterDepthBlend);
+		shader.setUniform("texture_offset",			texture_offset);
 
-		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
+		shader.setUniform("amountOfLights",			(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
 		shader.setUniform("_shadowIntensity",		m_lights[0]->getComponent<LightObject>().shadowIntensity); // todo write fallback for if no lights
 		shader.setUniform("_lightIntensity",		m_lights[0]->getComponent<LightObject>().lightIntensity);
@@ -152,6 +157,7 @@ namespace uniform {
 		shader.setUniform("metallic_scalar",		metallic_scalar);
 		shader.setUniform("roughness_scalar",		roughness_scalar);
 		shader.setUniform("occlusion_scalar",		occlusion_scalar);
+		shader.setUniform("DuDv_scalar",			DuDv_scalar);
 
 		shader.setUniformSampler("albedoMap",				0);		// 0 = albedo
 		shader.setUniformSampler("normalMap",				1);		// 1 = normal
@@ -161,6 +167,7 @@ namespace uniform {
 		shader.setUniformSampler("shadowMap",				5);		// 5 = shadow
 		shader.setUniformSampler("cameraDepthRenderPass",	6);
 		shader.setUniformSampler("cameraColorRenderPass",	7);
+		shader.setUniformSampler("DuDvMap",					8);
 
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
@@ -309,6 +316,20 @@ namespace uniform {
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##Occlusion_scalar", &occlusion_scalar, 0.0f, 10.0f);
 			ImGui::NextColumn();
+
+			//--------------DuDv Map--------------//
+			static uint16_t DuDv_Image_Scalar = 1;
+			if (ImGui::ImageButton((void*)m_pbr_textures[5].GetTexture(), ImVec2(12.0f * DuDv_Image_Scalar, 12.0f * DuDv_Image_Scalar))) {
+				DuDv_Image_Scalar = (DuDv_Image_Scalar == 1) ? 10 : 1;
+			}
+
+			ImGui::SameLine();
+			ImGui::Selectable("DuDv Map");
+
+			ImGui::NextColumn();
+			ImGui::SliderFloat("##DuDv_scalar", &DuDv_scalar, 0.0f, 10.0f);
+			ImGui::NextColumn();
+
 
 			//--------------Shadow Map--------------// // TODO Update to support multiple shadowmaps
 			static uint16_t ShadowMap_Image_Scalar = 1;
