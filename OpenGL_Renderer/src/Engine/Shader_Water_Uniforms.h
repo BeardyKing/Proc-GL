@@ -18,6 +18,7 @@ namespace uniform {
 		void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera);
 		void SetUniformCustom(ShaderProgram& _shader)override;
 		void OnImGuiRender()override;
+		void OnUpdate(double deltaTime) override;
 
 	public: //helperFunction
 		void SetBaseColor(glm::vec3 _colour) override;
@@ -25,6 +26,10 @@ namespace uniform {
 		void SetColour(const glm::vec4& value, const std::string& name) override;
 		void SetFloat(const float& value, const std::string& name) override;
 		void SetInt(const int& value, const std::string& name) override;
+
+		virtual void SetVec2(const glm::vec2& value, const std::string& name) override;
+		virtual void SetVec3(const glm::vec3& value, const std::string& name) override;
+		virtual void SetVec4(const glm::vec4& value, const std::string& name) override;
 
 	private:
 		std::unique_ptr <Texture2D[]> m_pbr_textures;
@@ -43,10 +48,21 @@ namespace uniform {
 		float occlusion_scalar	= 1.0f;
 
 		float waterDepthBlend = 5.0f;
+		glm::vec2 texture_offset = glm::vec2(0);
+		glm::vec2 scroll_amount = glm::vec2(0.05f, 0.1f);
 	};
 
 	void Shader_Water_Uniforms::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
 	void Shader_Water_Uniforms::SetTextureScale(glm::vec2 _scale) { m_TextureTiling = _scale; }
+
+	void Shader_Water_Uniforms::SetVec2(const glm::vec2& value, const std::string& name) {
+		if (name == "texture_offset") {
+			texture_offset = value;
+		}
+	}
+
+	void Shader_Water_Uniforms::SetVec3(const glm::vec3& value, const std::string& name) {}
+	void Shader_Water_Uniforms::SetVec4(const glm::vec4& value, const std::string& name) {}
 
 	 void Shader_Water_Uniforms::SetColour(const glm::vec4& value, const std::string& name) {
 		 if (name == "albedo_color"){
@@ -122,6 +138,7 @@ namespace uniform {
 
 
 		shader.setUniform("waterDepthBlend",waterDepthBlend);
+		shader.setUniform("texture_offset", texture_offset);
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
 		shader.setUniform("textureScale",			m_TextureTiling);
@@ -168,6 +185,13 @@ namespace uniform {
 
 	}
 
+	void Shader_Water_Uniforms::OnUpdate(double deltaTime) {
+		// LOCAL BEHAVIOUR
+		texture_offset.x += deltaTime * scroll_amount.x;
+		texture_offset.y += deltaTime * scroll_amount.y;
+		std::cout << "Here" << std::endl;
+	}
+
 	void Shader_Water_Uniforms::OnImGuiRender() {
 		
 	#pragma region EDITOR_SURFACE_INPUTS
@@ -182,14 +206,24 @@ namespace uniform {
 			
 			ImGui::NextColumn();
 			
-			ImGui::Selectable("Recieve Shadows");
+			ImGui::Selectable("Receive Shadows");
 			ImGui::NextColumn();
-			ImGui::Checkbox("##Recieve Shadows", &recieveShadows);
+			ImGui::Checkbox("##Receive Shadows", &recieveShadows);
 			ImGui::NextColumn();
 			
 			ImGui::Selectable("Edge Blend Distance");
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##Edge Blend Distance", &waterDepthBlend, 0.0f, 30.0f);
+			ImGui::SliderFloat("##Edge Blend Distance", &waterDepthBlend, 0.0f, 30.0f); 
+			ImGui::NextColumn();
+			
+			ImGui::Selectable("Texture Offset");
+			ImGui::NextColumn();
+			ImGui::DragFloat2("##Texture Offset", &texture_offset.x, -0.01f, 0.01f);
+			ImGui::NextColumn();
+			ImGui::Selectable("Scroll amount");
+			ImGui::NextColumn();
+			ImGui::DragFloat2("##Scroll amount", &scroll_amount.x, -0.01f, 0.01f);
+			ImGui::NextColumn();
 
 			
 			ImGui::Columns(1);
@@ -310,6 +344,8 @@ namespace uniform {
 	#pragma endregion
 
 	}
+
+	
 
 	void Shader_Water_Uniforms::LoadTextures(Entity& _shader) {
 		auto tex = _shader.getComponent<ShaderProgram>().GetTextures();

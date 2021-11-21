@@ -109,18 +109,45 @@ void ShaderProgram::OnImGuiRender(){
 	ImGui::End();
 }
 
-//glm::vec3 ShaderProgram::GetBaseColor(){
-//	return m_BaseColor;
-//}
+void ShaderProgram::OnUpdate(double deltaTime){
+	currentShader_uniform->OnUpdate(deltaTime);
+}
+
 
 void ShaderProgram::SetColour(const glm::vec4& value, const std::string& name) {
 	currentShader_uniform->SetColour(value, name);
 }
+
 void ShaderProgram::SetFloat(const float& value, const std::string& name) {
 	currentShader_uniform->SetFloat(value, name);
 }
+
 void ShaderProgram::SetInt(const int& value, const std::string& name) {
 	currentShader_uniform->SetInt(value, name);
+}
+
+void ShaderProgram::SetVec2(const glm::vec2& value, const std::string& name) {
+	currentShader_uniform->SetVec2(value, name);
+}
+
+void ShaderProgram::SetVec3(const glm::vec3& value, const std::string& name) {
+	currentShader_uniform->SetVec3(value, name);
+}
+
+void ShaderProgram::SetVec4(const glm::vec4& value, const std::string& name) {
+	currentShader_uniform->SetVec4(value, name);
+}
+
+void ShaderProgram::SetMat2(const glm::mat2& value, const std::string& name) {
+	currentShader_uniform->SetMat2(value, name);
+}
+
+void ShaderProgram::SetMat3(const glm::mat3& value, const std::string& name) {
+	currentShader_uniform->SetMat3(value, name);
+}
+
+void ShaderProgram::SetMat4(const glm::mat4& value, const std::string& name) {
+	currentShader_uniform->SetMat4(value, name);
 }
 
 void ShaderProgram::SetBaseColor(glm::vec3 color){

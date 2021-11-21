@@ -20,6 +20,7 @@ uniform samplerCube skybox;
 uniform sampler2D cameraDepthRenderPass;
 uniform sampler2D cameraColorRenderPass;
 uniform float waterDepthBlend;
+uniform vec2 texture_offset;
 
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
@@ -174,6 +175,7 @@ vec4 RayCast(vec3 dir, inout vec3 hitCoord, out float dDepth)
 
 void main()
 {	
+
     //------------Skybox Reflection ------------
     reflectTex = vec4(1);
     if(isUsingCubemapReflections){
@@ -445,12 +447,12 @@ vec3 BRDF(){
 
 vec3 getNormalFromMap()
 {
-    vec3 tangentNormal = texture(normalMap, fs_in.TexCoords).xyz * 2.0 - 1.0 ;
+    vec3 tangentNormal = texture(normalMap, vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y)).xyz * 2.0 - 1.0 ;
     
     vec3 Q1  = dFdx(WorldPos);
     vec3 Q2  = dFdy(WorldPos);
-    vec2 st1 = dFdx(fs_in.TexCoords);
-    vec2 st2 = dFdy(fs_in.TexCoords);
+    vec2 st1 = dFdx(vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y));
+    vec2 st2 = dFdy(vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y));
 
     vec3 N   = normalize(fs_in.Normal) * vec3(normal_scalar);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);

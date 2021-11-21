@@ -116,7 +116,7 @@ void Anim_Mesh::OnRender(){
 	}
 
 	int j = glGetUniformLocation(shader.getProgram(), "joints"); 
-	std::cout << frameMatrices.size() << std::endl;
+	//std::cout << frameMatrices.size() << std::endl;
 	glUniformMatrix4fv(j, frameMatrices.size(), false, (float*)frameMatrices.data());
 
 

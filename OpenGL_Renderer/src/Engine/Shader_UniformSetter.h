@@ -33,6 +33,14 @@ namespace uniform {
 		virtual void SetColour(const glm::vec4& value, const std::string& name) {}
 		virtual void SetFloat(const float& value, const std::string& name) {}
 		virtual void SetInt(const int& value, const std::string& name) {}
+
+		virtual void SetVec2(const glm::vec2& value, const std::string& name) {}
+		virtual void SetVec3(const glm::vec3& value, const std::string& name) {}
+		virtual void SetVec4(const glm::vec4& value, const std::string& name) {}
+
+		virtual void SetMat2(const glm::mat2& value, const std::string& name) {}
+		virtual void SetMat3(const glm::mat3& value, const std::string& name) {}
+		virtual void SetMat4(const glm::mat4& value, const std::string& name) {}
 	};
 
 	class ShaderMenu : public Shader_Uniforms {

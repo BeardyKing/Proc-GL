@@ -106,19 +106,14 @@ namespace test {
 			const string* filename = nullptr;
 			matEntry->GetEntry("Diffuse", &filename);
 			string path = "8502_Assets/animation/" + *filename;
-			//GLuint texID = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
             Texture2D* tex = new Texture2D();
             tex->LoadTexture(path.c_str(), true);
             entity->getComponent<Anim_Mesh>().textures.emplace_back(tex);
 		}
         
         entity->getComponent<ShaderProgram>().LoadTextures();
-        // MAT SETUP END
-
-
         e_animated_mesh = entity;
-        
-        //entity->getComponent<Anim_Mesh>().GenerateQuad();
+        entity->isActive(false);
 
 #pragma endregion
 
@@ -593,7 +588,7 @@ entity = new Entity("SPHERE");
         entity->getComponent<ShaderProgram>().SetFloat(0.460f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.162f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.875f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(3.0f, "waterDepthBlend");
+        entity->getComponent<ShaderProgram>().SetFloat(6.0f, "waterDepthBlend");
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(70));
         e_water = entity;
 #pragma endregion
@@ -660,7 +655,7 @@ entity = new Entity("SPHERE");
 
 	void test_shadowMap::OnUpdate(double deltaTime) {
         G_GetManager()->OnUpdate(deltaTime);
-
+        //e_water->getComponent<ShaderProgram>().Set
 		/*frameTime -= (float)deltaTime;
 		while (frameTime < 0.0f) {
 			currentFrame = (currentFrame + 1) % e_animated_mesh->getComponent<MeshAnimation>().GetFrameCount();

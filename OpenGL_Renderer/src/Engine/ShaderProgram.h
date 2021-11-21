@@ -33,6 +33,7 @@ public :
 
 
 	void OnImGuiRender();
+	void OnUpdate(double deltaTime);
 
 	void SetBaseColor(glm::vec3 color);
 	void SetTextureScale(glm::vec2 scale);
@@ -40,6 +41,14 @@ public :
 	void SetColour(const glm::vec4& value, const std::string& name);
 	void SetFloat(const float& value, const std::string& name);
 	void SetInt(const int& value, const std::string& name);
+
+	void SetVec2(const glm::vec2& value, const std::string& name);
+	void SetVec3(const glm::vec3& value, const std::string& name);
+	void SetVec4(const glm::vec4& value, const std::string& name);
+															 
+	void SetMat2(const glm::mat2& value, const std::string& name);
+	void SetMat3(const glm::mat3& value, const std::string& name);
+	void SetMat4(const glm::mat4& value, const std::string& name);
 
 	glm::vec2 GetTextureScale();
 	glm::vec3 GetBaseColor();
