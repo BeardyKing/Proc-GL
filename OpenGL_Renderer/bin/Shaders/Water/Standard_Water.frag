@@ -28,12 +28,14 @@ uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D shadowMap;
+uniform sampler2D DuDvMap;
 
 uniform vec4 albedo_color; 
 uniform float normal_scalar;
 uniform float metallic_scalar;
 uniform float roughness_scalar;
 uniform float occlusion_scalar;
+uniform float DuDv_scalar;
 
 uniform vec3 lightPositions[128];
 uniform vec3 lightColors[128];
@@ -447,12 +449,19 @@ vec3 BRDF(){
 
 vec3 getNormalFromMap()
 {
-    vec3 tangentNormal = texture(normalMap, vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y)).xyz * 2.0 - 1.0 ;
+    vec2 dudvTexCoord = vec2(fs_in.TexCoords.x / 2.0 + 0.5, fs_in.TexCoords.y / 2.0 + 0.5);
+    vec2 distortion1 = (texture(DuDvMap, vec2(dudvTexCoord.x , dudvTexCoord.y)).rg * 2.0 - 1.0) * DuDv_scalar;
     
+    dudvTexCoord += distortion1;
+
+    vec3 tangentNormal = texture(normalMap, vec2(dudvTexCoord.x + texture_offset.x, dudvTexCoord.y + texture_offset.y)).xyz * 2.0 - 1.0;
+    
+
+
     vec3 Q1  = dFdx(WorldPos);
     vec3 Q2  = dFdy(WorldPos);
-    vec2 st1 = dFdx(vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y));
-    vec2 st2 = dFdy(vec2(fs_in.TexCoords.x + texture_offset.x, fs_in.TexCoords.y + texture_offset.y));
+    vec2 st1 = dFdx(vec2(dudvTexCoord.x + texture_offset.x, dudvTexCoord.y + texture_offset.y));
+    vec2 st2 = dFdy(vec2(dudvTexCoord.x + texture_offset.x, dudvTexCoord.y + texture_offset.y));
 
     vec3 N   = normalize(fs_in.Normal) * vec3(normal_scalar);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);

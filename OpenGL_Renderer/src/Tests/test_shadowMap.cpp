@@ -580,17 +580,19 @@ entity = new Entity("SPHERE");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_DISP.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_SPEC.jpg");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv_halisavkis.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
 
         //entity->getComponent<ShaderProgram>().SetColour(glm::vec4(91.0f/255.0f, 171.0f /255.0f, 255.0f /255.0f, 255.0f /255.0f), "albedo_color");
         entity->getComponent<ShaderProgram>().SetColour(glm::vec4(1.0f), "albedo_color");
-        entity->getComponent<ShaderProgram>().SetFloat(0.630f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.460f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.162f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.875f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(6.0f, "waterDepthBlend");
-        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(70));
+        entity->getComponent<ShaderProgram>().SetFloat(1.078f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.058f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(4.595f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(7.71f, "waterDepthBlend");
+        entity->getComponent<ShaderProgram>().SetFloat(0.014f, "DuDv_scalar");
+        entity->getComponent<ShaderProgram>().SetVec2(glm::vec2(0.05), "scroll_amount");
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(90));
         e_water = entity;
 #pragma endregion
 
@@ -601,6 +603,7 @@ entity = new Entity("SPHERE");
 		entity->getComponent<Transform>().position = glm::vec3(44, 40, 72);
 		entity->addComponent<LightObject>();
 		entity->getComponent<LightObject>().lightType = LightObject::Point;
+        entity->getComponent<LightObject>().lightIntensity = 4.6;
 		entity->getComponent<LightObject>().far_plane = 200;
 		entity->getComponent<LightObject>().near_plane = 43;
 		entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-45, 45, -45, 45);

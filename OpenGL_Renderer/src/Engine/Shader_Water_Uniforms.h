@@ -46,7 +46,7 @@ namespace uniform {
 		float metallic_scalar	= 1.0f;
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
-		float DuDv_scalar = 1.0f;
+		float DuDv_scalar = 0.02f;
 
 		float waterDepthBlend = 5.0f;
 		glm::vec2 texture_offset = glm::vec2(0);
@@ -59,6 +59,9 @@ namespace uniform {
 	void Shader_Water_Uniforms::SetVec2(const glm::vec2& value, const std::string& name) {
 		if (name == "texture_offset") {
 			texture_offset = value;
+		}
+		if (name == "scroll_amount"){
+			scroll_amount = value;
 		}
 	}
 
@@ -196,7 +199,6 @@ namespace uniform {
 		// LOCAL BEHAVIOUR
 		texture_offset.x += deltaTime * scroll_amount.x;
 		texture_offset.y += deltaTime * scroll_amount.y;
-		std::cout << "Here" << std::endl;
 	}
 
 	void Shader_Water_Uniforms::OnImGuiRender() {
@@ -327,7 +329,7 @@ namespace uniform {
 			ImGui::Selectable("DuDv Map");
 
 			ImGui::NextColumn();
-			ImGui::SliderFloat("##DuDv_scalar", &DuDv_scalar, 0.0f, 10.0f);
+			ImGui::SliderFloat("##DuDv_scalar", &DuDv_scalar, -0.1f, 0.1f);
 			ImGui::NextColumn();
 
 
