@@ -94,14 +94,10 @@ namespace test {
 		entity = new Entity("Animated Mesh");
 		G_GetManager()->addEntity(entity);
         entity->addComponent<ShaderProgram>("Shaders/anim_model/anim_model.vert", "Shaders/anim_model/anim_model.frag", "Uniform_Standard_Lit");
-        /*entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");*/
         entity->addComponent<Anim_Mesh>();
-        entity->getComponent<Anim_Mesh>().LoadFromMeshFile("8502_Assets/animation/Role_T.msh");
-        entity->addComponent<MeshMaterial>("8502_Assets/animation/Role_T.mat");
-        entity->addComponent<MeshAnimation>("8502_Assets/animation/Role_T.anm");
+        entity->getComponent<Anim_Mesh>().LoadFromMeshFile("8502_Assets/animation/Minotaur.msh");
+        entity->addComponent<MeshMaterial>("8502_Assets/animation/Minotaur.mat");
+        entity->addComponent<MeshAnimation>("8502_Assets/animation/Minotaur.anm");
         
         
         // MAT SETUP START
