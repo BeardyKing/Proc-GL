@@ -72,18 +72,18 @@ namespace test {
         entity->getComponent<Mesh>().LoadTerrain(entity->getComponent<Terrain>().GetVertexData());
         
         entity->addComponent<ShaderProgram>("Shaders/Terrain/Standard_Terrain.vert", "Shaders/Terrain/Standard_Terrain.frag", "Uniform_Standard_Terrain");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_BaseColor.png");
-		//entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/animation//RealisticCharacter/Role/head.tga");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Normal.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Height.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_Roughness_e.png");
-        entity->getComponent<ShaderProgram>().AddTexturePath("Ground/WhiteTiles02_1K_AO.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_COLOR.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_NRM.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_DISP.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_SPEC.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_OCC.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetFloat(0.723f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.207f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(0.199f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(9.817f, "occlusion_scalar");
-        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(4, 4));
+        entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3( 255.0f / 255.0f , 255.0f / 236.0f, 255.0f / 198.0f ));
+        entity->getComponent<ShaderProgram>().SetFloat(2.282f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.365f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(6.713f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(1, 1));
 
         entity->getComponent<Transform>().scale = glm::vec3(0.01f);
         entity->getComponent<Transform>().position = glm::vec3(-80,-25,-60);
@@ -532,41 +532,12 @@ namespace test {
     //#pragma endregion
     //#pragma endregion
 
-entity = new Entity("SPHERE");
-	G_GetManager()->addEntity(entity);
-
-	// 0 = albedo
-	// 1 = normal
-	// 2 = metalic
-	// 3 = roughness
-	// 4 = ambient 
-	entity->getComponent<Transform>().position = glm::vec3(0, -12, 0);
-	entity->getComponent<Transform>().scale = glm::vec3(7);
-
-	entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-
-	entity->addComponent<Mesh>("sphere64_64.obj");
-	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Base_Color.png");
-	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Normal.png");
-	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Metallic.png");
-	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_Roughness.png");
-	entity->getComponent<ShaderProgram>().AddTexturePath("paint/Painted_metal_02_1K_AO.png");
-	entity->getComponent<ShaderProgram>().LoadTextures();
-
-	entity->getComponent<ShaderProgram>().SetFloat(0.342f, "normal_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(1.177f, "roughness_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
-
-
-    #pragma endregion
-
     #pragma region Water
-    // 0 = albedo
-    // 1 = normal
-    // 2 = metalic
-    // 3 = roughness
-    // 4 = ambient 
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
         entity = new Entity("Water");
         G_GetManager()->addEntity(entity);
 
@@ -580,7 +551,7 @@ entity = new Entity("SPHERE");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_DISP.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/Water_001_SPEC.jpg");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv_halisavkis.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv_halisavkis.png"); // has strange artifact but is seamless
         entity->getComponent<ShaderProgram>().LoadTextures();
 
         //entity->getComponent<ShaderProgram>().SetColour(glm::vec4(91.0f/255.0f, 171.0f /255.0f, 255.0f /255.0f, 255.0f /255.0f), "albedo_color");
@@ -607,6 +578,7 @@ entity = new Entity("SPHERE");
 		entity->getComponent<LightObject>().far_plane = 200;
 		entity->getComponent<LightObject>().near_plane = 43;
 		entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-45, 45, -45, 45);
+        entity->getComponent<LightObject>().shadowIntensity = -0.150f;
 		entity->addComponent<script_simplebehaviours>();
 
 		entity = new Entity("Point Light1");
