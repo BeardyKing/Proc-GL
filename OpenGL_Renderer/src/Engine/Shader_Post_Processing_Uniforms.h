@@ -28,9 +28,9 @@ namespace uniform {
 		int numberOfTextures = 0;
 
 		float threshold = 1.0f;
-		float strength = 1.0f;
+		float strength = 10.0f;
 		float resolution = 512.0f;
-		float radius = 1.0f;
+		float radius = 0.011f;
 		glm::vec2 direction = glm::vec2(1);
 
 		int isVertical = 0;
@@ -104,6 +104,7 @@ namespace uniform {
 		_shader.setUniform("textureScale", glm::vec2(1));
 
 		_shader.setUniform("threshold"		, threshold);
+		_shader.setUniform("radius"		, radius);
 		_shader.setUniform("strength"		, strength);
 		_shader.setUniform("blurStrength_0"			, blurStrength_0);
 		_shader.setUniform("blurStrength_1"			, blurStrength_1);
@@ -145,10 +146,10 @@ namespace uniform {
 
 
 
-		ImGui::SliderFloat("strength", &strength, 0.0f, 5.0f);
+		ImGui::SliderFloat("strength", &strength, 0.0f, 15.0f);
 		ImGui::NextColumn();
 
-		ImGui::SliderFloat("radius", &radius, -10.0f, 10.0f);
+		ImGui::SliderFloat("radius", &radius, 0.0f, 0.1f);
 		ImGui::NextColumn(); 
 
 		ImGui::SliderFloat("blurStrength_0", &blurStrength_0, 0.0f, 10.0f);

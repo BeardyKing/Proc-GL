@@ -45,20 +45,38 @@ void main(){
     //         sum += texture2D( rendertextureColor , vec2( uv.x + 4.0*blur*hstep , uv.y + 4.0*blur*vstep )) * 0.0162162162;
 
 	// fragColor = vec4( sum.rgb , 1.0 );
-    vec4 out_blur = vec4(0);
-    if(renderPassCount == 0){
-        out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), direction * blurStrength_0);
-    }
-    if(renderPassCount == 1){
-        out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), direction * blurStrength_1);
-    }
-    if(renderPassCount == 2){
-        out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), direction * blurStrength_2);
-    }
+    vec4 out_blur = texture(rendertextureColor, fs_in.TexCoords);
+    vec2 direction_amm = direction;
+    float dist = (texture(rendertextureDepth, fs_in.TexCoords).r);
+    dist+= radius;
+    dist = clamp(dist,0 , 1);
+        // direction_amm = direction_amm * dist;
+        direction_amm.x = mix(direction_amm.x * strength, 0, dist);
+        direction_amm.y = mix(direction_amm.y * strength, 0, dist);
+    // if(texture(rendertextureDepth, fs_in.TexCoords).r > strength){
+    // }
+        // if(renderPassCount == 0){
+        //     out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_0 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
+        // }
+        // if(renderPassCount == 1){
+        //     out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_1 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
+        // }
+        // if(renderPassCount == 2){
+        //     out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_2 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
+        // }
+         if(renderPassCount == 0){
+            out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_0 * direction_amm);
+        }
+        if(renderPassCount == 1){
+            out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_1 * direction_amm );
+        }
+        if(renderPassCount == 2){
+            out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_2 * direction_amm);
+        }
     // if(blendPass){
 
     // }
-    fragColor = out_blur;
+    fragColor = out_blur; //* (vec4(vec3(texture(rendertextureDepth, fs_in.TexCoords).r), 1) * strength);
     // fragColor = texture2D( rendertextureColor, fs_in.TexCoords) + (out_blur * strength);
     //fragColor = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), direction);
 }
