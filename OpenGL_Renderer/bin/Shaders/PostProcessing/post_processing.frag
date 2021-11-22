@@ -1,5 +1,5 @@
 #version 330 core
-out vec4 FragColor;
+out vec4 fragColor;
   
 in VS_OUT {
     vec3 FragPos;
@@ -22,22 +22,25 @@ void main(){
     //FragColor = texture(rendertextureColor, fs_in.TexCoords) * vec4(1,0,1,1);
     //FragColor = vec4(vec3(texture(rendertextureDepth, fs_in.TexCoords).r), 1) ;//* vec4(1,0,1,1);
 
-    FragColor = vec4 (0,0,0,1);
-    vec2 delta = vec2 (0,0);
+    vec2 uv = fs_in.TexCoords;
 
     
+    float blur = radius/resolution;
+    
+    float hstep = direction.x;
+    float vstep = direction.y;
 
-    if(isVertical == 1) {
-        delta = dFdy(fs_in.TexCoords );
-    }
-    else{
-        delta = dFdx(fs_in.TexCoords );
-    }
-    for(int i = 0; i < 7; i++ ) {
-        vec2 offset = delta * (i - 3);
-        vec4 tmp = texture2D(rendertextureColor , fs_in.TexCoords.xy + offset );
-        FragColor += tmp * (scaleFactors[i] * resolution);
-    }
+	vec4    sum = texture2D( rendertextureColor , vec2( uv.x - 4.0*blur*hstep , uv.y - 4.0*blur*vstep )) * 0.0162162162;
+            sum += texture2D( rendertextureColor , vec2( uv.x - 3.0*blur*hstep , uv.y - 3.0*blur*vstep )) * 0.0540540541;
+            sum += texture2D( rendertextureColor , vec2( uv.x - 2.0*blur*hstep , uv.y - 2.0*blur*vstep )) * 0.1216216216;
+            sum += texture2D( rendertextureColor , vec2( uv.x - 1.0*blur*hstep , uv.y - 1.0*blur*vstep )) * 0.1945945946;
+            sum += texture2D( rendertextureColor , vec2( uv.x , uv.y )) * 0.2270270270;
+            sum += texture2D( rendertextureColor , vec2( uv.x + 1.0*blur*hstep , uv.y + 1.0*blur*vstep )) * 0.1945945946;
+            sum += texture2D( rendertextureColor , vec2( uv.x + 2.0*blur*hstep , uv.y + 2.0*blur*vstep )) * 0.1216216216;
+            sum += texture2D( rendertextureColor , vec2( uv.x + 3.0*blur*hstep , uv.y + 3.0*blur*vstep )) * 0.0540540541;
+            sum += texture2D( rendertextureColor , vec2( uv.x + 4.0*blur*hstep , uv.y + 4.0*blur*vstep )) * 0.0162162162;
+
+	fragColor = vec4( sum.rgb , 1.0 );
 }
 
 // for(int i = 0; i < 7; i++ ) {

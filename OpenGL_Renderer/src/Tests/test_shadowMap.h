@@ -26,6 +26,7 @@ namespace test {
 	private:
 		FrameBuffer fbo;
 		RenderPass fbo_post_process;
+		RenderPass fbo_post_process2;
 		RenderPass fbo_render_pass;
 		std::vector<DepthBuffer> depthBuffers;
 		std::vector<GLuint> depthTexturesThisFrame;

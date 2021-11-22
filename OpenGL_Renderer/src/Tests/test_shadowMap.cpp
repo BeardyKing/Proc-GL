@@ -628,6 +628,7 @@ namespace test {
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
         fbo_post_process.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        fbo_post_process2.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
         fbo_render_pass.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
     #pragma endregion
@@ -662,6 +663,7 @@ namespace test {
             fbo.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_render_pass.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_post_process.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
+            fbo_post_process2.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
@@ -714,17 +716,36 @@ namespace test {
 		glEnable(GL_DEPTH_TEST); 
 		glDepthFunc(GL_LESS);    
         post_processing->isActive(true);
-        post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
+        post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 		post_processing->OnRender();
-		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
+        post_processing->isActive(false);
+        fbo_post_process.UnBind();
+
+		fbo_post_process2.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 		post_processing->OnRender();
+		post_processing->isActive(false);
+		fbo_post_process2.UnBind();
 
-        post_processing->isActive(false);
-        fbo_post_process.UnBind();
+
+
+		/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		fbo_post_process.Bind();
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+		post_processing->OnRender();
+		fbo_post_process.UnBind();*/
+
     }
 
     void test_shadowMap::OnExit() {
@@ -772,7 +793,7 @@ namespace test {
         ImGui::End();
 
         //editor->RenderScene(fbo.GetRenderBuffer());
-        editor->RenderScene(fbo_post_process.GetRenderBuffer());
+        editor->RenderScene(fbo_post_process2.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

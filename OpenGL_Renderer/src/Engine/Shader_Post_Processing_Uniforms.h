@@ -55,6 +55,9 @@ namespace uniform {
 	}
 
 	void Shader_Post_Processing_Uniforms::SetUniformCustom(ShaderProgram& _shader){
+		
+		Entity* cam = G_GetManager()->FindActiveCamera();
+
 		_shader.use();
 		
 		if (render_texture[0]){
@@ -72,8 +75,18 @@ namespace uniform {
 
 		_shader.setUniform("threshold"		, threshold);
 		_shader.setUniform("strength"		, strength);
-		_shader.setUniform("resolution"		, resolution);
 		_shader.setUniform("radius"			, radius);
+		if (isVertical == 0){
+			direction = glm::vec2(1.0f, 0.0f);
+			resolution = cam->getComponent<FPSCamera>().ImGuiWindowSize.x;
+			std::cout << "IS VERT FALSE" << std::endl;
+		}
+		else if( isVertical == 1){
+			direction = glm::vec2(0.0f, 1.0f);
+			resolution = cam->getComponent<FPSCamera>().ImGuiWindowSize.y;
+			std::cout << "IS VERT TRUE" << std::endl;
+		}
+		_shader.setUniform("resolution"		, resolution);
 		_shader.setUniform("direction"		, direction);
 		_shader.setUniform("isVertical"		, isVertical);
 
@@ -95,34 +108,18 @@ namespace uniform {
 		ImGui::SliderInt("##isVertical", &isVertical, 0, 1);
 		ImGui::NextColumn();*/
 
-		ImGui::Selectable("threshold");
-		ImGui::NextColumn();
-		ImGui::SliderFloat("##threshold", &threshold, 0.0f, 100.0f);
+
+		ImGui::SliderFloat("threshold", &threshold, 0.0f, 100.0f);
 		ImGui::NextColumn();
 
-		ImGui::SameLine();
-		ImGui::Selectable("strength");
-		ImGui::NextColumn();
-		ImGui::SliderFloat("##strength", &strength, 0.0f, 100.0f);
+
+
+		ImGui::SliderFloat("strength", &strength, 0.0f, 100.0f);
 		ImGui::NextColumn();
 
-		ImGui::SameLine();
-		ImGui::Selectable("resolution");
-		ImGui::NextColumn();
-		ImGui::SliderFloat("##resolution", &resolution, 0.0f, 3.0f);
+		ImGui::SliderFloat("radius", &radius, -10.0f, 10.0f);
 		ImGui::NextColumn();
 
-		ImGui::SameLine();
-		ImGui::Selectable("radius");
-		ImGui::NextColumn();
-		ImGui::SliderFloat("##radius", &radius, 0.0f, 1000.0f);
-		ImGui::NextColumn();
-
-		ImGui::SameLine();
-		ImGui::Selectable("direction");
-		ImGui::NextColumn();
-		ImGui::SliderFloat2("##direction", &direction.x, -100.0f, 100.0f);
-		ImGui::NextColumn();
 
 		if (ImGui::CollapsingHeader("public Uniforms", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::ColorPicker3("Base Color Picker", &_baseColor.r);
