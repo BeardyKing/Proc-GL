@@ -25,6 +25,7 @@ namespace test {
 
 	private:
 		FrameBuffer fbo;
+		RenderPass fbo_post_process;
 		RenderPass fbo_render_pass;
 		std::vector<DepthBuffer> depthBuffers;
 		std::vector<GLuint> depthTexturesThisFrame;
@@ -33,6 +34,8 @@ namespace test {
 		EditorGUI* editor;
 		FPSCamera* camera;
 		ShaderProgram* depthShader;
+
+		Entity* post_processing;
 
 		//SKYBOX TEST
 		Entity* e_skybox;

@@ -12,6 +12,7 @@
 #include "Shader_Standard_Skybox_Uniforms.h"
 #include "Shader_Terrain_Uniforms.h"
 #include "Shader_Water_Uniforms.h"
+#include "Shader_Post_Processing_Uniforms.h"
 
 ShaderProgram::ShaderProgram()
 	: m_Handle(0)
@@ -59,6 +60,7 @@ void ShaderProgram::LoadShaderMenu() {
 	shaderMenu->RegisterShader<uniform::Shader_Standard_Skybox_Uniforms>("Uniform_Skybox");
 	shaderMenu->RegisterShader<uniform::Shader_Terrain_Uniforms>		("Uniform_Standard_Terrain");
 	shaderMenu->RegisterShader<uniform::Shader_Water_Uniforms>			("Uniform_Standard_Water");
+	shaderMenu->RegisterShader<uniform::Shader_Post_Processing_Uniforms>("Uniform_Post_Processing");
 
 }
 
@@ -148,6 +150,10 @@ void ShaderProgram::SetMat3(const glm::mat3& value, const std::string& name) {
 
 void ShaderProgram::SetMat4(const glm::mat4& value, const std::string& name) {
 	currentShader_uniform->SetMat4(value, name);
+}
+
+void ShaderProgram::SetRenderTexture(GLuint fbo_render_texture){
+	currentShader_uniform->SetRenderTexture(fbo_render_texture);
 }
 
 void ShaderProgram::SetBaseColor(glm::vec3 color){

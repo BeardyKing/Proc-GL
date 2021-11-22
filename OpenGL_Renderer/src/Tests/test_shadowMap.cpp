@@ -603,8 +603,21 @@ namespace test {
 
         std::vector<Entity*> lights = manager->FindLights();
 
-    #pragma endregion
 
+    #pragma endregion
+#pragma region post_processing
+
+		entity = new Entity("post_processing_object");
+		G_GetManager()->addEntity(entity);
+		entity->addComponent<ShaderProgram>("Shaders/PostProcessing/post_processing.vert", "Shaders/PostProcessing/post_processing.frag", "Uniform_Post_Processing");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/water/dudv_halisavkis.png"); // has strange artifact but is seamless
+		entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->addComponent<Mesh>();
+		entity->getComponent<Mesh>().Generate_primitive_Plane();
+		post_processing = entity;
+        post_processing->isActive(false);
+
+#pragma endregion
 
     #pragma region Frame Buffer (imGUI Image)
 
@@ -614,6 +627,7 @@ namespace test {
         //depthBuffers.emplace_back(s);
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        fbo_post_process.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
         fbo_render_pass.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
     #pragma endregion
@@ -646,6 +660,7 @@ namespace test {
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
             fbo_render_pass.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
+            fbo_post_process.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
@@ -689,6 +704,34 @@ namespace test {
         G_GetManager()->OnRender();
         
         fbo.UnBind();
+
+        // POST PROCESSING
+        // 
+		fbo_post_process.Bind(); // DISABLED FOR SSR TESTING
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glEnable(GL_DEPTH_TEST);  // We want depth test !
+		glDepthFunc(GL_LESS);     // We want to get the nearest pixels
+        post_processing->isActive(true);
+        post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
+		post_processing->OnRender();
+
+        post_processing->isActive(false);
+        fbo_post_process.UnBind();
+
+  //      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //      fbo_post_process.Bind();
+  //      post_processing->isActive(true);
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, fbo.GetRenderBuffer());
+  //      //post_processing->getComponent<ShaderProgram>().setUniformSampler("screenTexture", 0);
+  //      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //      post_processing->OnRender();
+
+  //      post_processing->isActive(false);
+  //      fbo_post_process.UnBind();
+
+
     }
 
     void test_shadowMap::OnExit() {
@@ -710,6 +753,11 @@ namespace test {
             }
             counter++;
         }
+
+		if (ImGui::CollapsingHeader("FBO_POST_PROCESS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+			ImGui::Image((void*)fbo_post_process.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+		}
 
         if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
             int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;

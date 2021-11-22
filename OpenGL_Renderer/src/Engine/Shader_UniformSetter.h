@@ -2,6 +2,7 @@
 #define SHADER_UNIFORMSETTER_H
 
 #include "../ECS/Engine_ECS.h"
+#include <GL/glew.h>
 
 
 #include <iostream>
@@ -41,6 +42,8 @@ namespace uniform {
 		virtual void SetMat2(const glm::mat2& value, const std::string& name) {}
 		virtual void SetMat3(const glm::mat3& value, const std::string& name) {}
 		virtual void SetMat4(const glm::mat4& value, const std::string& name) {}
+
+		virtual void SetRenderTexture(GLuint fbo_render_texture) {}
 	};
 
 	class ShaderMenu : public Shader_Uniforms {

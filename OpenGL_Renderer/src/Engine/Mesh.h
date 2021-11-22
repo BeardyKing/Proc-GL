@@ -46,6 +46,7 @@ public:
 	bool LoadOBJ(const std::string& fileName);
 	bool LoadTerrain(const std::string& fileName);
 	bool LoadTerrain(VertexData vertexData);
+	bool Generate_primitive_Plane();
 	void Draw();
 
 private:

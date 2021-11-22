@@ -278,6 +278,57 @@ bool Mesh::LoadTerrain(VertexData vertexData){
 	return true;
 }
 
+bool Mesh::Generate_primitive_Plane(){
+	VertexData vertexData;
+
+	Vertex vertex0;
+	Vertex vertex1;
+	Vertex vertex2;
+	Vertex vertex3;
+	Vertex vertex4;
+	Vertex vertex5;
+
+	vertex0.position = glm::vec3(-1.0f, 1.0f, 0.0f);
+	vertex0.texCoords = glm::vec2(0.0f, 1.0f);
+
+	vertex1.position = glm::vec3(-1.0f, -1.0f, 0.0f);
+	vertex1.texCoords = glm::vec2(0.0f, 0.0f);
+
+	vertex2.position = glm::vec3(1.0f, -1.0f, 0.0f);
+	vertex2.texCoords = glm::vec2(1.0f, 0.0f);
+
+	vertex3.position = glm::vec3(-1.0f, 1.0f, 0.0f);
+	vertex3.texCoords = glm::vec2(0.0f, 1.0f);
+
+	vertex4.position = glm::vec3(1.0f, -1.0f, 0.0f);
+	vertex4.texCoords = glm::vec2(1.0f, 0.0f);
+
+	vertex5.position = glm::vec3(1.0f, 1.0f, 0.0f);
+	vertex5.texCoords = glm::vec2(1.0f, 1.0f);
+	
+	vertexData.vData.push_back(vertex0);
+	vertexData.vData.push_back(vertex1);
+	vertexData.vData.push_back(vertex2);
+	vertexData.vData.push_back(vertex3);
+	vertexData.vData.push_back(vertex4);
+	vertexData.vData.push_back(vertex5);
+
+	vertexData.indices.push_back(0);
+	vertexData.indices.push_back(1);
+	vertexData.indices.push_back(2);
+	vertexData.indices.push_back(0);
+	vertexData.indices.push_back(2);
+	vertexData.indices.push_back(5);
+
+	mVertices = vertexData.vData;
+	mIndices = vertexData.indices;
+
+
+	InitBuffers();
+	std::cout << "Loaded PostProcessing Plane" << std::endl;
+	return true;
+}
+
 void Mesh::Draw() {
 	if (!mLoaded) { return; }
 

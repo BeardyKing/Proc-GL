@@ -362,6 +362,9 @@
     <ClInclude Include="src\Engine\Mesh_Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Shader_Post_Processing_Uniforms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\lighting.frag">

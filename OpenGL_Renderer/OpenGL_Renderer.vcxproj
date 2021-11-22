@@ -215,6 +215,7 @@
     <ClInclude Include="src\Engine\Shader_Blinn_Phong_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_DefaultUniforms.h" />
     <ClInclude Include="src\Engine\Shader_PBR_Uniforms.h" />
+    <ClInclude Include="src\Engine\Shader_Post_Processing_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Lit_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Standard_Skybox_Uniforms.h" />
     <ClInclude Include="src\Engine\Shader_Terrain_Uniforms.h" />

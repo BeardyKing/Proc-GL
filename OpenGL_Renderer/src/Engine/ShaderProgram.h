@@ -50,6 +50,8 @@ public :
 	void SetMat3(const glm::mat3& value, const std::string& name);
 	void SetMat4(const glm::mat4& value, const std::string& name);
 
+	void SetRenderTexture(GLuint fbo_render_texture);
+
 	glm::vec2 GetTextureScale();
 	glm::vec3 GetBaseColor();
 
