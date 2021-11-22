@@ -128,8 +128,8 @@ void FPSCamera::OnUpdate(double deltaTime)
 	if (w) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
 	else if (s) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
 
-	if (a) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
-	else if (d) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
+	if (a) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
+	else if (d) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
 
 	if (r) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetUp()); }
 	else if (f) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetUp()); }

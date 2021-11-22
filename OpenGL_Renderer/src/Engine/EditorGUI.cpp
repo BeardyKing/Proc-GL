@@ -52,11 +52,23 @@ void EditorGUI::RenderScene(const GLuint& renderTexture) {
     }
 
     {
+        static ImVec2 f_uv_min = ImVec2(0.0f, 0.0f);
+        static ImVec2 f_uv_max = ImVec2(1.0f, 1.0f);
+
+		/*ImGui::SliderFloat2("f_uv_min_DRAG", &f_uv_min.x, -2.0f, 2.0f);
+		ImGui::NextColumn();
+
+		ImGui::SliderFloat2("f_uv_max_DRAG", &f_uv_max.x, -20.0f, 2.0f);
+		ImGui::NextColumn();*/
+
         ImTextureID tex = (void*)renderTexture; // Texture from framebuffer
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
-        ImVec2 uv_min = ImVec2(0.0f, 0.0f);
-        ImVec2 uv_max = ImVec2(1.0f, -1.0f);
+       /* ImVec2 uv_min = ImVec2(-1.0f, -1.0f);
+        ImVec2 uv_max = ImVec2(1.0f, 1.0f);*/
+        ImVec2 uv_min = f_uv_min;
+        ImVec2 uv_max = f_uv_max;
+
         ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);
         ImGui::Image(tex, windowSize, uv_min, uv_max, tint_col, border_col);
@@ -184,7 +196,7 @@ void EditorGUI::RenderConsole() {
 }
 
 void EditorGUI::RenderMainMenuBar() {
-    if (ImGui::BeginMainMenuBar()) {
+    /*if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("File")) {
             if (ImGui::MenuItem("ITEM", "CTRL+O")) {
             }
@@ -195,7 +207,7 @@ void EditorGUI::RenderMainMenuBar() {
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
-    }
+    }*/
 }
 
 void EditorGUI::UpdateFrameBufferTextureSize(GLuint renderTexture) {

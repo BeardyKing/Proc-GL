@@ -34,6 +34,8 @@ public:
 	float GetZNear() { return zNear; }
 	float GetZFar() { return zFar; }
 
+	glm::vec2 m_mouseSpeedDelta = glm::vec2(-2,2);
+
 protected:
 	Camera();
 
@@ -55,7 +57,6 @@ protected:
 	
 	float m_MoveSpeed = 5;
 	float m_MoveSpeedDelta = 4;
-	glm::vec2 m_mouseSpeedDelta = glm::vec2(2);
 
 	float zNear { 0.1f };
 	float zFar{ 800.0f };

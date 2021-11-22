@@ -37,6 +37,8 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(35, 9, 6);
         entity->getComponent<FPSCamera>().Rotate(260.0f,-45.0f);
         entity->getComponent<FPSCamera>().SetZNear(0.5f);
+        entity->getComponent<FPSCamera>().setFOV(-45); // TO FIX ISSUE WITH GL_MIRRORED_REPEAT
+
         G_GetManager()->addEntity(entity);
         camera = &entity->getComponent<FPSCamera>();
 
@@ -614,6 +616,9 @@ namespace test {
 		entity->getComponent<ShaderProgram>().LoadTextures();
         entity->addComponent<Mesh>();
 		entity->getComponent<Mesh>().Generate_primitive_Plane();
+        entity->getComponent<ShaderProgram>().SetFloat(10.0f, "blurStrength_0");
+        entity->getComponent<ShaderProgram>().SetFloat(2.147f, "blurStrength_1");
+        entity->getComponent<ShaderProgram>().SetFloat(6.712f, "blurStrength_2");
 		post_processing = entity;
         post_processing->isActive(false);
 
@@ -709,7 +714,7 @@ namespace test {
         fbo.UnBind();
 
         // POST PROCESSING
-
+        // blur 1
 		fbo_post_process.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -717,6 +722,7 @@ namespace test {
 		glDepthFunc(GL_LESS);    
         post_processing->isActive(true);
         post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "renderPassCount");
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 		post_processing->OnRender();
@@ -734,17 +740,60 @@ namespace test {
 		post_processing->OnRender();
 		post_processing->isActive(false);
 		fbo_post_process2.UnBind();
-
-
-
-		/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		// blur 2
 		fbo_post_process.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "renderPassCount");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process2.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+		post_processing->OnRender();
+		post_processing->isActive(false);
+		fbo_post_process.UnBind();
+
+		fbo_post_process2.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 		post_processing->OnRender();
-		fbo_post_process.UnBind();*/
+		post_processing->isActive(false);
+		fbo_post_process2.UnBind();
+		// blur 3
+		fbo_post_process.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetInt(2, "renderPassCount");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process2.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+		post_processing->OnRender();
+		post_processing->isActive(false);
+		fbo_post_process.UnBind();
+
+		fbo_post_process2.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+		post_processing->OnRender();
+		post_processing->isActive(false);
+		fbo_post_process2.UnBind();
+
+        
 
     }
 

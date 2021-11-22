@@ -19,6 +19,7 @@ namespace uniform {
 		void SetRenderTexture(GLuint fbo_render_texture);
 	public: //helperFunction
 		void SetInt(const int& value, const std::string& name) override;
+		void SetFloat(const float& value, const std::string& name) override;
 		void SetBaseColor(glm::vec3 _colour) override;
 	private:
 		glm::vec3 _baseColor = glm::vec3(1.0f, 0.38f, 0.38f);
@@ -33,6 +34,11 @@ namespace uniform {
 		glm::vec2 direction = glm::vec2(1);
 
 		int isVertical = 0;
+		int renderPassCount = 0;
+
+		float blurStrength_0 = 1;
+		float blurStrength_1 = 1;
+		float blurStrength_2 = 1;
 
 	};
 
@@ -45,6 +51,30 @@ namespace uniform {
 	void Shader_Post_Processing_Uniforms::SetInt(const int& value, const std::string& name) {
 		if (name == "isVertical") {
 			isVertical = value;
+		}
+		if (name == "renderPassCount") {
+			renderPassCount = value;
+		}
+		if (name == "blurStrength_0") {
+			blurStrength_0 = value;
+		}
+		if (name == "blurStrength_1") {
+			blurStrength_1 = value;
+		}
+		if (name == "blurStrength_2") {
+			blurStrength_2 = value;
+		}
+	}
+
+	void Shader_Post_Processing_Uniforms::SetFloat(const float& value, const std::string& name) {
+		if (name == "blurStrength_0") {
+			blurStrength_0 = value;
+		}
+		if (name == "blurStrength_1") {
+			blurStrength_1 = value;
+		}
+		if (name == "blurStrength_2") {
+			blurStrength_2 = value;
 		}
 	}
 
@@ -75,20 +105,21 @@ namespace uniform {
 
 		_shader.setUniform("threshold"		, threshold);
 		_shader.setUniform("strength"		, strength);
-		_shader.setUniform("radius"			, radius);
+		_shader.setUniform("blurStrength_0"			, blurStrength_0);
+		_shader.setUniform("blurStrength_1"			, blurStrength_1);
+		_shader.setUniform("blurStrength_2"			, blurStrength_2);
 		if (isVertical == 0){
 			direction = glm::vec2(1.0f, 0.0f);
 			resolution = cam->getComponent<FPSCamera>().ImGuiWindowSize.x;
-			std::cout << "IS VERT FALSE" << std::endl;
 		}
 		else if( isVertical == 1){
 			direction = glm::vec2(0.0f, 1.0f);
 			resolution = cam->getComponent<FPSCamera>().ImGuiWindowSize.y;
-			std::cout << "IS VERT TRUE" << std::endl;
 		}
 		_shader.setUniform("resolution"		, resolution);
 		_shader.setUniform("direction"		, direction);
 		_shader.setUniform("isVertical"		, isVertical);
+		_shader.setUniform("renderPassCount", renderPassCount);
 
 
 		
@@ -114,10 +145,20 @@ namespace uniform {
 
 
 
-		ImGui::SliderFloat("strength", &strength, 0.0f, 100.0f);
+		ImGui::SliderFloat("strength", &strength, 0.0f, 5.0f);
 		ImGui::NextColumn();
 
 		ImGui::SliderFloat("radius", &radius, -10.0f, 10.0f);
+		ImGui::NextColumn(); 
+
+		ImGui::SliderFloat("blurStrength_0", &blurStrength_0, 0.0f, 10.0f);
+		ImGui::NextColumn(); 
+		ImGui::SliderFloat("blurStrength_1", &blurStrength_1, 0.0f, 10.0f);
+		ImGui::NextColumn(); 
+		ImGui::SliderFloat("blurStrength_2", &blurStrength_2, 0.0f, 10.0f);
+		ImGui::NextColumn();
+
+		ImGui::SliderInt("renderPassCount", &renderPassCount, -10.0f, 10.0f);
 		ImGui::NextColumn();
 
 
