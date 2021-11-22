@@ -30,6 +30,11 @@ GLuint FrameBuffer::GetRenderBuffer() {
     return m_renderBuffer;
 }
 
+GLuint FrameBuffer::GetDepthBuffer()
+{
+    return m_depthBuffer;
+}
+
 void FrameBuffer::DeleteFrameBuffer() {
     glDeleteBuffers(GL_FRAMEBUFFER, &m_frameBuffer);
 }

@@ -8,8 +8,10 @@ in VS_OUT {
     vec4 FragPosLightSpace;
 } fs_in;
 
-uniform sampler2D screenTexture;
+uniform sampler2D rendertextureColor;
+uniform sampler2D rendertextureDepth;
 
 void main(){ 
-    FragColor = texture(screenTexture, fs_in.TexCoords) * vec4(1,0,1,1);
+    FragColor = texture(rendertextureColor, fs_in.TexCoords) * vec4(1,0,1,1);
+    FragColor = vec4(vec3(texture(rendertextureDepth, fs_in.TexCoords).r), 1) ;//* vec4(1,0,1,1);
 }

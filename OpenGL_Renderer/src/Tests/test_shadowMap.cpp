@@ -659,6 +659,7 @@ namespace test {
 	void test_shadowMap::OnRender() {
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
+            fbo.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_render_pass.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_post_process.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
@@ -706,32 +707,20 @@ namespace test {
         fbo.UnBind();
 
         // POST PROCESSING
-        // 
-		fbo_post_process.Bind(); // DISABLED FOR SSR TESTING
+
+		fbo_post_process.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glEnable(GL_DEPTH_TEST);  // We want depth test !
-		glDepthFunc(GL_LESS);     // We want to get the nearest pixels
+		glEnable(GL_DEPTH_TEST); 
+		glDepthFunc(GL_LESS);    
         post_processing->isActive(true);
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
+        post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+        post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_render_pass.GetDepthBuffer());
 		post_processing->OnRender();
 
         post_processing->isActive(false);
         fbo_post_process.UnBind();
-
-  //      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //      fbo_post_process.Bind();
-  //      post_processing->isActive(true);
-		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, fbo.GetRenderBuffer());
-  //      //post_processing->getComponent<ShaderProgram>().setUniformSampler("screenTexture", 0);
-  //      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //      post_processing->OnRender();
-
-  //      post_processing->isActive(false);
-  //      fbo_post_process.UnBind();
-
-
     }
 
     void test_shadowMap::OnExit() {

@@ -45,14 +45,23 @@ namespace uniform {
 	void Shader_Post_Processing_Uniforms::SetUniformCustom(ShaderProgram& _shader){
 		_shader.use();
 		
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, render_texture[0]); 
+		if (render_texture[0]){
+			glActiveTexture(GL_TEXTURE0 + 0);
+			glBindTexture(GL_TEXTURE_2D, render_texture[0]); 
+		}
+
+		if (render_texture[1]) {
+			glActiveTexture(GL_TEXTURE0 + 1);
+			glBindTexture(GL_TEXTURE_2D, render_texture[1]);
+		}
 
 		_shader.setUniform("lightCol", _baseColor);
 		_shader.setUniform("textureScale", glm::vec2(1));
 
-		_shader.setUniformSampler("screenTexture", 0);		// 0 = albedo
-
+		_shader.setUniformSampler("rendertextureColor", 0);		// 0 = albedo
+		_shader.setUniformSampler("rendertextureDepth", 1);		// 0 = albedo
+		
+		render_texture.clear();
 	}
 
 	void Shader_Post_Processing_Uniforms::OnImGuiRender() {

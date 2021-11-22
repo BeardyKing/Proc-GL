@@ -122,7 +122,7 @@ namespace uniform {
 
 		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		shader.setUniformSampler("normalMap",		1);		// 1 = normal
-		shader.setUniformSampler("metallicMap",	2);		// 2 = metalic
+		shader.setUniformSampler("metallicMap",		2);			// 2 = metalic
 		shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
 		shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
 		shader.setUniformSampler("shadowMap",		5);		// 5 = shadow

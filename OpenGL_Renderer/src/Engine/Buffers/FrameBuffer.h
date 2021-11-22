@@ -17,6 +17,7 @@ public:
 
 	GLuint GetFrameBuffer();
 	GLuint GetRenderBuffer();
+	GLuint GetDepthBuffer();
 
 private:
 	GLuint m_frameBuffer;
