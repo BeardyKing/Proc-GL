@@ -714,9 +714,13 @@ namespace test {
 		glEnable(GL_DEPTH_TEST); 
 		glDepthFunc(GL_LESS);    
         post_processing->isActive(true);
+        post_processing->getComponent<ShaderProgram>().SetInt(0, "isVertical");
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
-        post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_render_pass.GetDepthBuffer());
+		post_processing->OnRender();
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 		post_processing->OnRender();
 
         post_processing->isActive(false);
@@ -767,7 +771,8 @@ namespace test {
 
         ImGui::End();
 
-        editor->RenderScene(fbo.GetRenderBuffer());
+        //editor->RenderScene(fbo.GetRenderBuffer());
+        editor->RenderScene(fbo_post_process.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

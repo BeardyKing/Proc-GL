@@ -208,9 +208,9 @@ namespace uniform {
 				normalMap_Image_Scalar = (normalMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
+
 			ImGui::SameLine();
 			ImGui::Selectable("Normal Map");
-
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##normal_scalar", &normal_scalar, 0.3f, 15.0f);
 			ImGui::NextColumn();
@@ -221,9 +221,9 @@ namespace uniform {
 				metallicMap_Image_Scalar = (metallicMap_Image_Scalar == 1) ? 10 : 1;
 			}
 
+
 			ImGui::SameLine();
 			ImGui::Selectable("Metallic Map");
-
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##Metallic_scalar", &metallic_scalar, 0.0f, 1.0f);
 			ImGui::NextColumn();

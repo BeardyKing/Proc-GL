@@ -17,15 +17,22 @@ namespace uniform {
 
 		void LoadTextures(Entity& _shader);
 		void SetRenderTexture(GLuint fbo_render_texture);
-
 	public: //helperFunction
+		void SetInt(const int& value, const std::string& name) override;
 		void SetBaseColor(glm::vec3 _colour) override;
 	private:
-		glm::vec3 _baseColor = glm::vec3(1.0f,0.38f,0.38f);
+		glm::vec3 _baseColor = glm::vec3(1.0f, 0.38f, 0.38f);
 		std::unique_ptr <Texture2D[]> m_pbr_textures;
 		std::vector<GLuint>render_texture;
 		int numberOfTextures = 0;
-		
+
+		float threshold = 1.0f;
+		float strength = 1.0f;
+		float resolution = 512.0f;
+		float radius = 1.0f;
+		glm::vec2 direction = glm::vec2(1);
+
+		int isVertical = 0;
 
 	};
 
@@ -35,6 +42,11 @@ namespace uniform {
 
 	void Shader_Post_Processing_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
 
+	void Shader_Post_Processing_Uniforms::SetInt(const int& value, const std::string& name) {
+		if (name == "isVertical") {
+			isVertical = value;
+		}
+	}
 
 	void Shader_Post_Processing_Uniforms::SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 		_shader.setUniform("model", model);
@@ -58,6 +70,16 @@ namespace uniform {
 		_shader.setUniform("lightCol", _baseColor);
 		_shader.setUniform("textureScale", glm::vec2(1));
 
+		_shader.setUniform("threshold"		, threshold);
+		_shader.setUniform("strength"		, strength);
+		_shader.setUniform("resolution"		, resolution);
+		_shader.setUniform("radius"			, radius);
+		_shader.setUniform("direction"		, direction);
+		_shader.setUniform("isVertical"		, isVertical);
+
+
+		
+
 		_shader.setUniformSampler("rendertextureColor", 0);		// 0 = albedo
 		_shader.setUniformSampler("rendertextureDepth", 1);		// 0 = albedo
 		
@@ -66,6 +88,42 @@ namespace uniform {
 
 	void Shader_Post_Processing_Uniforms::OnImGuiRender() {
 		ImGui::Indent();
+
+		/*ImGui::SameLine();
+		ImGui::Selectable("isVertical");
+		ImGui::NextColumn();
+		ImGui::SliderInt("##isVertical", &isVertical, 0, 1);
+		ImGui::NextColumn();*/
+
+		ImGui::Selectable("threshold");
+		ImGui::NextColumn();
+		ImGui::SliderFloat("##threshold", &threshold, 0.0f, 100.0f);
+		ImGui::NextColumn();
+
+		ImGui::SameLine();
+		ImGui::Selectable("strength");
+		ImGui::NextColumn();
+		ImGui::SliderFloat("##strength", &strength, 0.0f, 100.0f);
+		ImGui::NextColumn();
+
+		ImGui::SameLine();
+		ImGui::Selectable("resolution");
+		ImGui::NextColumn();
+		ImGui::SliderFloat("##resolution", &resolution, 0.0f, 3.0f);
+		ImGui::NextColumn();
+
+		ImGui::SameLine();
+		ImGui::Selectable("radius");
+		ImGui::NextColumn();
+		ImGui::SliderFloat("##radius", &radius, 0.0f, 1000.0f);
+		ImGui::NextColumn();
+
+		ImGui::SameLine();
+		ImGui::Selectable("direction");
+		ImGui::NextColumn();
+		ImGui::SliderFloat2("##direction", &direction.x, -100.0f, 100.0f);
+		ImGui::NextColumn();
+
 		if (ImGui::CollapsingHeader("public Uniforms", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::ColorPicker3("Base Color Picker", &_baseColor.r);
 		}
