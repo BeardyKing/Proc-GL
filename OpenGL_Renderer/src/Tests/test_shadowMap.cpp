@@ -653,12 +653,7 @@ namespace test {
 
 	void test_shadowMap::OnUpdate(double deltaTime) {
         G_GetManager()->OnUpdate(deltaTime);
-        //e_water->getComponent<ShaderProgram>().Set
-		/*frameTime -= (float)deltaTime;
-		while (frameTime < 0.0f) {
-			currentFrame = (currentFrame + 1) % e_animated_mesh->getComponent<MeshAnimation>().GetFrameCount();
-			frameTime += 1.0f / e_animated_mesh->getComponent<MeshAnimation>().GetFrameRate();
-		}*/
+        
 
     }
     bool once = false;
@@ -677,6 +672,9 @@ namespace test {
         }
 
         depthTexturesThisFrame.clear();
+        
+        #pragma region SHADOW_DEPTH_PASS
+
         for (auto& buffer : depthBuffers) {
             buffer.Bind();
             G_GetManager()->OnRender();
@@ -684,6 +682,10 @@ namespace test {
             depthTexturesThisFrame.emplace_back(buffer.GetDepthBuffer());
             buffer.UnBind();
         }
+
+        #pragma endregion
+
+        #pragma region WATER_DEPTH_PASS
 
         {
             fbo_render_pass.Bind(); // DISABLED FOR SSR TESTING
@@ -703,6 +705,10 @@ namespace test {
             fbo_render_pass.UnBind();
         }
 
+        #pragma endregion
+        
+        #pragma region MAIN_RENDER_PASS
+
 		glEnable(GL_DEPTH_TEST);  // We still want depth test
 		glDepthFunc(GL_LEQUAL);   // EQUAL should work, too. (Only draw pixels if they are the closest ones)
 
@@ -712,6 +718,14 @@ namespace test {
         G_GetManager()->OnRender();
         
         fbo.UnBind();
+
+        #pragma endregion
+
+        #pragma region POST_PROCESS
+
+        #pragma region POST_PROCESS_DEPTH_OF_FIELD
+
+
 
         // POST PROCESSING
         // blur 1
@@ -797,6 +811,10 @@ namespace test {
 		post_processing->isActive(false);
 		fbo_post_process2.UnBind();
 
+        #pragma endregion
+
+        #pragma region POST_PROCESS_VEGNETTE
+
 		fbo_post_process.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
@@ -815,7 +833,9 @@ namespace test {
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "blendPass");
 		fbo_post_process.UnBind();
 
+        #pragma endregion
         
+        #pragma endregion
 
     }
 
