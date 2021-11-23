@@ -721,6 +721,10 @@ namespace test {
 		glEnable(GL_DEPTH_TEST); 
 		glDepthFunc(GL_LESS);    
         post_processing->isActive(true);
+        post_processing->getComponent<ShaderProgram>().SetInt(1, "isDepthOfField");
+        post_processing->getComponent<ShaderProgram>().SetInt(0, "isVignette");
+        post_processing->getComponent<ShaderProgram>().SetInt(0, "isColorCorrection");
+
         post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "renderPassCount");
         post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
@@ -793,6 +797,24 @@ namespace test {
 		post_processing->isActive(false);
 		fbo_post_process2.UnBind();
 
+		fbo_post_process.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isDepthOfField");
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVignette");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isColorCorrection");
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process2.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process2.GetRenderBuffer());
+		post_processing->OnRender();
+		post_processing->isActive(false);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "blendPass");
+		fbo_post_process.UnBind();
+
         
 
     }
@@ -842,7 +864,7 @@ namespace test {
         ImGui::End();
 
         //editor->RenderScene(fbo.GetRenderBuffer());
-        editor->RenderScene(fbo_post_process2.GetRenderBuffer());
+        editor->RenderScene(fbo_post_process.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

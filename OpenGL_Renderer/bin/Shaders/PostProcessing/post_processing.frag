@@ -13,72 +13,81 @@ in VS_OUT {
 uniform float resolution;
 uniform float radius;
 uniform vec2 direction;
+uniform vec2 screen_resolution;
 uniform int isVertical;
 uniform float strength;
-uniform bool blendPass;
 uniform int renderPassCount;
 uniform float blurStrength_0;
 uniform float blurStrength_1;
 uniform float blurStrength_2;
 
+uniform float vignette_pow_intensity;
+uniform float vignette_multiply_intensity;
+
+uniform bool isColorCorrection;
+uniform bool isVignette;
+uniform bool isDepthOfField;
+
 vec4 blur5(sampler2D image, vec2 uv, vec2 resolution, vec2 direction);
 vec4 blur9(sampler2D image, vec2 uv, vec2 resolution, vec2 direction);
 vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction);
 
+void PostProcess_Vignette();
+void PostProcess_Depth_Of_Field();
+
 uniform sampler2D rendertextureColor;
 uniform sampler2D rendertextureDepth;
+
+uniform sampler2D rendertextureFinalColour;
+uniform sampler2D rendertextureFinalBlur;
 const float scaleFactors [7] = float [](0.006 , 0.061, 0.242, 0.383, 0.242, 0.061, 0.006);
+
 void main(){ 
-    //FragColor = texture(rendertextureColor, fs_in.TexCoords) * vec4(1,0,1,1);
-    //FragColor = vec4(vec3(texture(rendertextureDepth, fs_in.TexCoords).r), 1) ;//* vec4(1,0,1,1);
+  if(isDepthOfField){
+    PostProcess_Depth_Of_Field();
+  }
+  if(isVignette){
+     PostProcess_Vignette();
+  }
+  if(isColorCorrection){
 
-   
+  }
+}
 
-	// vec4    sum = texture2D( rendertextureColor , vec2( uv.x - 4.0*blur*hstep , uv.y - 4.0*blur*vstep )) * 0.0162162162;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x - 3.0*blur*hstep , uv.y - 3.0*blur*vstep )) * 0.0540540541;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x - 2.0*blur*hstep , uv.y - 2.0*blur*vstep )) * 0.1216216216;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x - 1.0*blur*hstep , uv.y - 1.0*blur*vstep )) * 0.1945945946;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x , uv.y ))                                   * 0.2270270270;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x + 1.0*blur*hstep , uv.y + 1.0*blur*vstep )) * 0.1945945946;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x + 2.0*blur*hstep , uv.y + 2.0*blur*vstep )) * 0.1216216216;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x + 3.0*blur*hstep , uv.y + 3.0*blur*vstep )) * 0.0540540541;
-    //         sum += texture2D( rendertextureColor , vec2( uv.x + 4.0*blur*hstep , uv.y + 4.0*blur*vstep )) * 0.0162162162;
+void PostProcess_Vignette(){
+  vec2 uv = gl_FragCoord.xy / screen_resolution.xy;
 
-	// fragColor = vec4( sum.rgb , 1.0 );
-    vec4 out_blur = texture(rendertextureColor, fs_in.TexCoords);
-    vec2 direction_amm = direction;
-    float dist = (texture(rendertextureDepth, fs_in.TexCoords).r);
-    dist+= radius;
-    dist = clamp(dist,0 , 1);
-        // direction_amm = direction_amm * dist;
-        direction_amm.x = mix(direction_amm.x * strength, 0, dist);
-        direction_amm.y = mix(direction_amm.y * strength, 0, dist);
-    // if(texture(rendertextureDepth, fs_in.TexCoords).r > strength){
-    // }
-        // if(renderPassCount == 0){
-        //     out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_0 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
-        // }
-        // if(renderPassCount == 1){
-        //     out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_1 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
-        // }
-        // if(renderPassCount == 2){
-        //     out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), (direction_amm * blurStrength_2 * dist) * texture(rendertextureDepth, fs_in.TexCoords).r + strength);
-        // }
-         if(renderPassCount == 0){
-            out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_0 * direction_amm);
-        }
-        if(renderPassCount == 1){
-            out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_1 * direction_amm );
-        }
-        if(renderPassCount == 2){
-            out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_2 * direction_amm);
-        }
-    // if(blendPass){
+  uv *=  1.0 - uv.yx;   //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
 
-    // }
-    fragColor = out_blur; //* (vec4(vec3(texture(rendertextureDepth, fs_in.TexCoords).r), 1) * strength);
-    // fragColor = texture2D( rendertextureColor, fs_in.TexCoords) + (out_blur * strength);
-    //fragColor = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), direction);
+  float vig = uv.x*uv.y * vignette_multiply_intensity; // multiply with sth for intensity
+
+  vig = pow(vig, vignette_pow_intensity); // change pow for modifying the extend of the  vignette
+  vig = clamp(vig,0,1);
+
+  fragColor = texture(rendertextureFinalBlur, fs_in.TexCoords);
+  fragColor *= vec4(vig);
+}
+
+void PostProcess_Depth_Of_Field(){
+  vec4 out_blur = texture(rendertextureColor, fs_in.TexCoords);
+  vec2 direction_amm = direction;
+  float dist = (texture(rendertextureDepth, fs_in.TexCoords).r);
+  dist+= radius;
+  dist = clamp(dist,0 , 1);
+
+  direction_amm.x = mix(direction_amm.x * strength, 0, dist);
+  direction_amm.y = mix(direction_amm.y * strength, 0, dist);
+
+  if(renderPassCount == 0){
+    out_blur = blur5(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_0 * direction_amm);
+  }
+  if(renderPassCount == 1){
+    out_blur = blur9(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_1 * direction_amm );
+  }
+  if(renderPassCount == 2){
+    out_blur = blur13(rendertextureColor,fs_in.TexCoords, vec2(resolution), blurStrength_2 * direction_amm);
+  }
+  fragColor = out_blur; 
 }
 
 vec4 blur5(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
@@ -117,49 +126,3 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
   color += texture2D(image, uv - (off3 / resolution)) * 0.010381362401148057;
   return color;
 }
-
-// for(int i = 0; i < 7; i++ ) {
-//         for(int j = 0; j < 7; j++ ) {
-//             // vec2 offset = vec2(dFdx(fs_in.TexCoords).x, dFdy(fs_in.TexCoords).y) * (i - 3);
-//             vec2 offset = vec2(dFdx(fs_in.TexCoords).x * (i - 3), dFdy(fs_in.TexCoords).y * (j - 3));
-//             vec4 tmp = texture2D(rendertextureColor , fs_in.TexCoords.xy + offset);
-//             FragColor += tmp * scaleFactors[i];
-//         }
-//     }
-
-// BLOOM
-// #version 330 core
-// uniform sampler2D colorTexture;
-// uniform float resolution;
-// uniform float radius;
-// uniform vec2 direction;
-// in vec2 uv;
-// out vec4 fragColor;
-// void main()
-// {
-// 	float blur = radius/resolution;
-// 	float hstep = direction.x;
-// 	float vstep = direction.y;
-
-// 	vec4 sum = texture2D( colorTexture , vec2( uv.x - 4.0*blur*hstep , uv.y - 4.0*blur*vstep )) * 0.0162162162;
-// 	sum += texture2D( colorTexture , vec2( uv.x - 3.0*blur*hstep , uv.y - 3.0*blur*vstep )) * 0.0540540541;
-// 	sum += texture2D( colorTexture , vec2( uv.x - 2.0*blur*hstep , uv.y - 2.0*blur*vstep )) * 0.1216216216;
-// 	sum += texture2D( colorTexture , vec2( uv.x - 1.0*blur*hstep , uv.y - 1.0*blur*vstep )) * 0.1945945946;
-// 	sum += texture2D( colorTexture , vec2( uv.x , uv.y )) * 0.2270270270;
-// 	sum += texture2D( colorTexture , vec2( uv.x + 1.0*blur*hstep , uv.y + 1.0*blur*vstep )) * 0.1945945946;
-// 	sum += texture2D( colorTexture , vec2( uv.x + 2.0*blur*hstep , uv.y + 2.0*blur*vstep )) * 0.1216216216;
-// 	sum += texture2D( colorTexture , vec2( uv.x + 3.0*blur*hstep , uv.y + 3.0*blur*vstep )) * 0.0540540541;
-// 	sum += texture2D( colorTexture , vec2( uv.x + 4.0*blur*hstep , uv.y + 4.0*blur*vstep )) * 0.0162162162;
-
-// 	fragColor = vec4( sum.rgb , 1.0 );
-// }
-// BLOOM
-/*
-	// the uniforms for the two gaussian blur passes
-	glUniform1f( u_resolution , width );
-	glUniform2f( u_direction , 1.0f , 0.0f );
-	// draw horizontal
-	glUniform1f( u_resolution , height );
-	glUniform2f( u_direction , 0.0f , 1.0f );
-	// draw vertical
-*/

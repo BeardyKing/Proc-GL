@@ -1,1 +1,76 @@
-﻿  OpenGL_Renderer.vcxproj -> H:\Dev\Proc-GL\OpenGL_Renderer\bin\OpenGL_Renderer.exe
+﻿  test_shadowMap.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(569,69): warning C4305: 'argument': truncation from 'double' to 'const T'
+          with
+          [
+              T=float
+          ]
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(581,65): warning C4305: '=': truncation from 'double' to 'float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(836,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(837,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(843,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(844,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(848,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(849,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(853,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(854,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(859,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(579): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  1 of 4861 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    108 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewVertexAttribIPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewUniformMatrix4fv' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewActiveTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewObjectLabel' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
+LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
+LINK : warning LNK4286: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
+LINK : warning LNK4286: symbol '___glewFramebufferTexture2D' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
+LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
+LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
+LINK : warning LNK4286: symbol '___glewUniform4f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewLinkProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewDeleteShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform1f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform2f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUniform1i' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCreateShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewGetShaderiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
+LINK : warning LNK4286: symbol '___glewCheckFramebufferStatus' defined in 'glew32s.lib(glew.obj)' is imported by 'test_defaultTest.obj'
+LINK : warning LNK4286: symbol '___glewGenerateMipmap' defined in 'glew32s.lib(glew.obj)' is imported by 'Texture2D.obj'
+LINK : warning LNK4286: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewBlendEquationSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewBlendEquation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewBlendFuncSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewGetAttribLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewDrawElementsBaseVertex' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewBindSampler' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'H:\Dev\Proc-GL\OpenGL_Renderer\bin\glew_static.pdb'; linking object as if no debug info
+  OpenGL_Renderer.vcxproj -> H:\Dev\Proc-GL\OpenGL_Renderer\bin\OpenGL_Renderer.exe
