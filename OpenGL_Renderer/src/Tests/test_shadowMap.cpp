@@ -38,6 +38,8 @@ namespace test {
         entity->getComponent<FPSCamera>().Rotate(260.0f,-45.0f);
         entity->getComponent<FPSCamera>().SetZNear(0.5f);
         entity->getComponent<FPSCamera>().setFOV(-45); // TO FIX ISSUE WITH GL_MIRRORED_REPEAT
+        entity->addComponent<script_simplebehaviours>();
+        entity->getComponent<script_simplebehaviours>().SetCameraMoveActive(true);
 
         G_GetManager()->addEntity(entity);
         camera = &entity->getComponent<FPSCamera>();

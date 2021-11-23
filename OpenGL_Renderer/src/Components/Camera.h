@@ -34,6 +34,15 @@ public:
 	float GetZNear() { return zNear; }
 	float GetZFar() { return zFar; }
 
+	void SetTarget(glm::vec3 in_target) { mTarget = in_target; };
+	void SetLook(glm::vec3 in_target) { 
+		mLook = in_target; 
+		mTarget = entity->getComponent<Transform>().position + mLook;
+	};
+
+	bool isLookingAtTargetPosition = false;
+	glm::vec3 inputTargetPosition = glm::vec3(0);
+
 	glm::vec2 m_mouseSpeedDelta = glm::vec2(-2,2);
 
 protected:
@@ -74,6 +83,9 @@ public:
 	virtual void OnUpdate(double deltaTime);
 	virtual void OnImGuiRender();
 	virtual bool init();
+
+	void SetRotate(float yaw, float pitch);
+	void SetLookAt(const glm::vec3& target);
 
 	glm::vec3 GetRotation();
 

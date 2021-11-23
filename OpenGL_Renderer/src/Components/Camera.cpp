@@ -20,9 +20,16 @@ Camera::Camera()
 {
 
 }
-
 glm::mat4 Camera::GetViewMatrix()const {
-	return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
+	if (isLookingAtTargetPosition) {
+		glm::vec3 v = inputTargetPosition;
+		//v.y = 0;
+		v.x = 0;
+		return glm::lookAt(entity->getComponent<Transform>().position, v, glm::vec3(0,1,0));
+	}
+	else {
+		return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
+	}
 }
 
 const glm::vec3& Camera::GetForward()	const { //forward
@@ -64,6 +71,7 @@ ImGuiWindowSize(10,10)
 
 void FPSCamera::SetPosition(const glm::vec3& position){
 	entity->getComponent<Transform>().position = position;
+	UpdateCameraVectors();
 }
 
 void FPSCamera::Move(const glm::vec3& offsetPos) {
@@ -178,6 +186,17 @@ bool FPSCamera::init(){
 	//entity->getComponent<Transform>().position = glm::vec3(0.0f,0.0f,-18.0f);
 	std::cout << "init from Cam" << std::endl;
 	return true;
+}
+void FPSCamera::SetRotate(float yaw, float pitch) {
+	mYaw = glm::radians(yaw);
+	mPitch = glm::radians(pitch);
+	//mYaw = yaw;
+	//mPitch = pitch;
+
+
+	// constrain pitch
+	//mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
+	UpdateCameraVectors();
 }
 
 void FPSCamera::Rotate(float yaw, float pitch) {

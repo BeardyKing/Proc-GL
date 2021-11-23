@@ -1,4 +1,7 @@
 #include "script_simpleBehaviours.h"
+#define GLM_ENABLE_EXPERIMENTAL
+
+#include <glm/gtx/matrix_decompose.hpp>
 
 script_simplebehaviours::script_simplebehaviours() {}
 script_simplebehaviours::~script_simplebehaviours() {
@@ -25,12 +28,70 @@ void script_simplebehaviours::OnUpdate(double deltaTime) {
 		entity->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
 		entity->getComponent<Transform>().position.y = 8 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 	}
+	if (isMovingOnCameraPath == true) {
+		IsMovingOnCameraPath(deltaTime);
+	}
 }
+
+glm::vec3 lerp(glm::vec3 x, glm::vec3 y, float t) {
+	return x * (1.f - t) + y * t;
+}
+
+std::vector<glm::vec3> targetLookAt
+{
+	glm::vec3(0),
+	glm::vec3(4),
+	glm::vec3(-4)
+};
+
+std::vector<glm::vec3> targetPositions
+{
+	glm::vec3(-40,10,10),
+	glm::vec3(40,10,10),
+	glm::vec3(10,10,40)
+};
+
+int currentTargetPos = 0;
+float next_distance = 1.0f;
+double speed = 30.0;
+float timer = 0;
+
+void script_simplebehaviours::IsMovingOnCameraPath(double deltaTime){
+	glm::vec3 currentPos = entity->getComponent<FPSCamera>().GetPosition();
+	glm::vec3 targetPos = targetPositions[currentTargetPos];
+	glm::vec3 targetLookAtPos = targetLookAt[currentTargetPos];
+	timer += deltaTime;
+	double pitch = 0.0;
+	if (glm::distance(currentPos, targetPos) < next_distance){
+		if (currentTargetPos < targetPositions.size() - 1){
+			currentTargetPos++;
+			timer = 0;
+		}
+		else{
+			currentTargetPos = 0;
+		}
+	}
+
+	entity->getComponent<FPSCamera>().isLookingAtTargetPosition = true;
+	//entity->getComponent<FPSCamera>().inputTargetPosition = targetLookAt[currentTargetPos];
+	glm::vec3 nextLookat = targetLookAt[0];
+	if (currentTargetPos < targetPositions.size()) {
+		nextLookat = targetLookAt[currentTargetPos + 1];
+	}
+	glm::vec3 tmp_lookat_target = lerp(targetLookAt[currentTargetPos], targetLookAt[currentTargetPos + 1], timer);
+	entity->getComponent<FPSCamera>().inputTargetPosition =  targetLookAt[currentTargetPos];
+	entity->getComponent<FPSCamera>().SetPosition(lerp(currentPos, targetPos, deltaTime));
+
+}
+
+
 void script_simplebehaviours::OnImGuiRender() {
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Inspector"); {
+
 		ImGui::Separator();
+		ImGui::DragFloat3("test_rotation", &test_rotation.x);
 		if (ImGui::CollapsingHeader("Behaviour", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 			ImGui::Indent();
 				ImGui::Checkbox("rotate", &rotate);
@@ -52,6 +113,11 @@ void script_simplebehaviours::OnImGuiRender() {
 void script_simplebehaviours::SetOrbitActive(bool b) {
 	orbit = b;
 }
+
+void script_simplebehaviours::SetCameraMoveActive(bool b) {
+	isMovingOnCameraPath = b;
+}
+
 
 #pragma endregion
 

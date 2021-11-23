@@ -27,6 +27,8 @@ public:
 	void SetRotationSpeed(float speed);
 
 	void SetOrbitActive(bool b);
+	void SetCameraMoveActive(bool b);
+	void IsMovingOnCameraPath(double deltaTime);
 
 private:
 		bool rotate = false;
@@ -36,8 +38,12 @@ private:
 		bool rotateZ = false;
 
 		bool orbit = false;
+		bool isMovingOnCameraPath = false;
 		float m_movingLightAngle = 90;
 		glm::vec3 centre;
+
+		glm::vec3 test_rotation = glm::vec3(0);
+
 
 
 };

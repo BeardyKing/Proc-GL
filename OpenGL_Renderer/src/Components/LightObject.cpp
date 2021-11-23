@@ -25,10 +25,7 @@ glm::mat4 LightObject::LightSpaceMatrix() {
 			near_plane, 
 			far_plane);
 
-		lightView = glm::lookAt
-		(entity->getComponent<Transform>().position, 
-			lookAtTarget, 
-			glm::vec3(0.0, 1.0, 0.0));
+		lightView = glm::lookAt (entity->getComponent<Transform>().position, lookAtTarget,  glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
 		return lightSpaceMatrix;
 }
