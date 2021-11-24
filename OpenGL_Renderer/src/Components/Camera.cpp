@@ -7,9 +7,9 @@ const float DEFAULT_FOV = 45.0f;
 // CAMERA BASE CLASS
 // --------------------------------
 
-Camera::Camera() 
-	: 
-	mTarget(glm::vec3(0.0f, 0.0f, 0.0f)), 
+Camera::Camera()
+	:
+	mTarget(glm::vec3(0.0f, 0.0f, 0.0f)),
 	mUp(glm::vec3(0.0f, 0.1f, 0.0f)),
 	mRight(0.0f, 0.0f, 0.0f),
 	WORLD_UP(0.0f, 1.0f, 0.0f),
@@ -20,27 +20,20 @@ Camera::Camera()
 {
 
 }
+
 glm::mat4 Camera::GetViewMatrix()const {
-	if (isLookingAtTargetPosition) {
-		glm::vec3 v = inputTargetPosition;
-		//v.y = 0;
-		v.x = 0;
-		return glm::lookAt(entity->getComponent<Transform>().position, v, glm::vec3(0,1,0));
-	}
-	else {
-		return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
-	}
+	return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
 }
 
 const glm::vec3& Camera::GetForward()	const { //forward
 	return mLook;
 }
 
-const glm::vec3& Camera::GetRight()	const { 
+const glm::vec3& Camera::GetRight()	const {
 	return mRight;
 }
 
-const glm::vec3& Camera::GetUp()	const { 
+const glm::vec3& Camera::GetUp()	const {
 	return mUp;
 }
 
@@ -54,7 +47,7 @@ const glm::vec3 Camera::GetPosition()const {
 // --------------------------------
 
 FPSCamera::FPSCamera(glm::vec3 position, float yaw, float pitch) :
-ImGuiWindowSize(10,10)
+	ImGuiWindowSize(10, 10)
 
 {
 	//mPosition = position;
@@ -69,9 +62,8 @@ ImGuiWindowSize(10,10)
 
 }
 
-void FPSCamera::SetPosition(const glm::vec3& position){
+void FPSCamera::SetPosition(const glm::vec3& position) {
 	entity->getComponent<Transform>().position = position;
-	UpdateCameraVectors();
 }
 
 void FPSCamera::Move(const glm::vec3& offsetPos) {
@@ -86,7 +78,7 @@ void FPSCamera::OnUpdate(double deltaTime)
 
 	if (m_mouseEnabled) {
 		_cameraFocusFlag = true;
-		return; 
+		return;
 	}
 
 	//----------------------------------//
@@ -97,13 +89,13 @@ void FPSCamera::OnUpdate(double deltaTime)
 	currentMousePos.x = ImGui::GetMousePos().x;
 	currentMousePos.y = ImGui::GetMousePos().y;
 
-	if (_cameraFocusFlag){
+	if (_cameraFocusFlag) {
 		_cameraFocusFlag = !_cameraFocusFlag;
 		m_lastMousePos = currentMousePos;
 	}
 
 	glm::vec2 mouseDelta = (m_lastMousePos - currentMousePos) / m_mouseSpeedDelta;
-	if (mouseDelta.x != 0 || mouseDelta.y != 0){
+	if (mouseDelta.x != 0 || mouseDelta.y != 0) {
 		Rotate(mouseDelta.x * static_cast<float>(deltaTime) * 30, mouseDelta.y * static_cast<float>(deltaTime) * 30);
 	}
 
@@ -133,21 +125,21 @@ void FPSCamera::OnUpdate(double deltaTime)
 		moveSpeedDelta = m_MoveSpeedDelta;
 	}
 
-	if (w) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
-	else if (s) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
+	if (w) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetForward()); }
+	else if (s) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetForward()); }
 
-	if (a) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
-	else if (d) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
+	if (a) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetRight()); }
+	else if (d) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetRight()); }
 
-	if (r) {		Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetUp()); }
-	else if (f) {	Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetUp()); }
+	if (r) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * GetUp()); }
+	else if (f) { Move((moveSpeed * moveSpeedDelta) * (float)deltaTime * -GetUp()); }
 
 	m_lastMousePos = currentMousePos;
 }
 
 void FPSCamera::OnImGuiRender()
 {
-	ImGui::Begin("Inspector"); 
+	ImGui::Begin("Inspector");
 	{
 		ImGui::Separator();
 
@@ -157,10 +149,10 @@ void FPSCamera::OnImGuiRender()
 			ImGui::DragFloat("Near plane", &zNear, 0.01f);
 			ImGui::DragFloat("Far plane", &zFar, 0.01f);
 			ImGui::Spacing();
-			ImGui::Checkbox("usingImGuiWindow",&usingImGuiWindow);
-			ImGui::DragFloat("FOV", &mFOV,0.01f);
-			ImGui::DragFloat("Move Speed", &m_MoveSpeed,0.01f);
-			ImGui::DragFloat("Move Speed Delta", &m_MoveSpeedDelta,0.01f);
+			ImGui::Checkbox("usingImGuiWindow", &usingImGuiWindow);
+			ImGui::DragFloat("FOV", &mFOV, 0.01f);
+			ImGui::DragFloat("Move Speed", &m_MoveSpeed, 0.01f);
+			ImGui::DragFloat("Move Speed Delta", &m_MoveSpeedDelta, 0.01f);
 
 			ImGui::DragFloat2("Mouse Speed", &m_mouseSpeedDelta.x, -.05f, 0.05f);
 			ImGui::Unindent();
@@ -182,21 +174,10 @@ glm::vec3 FPSCamera::GetRotation() {
 	return glm::vec3(mRoll, mPitch, mYaw);
 }
 
-bool FPSCamera::init(){
+bool FPSCamera::init() {
 	//entity->getComponent<Transform>().position = glm::vec3(0.0f,0.0f,-18.0f);
 	std::cout << "init from Cam" << std::endl;
 	return true;
-}
-void FPSCamera::SetRotate(float yaw, float pitch) {
-	mYaw = glm::radians(yaw);
-	mPitch = glm::radians(pitch);
-	//mYaw = yaw;
-	//mPitch = pitch;
-
-
-	// constrain pitch
-	//mPitch = glm::clamp(mPitch, -glm::pi<float>() / 2.0f + 0.1f, glm::pi<float>() / 2.0f - 0.1f);
-	UpdateCameraVectors();
 }
 
 void FPSCamera::Rotate(float yaw, float pitch) {
@@ -230,7 +211,7 @@ void FPSCamera::UpdateCameraVectors() {
 // ORBIT CAMERA
 // --------------------------------
 
-OrbitCamera::OrbitCamera() 
+OrbitCamera::OrbitCamera()
 	:mRadius(10.0f)
 {
 }

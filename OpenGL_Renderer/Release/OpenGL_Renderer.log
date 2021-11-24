@@ -1,11 +1,56 @@
-﻿  script_simpleBehaviours.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Components\scripts\script_simpleBehaviours.cpp(65,24): warning C4018: '<': signed/unsigned mismatch
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Components\scripts\script_simpleBehaviours.cpp(75,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  ShaderProgram.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_PBR_Uniforms.h(109,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Blinn_Phong_Uniforms.h(98,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Water_Uniforms.h(200,50): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Water_Uniforms.h(201,50): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Post_Processing_Uniforms.h(44,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Post_Processing_Uniforms.h(214,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_Post_Processing_Uniforms.h(214,58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(301,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(302,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(307,14): warning C4244: 'initializing': conversion from 'GLint' to 'GLfloat', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(308,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(58,1): warning C4316: 'uniform::Shader_Standard_Lit_Uniform': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(59): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Standard_Lit_Uniform>(const std::string &)' being compiled
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(58,1): warning C4316: 'uniform::Shader_Terrain_Uniforms': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(61): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Terrain_Uniforms>(const std::string &)' being compiled
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\Shader_UniformSetter.h(58,1): warning C4316: 'uniform::Shader_Water_Uniforms': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Engine\ShaderProgram.cpp(62): message : see reference to function template instantiation 'void uniform::ShaderMenu::RegisterShader<uniform::Shader_Water_Uniforms>(const std::string &)' being compiled
+  test_shadowMap.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(571,69): warning C4305: 'argument': truncation from 'double' to 'const T'
+          with
+          [
+              T=float
+          ]
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(583,65): warning C4305: '=': truncation from 'double' to 'float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(886,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(887,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(893,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(894,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(898,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(899,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(903,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(904,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(909,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(581): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  2 of 4885 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  9 of 4882 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    108 functions had inline decision re-evaluated but remain unchanged
+    231 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'

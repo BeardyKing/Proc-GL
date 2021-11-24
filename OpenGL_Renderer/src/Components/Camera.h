@@ -43,7 +43,7 @@ public:
 	bool isLookingAtTargetPosition = false;
 	glm::vec3 inputTargetPosition = glm::vec3(0);
 
-	glm::vec2 m_mouseSpeedDelta = glm::vec2(-2,2);
+	glm::vec2 m_mouseSpeedDelta = glm::vec2(2,2);
 
 protected:
 	Camera();

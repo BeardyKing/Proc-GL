@@ -57,30 +57,30 @@ double speed = 30.0;
 float timer = 0;
 
 void script_simplebehaviours::IsMovingOnCameraPath(double deltaTime){
-	glm::vec3 currentPos = entity->getComponent<FPSCamera>().GetPosition();
-	glm::vec3 targetPos = targetPositions[currentTargetPos];
-	glm::vec3 targetLookAtPos = targetLookAt[currentTargetPos];
-	timer += deltaTime;
-	double pitch = 0.0;
-	if (glm::distance(currentPos, targetPos) < next_distance){
-		if (currentTargetPos < targetPositions.size() - 1){
-			currentTargetPos++;
-			timer = 0;
-		}
-		else{
-			currentTargetPos = 0;
-		}
-	}
+	//glm::vec3 currentPos = entity->getComponent<FPSCamera>().GetPosition();
+	//glm::vec3 targetPos = targetPositions[currentTargetPos];
+	//glm::vec3 targetLookAtPos = targetLookAt[currentTargetPos];
+	//timer += deltaTime;
+	//double pitch = 0.0;
+	//if (glm::distance(currentPos, targetPos) < next_distance){
+	//	if (currentTargetPos < targetPositions.size() - 1){
+	//		currentTargetPos++;
+	//		timer = 0;
+	//	}
+	//	else{
+	//		currentTargetPos = 0;
+	//	}
+	//}
 
-	entity->getComponent<FPSCamera>().isLookingAtTargetPosition = true;
-	//entity->getComponent<FPSCamera>().inputTargetPosition = targetLookAt[currentTargetPos];
-	glm::vec3 nextLookat = targetLookAt[0];
-	if (currentTargetPos < targetPositions.size()) {
-		nextLookat = targetLookAt[currentTargetPos + 1];
-	}
-	glm::vec3 tmp_lookat_target = lerp(targetLookAt[currentTargetPos], targetLookAt[currentTargetPos + 1], timer);
-	entity->getComponent<FPSCamera>().inputTargetPosition =  targetLookAt[currentTargetPos];
-	entity->getComponent<FPSCamera>().SetPosition(lerp(currentPos, targetPos, deltaTime));
+	//entity->getComponent<FPSCamera>().isLookingAtTargetPosition = true;
+	////entity->getComponent<FPSCamera>().inputTargetPosition = targetLookAt[currentTargetPos];
+	//glm::vec3 nextLookat = targetLookAt[0];
+	//if (currentTargetPos < targetPositions.size()) {
+	//	nextLookat = targetLookAt[currentTargetPos + 1];
+	//}
+	//glm::vec3 tmp_lookat_target = lerp(targetLookAt[currentTargetPos], targetLookAt[currentTargetPos + 1], timer);
+	//entity->getComponent<FPSCamera>().inputTargetPosition =  targetLookAt[currentTargetPos];
+	//entity->getComponent<FPSCamera>().SetPosition(lerp(currentPos, targetPos, deltaTime));
 
 }
 

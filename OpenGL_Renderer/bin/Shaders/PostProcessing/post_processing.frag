@@ -27,6 +27,7 @@ uniform float vignette_multiply_intensity;
 uniform bool isColorCorrection;
 uniform bool isVignette;
 uniform bool isDepthOfField;
+uniform bool isFlipImage;
 
 vec4 blur5(sampler2D image, vec2 uv, vec2 resolution, vec2 direction);
 vec4 blur9(sampler2D image, vec2 uv, vec2 resolution, vec2 direction);
@@ -52,11 +53,14 @@ void main(){
   if(isColorCorrection){
 
   }
+  if(isFlipImage){
+    fragColor = texture(rendertextureFinalBlur, vec2(fs_in.TexCoords.x, 1.0 - fs_in.TexCoords.y));
+  }
 }
 
 void PostProcess_Vignette(){
   vec2 uv = gl_FragCoord.xy / screen_resolution.xy;
-
+  
   uv *=  1.0 - uv.yx;   //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
 
   float vig = uv.x*uv.y * vignette_multiply_intensity; // multiply with sth for intensity

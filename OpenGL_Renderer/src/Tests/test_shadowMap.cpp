@@ -37,7 +37,7 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(35, 9, 6);
         entity->getComponent<FPSCamera>().Rotate(260.0f,-45.0f);
         entity->getComponent<FPSCamera>().SetZNear(0.5f);
-        entity->getComponent<FPSCamera>().setFOV(-45); // TO FIX ISSUE WITH GL_MIRRORED_REPEAT
+        //entity->getComponent<FPSCamera>().setFOV(-45); // TO FIX ISSUE WITH GL_MIRRORED_REPEAT
         entity->addComponent<script_simplebehaviours>();
         entity->getComponent<script_simplebehaviours>().SetCameraMoveActive(true);
 
@@ -740,6 +740,8 @@ namespace test {
         post_processing->getComponent<ShaderProgram>().SetInt(1, "isDepthOfField");
         post_processing->getComponent<ShaderProgram>().SetInt(0, "isVignette");
         post_processing->getComponent<ShaderProgram>().SetInt(0, "isColorCorrection");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isFlipImage");
+
 
         post_processing->getComponent<ShaderProgram>().SetInt(1, "isVertical");
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "renderPassCount");
@@ -825,6 +827,8 @@ namespace test {
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "isDepthOfField");
 		post_processing->getComponent<ShaderProgram>().SetInt(1, "isVignette");
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "isColorCorrection");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isFlipImage");
+
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process2.GetRenderBuffer());
 		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
 
@@ -834,6 +838,30 @@ namespace test {
 		post_processing->isActive(false);
 		post_processing->getComponent<ShaderProgram>().SetInt(0, "blendPass");
 		fbo_post_process.UnBind();
+
+        #pragma endregion
+
+        #pragma region POST_PROCESS_FLIP_Y_TEXTURE
+
+        fbo_post_process2.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		post_processing->isActive(true);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isDepthOfField");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isVignette");
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "isColorCorrection");
+		post_processing->getComponent<ShaderProgram>().SetInt(1, "isFlipImage");
+
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetDepthBuffer());
+
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo.GetRenderBuffer());
+		post_processing->getComponent<ShaderProgram>().SetRenderTexture(fbo_post_process.GetRenderBuffer());
+		post_processing->OnRender();
+		post_processing->isActive(false);
+		post_processing->getComponent<ShaderProgram>().SetInt(0, "blendPass");
+        fbo_post_process2.UnBind();
 
         #pragma endregion
         
@@ -886,7 +914,7 @@ namespace test {
         ImGui::End();
 
         //editor->RenderScene(fbo.GetRenderBuffer());
-        editor->RenderScene(fbo_post_process.GetRenderBuffer());
+        editor->RenderScene(fbo_post_process2.GetRenderBuffer());
         editor->RenderHierarchy();
         editor->RenderProject();
         editor->RenderConsole();

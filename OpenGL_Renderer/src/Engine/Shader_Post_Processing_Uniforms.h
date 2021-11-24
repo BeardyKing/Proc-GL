@@ -44,9 +44,10 @@ namespace uniform {
 		float vignette_pow_intensity = 0.059;
 		float vignette_multiply_intensity = 50;
 
-		bool isColorCorrection;
-		bool isVignette;
-		bool isDepthOfField;
+		bool isColorCorrection = 0;
+		bool isVignette = 0;
+		bool isDepthOfField = 0;
+		bool isFlipImage = 0;
 		
 		int blendPass = 0;
 		float bloomStrength = 1;
@@ -76,6 +77,9 @@ namespace uniform {
 		}
 		if (name == "isDepthOfField") {
 			isDepthOfField = value;
+		}
+		if (name == "isFlipImage") {
+			isFlipImage = value;
 		}
 		
 	}
@@ -154,6 +158,7 @@ namespace uniform {
 		_shader.setUniform("isColorCorrection"	, isColorCorrection);
 		_shader.setUniform("isVignette"			, isVignette);
 		_shader.setUniform("isDepthOfField"		, isDepthOfField);
+		_shader.setUniform("isFlipImage"		, isFlipImage);
 		
 		_shader.setUniform("renderPassCount", renderPassCount);
 		_shader.setUniform("blendPass"		, blendPass);
