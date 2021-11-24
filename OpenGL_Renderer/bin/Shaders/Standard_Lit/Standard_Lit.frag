@@ -22,6 +22,7 @@ uniform float normal_scalar;
 uniform float metallic_scalar;
 uniform float roughness_scalar;
 uniform float occlusion_scalar;
+uniform float albedo_scalar;
 
 uniform vec3 lightPositions[128];
 uniform vec3 lightColors[128];
@@ -154,7 +155,7 @@ void main()
     FragColor = vec4(texture(skybox, R).rgb, 1.0);
     //-----------------------------------------------
 
-    vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color;
+    vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color * albedo_scalar;
     vec3 albedo     = pow(v4_albedo.rgb, vec3(2.2));
     float metallic  = texture(metallicMap, fs_in.TexCoords).r;
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;

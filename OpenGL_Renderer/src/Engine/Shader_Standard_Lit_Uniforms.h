@@ -41,6 +41,7 @@ namespace uniform {
 		float metallic_scalar	= 1.0f;
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
+		float albedo_scalar		= 1.0f;
 	};
 
 	void Shader_Standard_Lit_Uniform::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
@@ -66,6 +67,9 @@ namespace uniform {
 		}
 		else if (name == "occlusion_scalar"){	 
 			occlusion_scalar = value;
+		}
+		else if (name == "albedo_scalar"){	 
+			albedo_scalar = value;
 		}
 		else {	 
 			std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
@@ -115,6 +119,7 @@ namespace uniform {
 		shader.setUniform("viewPos",				camPos);
 
 		shader.setUniform("albedo_color",			albedo_color);
+		shader.setUniform("albedo_scalar",			albedo_scalar);
 		shader.setUniform("normal_scalar",			normal_scalar);
 		shader.setUniform("metallic_scalar",		metallic_scalar);
 		shader.setUniform("roughness_scalar",		roughness_scalar);
@@ -184,6 +189,12 @@ namespace uniform {
 
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
 			//--------------Albedo Map--------------//
+
+			ImGui::Selectable("albedo_scalar");
+			ImGui::NextColumn();
+			ImGui::SliderFloat("##albedo_scalar", &albedo_scalar, 0.3f, 10.0f);
+			ImGui::NextColumn();
+
 			static uint16_t albedoMap_Image_Scalar = 1;
 			if(ImGui::ImageButton((void*)m_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
 				albedoMap_Image_Scalar = (albedoMap_Image_Scalar == 1) ? 10 : 1;
@@ -203,10 +214,13 @@ namespace uniform {
 
 
 			//--------------Normal Map--------------//
+			
+
 			 static uint16_t normalMap_Image_Scalar = 1;
 			if (ImGui::ImageButton((void*)m_pbr_textures[1].GetTexture(), ImVec2(12.0f * normalMap_Image_Scalar, 12.0f * normalMap_Image_Scalar))) {
 				normalMap_Image_Scalar = (normalMap_Image_Scalar == 1) ? 10 : 1;
 			}
+			ImGui::SameLine();
 
 
 			ImGui::SameLine();
