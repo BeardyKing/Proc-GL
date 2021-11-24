@@ -85,7 +85,7 @@ void Mesh::OnRender(){
 	//////----------------------------------//
 	//////				MVP					//
 	//////----------------------------------//
-
+	
 	if (&shader != NULL) {
 		if (shader.currentShader_uniform) {
 			shader.use();

@@ -82,7 +82,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_SPEC.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Terrain/Sand_004_OCC.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetBaseColor(glm::vec3( 255.0f / 255.0f , 255.0f / 236.0f, 255.0f / 198.0f ));
+        entity->getComponent<ShaderProgram>().SetColour(glm::vec4( 255.0f / 255.0f , 255.0f / 236.0f, 255.0f / 198.0f ,1.0), "albedo_color");
         entity->getComponent<ShaderProgram>().SetFloat(2.282f, "normal_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.365f, "roughness_scalar");
@@ -125,84 +125,90 @@ namespace test {
     #pragma region TODO Write bespoke shaders
 
 
-    //#pragma region gold_coins
-    //    entity = new Entity("gold_coins");
-    //    G_GetManager()->addEntity(entity);
+    #pragma region gold_coins
+        entity = new Entity("gold_coins");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    // 0 = albedo
-    //    // 1 = normal
-    //    // 2 = metalic
-    //    // 3 = roughness
-    //    // 4 = ambient 
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
 
-    //    entity->addComponent<Mesh>("8502_Assets/gold_coins/gold_coins.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_normals.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_Specular.png");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/gold_coins/gold_coins.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_normals.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_Specular.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+		entity->getComponent<ShaderProgram>().SetFloat(3.672f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.07f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.248f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.19f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion
 
-    //#pragma region bars
-    //    entity = new Entity("gold_bars");
-    //    G_GetManager()->addEntity(entity);
+    #pragma region bars
+        entity = new Entity("gold_bars");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    // 0 = albedo
-    //    // 1 = normal
-    //    // 2 = metalic
-    //    // 3 = roughness
-    //    // 4 = ambient 
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
 
-    //    entity->addComponent<Mesh>("8502_Assets/gold_bars/gold_bars.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_color.jpg");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_normals.jpg");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/gold_bars/gold_bars.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_color.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_normals.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_Specular.jpg");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+		entity->getComponent<ShaderProgram>().SetFloat(3.672f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.07f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.248f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.19f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion
 
-    //#pragma region dock
+#pragma region dock
 
-    //    entity = new Entity("ancient_wall");
-    //    G_GetManager()->addEntity(entity);
+		entity = new Entity("Dock");
+		G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+		entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+		entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    entity->addComponent<Mesh>("8502_Assets/dock/dock.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_BC.tga");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_N.tga");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_Metalic_AO.tga");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("T_wood_bridge_Metalic_AO.tga");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+		entity->addComponent<Mesh>("8502_Assets/dock/dock.obj");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_BC.tga");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_N.tga");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_Metalic_AO.tga");
+		entity->getComponent<ShaderProgram>().AddTexturePath("");
+		entity->getComponent<ShaderProgram>().AddTexturePath("T_wood_bridge_Metalic_AO.tga");
+		entity->getComponent<ShaderProgram>().LoadTextures();
 
-    //#pragma endregion
+		entity->getComponent<ShaderProgram>().SetColour(glm::vec4(255.0f / 255.0f, 202.0f /255.0f , 183.0f / 255.0f, 255.0f / 255.0f), "albedo_color");
+		entity->getComponent<ShaderProgram>().SetFloat(1.64f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.79f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.362f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.905f, "occlusion_scalar");
+		
+
+#pragma endregion
 
     #pragma region boat
         entity = new Entity("boat");
@@ -210,8 +216,9 @@ namespace test {
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-        entity->getComponent<Transform>().position = glm::vec3(32.0f, -140.7f, 21.6f);
-        entity->getComponent<Transform>().rotation = glm::vec3(-16, 12, 1);
+		entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        /*entity->getComponent<Transform>().position = glm::vec3(32.0f, -140.7f, 21.6f);
+        entity->getComponent<Transform>().rotation = glm::vec3(-16, 12, 1);*/
 
         entity->addComponent<Mesh>("8502_Assets/boat/boat.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/boat/Boat_Wood_BC.jpg");
@@ -220,10 +227,10 @@ namespace test {
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/boat/Boat_Wood_MS.jpg");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/boat/Boat_Wood_AO.jpg");
         entity->getComponent<ShaderProgram>().LoadTextures();
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
         entity = new Entity("boat_paddles");
         G_GetManager()->addEntity(entity);
@@ -270,7 +277,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.905f, "occlusion_scalar");
     #pragma endregion
 
-    #pragma region gold_columns
+    #pragma region gold_columns // TODO FIND SMALLER OBJ CLASS
         entity = new Entity("gold_columns");
         G_GetManager()->addEntity(entity);
 
@@ -291,84 +298,88 @@ namespace test {
 		entity->getComponent<ShaderProgram>().AddTexturePath("");
 		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/");
 		entity->getComponent<ShaderProgram>().LoadTextures();
-		 		entity->getComponent<ShaderProgram>().SetFloat(1.455f, "albedo_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetColour(glm::vec4(200.0f / 255.0f, 165.0f / 255.0f, 42.0f / 255.0f, 255.0f / 255.0f), "albedo_color");
+		entity->getComponent<ShaderProgram>().SetFloat(1.917f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(8.63f, "normal_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.324f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
     #pragma endregion
 
-    //#pragma region Vases
+    #pragma region Vases
 
-    //#pragma region Vase_Amphora
-    //    entity = new Entity("Vase_Amphora");
-    //    G_GetManager()->addEntity(entity);
+    #pragma region Vase_Amphora
+        entity = new Entity("Vase_Amphora");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    entity->addComponent<Mesh>("8502_Assets/Vases/railing_temp.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_AlbedoTransparency.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_Normal.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");         
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_MetallicSmoothness.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_Amphora.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_AlbedoTransparency.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");         
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Amphora_MetallicSmoothness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+		entity->getComponent<ShaderProgram>().SetFloat(2.1f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.3f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.462f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion
 
-    //#pragma region Vase_Hydria
-    //    entity = new Entity("Vase_Hydria");
-    //    G_GetManager()->addEntity(entity);
+    #pragma region Vase_Hydria
+        entity = new Entity("Vase_Hydria");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    entity->addComponent<Mesh>("8502_Assets/Vases/Vase_Hydria/Vase_Hydria.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_AlbedoTransparency.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_Normal.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_MetallicSmoothness.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_Hydria/Vase_Hydria.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_AlbedoTransparency.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_Hydria/Vase_Hydria_MetallicSmoothness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+		entity->getComponent<ShaderProgram>().SetFloat(2.1f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.3f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.462f, "metallic_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion
 
-    //#pragma region Vase_Amphora
-    //    entity = new Entity("Vase_VoluteKrater");
-    //    G_GetManager()->addEntity(entity);
+    #pragma region Vase_Amphora
+        entity = new Entity("Vase_VoluteKrater");
+        G_GetManager()->addEntity(entity);
 
-    //    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //    entity->addComponent<Mesh>("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater.obj");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_AlbedoTransparency.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_Normal.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_MetallicSmoothness.png");
-    //    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
-    //    entity->getComponent<ShaderProgram>().LoadTextures();
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        entity->addComponent<Mesh>("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_AlbedoTransparency.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_Normal.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/Vase_VoluteKrater/Vase_VoluteKrater_MetallicSmoothness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/Vases/");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+		entity->getComponent<ShaderProgram>().SetFloat(2.1f, "albedo_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.3f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.462f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    //#pragma endregion
+    #pragma endregion
 
 
-    //#pragma endregion
+    #pragma endregion
 
         #pragma region island_rocks
 
@@ -395,7 +406,6 @@ namespace test {
         #pragma endregion
 
     //   
-    ////TODO ALPHA CUTOFF SHADER FOR TREE // TODO fix backface culling on object
 
     #pragma region Marble_Railings_TEMP
         entity = new Entity("Marble_Railings_TEMP");
@@ -416,8 +426,8 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.3f, "normal_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.133f, "roughness_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(3.0f, "occlusion_scalar");
-    #pragma endregion
+		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
+#pragma endregion
 
     #pragma region Marble_Ground
         entity = new Entity("marble ground");
@@ -438,7 +448,7 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.3f, "normal_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.133f, "roughness_scalar");
-        entity->getComponent<ShaderProgram>().SetFloat(3.0f, "occlusion_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
     #pragma endregion
 
     #pragma region Statue
@@ -469,80 +479,105 @@ namespace test {
   //      entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
 
 
-    //#pragma region Tree_box_Temp_Shaders
-    // 
-    //entity = new Entity("Tree_Box");
-    //G_GetManager()->addEntity(entity);
+    #pragma region Tree_box_Temp_Shaders
+     
+    entity = new Entity("Tree_Box");
+    G_GetManager()->addEntity(entity);
 
-    //entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
-    //entity->getComponent<ShaderProgram>().LoadTextures();
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    //#pragma endregion
+    entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
+    entity->getComponent<ShaderProgram>().LoadTextures();
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+    #pragma endregion
 
-    //#pragma region Tree 
-    //entity = new Entity("tree");
-    //G_GetManager()->addEntity(entity);
+    #pragma region Tree 
+    entity = new Entity("tree_0");
+    G_GetManager()->addEntity(entity);
 
-    //entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
-    //entity->getComponent<ShaderProgram>().LoadTextures();
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    //#pragma endregion
+    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+    entity->getComponent<ShaderProgram>().LoadTextures();
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
+    entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
+    #pragma endregion
+    #pragma region Tree 
+	entity = new Entity("tree_1");
+	G_GetManager()->addEntity(entity);
 
-    //#pragma region Tree_Glass_box
+	entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //entity = new Entity("glass_tree_box");
-    //G_GetManager()->addEntity(entity);
+	entity->getComponent<Transform>().position = glm::vec3(69.1f, -140.0f, 77.3f);
+	entity->getComponent<Transform>().scale = glm::vec3(-1, 1, -1);
 
-    //// 0 = albedo
-    //// 1 = normal
-    //// 2 = metalic
-    //// 3 = roughness
-    //// 4 = ambient 
-    //entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+	entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+	entity->getComponent<ShaderProgram>().AddTexturePath("");
+	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+	entity->getComponent<ShaderProgram>().LoadTextures();
+	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+	entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
+	entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
+#pragma endregion
 
-    //entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+    #pragma region Tree_Glass_box
 
-    //entity->addComponent<Mesh>("8502_Assets/tree_glass_box/tree_glass_box.obj");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_basemap.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_normal.png");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    //entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    //entity->getComponent<ShaderProgram>().LoadTextures();
+    entity = new Entity("glass_tree_box");
+    G_GetManager()->addEntity(entity);
 
-    //entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
-    //entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
+    // 0 = albedo
+    // 1 = normal
+    // 2 = metalic
+    // 3 = roughness
+    // 4 = ambient 
+    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    //entity->isActive(false);
+    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    //#pragma endregion
-    //#pragma endregion
+    entity->addComponent<Mesh>("8502_Assets/tree_glass_box/tree_glass_box.obj");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_basemap.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_normal.png");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
+    entity->getComponent<ShaderProgram>().LoadTextures();
+
+    entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
+    entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
+
+    entity->isActive(false);
+
+    #pragma endregion
+    #pragma endregion
 
     #pragma region Water
         // 0 = albedo
@@ -583,13 +618,14 @@ namespace test {
 
         entity = new Entity("Point Light Shadow");
 		G_GetManager()->addEntity(entity);
-		entity->getComponent<Transform>().position = glm::vec3(44, 40, 72);
+		entity->getComponent<Transform>().position = glm::vec3(51, 64, 37);
 		entity->addComponent<LightObject>();
 		entity->getComponent<LightObject>().lightType = LightObject::Point;
-        entity->getComponent<LightObject>().lightIntensity = 4.6;
-		entity->getComponent<LightObject>().far_plane = 200;
-		entity->getComponent<LightObject>().near_plane = 43;
-		entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-45, 45, -45, 45);
+        entity->getComponent<LightObject>().lightIntensity = 4.6f;
+		entity->getComponent<LightObject>().far_plane = 147;
+		entity->getComponent<LightObject>().near_plane = 39.45f;
+        entity->getComponent<LightObject>().lookAtTarget = glm::vec3(-19, 0, -16);
+		entity->getComponent<LightObject>().v4lightProjection = glm::vec4(-70, 70, -70, 70);
         entity->getComponent<LightObject>().shadowIntensity = -0.2f;
 		entity->addComponent<script_simplebehaviours>();
 

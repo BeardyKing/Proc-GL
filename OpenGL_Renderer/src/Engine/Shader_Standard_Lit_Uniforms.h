@@ -42,6 +42,10 @@ namespace uniform {
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
 		float albedo_scalar		= 1.0f;
+
+		bool alpha_cutoff_enabled = false;
+		float alpha_cutoff_amount = 0.0f;
+
 	};
 
 	void Shader_Standard_Lit_Uniform::SetBaseColor(glm::vec3 _color) { m_baseColor = _color; }
@@ -57,27 +61,36 @@ namespace uniform {
 	 }
 	 
 	 void Shader_Standard_Lit_Uniform::SetFloat(const float& value, const std::string& name) {
-		if (name == "normal_scalar") {	 normal_scalar = value;
-		}
-		else if (name == "metallic_scalar"){	 
-			metallic_scalar = value;
-		}
-		else if (name == "roughness_scalar"){	 
-			roughness_scalar = value;
-		}
-		else if (name == "occlusion_scalar"){	 
-			occlusion_scalar = value;
-		}
-		else if (name == "albedo_scalar"){	 
-			albedo_scalar = value;
-		}
-		else {	 
-			std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
-		}
+		 if (name == "normal_scalar") {
+			 normal_scalar = value;
+		 }
+		 else if (name == "metallic_scalar") {
+			 metallic_scalar = value;
+		 }
+		 else if (name == "roughness_scalar") {
+			 roughness_scalar = value;
+		 }
+		 else if (name == "occlusion_scalar") {
+			 occlusion_scalar = value;
+		 }
+		 else if (name == "albedo_scalar") {
+			 albedo_scalar = value;
+		 }
+		 else if (name == "alpha_cutoff_amount") {
+			 alpha_cutoff_amount = value;
+		 }
+		 else {
+			 std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
+		 }
 	 }
 
 	 void Shader_Standard_Lit_Uniform::SetInt(const int& value, const std::string& name) {
-		std::cout << " could not find uniform with name " << name << " of type int " << std::endl;
+		if (name == "alpha_cutoff_enabled") {	 
+			alpha_cutoff_enabled = value;
+		}
+		else {
+			std::cout << " could not find uniform with name " << name << " of type int " << std::endl;
+		}
 	 }
 
 
@@ -91,8 +104,7 @@ namespace uniform {
 	}
 
 	void Shader_Standard_Lit_Uniform::SetUniformCustom(ShaderProgram& shader) {
-
-
+		
 		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
 		shader.use();
@@ -124,7 +136,9 @@ namespace uniform {
 		shader.setUniform("metallic_scalar",		metallic_scalar);
 		shader.setUniform("roughness_scalar",		roughness_scalar);
 		shader.setUniform("occlusion_scalar",		occlusion_scalar);
-
+		shader.setUniform("alpha_cutoff_enabled", alpha_cutoff_enabled);
+		shader.setUniform("alpha_cutoff_amount", alpha_cutoff_amount);
+		
 		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		shader.setUniformSampler("normalMap",		1);		// 1 = normal
 		shader.setUniformSampler("metallicMap",		2);			// 2 = metalic
@@ -189,12 +203,21 @@ namespace uniform {
 
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
 			//--------------Albedo Map--------------//
+			ImGui::Selectable("alpha_cutoff_enabled");
+			ImGui::NextColumn();
+			ImGui::Checkbox("##Recieve Shadows", &alpha_cutoff_enabled);
+			ImGui::NextColumn();
+			ImGui::Selectable("alpha_cutoff_amount");
+			ImGui::NextColumn();
+			ImGui::SliderFloat("##alpha_cutoff_amount", &alpha_cutoff_amount, 0.0f, 1.0f);
+			ImGui::NextColumn();
+
 
 			ImGui::Selectable("albedo_scalar");
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##albedo_scalar", &albedo_scalar, 0.3f, 10.0f);
-			ImGui::NextColumn();
-
+			ImGui::NextColumn(); 
+			
 			static uint16_t albedoMap_Image_Scalar = 1;
 			if(ImGui::ImageButton((void*)m_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
 				albedoMap_Image_Scalar = (albedoMap_Image_Scalar == 1) ? 10 : 1;

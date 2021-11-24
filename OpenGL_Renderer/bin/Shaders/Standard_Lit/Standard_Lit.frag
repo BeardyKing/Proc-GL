@@ -35,6 +35,8 @@ uniform vec3  _lightColor;
 uniform float _spec;
 
 uniform float shadowBias;
+uniform bool alpha_cutoff_enabled;
+uniform float alpha_cutoff_amount;
 
 const float PI = 3.14159265359;
 // ----------------------------------------------------------------------------
@@ -154,7 +156,12 @@ void main()
     vec3 R = reflect(I, normalize(fs_in.Normal));
     FragColor = vec4(texture(skybox, R).rgb, 1.0);
     //-----------------------------------------------
-
+    
+    if(alpha_cutoff_enabled == true){
+        if(texture(albedoMap, fs_in.TexCoords).a < alpha_cutoff_amount){
+            discard;
+        }
+    }
     vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color * albedo_scalar;
     vec3 albedo     = pow(v4_albedo.rgb, vec3(2.2));
     float metallic  = texture(metallicMap, fs_in.TexCoords).r;
