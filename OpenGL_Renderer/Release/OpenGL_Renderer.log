@@ -1,36 +1,32 @@
-﻿  script_simpleBehaviours.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Components\scripts\script_simpleBehaviours.cpp(130,20): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Components\scripts\script_simpleBehaviours.cpp(133,24): warning C4018: '<': signed/unsigned mismatch
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Components\scripts\script_simpleBehaviours.cpp(179,24): warning C4018: '>': signed/unsigned mismatch
-  test_shadowMap.cpp
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(331,75): warning C4305: 'argument': truncation from 'double' to 'const float'
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(354,75): warning C4305: 'argument': truncation from 'double' to 'const float'
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(377,81): warning C4305: 'argument': truncation from 'double' to 'const float'
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(613,69): warning C4305: 'argument': truncation from 'double' to 'const T'
+﻿  test_shadowMap.cpp
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(333,75): warning C4305: 'argument': truncation from 'double' to 'const float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(356,75): warning C4305: 'argument': truncation from 'double' to 'const float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(379,81): warning C4305: 'argument': truncation from 'double' to 'const float'
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(615,69): warning C4305: 'argument': truncation from 'double' to 'const T'
           with
           [
               T=float
           ]
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(940,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(941,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(947,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(948,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(952,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(953,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(957,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(958,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(963,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(942,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(943,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(949,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(950,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(954,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(955,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(959,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(960,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(965,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(623): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(625): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
           [
               T=LightObject
           ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  4 of 4905 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    294 functions had inline decision re-evaluated but remain unchanged
+  25 of 4906 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    115 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'

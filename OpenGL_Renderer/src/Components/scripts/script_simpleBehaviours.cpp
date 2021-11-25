@@ -7,7 +7,6 @@ script_simplebehaviours::script_simplebehaviours() {}
 script_simplebehaviours::~script_simplebehaviours() {
 	std::cout << "Deleted - script_simplebehaviours" << std::endl;
 }
-
 void script_simplebehaviours::OnRender() {}
 void script_simplebehaviours::OnUpdate(double deltaTime) {
 
@@ -28,7 +27,14 @@ void script_simplebehaviours::OnUpdate(double deltaTime) {
 		entity->getComponent<Transform>().position.z = 1.5f + 10 * cosf(glm::radians(m_movingLightAngle));
 		entity->getComponent<Transform>().position.y = 8 + (0.5f * sinf(glm::radians(m_movingLightAngle) * 4));
 	}
-	if (isMovingOnCameraPath == true) {
+	if (ImGui::IsKeyReleased('E')) { isFPSCam = !isFPSCam; }
+
+	if (isFPSCam == true){
+		if (entity->hasComponent<FPSCamera>()){
+			entity->getComponent<FPSCamera>().isLookingAtTargetPosition = false;
+		}
+	}
+	if (isMovingOnCameraPath == true && isFPSCam == false) {
 		IsMovingOnCameraPath(deltaTime);
 	}
 }
