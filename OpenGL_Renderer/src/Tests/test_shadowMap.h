@@ -44,6 +44,7 @@ namespace test {
 		Entity* e_animated_mesh;
 		std::vector<GLuint> matTextures;
 
+		bool show_editor = false;
 
 	};
 }

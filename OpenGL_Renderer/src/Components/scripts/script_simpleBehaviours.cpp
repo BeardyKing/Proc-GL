@@ -155,16 +155,7 @@ void script_simplebehaviours::IsMovingOnCameraPath(double deltaTime){
 	}
 	glm::vec3 normDir = glm::normalize(moveDir);
 
-	//moveDir = glm::normalize(moveDir);
-	std::cout << "NORM" << std::endl;
-	std::cout << normDir.x << std::endl;
-	std::cout << normDir.y << std::endl;
-	std::cout << normDir.z << std::endl;
-
-	std::cout << "DIR" << std::endl;
-	std::cout << moveDir.x << std::endl;
-	std::cout << moveDir.y << std::endl;
-	std::cout << moveDir.z << std::endl;
+	
 	currentPos = currentPos + (glm::normalize(moveDir) * (float)deltaTime * 9.0f);
 	entity->getComponent<FPSCamera>().SetPosition(currentPos);
 	//entity->getComponent<FPSCamera>().SetPosition(lerp(currentPos, targetPos, deltaTime));
@@ -176,46 +167,41 @@ void script_simplebehaviours::OnImGuiRender() {
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Inspector"); {
-		ImGui::Separator();
-		ImGui::Text("NODE POSITION DEBUG");
-		std::string timer_val = "TIMER : ";
-		timer_val.append(std::to_string(timer));
-		ImGui::Text(timer_val.c_str());
-		ImGui::InputInt("DEBUG currentPos ", &debug_CurrentPos, 1);
-		if (debug_CurrentPos > targetPositions.size()) {
-			debug_CurrentPos = targetPositions.size();
-		}
-
-		ImGui::Text("NODE POSITION DEBUG");
-		ImGui::Text("NODE LOOK AT POS");
-		int j = 0;
-		for (auto& v : targetLookAt) {
-			j++;
-			std::string name = "targetLookAt : ";
-			name.append(std::to_string(j));
-			ImGui::DragFloat3(name.c_str(), &v.x);
-		}
-		ImGui::Separator();
-
-		ImGui::Text("NODE POSITIONS");
-		int i = 0;
-		for (auto& v : targetPositions){
-			i++;
-			std::string name = "NodePos : ";
-			name.append(std::to_string(i));
-			ImGui::DragFloat3(name.c_str(), & v.x);
-		}
-		ImGui::Separator();
-
-
 		
-
-
-
-
-		ImGui::Separator();
-		ImGui::DragFloat3("test_rotation", &test_rotation.x);
 		if (ImGui::CollapsingHeader("Behaviour", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+			ImGui::Separator();
+			ImGui::Text("NODE POSITION DEBUG");
+			std::string timer_val = "TIMER : ";
+			timer_val.append(std::to_string(timer));
+			ImGui::Text(timer_val.c_str());
+			ImGui::InputInt("DEBUG currentPos ", &debug_CurrentPos, 1);
+			if (debug_CurrentPos > targetPositions.size()) {
+				debug_CurrentPos = targetPositions.size();
+			}
+
+			ImGui::Text("NODE POSITION DEBUG");
+			ImGui::Text("NODE LOOK AT POS");
+			int j = 0;
+			for (auto& v : targetLookAt) {
+				j++;
+				std::string name = "targetLookAt : ";
+				name.append(std::to_string(j));
+				ImGui::DragFloat3(name.c_str(), &v.x);
+			}
+			ImGui::Separator();
+
+			ImGui::Text("NODE POSITIONS");
+			int i = 0;
+			for (auto& v : targetPositions) {
+				i++;
+				std::string name = "NodePos : ";
+				name.append(std::to_string(i));
+				ImGui::DragFloat3(name.c_str(), &v.x);
+			}
+			ImGui::Separator();
+
+			ImGui::Separator();
+			ImGui::DragFloat3("test_rotation", &test_rotation.x);
 			ImGui::Indent();
 				ImGui::Checkbox("rotate", &rotate);
 				ImGui::Checkbox("orbit", &orbit);

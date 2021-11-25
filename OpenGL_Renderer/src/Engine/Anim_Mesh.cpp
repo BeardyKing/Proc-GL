@@ -131,7 +131,7 @@ void Anim_Mesh::OnRender(){
 }
 
 void Anim_Mesh::OnUpdate(double deltaTime){
-	frameTime -= (float)deltaTime;
+	frameTime -= (float)deltaTime / 5;
 	while (frameTime < 0.0f) {
 		currentFrame = (currentFrame + 1) % entity->getComponent<MeshAnimation>().GetFrameCount();
 		frameTime += 1.0f / entity->getComponent<MeshAnimation>().GetFrameCount();

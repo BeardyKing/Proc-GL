@@ -74,7 +74,7 @@ int main(){
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 		if (currentTest) {
 
 			currentTest->OnUpdate(deltaTime);
@@ -82,11 +82,11 @@ int main(){
 			ImGui::Begin("Test");
 			currentTest->OnImGuiRender();
 
-			if (currentTest != testMenu && ImGui::Button("<-")) {
+			/*if (currentTest != testMenu && ImGui::Button("<-")) {
 				currentTest->OnExit();
 				delete currentTest;
 				currentTest = testMenu;
-			}
+			}*/
 
 			ImGui::End();
 		}
@@ -220,7 +220,7 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
-	if (key == GLFW_KEY_Q && action == GLFW_PRESS){
+	if (key == GLFW_KEY_F12 && action == GLFW_PRESS){
 		g_lWireframe = !g_lWireframe;
 		if (g_lWireframe){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

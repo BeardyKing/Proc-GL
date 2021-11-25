@@ -7,15 +7,15 @@ H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(615,69): warning C43
           [
               T=float
           ]
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(942,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(943,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(949,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(950,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(954,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(955,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(959,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(960,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(965,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(947,39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(948,93): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(954,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(955,117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(959,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(960,117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(964,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(965,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(970,39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 H:\Dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
 H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(625): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
@@ -24,9 +24,9 @@ H:\Dev\Proc-GL\OpenGL_Renderer\src\Tests\test_shadowMap.cpp(625): message : see 
           ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  25 of 4906 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    115 functions had inline decision re-evaluated but remain unchanged
+  2 of 4603 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    73 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'

@@ -102,6 +102,8 @@ namespace test {
         entity->getComponent<Anim_Mesh>().LoadFromMeshFile("8502_Assets/animation/Minotaur.msh");
         entity->addComponent<MeshMaterial>("8502_Assets/animation/Minotaur.mat");
         entity->addComponent<MeshAnimation>("8502_Assets/animation/Minotaur.anm");
+        entity->getComponent<Transform>().position = glm::vec3(6.749f,-7.071f, -21.392);
+        entity->getComponent<Transform>().scale = glm::vec3(0.07f);
         
         
         // MAT SETUP START
@@ -929,51 +931,59 @@ namespace test {
 
     void test_shadowMap::OnImGuiRender() {
        
+        if (ImGui::IsKeyReleased('P')) { show_editor = !show_editor; }
+
+
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
+        if (show_editor == true) {
         ImGui::Begin("Debug_FrameBuffers");
 
-        int counter = 0;
-        for (auto& buffer : depthTexturesThisFrame) {
-            std::string name = "DEPTH TEXTURE ";
-            name.append(std::to_string(counter));
-            if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-                int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-                ImGui::Image((void*)buffer, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            int counter = 0;
+            for (auto& buffer : depthTexturesThisFrame) {
+                std::string name = "DEPTH TEXTURE ";
+                name.append(std::to_string(counter));
+                if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                    int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                    ImGui::Image((void*)buffer, ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+                }
+                counter++;
             }
-            counter++;
+
+            if (ImGui::CollapsingHeader("FBO_POST_PROCESS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                ImGui::Image((void*)fbo_post_process.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            }
+
+            if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                ImGui::Image((void*)G_GetRenderPass().GetDepthBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            }
+
+            if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                ImGui::Image((void*)fbo.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+            }
+
+            for (auto& t : e_animated_mesh->getComponent<Anim_Mesh>().textures) {
+                if (ImGui::CollapsingHeader("TEXTURE CHECK", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
+                    int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
+                    ImGui::Image((void*)t->GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), 512));
+                }
+            }
+
+            ImGui::End();
         }
-
-		if (ImGui::CollapsingHeader("FBO_POST_PROCESS", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-			int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-			ImGui::Image((void*)fbo_post_process.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
-		}
-
-        if (ImGui::CollapsingHeader("FBO_DEPTH_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-            int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)G_GetRenderPass().GetDepthBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
-        }
-
-        if (ImGui::CollapsingHeader("FBO_For_ImGui", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-            int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-            ImGui::Image((void*)fbo.GetRenderBuffer(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
-        }
-
-        for (auto& t : e_animated_mesh->getComponent<Anim_Mesh>().textures) {
-		    if (ImGui::CollapsingHeader("TEXTURE CHECK", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
-			    int adjustedWidth = ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-			    ImGui::Image((void*)t->GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), 512));
-		    }
-        }
-
-        ImGui::End();
 
         //editor->RenderScene(fbo.GetRenderBuffer());
         editor->RenderScene(fbo_post_process2.GetRenderBuffer());
-        editor->RenderHierarchy();
-        editor->RenderProject();
-        editor->RenderConsole();
-        editor->RenderMainMenuBar();
-        editor->RenderActiveInspector();
+        if (show_editor){
+			editor->RenderHierarchy();
+			editor->RenderProject();
+			editor->RenderConsole();
+			editor->RenderMainMenuBar();
+			editor->RenderActiveInspector();
+        }
     }
 }
 
