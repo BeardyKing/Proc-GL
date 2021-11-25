@@ -117,7 +117,7 @@ namespace test {
         
         entity->getComponent<ShaderProgram>().LoadTextures();
         e_animated_mesh = entity;
-        entity->isActive(false);
+        entity->isActive(true);
 
 #pragma endregion
 
@@ -453,31 +453,31 @@ namespace test {
     #pragma endregion
 
     #pragma region Statue
-  //      entity = new Entity("Afrodta Statue");
-  //      G_GetManager()->addEntity(entity);
+        entity = new Entity("Afrodta Statue");
+        G_GetManager()->addEntity(entity);
 
-  //      // 0 = albedo
-  //      // 1 = normal
-  //      // 2 = metalic
-  //      // 3 = roughness
-  //      // 4 = ambient 
-  //      entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        // 0 = albedo
+        // 1 = normal
+        // 2 = metalic
+        // 3 = roughness
+        // 4 = ambient 
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-  //      entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
-  //      
-  //      entity->addComponent<Mesh>("8502_Assets/afrodta_statues/afrodta_Statues.obj");
-  //      entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_albedo1k.jpg");
-  //      entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_normal1k.jpg");
-  //      entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Metallic.png");
-  //      entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Roughness.png");
-  //      entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_AO.png");
-  //      entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        
+        entity->addComponent<Mesh>("8502_Assets/afrodta_statues/afrodta_Statues.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_albedo1k.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/afrodta_Statues_normal1k.jpg");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Metallic.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_Roughness.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/afrodta_statues/Painted_metal_02_1K_AO.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
 
-		//entity->getComponent<ShaderProgram>().SetFloat(1.0f, "albedo_scalar");
-  //      entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
-  //      entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
-  //      entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
-  //      entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "albedo_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
 
 
     #pragma region Tree_box_Temp_Shaders

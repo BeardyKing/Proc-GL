@@ -22,7 +22,12 @@ Camera::Camera()
 }
 
 glm::mat4 Camera::GetViewMatrix()const {
-	return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
+	if (isLookingAtTargetPosition){
+		return glm::lookAt(entity->getComponent<Transform>().position, inputTargetPosition, glm::vec3(0,1,0));
+	}
+	else {
+		return glm::lookAt(entity->getComponent<Transform>().position, mTarget, mUp);
+	}
 }
 
 const glm::vec3& Camera::GetForward()	const { //forward

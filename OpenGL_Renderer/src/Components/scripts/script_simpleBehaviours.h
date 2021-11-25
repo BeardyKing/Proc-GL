@@ -41,6 +41,7 @@ private:
 		bool isMovingOnCameraPath = false;
 		float m_movingLightAngle = 90;
 		glm::vec3 centre;
+		float timer = 0;
 
 		glm::vec3 test_rotation = glm::vec3(0);
 
