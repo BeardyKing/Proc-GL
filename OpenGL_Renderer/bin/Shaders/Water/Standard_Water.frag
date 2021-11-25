@@ -355,7 +355,6 @@ void main()
 vec4 GetReflectionFromCubemap(vec3 N){
     vec3 I = normalize(fs_in.FragPos - viewPos); 
     vec3 R = reflect(I, normalize(fs_in.Normal));
-    // vec4 reflectTex = vec4(texture(skybox, R).rgb, 1.0);
     return vec4(texture(skybox, normalize(N + R)).rgb, 1.0);
 }
 

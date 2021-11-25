@@ -37,6 +37,7 @@ uniform float _spec;
 uniform float shadowBias;
 uniform bool alpha_cutoff_enabled;
 uniform float alpha_cutoff_amount;
+uniform float sky_box_scalar;
 
 const float PI = 3.14159265359;
 // ----------------------------------------------------------------------------
@@ -153,8 +154,8 @@ void main()
     
     //------------Skybox Reflection Test------------
     vec3 I = normalize(fs_in.FragPos - viewPos); 
-    vec3 R = reflect(I, normalize(fs_in.Normal));
-    FragColor = vec4(texture(skybox, R).rgb, 1.0);
+    vec3 R = reflect(I, normalize(getNormalFromMap()));
+    vec4 sky_col = vec4(texture(skybox, R).rgb, 1.0);
     //-----------------------------------------------
     
     if(alpha_cutoff_enabled == true){
@@ -162,7 +163,9 @@ void main()
             discard;
         }
     }
-    vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_color * albedo_scalar;
+    vec4 v4_albedo  = texture(albedoMap, fs_in.TexCoords) * albedo_scalar;
+    v4_albedo = mix(v4_albedo, sky_col,sky_box_scalar);
+    v4_albedo = v4_albedo * albedo_color;
     vec3 albedo     = pow(v4_albedo.rgb, vec3(2.2));
     float metallic  = texture(metallicMap, fs_in.TexCoords).r;
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;

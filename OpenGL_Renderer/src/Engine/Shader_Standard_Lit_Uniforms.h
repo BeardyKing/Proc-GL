@@ -42,6 +42,7 @@ namespace uniform {
 		float roughness_scalar	= 1.0f;
 		float occlusion_scalar	= 1.0f;
 		float albedo_scalar		= 1.0f;
+		float sky_box_scalar	= 0.2f;
 
 		bool alpha_cutoff_enabled = false;
 		float alpha_cutoff_amount = 0.0f;
@@ -78,6 +79,9 @@ namespace uniform {
 		 }
 		 else if (name == "alpha_cutoff_amount") {
 			 alpha_cutoff_amount = value;
+		 }
+		 else if (name == "sky_box_scalar") {
+			 sky_box_scalar = value;
 		 }
 		 else {
 			 std::cout << " could not find uniform with name " << name << " of type float " << std::endl;
@@ -121,6 +125,7 @@ namespace uniform {
 		auto m_lights = G_GetManager()->FindLights();
 		auto sb = G_GetManager()->FindEntityWithType<SkyBox>();
 
+		glActiveTexture(GL_TEXTURE0 + 6);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, sb->getComponent<SkyBox>().GetSkyboxTexture()); // instead of _shader.bind
 
 		shader.setUniform("amountOfLights",		(GLint)m_lights.size());
@@ -136,15 +141,17 @@ namespace uniform {
 		shader.setUniform("metallic_scalar",		metallic_scalar);
 		shader.setUniform("roughness_scalar",		roughness_scalar);
 		shader.setUniform("occlusion_scalar",		occlusion_scalar);
-		shader.setUniform("alpha_cutoff_enabled", alpha_cutoff_enabled);
-		shader.setUniform("alpha_cutoff_amount", alpha_cutoff_amount);
-		
+		shader.setUniform("alpha_cutoff_enabled",	alpha_cutoff_enabled);
+		shader.setUniform("alpha_cutoff_amount",	alpha_cutoff_amount);
+		shader.setUniform("sky_box_scalar",			sky_box_scalar);
+
 		shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		shader.setUniformSampler("normalMap",		1);		// 1 = normal
-		shader.setUniformSampler("metallicMap",		2);			// 2 = metalic
+		shader.setUniformSampler("metallicMap",		2);		// 2 = metalic
 		shader.setUniformSampler("roughnessMap",	3);		// 3 = roughness
 		shader.setUniformSampler("aoMap",			4);		// 4 = ambient 
 		shader.setUniformSampler("shadowMap",		5);		// 5 = shadow
+		shader.setUniformSampler("skybox",			6);		// 5 = skybox
 
 		
 		//std::cout << m_lights[0]->getComponent<LightObject>().color.x << "," 
@@ -201,6 +208,12 @@ namespace uniform {
 		ImGui::SetNextTreeNodeOpen(true, ImGuiTreeNodeFlags_DefaultOpen);
 		if (ImGui::TreeNode("Surface Inputs")) {
 
+			ImGui::SameLine();
+			ImGui::Selectable("sky_box_scalar");
+			ImGui::NextColumn();
+			ImGui::SliderFloat("##sky_box_scalar", &sky_box_scalar, 0.0f, 2.0f);
+			ImGui::NextColumn();
+
 			ImGui::Columns(2, "Surface_Inputs_Columns", false);
 			//--------------Albedo Map--------------//
 			ImGui::Selectable("alpha_cutoff_enabled");
@@ -217,6 +230,7 @@ namespace uniform {
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##albedo_scalar", &albedo_scalar, 0.3f, 10.0f);
 			ImGui::NextColumn(); 
+			
 			
 			static uint16_t albedoMap_Image_Scalar = 1;
 			if(ImGui::ImageButton((void*)m_pbr_textures[0].GetTexture(), ImVec2(12.0f * albedoMap_Image_Scalar, 12.0f * albedoMap_Image_Scalar))) {
@@ -251,6 +265,8 @@ namespace uniform {
 			ImGui::NextColumn();
 			ImGui::SliderFloat("##normal_scalar", &normal_scalar, 0.3f, 15.0f);
 			ImGui::NextColumn();
+			
+			
 
 			//--------------Metallic Map--------------//
 			static uint16_t metallicMap_Image_Scalar = 1;

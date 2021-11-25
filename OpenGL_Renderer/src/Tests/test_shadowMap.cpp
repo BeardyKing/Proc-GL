@@ -292,18 +292,19 @@ namespace test {
         // 4 = ambient 
 
 		entity->addComponent<Mesh>("8502_Assets/gold_columns/gold_columns.obj");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/");
-		entity->getComponent<ShaderProgram>().AddTexturePath("");
-		entity->getComponent<ShaderProgram>().AddTexturePath("");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_BaseColor.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_Normal.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_Metallic.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_Roughness.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_AO.png");
 		entity->getComponent<ShaderProgram>().LoadTextures();
 		entity->getComponent<ShaderProgram>().SetColour(glm::vec4(200.0f / 255.0f, 165.0f / 255.0f, 42.0f / 255.0f, 255.0f / 255.0f), "albedo_color");
-		entity->getComponent<ShaderProgram>().SetFloat(1.917f, "albedo_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(8.63f, "normal_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.963f, "sky_box_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(7.552f, "albedo_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(6.11f, "normal_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(0.324f, "roughness_scalar");
-		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(0.437f, "roughness_scalar");
+		entity->getComponent<ShaderProgram>().SetFloat(3.667f, "occlusion_scalar");
 
     #pragma endregion
 
