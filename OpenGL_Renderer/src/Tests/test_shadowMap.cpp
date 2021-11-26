@@ -21,15 +21,15 @@ void G_SetRenderShadowMap( bool b) {renderShadowMap = b;}
 namespace test {
     test_shadowMap::test_shadowMap(){
     
-    #pragma region ECS
+        #pragma region ECS
 
         editor = new EditorGUI;
         EntityManager* manager = new EntityManager;
         G_SetManager(manager);
 
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region Camera
+        #pragma region Camera
 
         entity = new Entity("Main Camera");
         entity->addComponent<FPSCamera>();
@@ -37,16 +37,15 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(35, 9, 6);
         entity->getComponent<FPSCamera>().Rotate(260.0f,-45.0f);
         entity->getComponent<FPSCamera>().SetZNear(0.5f);
-        //entity->getComponent<FPSCamera>().setFOV(-45); // TO FIX ISSUE WITH GL_MIRRORED_REPEAT
         entity->addComponent<script_simplebehaviours>();
         entity->getComponent<script_simplebehaviours>().SetCameraMoveActive(true);
 
         G_GetManager()->addEntity(entity);
         camera = &entity->getComponent<FPSCamera>();
 
-    #pragma endregion
+        #pragma endregion
         
-    #pragma region Cubemap
+        #pragma region Cubemap / Skybox
 
         std::vector<std::string> faces = {
             "skybox/right.jpg",
@@ -64,9 +63,10 @@ namespace test {
         e_skybox->addComponent<SkyBox>(faces);
         e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag","Uniform_Skybox");
         
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region Terrain
+        #pragma region Terrain
+		// Standard Terrain Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
         entity = new Entity("Terrain");
         G_GetManager()->addEntity(entity);
@@ -92,9 +92,10 @@ namespace test {
         entity->getComponent<Transform>().scale = glm::vec3(0.01f);
         entity->getComponent<Transform>().position = glm::vec3(-80,-25,-60);
 
-    #pragma endregion
+        #pragma endregion
 
-#pragma region AnimMesh
+        #pragma region AnimMesh
+
 		entity = new Entity("Animated Mesh");
 		G_GetManager()->addEntity(entity);
         entity->addComponent<ShaderProgram>("Shaders/anim_model/anim_model.vert", "Shaders/anim_model/anim_model.frag", "Uniform_Standard_Lit");
@@ -121,25 +122,18 @@ namespace test {
         e_animated_mesh = entity;
         entity->isActive(true);
 
-#pragma endregion
+        #pragma endregion
 
+        #pragma region gold_coins
+		
+        // Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
-    #pragma region TODO Write bespoke shaders
-
-
-    #pragma region gold_coins
         entity = new Entity("gold_coins");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-
-        // 0 = albedo
-        // 1 = normal
-        // 2 = metalic
-        // 3 = roughness
-        // 4 = ambient 
 
         entity->addComponent<Mesh>("8502_Assets/gold_coins/gold_coins.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_coins/gold_coin_color.png");
@@ -154,21 +148,18 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.248f, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(1.19f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region bars
+        #pragma region bars
+		
+        // Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("gold_bars");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-
-        // 0 = albedo
-        // 1 = normal
-        // 2 = metalic
-        // 3 = roughness
-        // 4 = ambient 
 
         entity->addComponent<Mesh>("8502_Assets/gold_bars/gold_bars.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_bars/gold_bar_color.jpg");
@@ -183,9 +174,11 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.248f, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(1.19f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
-#pragma region dock
+        #pragma region dock
+		
+        // Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
 		entity = new Entity("Dock");
 		G_GetManager()->addEntity(entity);
@@ -210,17 +203,18 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.905f, "occlusion_scalar");
 		
 
-#pragma endregion
+        #pragma endregion
 
-    #pragma region boat
+        #pragma region boat
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("boat");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
 		entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-        /*entity->getComponent<Transform>().position = glm::vec3(32.0f, -140.7f, 21.6f);
-        entity->getComponent<Transform>().rotation = glm::vec3(-16, 12, 1);*/
 
         entity->addComponent<Mesh>("8502_Assets/boat/boat.obj");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/boat/Boat_Wood_BC.jpg");
@@ -254,9 +248,11 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
 
-    //#pragma endregion
+        #pragma endregion
 
-    #pragma region ancient_wall
+        #pragma region ancient_wall
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
         entity = new Entity("ancient_wall");
         G_GetManager()->addEntity(entity);
@@ -277,21 +273,20 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.21f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.905f, "occlusion_scalar");
-    #pragma endregion
+        
+        #pragma endregion
 
-    #pragma region gold_columns // TODO FIND SMALLER OBJ CLASS
+        #pragma region gold_columns
+		
+        // Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+        
         entity = new Entity("gold_columns");
+
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
-
-        // 0 = albedo
-        // 1 = normal
-        // 2 = metalic
-        // 3 = roughness
-        // 4 = ambient 
 
 		entity->addComponent<Mesh>("8502_Assets/gold_columns/gold_columns.obj");
 		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/gold_columns/DirtyGold01_1K_BaseColor.png");
@@ -308,11 +303,14 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.437f, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(3.667f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region Vases
+        #pragma region Vases
 
-    #pragma region Vase_Amphora
+        #pragma region Vase_Amphora
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("Vase_Amphora");
         G_GetManager()->addEntity(entity);
 
@@ -333,9 +331,12 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region Vase_Hydria
+        #pragma region Vase_Hydria
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("Vase_Hydria");
         G_GetManager()->addEntity(entity);
 
@@ -356,9 +357,12 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
-    #pragma region Vase_Amphora
+        #pragma region Vase_Amphora
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("Vase_VoluteKrater");
         G_GetManager()->addEntity(entity);
 
@@ -379,12 +383,14 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.895, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
 
-    #pragma endregion
+        #pragma endregion
 
 
-    #pragma endregion
+        #pragma endregion
 
         #pragma region island_rocks
+
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
         entity = new Entity("island_rocks");
         G_GetManager()->addEntity(entity);
@@ -408,10 +414,11 @@ namespace test {
 
         #pragma endregion
 
-    //   
+        #pragma region Marble_Railings
 
-    #pragma region Marble_Railings_TEMP
-        entity = new Entity("Marble_Railings_TEMP");
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
+        entity = new Entity("Marble_Railings");
         G_GetManager()->addEntity(entity);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
@@ -430,9 +437,13 @@ namespace test {
 		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.133f, "roughness_scalar");
 		entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
-#pragma endregion
 
-    #pragma region Marble_Ground
+        #pragma endregion
+
+        #pragma region Marble_Ground
+
+        // Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("marble ground");
         G_GetManager()->addEntity(entity);
 
@@ -452,17 +463,16 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "metallic_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.133f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(0.0f, "occlusion_scalar");
-    #pragma endregion
+    
+        #pragma endregion
 
-    #pragma region Statue
+        #pragma region Statue
+        
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
+
         entity = new Entity("Afrodta Statue");
         G_GetManager()->addEntity(entity);
 
-        // 0 = albedo
-        // 1 = normal
-        // 2 = metalic
-        // 3 = roughness
-        // 4 = ambient 
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
         entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
@@ -481,111 +491,89 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
 
-
-    #pragma region Tree_box_Temp_Shaders
+        #pragma endregion
+        
+        #pragma region Tree_box
      
-    entity = new Entity("Tree_Box");
-    G_GetManager()->addEntity(entity);
+		// Standard Lit Texture Layout // 0 = albedo // 1 = normal // 2 = metallic // 3 = roughness // 4 = ambient 
 
-    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity = new Entity("Tree_Box");
+        G_GetManager()->addEntity(entity);
 
-    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
-    entity->getComponent<ShaderProgram>().LoadTextures();
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    #pragma endregion
+        entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-    #pragma region Tree 
-    entity = new Entity("tree_0");
-    G_GetManager()->addEntity(entity);
+        entity->addComponent<Mesh>("8502_Assets/tree_box/tree_box.obj");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_diff_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_nor_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_rough_1k.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/marble_ground/marble_01_AO_1k.png");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+        entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+        
+        #pragma endregion
 
-    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        #pragma region Tree_0
 
-    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+	    entity = new Entity("tree_0");
+	    G_GetManager()->addEntity(entity);
 
-    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
-    entity->getComponent<ShaderProgram>().LoadTextures();
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
-    entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
-    #pragma endregion
-    #pragma region Tree 
-	entity = new Entity("tree_1");
-	G_GetManager()->addEntity(entity);
+	    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-	entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+	    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
-	entity->getComponent<Transform>().position = glm::vec3(69.1f, -140.0f, 77.3f);
-	entity->getComponent<Transform>().scale = glm::vec3(-1, 1, -1);
+	    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+	    entity->getComponent<ShaderProgram>().LoadTextures();
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
+	    entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
+        
+        #pragma endregion
 
-	entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
-	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
-	entity->getComponent<ShaderProgram>().AddTexturePath("");
-	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
-	entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
-	entity->getComponent<ShaderProgram>().LoadTextures();
-	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
-	entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
-	entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
-#pragma endregion
+        #pragma region Tree_1
 
-    #pragma region Tree_Glass_box
+	    entity = new Entity("tree_1");
+	    G_GetManager()->addEntity(entity);
 
-    entity = new Entity("glass_tree_box");
-    G_GetManager()->addEntity(entity);
+	    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
 
-    // 0 = albedo
-    // 1 = normal
-    // 2 = metalic
-    // 3 = roughness
-    // 4 = ambient 
-    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
+	    entity->getComponent<Transform>().position = glm::vec3(69.1f, -140.0f, 77.3f);
+	    entity->getComponent<Transform>().scale = glm::vec3(-1, 1, -1);
 
-    entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+	    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
+	    entity->getComponent<ShaderProgram>().LoadTextures();
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "metallic_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "roughness_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "occlusion_scalar");
+	    entity->getComponent<ShaderProgram>().SetFloat(0.081f, "alpha_cutoff_amount");
+	    entity->getComponent<ShaderProgram>().SetInt(1, "alpha_cutoff_enabled");
+        
+        #pragma endregion
 
-    entity->addComponent<Mesh>("8502_Assets/tree_glass_box/tree_glass_box.obj");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_basemap.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/glass_normal.png");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree_glass_box/");
-    entity->getComponent<ShaderProgram>().LoadTextures();
+        #pragma region Water
 
-    entity->getComponent<ShaderProgram>().SetFloat(0.864f, "normal_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(0.087f, "metallic_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(0.322f, "roughness_scalar");
-    entity->getComponent<ShaderProgram>().SetFloat(4.6f, "occlusion_scalar");
-
-    entity->isActive(false);
-
-    #pragma endregion
-    #pragma endregion
-
-    #pragma region Water
         // 0 = albedo
         // 1 = normal
-        // 2 = metalic
+        // 2 = metallic
         // 3 = roughness
         // 4 = ambient 
         entity = new Entity("Water");
@@ -615,9 +603,10 @@ namespace test {
         entity->getComponent<ShaderProgram>().SetVec2(glm::vec2(0.05), "scroll_amount");
         entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(110,90));
         e_water = entity;
-#pragma endregion
 
-    #pragma region point_Light
+        #pragma endregion
+
+        #pragma region point_Light (4 lights)
 
         entity = new Entity("Point Light Shadow");
 		G_GetManager()->addEntity(entity);
@@ -665,7 +654,8 @@ namespace test {
 
 
     #pragma endregion
-#pragma region post_processing
+
+        #pragma region post_processing
 
 		entity = new Entity("post_processing_object");
 		G_GetManager()->addEntity(entity);
@@ -682,19 +672,17 @@ namespace test {
 
 #pragma endregion
 
-    #pragma region Frame Buffer (imGUI Image)
+        #pragma region Frame Buffer (imGUI Image)
 
         DepthBuffer d(1024 * 4, 1024 * 4);
-        //DepthBuffer s(1024 * 4, 1024 * 4);
         depthBuffers.emplace_back(d);
-        //depthBuffers.emplace_back(s);
         
         fbo.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
+        fbo_render_pass.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
         fbo_post_process.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
         fbo_post_process2.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
-        fbo_render_pass.GenerateFrameBuffer(editor->lastFrameWindowSize.x, editor->lastFrameWindowSize.y);
 
-    #pragma endregion
+        #pragma endregion
 
     }
 
@@ -711,18 +699,18 @@ namespace test {
 
 	void test_shadowMap::OnUpdate(double deltaTime) {
         G_GetManager()->OnUpdate(deltaTime);
-        
-
     }
-    bool once = false;
+
 	void test_shadowMap::OnRender() {
+
+        #pragma region UPDATE_FRAME_BUFFERS
+
         if (editor->windowSizeChangeFlag) {
             editor->UpdateFrameBufferTextureSize(fbo.GetRenderBuffer());
             fbo.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_render_pass.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_post_process.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
             fbo_post_process2.UpdateFrameBufferTextureSize(camera->ImGuiWindowSize.x, camera->ImGuiWindowSize.y);
-            //editor->UpdateFrameBufferTextureSize(fbo_cam_depth.GetRenderBuffer());
         }
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -730,6 +718,8 @@ namespace test {
         }
 
         depthTexturesThisFrame.clear();
+
+        #pragma endregion
         
         #pragma region SHADOW_DEPTH_PASS
 
@@ -930,7 +920,10 @@ namespace test {
     }
 
     void test_shadowMap::OnImGuiRender() {
-       
+
+        #pragma region ImGui_Editor_DEBUG
+
+
         if (ImGui::IsKeyReleased('P')) { show_editor = !show_editor; }
 
 
@@ -975,8 +968,12 @@ namespace test {
             ImGui::End();
         }
 
-        //editor->RenderScene(fbo.GetRenderBuffer());
+        #pragma endregion
+
         editor->RenderScene(fbo_post_process2.GetRenderBuffer());
+
+        #pragma region ImGui_Editor
+
         if (show_editor){
 			editor->RenderHierarchy();
 			editor->RenderProject();
@@ -984,6 +981,7 @@ namespace test {
 			editor->RenderMainMenuBar();
 			editor->RenderActiveInspector();
         }
+        #pragma endregion
     }
 }
 

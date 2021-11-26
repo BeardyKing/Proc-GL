@@ -17,5 +17,7 @@ extern uint32_t GetAmountOfEntities();
 extern void G_SetManager(EntityManager* mgr);
 
 
+
+
 #endif // !ENGINE_UTILITYFUNCTIONS_H
 
