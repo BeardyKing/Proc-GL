@@ -188,11 +188,11 @@ namespace test {
 		entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
 		entity->addComponent<Mesh>("8502_Assets/dock/dock.obj");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_BC.tga");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_N.tga");
-		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_Metalic_AO.tga");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_BC.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_N.png");
+		entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/dock/T_wood_bridge_Metalic_AO.png");
 		entity->getComponent<ShaderProgram>().AddTexturePath("");
-		entity->getComponent<ShaderProgram>().AddTexturePath("T_wood_bridge_Metalic_AO.tga");
+		entity->getComponent<ShaderProgram>().AddTexturePath("T_wood_bridge_Metalic_AO.png");
 		entity->getComponent<ShaderProgram>().LoadTextures();
 
 		entity->getComponent<ShaderProgram>().SetColour(glm::vec4(255.0f / 255.0f, 202.0f /255.0f , 183.0f / 255.0f, 255.0f / 255.0f), "albedo_color");
@@ -400,11 +400,11 @@ namespace test {
         entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
         entity->addComponent<Mesh>("8502_Assets/island_rocks/island_rocks.obj");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_BC_SM.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_BC_SM.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_N.png");
         entity->getComponent<ShaderProgram>().AddTexturePath("");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.tga");
-        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_MT_AO_SM.tga");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_DETAIL.png");
+        entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/island_rocks/T_beech_forest_stones_01_MT_AO_SM.png");
         entity->getComponent<ShaderProgram>().LoadTextures();
         entity->getComponent<ShaderProgram>().SetFloat(2.009f, "albedo_scalar");
         entity->getComponent<ShaderProgram>().SetFloat(1.21f, "normal_scalar");
@@ -528,10 +528,10 @@ namespace test {
 	    entity->getComponent<Transform>().position = glm::vec3(0, -140, 0);
 
 	    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("");
-	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
 	    entity->getComponent<ShaderProgram>().LoadTextures();
 	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
@@ -554,10 +554,10 @@ namespace test {
 	    entity->getComponent<Transform>().scale = glm::vec3(-1, 1, -1);
 
 	    entity->addComponent<Mesh>("8502_Assets/tree/tree.obj");
-	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_BC.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("");
-	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.tga");
+	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/T_beech_atlas_N.png");
 	    entity->getComponent<ShaderProgram>().AddTexturePath("8502_Assets/tree/");
 	    entity->getComponent<ShaderProgram>().LoadTextures();
 	    entity->getComponent<ShaderProgram>().SetFloat(1.0f, "normal_scalar");
