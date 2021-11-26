@@ -175,19 +175,11 @@ void script_simplebehaviours::OnImGuiRender() {
 			timer_val.append(std::to_string(timer));
 			ImGui::Text(timer_val.c_str());
 			ImGui::InputInt("DEBUG currentPos ", &debug_CurrentPos, 1);
+			
 			if (debug_CurrentPos > targetPositions.size()) {
 				debug_CurrentPos = targetPositions.size();
 			}
 
-			ImGui::Text("NODE POSITION DEBUG");
-			ImGui::Text("NODE LOOK AT POS");
-			int j = 0;
-			for (auto& v : targetLookAt) {
-				j++;
-				std::string name = "targetLookAt : ";
-				name.append(std::to_string(j));
-				ImGui::DragFloat3(name.c_str(), &v.x);
-			}
 			ImGui::Separator();
 
 			ImGui::Text("NODE POSITIONS");
@@ -199,6 +191,16 @@ void script_simplebehaviours::OnImGuiRender() {
 				ImGui::DragFloat3(name.c_str(), &v.x);
 			}
 			ImGui::Separator();
+
+			ImGui::Text("NODE POSITION DEBUG");
+			ImGui::Text("NODE LOOK AT POS");
+			int j = 0;
+			for (auto& v : targetLookAt) {
+				j++;
+				std::string name = "targetLookAt : ";
+				name.append(std::to_string(j));
+				ImGui::DragFloat3(name.c_str(), &v.x);
+			}
 
 			ImGui::Separator();
 			ImGui::DragFloat3("test_rotation", &test_rotation.x);

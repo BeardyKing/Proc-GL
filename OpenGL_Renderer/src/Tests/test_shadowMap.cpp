@@ -59,7 +59,7 @@ namespace test {
         e_skybox = new Entity("Skybox");
         G_GetManager()->addEntity(e_skybox);
 
-        e_skybox->addComponent<Mesh>("cube.obj");
+        e_skybox->addComponent<Mesh>("objectDefaults/cube.obj");
         e_skybox->addComponent<SkyBox>(faces);
         e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag","Uniform_Skybox");
         
