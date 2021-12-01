@@ -4,18 +4,17 @@
 #include "../Engine/Engine_Core.h"
 #include "../Engine/Buffers/Depth_Pass.h"
 
-RenderPass G_GetRenderPass(); // NO TRANSPARENT OBJECTS 
-void G_SetRenderPass(RenderPass tex); // NO TRANSPARENT OBJECTS 
+	RenderPass G_GetRenderPass(); // NO TRANSPARENT OBJECTS 
+	void G_SetRenderPass(RenderPass tex); // NO TRANSPARENT OBJECTS 
 
-extern void G_SetRenderShadowMap(bool b);
-extern GLuint G_GetShadowMap();
-extern void G_SetShadowMap(GLuint tex);
-extern bool G_RenderShadowMap();
+	extern void G_SetRenderShadowMap(bool b);
+	extern GLuint G_GetShadowMap();
+	extern void G_SetShadowMap(GLuint tex);
+	extern bool G_RenderShadowMap();
 
-extern EntityManager* G_GetManager();
-extern uint32_t GetAmountOfEntities();
-extern void G_SetManager(EntityManager* mgr);
-
+	extern EntityManager* G_GetManager();
+	extern uint32_t GetAmountOfEntities();
+	extern void G_SetManager(EntityManager* mgr);
 
 
 

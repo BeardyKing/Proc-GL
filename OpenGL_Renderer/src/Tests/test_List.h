@@ -9,6 +9,8 @@
 #include "test_ECS.h"
 #include "test_imguizmo.h"
 #include "test_shadowMap.h"
+#include "test_post_processing.h"
+
 
 #endif // !TEST_LIST_H
 

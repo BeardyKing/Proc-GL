@@ -175,6 +175,7 @@
     <ClCompile Include="src\Tests\test_ECS.cpp" />
     <ClCompile Include="src\Tests\test_imguizmo.cpp" />
     <ClCompile Include="src\Tests\test_PBR.cpp" />
+    <ClCompile Include="src\Tests\test_post_processing.cpp" />
     <ClCompile Include="src\Tests\test_shadowMap.cpp" />
     <ClCompile Include="src\Engine\Texture2D.cpp" />
     <ClCompile Include="src\vendor\ImGuizmo\ImCurveEdit.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="src\Tests\test_imguizmo.h" />
     <ClInclude Include="src\Tests\test_List.h" />
     <ClInclude Include="src\Tests\test_PBR.h" />
+    <ClInclude Include="src\Tests\test_post_processing.h" />
     <ClInclude Include="src\Tests\test_shadowMap.h" />
     <ClInclude Include="src\Engine\Texture2D.h" />
     <ClInclude Include="src\vendor\ImGuizmo\ImCurveEdit.h" />

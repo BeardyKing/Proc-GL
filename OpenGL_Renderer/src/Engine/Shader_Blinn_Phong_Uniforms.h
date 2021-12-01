@@ -68,16 +68,7 @@ namespace uniform {
 		}
 
 			_shader.setUniform("_shadowIntensity", m_lights[0]->getComponent<LightObject>().shadowIntensity);
-			//_shader.setUniform("_lightColor", m_lights[0]->getComponent<LightObject>().color);
-			//_shader.setUniform("_spec", specular);
 
-			/*uniform vec3 _lightColor;
-			uniform float _spec;*/
-		
-
-
-
-		
 	}
 
 	void Shader_Blinn_Phong_Uniforms::OnImGuiRender() {

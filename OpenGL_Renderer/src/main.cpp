@@ -47,14 +47,15 @@ int main(){
 	test::Test* currentTest = nullptr;
 	test::TestMenu* testMenu = new test::TestMenu(currentTest);
 	currentTest = testMenu;
-	testMenu->RegisterTest<test::test_Default>		("Default");
-	testMenu->RegisterTest<test::test_shadowMap>	("shadow map");
-	testMenu->RegisterTest<test::test_Dock>			("docking test");
-	testMenu->RegisterTest<test::test_PBR>			("PBR 5 point light");
-	testMenu->RegisterTest<test::test_imguizmo>		("imguizmo");
-	testMenu->RegisterTest<test::test_ECS>			("ECS test");
+	testMenu->RegisterTest<test::test_Default>			("Default");
+	testMenu->RegisterTest<test::test_shadowMap>		("shadow map");
+	testMenu->RegisterTest<test::test_Dock>				("docking test");
+	testMenu->RegisterTest<test::test_PBR>				("PBR 5 point light");
+	testMenu->RegisterTest<test::test_imguizmo>			("imguizmo");
+	testMenu->RegisterTest<test::test_ECS>				("ECS test");
+	testMenu->RegisterTest<test::test_post_processing>	("post processing");
 	
-	testMenu->DEBUG_SetActiveTest("shadow map");
+	testMenu->DEBUG_SetActiveTest("post processing");
 	
 	double lastTime = glfwGetTime();
 
@@ -82,11 +83,11 @@ int main(){
 			ImGui::Begin("Test");
 			currentTest->OnImGuiRender();
 
-			/*if (currentTest != testMenu && ImGui::Button("<-")) {
+			if (currentTest != testMenu && ImGui::Button("<-")) {
 				currentTest->OnExit();
 				delete currentTest;
 				currentTest = testMenu;
-			}*/
+			}
 
 			ImGui::End();
 		}

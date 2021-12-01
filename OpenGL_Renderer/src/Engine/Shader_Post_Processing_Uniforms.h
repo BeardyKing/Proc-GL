@@ -9,18 +9,18 @@ namespace uniform {
 	class Shader_Post_Processing_Uniforms : public Shader_Uniforms
 	{
 	public:
-		Shader_Post_Processing_Uniforms();
-		~Shader_Post_Processing_Uniforms();
-		void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera);
+		Shader_Post_Processing_Uniforms() = default;
+
+		void SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) override;
 		void SetUniformCustom(ShaderProgram& _shader)override;
 		void OnImGuiRender()override;
 
-		void LoadTextures(Entity& _shader);
-		void SetRenderTexture(GLuint fbo_render_texture);
+		void LoadTextures(Entity& _shader) override;
+		void SetRenderTexture(GLuint fbo_render_texture) override;
 	public: //helperFunction
 		void SetInt(const int& value, const std::string& name) override;
 		void SetFloat(const float& value, const std::string& name) override;
-		void SetBaseColor(glm::vec3 _colour) override;
+		void SetBaseColor(glm::vec3 _color) override;
 	private:
 		glm::vec3 _baseColor = glm::vec3(1.0f, 0.38f, 0.38f);
 		std::unique_ptr <Texture2D[]> m_pbr_textures;
@@ -53,13 +53,13 @@ namespace uniform {
 		float bloomStrength = 1;
 	};
 
-	void Shader_Post_Processing_Uniforms::SetRenderTexture(GLuint fbo_render_texture) {
+	inline void Shader_Post_Processing_Uniforms::SetRenderTexture(GLuint fbo_render_texture) {
 		render_texture.emplace_back(fbo_render_texture);
 	}
 
-	void Shader_Post_Processing_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
+	inline void Shader_Post_Processing_Uniforms::SetBaseColor(glm::vec3 _color) { _baseColor = _color; }
 
-	void Shader_Post_Processing_Uniforms::SetInt(const int& value, const std::string& name) {
+	inline void Shader_Post_Processing_Uniforms::SetInt(const int& value, const std::string& name) {
 		if (name == "isVertical") {
 			isVertical = value;
 		}
@@ -84,7 +84,7 @@ namespace uniform {
 		
 	}
 
-	void Shader_Post_Processing_Uniforms::SetFloat(const float& value, const std::string& name) {
+	inline void Shader_Post_Processing_Uniforms::SetFloat(const float& value, const std::string& name) {
 		if (name == "blurStrength_0") {
 			blurStrength_0 = value;
 		}
@@ -93,7 +93,8 @@ namespace uniform {
 		}
 		if (name == "blurStrength_2") {
 			blurStrength_2 = value;
-		}if (name == "vignette_pow_intensity") {
+		}
+		if (name == "vignette_pow_intensity") {
 			vignette_pow_intensity = value;
 		}
 		if (name == "vignette_multiply_intensity") {
@@ -101,13 +102,13 @@ namespace uniform {
 		}
 	}
 
-	void Shader_Post_Processing_Uniforms::SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
+	inline void Shader_Post_Processing_Uniforms::SetUniformMVP(glm::mat4& model, glm::mat4& view, glm::mat4& projection, ShaderProgram& _shader, Camera& _camera) {
 		_shader.setUniform("model", model);
 		_shader.setUniform("view", view);
 		_shader.setUniform("projection", projection);
 	}
 
-	void Shader_Post_Processing_Uniforms::SetUniformCustom(ShaderProgram& _shader){
+	inline void Shader_Post_Processing_Uniforms::SetUniformCustom(ShaderProgram& _shader){
 		
 		Entity* cam = G_GetManager()->FindActiveCamera();
 
@@ -175,7 +176,7 @@ namespace uniform {
 		render_texture.clear();
 	}
 
-	void Shader_Post_Processing_Uniforms::OnImGuiRender() {
+	inline void Shader_Post_Processing_Uniforms::OnImGuiRender() {
 		ImGui::Indent();
 
 		/*ImGui::SameLine();
@@ -221,7 +222,7 @@ namespace uniform {
 		ImGui::Unindent();
 	}
 
-	void Shader_Post_Processing_Uniforms::LoadTextures(Entity& _shader) {
+	inline void Shader_Post_Processing_Uniforms::LoadTextures(Entity& _shader) {
 		auto tex = _shader.getComponent<ShaderProgram>().GetTextures();
 		numberOfTextures = tex.size();
 		m_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
@@ -230,9 +231,6 @@ namespace uniform {
 			m_pbr_textures[i].LoadTexture(tex[i], true);
 		}
 	}
-
-	Shader_Post_Processing_Uniforms::Shader_Post_Processing_Uniforms(){}
-	Shader_Post_Processing_Uniforms::~Shader_Post_Processing_Uniforms(){}
 }
 
 #endif // !SHADER_DEFAULTUNIFORMS_H

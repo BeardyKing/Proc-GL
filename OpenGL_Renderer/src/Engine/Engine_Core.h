@@ -6,6 +6,7 @@
 
 #include "Buffers/DepthBuffer.h"
 #include "Buffers/FrameBuffer.h"
+#include "Buffers/Depth_Pass.h"
 
 #include "ECS_List.h"
 #include "EditorGUI.h"

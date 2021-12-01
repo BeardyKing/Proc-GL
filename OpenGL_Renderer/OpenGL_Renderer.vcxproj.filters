@@ -183,6 +183,9 @@
     <ClCompile Include="src\Engine\Mesh_Animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tests\test_post_processing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\ShaderProgram.h">
@@ -363,6 +366,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Shader_Post_Processing_Uniforms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tests\test_post_processing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
