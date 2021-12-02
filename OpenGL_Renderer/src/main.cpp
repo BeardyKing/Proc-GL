@@ -22,7 +22,6 @@ int G_GetWindowWidth()					{return gWindowWidth;}
 int G_GetWindowHeight()					{return gWindowHeight;}
 EntityManager* G_GetManager()			{return ecs_manager;}
 void G_SetManager(EntityManager* mgr)	{ecs_manager = mgr;}
-
 GLFWwindow* g_Window = NULL;
 bool g_Fullscreen = false;			// to be deprecated
 bool g_lWireframe = false;			// to be deprecated
@@ -32,6 +31,8 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 void glfw_OnFrameBufferSize(GLFWwindow* window, int width, int height);
 void glfw_OnMouseMove(GLFWwindow* window, double posX, double posY);
 void glfw_OnMouseScroll(GLFWwindow* window, double deltaX, double deltaY);
+
+bool G_GetWireFrame()					{return g_lWireframe;}
 
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
@@ -221,7 +222,7 @@ void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mode)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
-	if (key == GLFW_KEY_F12 && action == GLFW_PRESS){
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS){
 		g_lWireframe = !g_lWireframe;
 		if (g_lWireframe){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

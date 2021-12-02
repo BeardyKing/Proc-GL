@@ -11,6 +11,8 @@
 	extern GLuint G_GetShadowMap();
 	extern void G_SetShadowMap(GLuint tex);
 	extern bool G_RenderShadowMap();
+	extern bool G_GetWireFrame();
+
 
 	extern EntityManager* G_GetManager();
 	extern uint32_t GetAmountOfEntities();

@@ -9,17 +9,22 @@ test_post_processing::test_post_processing(){
     auto* manager = new EntityManager;
     G_SetManager(manager);
 
-    create_camera();
-    create_sky_box();
-    create_water();
-    create_point_light_shadow();
-    create_point_light();
-    create_post_processing();
+    manager->addEntity(create_camera());
+    manager->addEntity(create_sky_box());
+    manager->addEntity(create_point_light_shadow());
+    manager->addEntity(create_point_light());
+    manager->addEntity(create_post_processing());
+    manager->addEntity(create_water());
+
+    for (int i = 0; i < 30; ++i){
+        manager->addEntity(create_random_default_object(i));
+    }
 
     initialise_frame_buffers();
 }
 
 test_post_processing ::~test_post_processing() {
+
     delete entity;
     delete editor;
     delete camera;
@@ -109,9 +114,6 @@ void test_post_processing::render_texture_no_transparent(){
     fbo_render_pass.UnBind();
 }
 
-
-
-
 void test_post_processing::OnImGuiRender() {
 
     #pragma region ImGui_Editor_DEBUG
@@ -157,8 +159,8 @@ void test_post_processing::OnImGuiRender() {
 
     #pragma endregion
 
-    editor->RenderScene(fbo_post_process2.GetRenderBuffer());
-
+	editor->RenderScene(fbo_post_process2.GetRenderBuffer());
+    
     #pragma region ImGui_Editor
 
     if (show_editor){
@@ -321,7 +323,7 @@ void test_post_processing::initialise_frame_buffers() {
 
 }
 
-void test_post_processing::create_post_processing()
+Entity* test_post_processing::create_post_processing()
 {
     entity = new Entity("post_processing_object");
     entity->addComponent<ShaderProgram>("Shaders/PostProcessing/post_processing.vert", "Shaders/PostProcessing/post_processing.frag", "Uniform_Post_Processing");
@@ -333,26 +335,48 @@ void test_post_processing::create_post_processing()
     entity->getComponent<ShaderProgram>().SetFloat(6.712f, "blurStrength_2");
     post_processing = entity;
     post_processing->isActive(false);
-    G_GetManager()->addEntity(entity);
+
+    return entity;
 }
 
-void test_post_processing::create_point_light()
-{
-    entity = new Entity("Point Light1");
-    entity->getComponent<Transform>().position = glm::vec3(-20, 15, -15);
-    entity->addComponent<LightObject>();
-    entity->getComponent<LightObject>().lightType = LightObject::Point;
-    entity->getComponent<LightObject>().far_plane = 200;
-    entity->getComponent<LightObject>().near_plane = 43;
-    entity->addComponent<script_simplebehaviours>();
+Entity* test_post_processing::create_random_default_object(int i){
+        std::string name = "basic sphere ";
+        name.append(std::to_string(i));
+        entity = new Entity(name.c_str());
+        entity->addComponent<ShaderProgram>("Shaders/Standard_Lit/Standard_Lit.vert", "Shaders/Standard_Lit/Standard_Lit.frag", "Uniform_Standard_Lit");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().AddTexturePath("");
+        entity->getComponent<ShaderProgram>().LoadTextures();
+        const glm::vec3 col_3 = glm::vec3(glm::ballRand((float)i / 2));
+        glm::vec4 col_4;
+		col_4.r = col_3.r;
+        col_4.g = col_3.g;
+        col_4.b = col_3.b;
+        col_4.a = 1.0f;
 
-    std::vector<Entity*> lights = G_GetManager()->FindLights();
-    G_GetManager()->addEntity(entity);
+
+
+        entity->getComponent<ShaderProgram>().SetColour(col_4, "albedo_color");
+
+        if (i % 2) {
+            entity->addComponent<Mesh>("objectDefaults/cube.obj");
+        }
+        else if (i % 3) {
+            entity->addComponent<Mesh>("mesh/pipe.obj");
+        }
+        else {
+            entity->addComponent<Mesh>();
+        }
+        entity->getComponent<Transform>().position = glm::vec3(glm::ballRand((float)i / 2));
+        entity->getComponent<Transform>().rotation = glm::vec3(glm::ballRand((float)i / 2));
+        return entity;
 }
 
-void test_post_processing::create_point_light_shadow() {
+Entity* test_post_processing::create_point_light_shadow() {
     entity = new Entity("Point Light Shadow");
-    G_GetManager()->addEntity(entity);
     entity->getComponent<Transform>().position = glm::vec3(51, 64, 37);
     entity->addComponent<LightObject>();
     entity->getComponent<LightObject>().lightType = LightObject::Point;
@@ -364,9 +388,24 @@ void test_post_processing::create_point_light_shadow() {
     entity->getComponent<LightObject>().shadowIntensity = -0.2f;
     entity->addComponent<script_simplebehaviours>();
 
+    return entity;
 }
 
-void test_post_processing::create_water() {
+Entity* test_post_processing::create_point_light()
+{
+    entity = new Entity("Point Light1");
+    entity->getComponent<Transform>().position = glm::vec3(-20, 15, -15);
+    entity->addComponent<LightObject>();
+    entity->getComponent<LightObject>().lightType = LightObject::Point;
+    entity->getComponent<LightObject>().far_plane = 200;
+    entity->getComponent<LightObject>().near_plane = 43;
+    entity->addComponent<script_simplebehaviours>();
+
+    std::vector<Entity*> lights = G_GetManager()->FindLights();
+    return entity;
+}
+
+Entity* test_post_processing::create_water() {
     entity = new Entity("Water");
 
     entity->addComponent<ShaderProgram>("Shaders/Water/Standard_Water.vert", "Shaders/Water/Standard_Water.frag", "Uniform_Standard_Water");
@@ -395,14 +434,14 @@ void test_post_processing::create_water() {
     entity->getComponent<ShaderProgram>().SetFloat(4.595f, "occlusion_scalar");
     entity->getComponent<ShaderProgram>().SetFloat(7.71f, "waterDepthBlend");
     entity->getComponent<ShaderProgram>().SetFloat(0.024f, "DuDv_scalar");
-    entity->getComponent<ShaderProgram>().SetVec2(glm::vec2(0.05), "scroll_amount");
+    entity->getComponent<ShaderProgram>().SetVec2(glm::vec2(0.05f), "scroll_amount");
     entity->getComponent<ShaderProgram>().SetTextureScale(glm::vec2(110, 90));
     e_water = entity;
 
-    G_GetManager()->addEntity(entity);
+    return entity;
 }
 
-void test_post_processing::create_sky_box() {
+Entity* test_post_processing::create_sky_box() {
     std::vector<std::string> faces = {
         "skybox/right.jpg",
         "skybox/left.jpg",
@@ -418,9 +457,10 @@ void test_post_processing::create_sky_box() {
     e_skybox->addComponent<SkyBox>(faces);
     e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag", "Uniform_Skybox");
 
-    G_GetManager()->addEntity(e_skybox);
+    return e_skybox;
 }
-void test_post_processing::create_camera() {
+
+Entity* test_post_processing::create_camera() {
     entity = new Entity("Main Camera");
     entity->addComponent<FPSCamera>();
     auto& cam = entity->getComponent<FPSCamera>().usingImGuiWindow = true;
@@ -431,5 +471,5 @@ void test_post_processing::create_camera() {
     entity->getComponent<script_simplebehaviours>().SetCameraMoveActive(false);
     camera = &entity->getComponent<FPSCamera>();
 
-    G_GetManager()->addEntity(entity);
+    return entity;
 }

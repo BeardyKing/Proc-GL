@@ -1,31 +1,30 @@
-﻿  test_post_processing.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(94,65): warning C4305: 'argument': truncation from 'double' to 'const T'
-          with
-          [
-              T=float
-          ]
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(260,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(261,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(267,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(268,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(272,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(273,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(277,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(278,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  test_ECS.cpp
 C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_ECS.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
           with
           [
               T=LightObject
           ]
-  main.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_List.h(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\dev\Proc-GL\OpenGL_Renderer\src\main.cpp(130,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  test_post_processing.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(135,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(136,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(142,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(143,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(147,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(148,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(152,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(153,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
+C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(381): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
+          with
+          [
+              T=LightObject
+          ]
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  2 of 4581 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    74 functions had inline decision re-evaluated but remain unchanged
+  17 of 4582 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    89 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'

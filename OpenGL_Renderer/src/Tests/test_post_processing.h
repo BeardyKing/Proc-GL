@@ -31,13 +31,15 @@ namespace test {
 		void post_processing_flip();
 		void post_processing_depth_of_field();
 		void post_processing_vignette();
+
 	private:
-		void create_camera();
-		void create_sky_box();
-		void create_water();
-		void create_point_light_shadow();
-		void create_point_light();
-		void create_post_processing();
+		Entity* create_camera();
+		Entity* create_sky_box();
+		Entity* create_water();
+		Entity* create_point_light_shadow();
+		Entity* create_point_light();
+		Entity* create_post_processing();
+		Entity* create_random_default_object(int i);
 
 		void initialise_frame_buffers();
 
@@ -56,7 +58,6 @@ namespace test {
 
 		Entity* post_processing;
 
-		//SKYBOX TEST
 		Entity* e_skybox;
 		Entity* e_water;
 		std::vector<GLuint> matTextures;
