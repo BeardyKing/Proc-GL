@@ -13,7 +13,15 @@ class EntityManager
 public:
 
 	EntityManager() = default;
-	~EntityManager() = default;
+	~EntityManager() {
+		std::cout << "entities count : " << entities.size() << std::endl;
+		for (auto& e : entities){
+			e->destroy();
+		}
+		entities.clear();
+		std::cout << "entities count : " << entities.size() << std::endl;
+		std::cout << "deleted entity manager" << std::endl;
+	}
 	
 	void OnRender();
 	void OnUpdate(double deltaTime);

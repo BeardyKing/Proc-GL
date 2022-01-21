@@ -46,10 +46,19 @@ void EntityManager::OnImGuiRender() {
 }
 
 void EntityManager::OnExit() {
-	for (auto& entity : entities) {
+
+	std::cout << "entities count : " << entities.size() << std::endl;
+	for (auto& e : entities) {
+		e->destroy();
+	}
+	entities.clear();
+	std::cout << "entities count : " << entities.size() << std::endl;
+	std::cout << "deleted entity manager" << std::endl;
+
+	/*for (auto& entity : entities) {
 		entity->OnExit();
 		entity.release();
-	}
+	}*/
 }
 
 #pragma endregion

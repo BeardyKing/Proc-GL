@@ -22,7 +22,12 @@ public:
 		this->addComponent<Transform>();
 	};
 
-	virtual ~Entity() = default;
+	virtual ~Entity() {
+		//destroy();
+		
+	}
+
+
 
 	template<typename T, typename... TArgs>
 	inline T& addComponent(TArgs&&... args) {
@@ -75,7 +80,9 @@ public:
 	}
 
 	inline void destroy() {
-		active = false; // TODO remove from ECS instead of set active to false
+		std::cout << "destroyed entity" << std::endl;
+		components.clear();
+		//active = false; // TODO remove from ECS instead of set active to false
 	}
 
 	inline void OnRender() {

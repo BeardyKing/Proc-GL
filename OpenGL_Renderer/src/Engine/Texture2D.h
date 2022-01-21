@@ -28,6 +28,7 @@ public:
 	glm::vec2 GetTextureSize();
 
 private:
+	std::string debug_filename = "";
 	bool isUsingCubeMap = false;
 	int m_textureWidth = 0;
 	int m_textureHeight = 0;

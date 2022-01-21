@@ -5,6 +5,8 @@
 #include "Tests/test_List.h"
 #include "ECS/Engine_ECS.h"
 #include "Editor/Engine_Editor.h"
+#include "Components/ObjectData.h"
+
 
 #include <iostream>
 #include <sstream>
@@ -37,6 +39,8 @@ bool G_GetWireFrame()					{return g_lWireframe;}
 void showFPS(GLFWwindow* window);
 bool InitOpenGL();
 
+extern uint32_t G_idCounter;
+
 int main(){
 	if (!InitOpenGL()){ 
 		std::cout << "INT FAILED" << std::endl;
@@ -56,7 +60,7 @@ int main(){
 	testMenu->RegisterTest<test::test_ECS>				("ECS test");
 	testMenu->RegisterTest<test::test_post_processing>	("post processing");
 	
-	testMenu->DEBUG_SetActiveTest("post processing");
+	//testMenu->DEBUG_SetActiveTest("post processing");
 	
 	double lastTime = glfwGetTime();
 
@@ -78,19 +82,25 @@ int main(){
 
 		//ImGui::ShowDemoWindow();
 		if (currentTest) {
-
+			bool is_exit = false;
 			currentTest->OnUpdate(deltaTime);
 			currentTest->OnRender();
 			ImGui::Begin("Test");
 			currentTest->OnImGuiRender();
 
 			if (currentTest != testMenu && ImGui::Button("<-")) {
+				is_exit = true;
 				currentTest->OnExit();
 				delete currentTest;
 				currentTest = testMenu;
+				G_idCounter = 0;
 			}
 
 			ImGui::End();
+			if (is_exit){
+				delete ecs_manager;
+				ecs_manager = nullptr;
+			}
 		}
 
 		// Rendering

@@ -1,7 +1,6 @@
 #include "ObjectData.h"
 #include "../Engine/ECS_List.h"
 
-static uint32_t G_idCounter = 0;
 extern EntityManager* G_GetManager();
 
 uint32_t GetAmountOfEntities() {
@@ -26,7 +25,10 @@ ObjectData::ObjectData(std::string _name):
 	G_idCounter++;
 }
 
-ObjectData::~ObjectData(){}
+ObjectData::~ObjectData(){
+	std::cout << "RESET ENTITY COUNT" << std::endl;
+	G_idCounter = 0;
+}
 
 void ObjectData::OnExit() {
 	std::cout << "RESET ENTITY COUNT" << std::endl;

@@ -299,7 +299,11 @@ namespace uniform {
 	}
 
 	Shader_Terrain_Uniforms::Shader_Terrain_Uniforms() {}
-	Shader_Terrain_Uniforms::~Shader_Terrain_Uniforms() {}
+	Shader_Terrain_Uniforms::~Shader_Terrain_Uniforms() {
+		auto tex_ptr = m_pbr_textures.get();
+		delete[] tex_ptr;
+		m_pbr_textures.release();
+	}
 }
 
 #endif // !SHADER_STANDARD_LIT_UNIFORMS_H

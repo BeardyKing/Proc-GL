@@ -81,7 +81,11 @@ std::vector<std::string> ShaderProgram::GetTextures() {
 }
 
 ShaderProgram::~ShaderProgram() {
-	glDeleteProgram(m_Handle);
+	if (currentShader_uniform != nullptr){
+		delete currentShader_uniform;
+		currentShader_uniform = nullptr;
+	}
+	//glDeleteProgram(m_Handle);
 }
 
 void ShaderProgram::OnImGuiRender(){

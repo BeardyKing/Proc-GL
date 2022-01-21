@@ -381,7 +381,11 @@ namespace uniform {
 	}
 
 	Shader_Water_Uniforms::Shader_Water_Uniforms() {}
-	Shader_Water_Uniforms::~Shader_Water_Uniforms() {}
+	Shader_Water_Uniforms::~Shader_Water_Uniforms() {
+		auto tex_ptr = m_pbr_textures.get();
+		delete[] tex_ptr;
+		m_pbr_textures.release();
+	}
 }
 
 #endif // !SHADER_STANDARD_LIT_UNIFORMS_H

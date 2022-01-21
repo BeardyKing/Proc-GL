@@ -11,7 +11,7 @@ FrameBuffer::FrameBuffer():
 }
 
 FrameBuffer::~FrameBuffer() {
-    //DeleteFrameBuffer(); // causes crash on "test" change
+    glDeleteFramebuffers(0, &m_frameBuffer); // causes crash on "test" change
 }
 
 void FrameBuffer::Bind() {

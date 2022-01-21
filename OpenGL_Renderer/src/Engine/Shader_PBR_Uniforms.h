@@ -25,7 +25,7 @@ namespace uniform {
 		void SetBaseColor(glm::vec3 _colour) override;
 	private:
 		glm::vec3 _baseColor = glm::vec3(1.0f,0.38f,0.38f);
-		std::unique_ptr <Texture2D[]> _pbr_textures;
+		std::unique_ptr <Texture2D[]> m_pbr_textures;
 		int numberOfTextures = 0;
 		bool castShadows = true;
 		bool recieveShadows = true;
@@ -44,11 +44,11 @@ namespace uniform {
 	void Shader_PBR_Uniforms::SetUniformCustom(ShaderProgram& _shader){
 		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
-		_pbr_textures[0].Bind(0);
-		_pbr_textures[1].Bind(1);
-		_pbr_textures[2].Bind(2);
-		_pbr_textures[3].Bind(3);
-		_pbr_textures[4].Bind(4);
+		m_pbr_textures[0].Bind(0);
+		m_pbr_textures[1].Bind(1);
+		m_pbr_textures[2].Bind(2);
+		m_pbr_textures[3].Bind(3);
+		m_pbr_textures[4].Bind(4);
 
 		_shader.setUniformSampler("albedoMap",		0);		// 0 = albedo
 		_shader.setUniformSampler("normalMap",		1);		// 1 = normal
@@ -106,7 +106,7 @@ namespace uniform {
 				name = "tex : " + std::to_string(i);
 				if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 					int adjustedWidth = (int)ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-					ImGui::Image((void*)_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), (int)adjustedWidth));
+					ImGui::Image((void*)m_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), (int)adjustedWidth));
 				}
 			}
 			ImGui::Unindent();
@@ -117,15 +117,19 @@ namespace uniform {
 	void Shader_PBR_Uniforms::LoadTextures(Entity& _shader) {
 		auto tex = _shader.getComponent<ShaderProgram>().GetTextures();
 		numberOfTextures = tex.size();
-		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
+		m_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
 		for (int i = 0; i < numberOfTextures; i++){
-			_pbr_textures[i].LoadTexture(tex[i], true);	  
+			m_pbr_textures[i].LoadTexture(tex[i], true);	  
 		}
 	}
 
 	Shader_PBR_Uniforms::Shader_PBR_Uniforms() {}
-	Shader_PBR_Uniforms::~Shader_PBR_Uniforms() {}
+	Shader_PBR_Uniforms::~Shader_PBR_Uniforms() {
+		auto tex_ptr = m_pbr_textures.get();
+		delete[] tex_ptr;
+		m_pbr_textures.release();
+	}
 }
 
 #endif // !SHADER_PBR_UNIFORMS_H

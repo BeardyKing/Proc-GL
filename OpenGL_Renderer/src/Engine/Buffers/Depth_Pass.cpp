@@ -11,7 +11,7 @@ RenderPass::RenderPass() :
 }
 
 RenderPass::~RenderPass() {
-	//DeleteFrameBuffer(); // causes crash on "test" change
+	glDeleteFramebuffers(0, &m_frameBuffer); // causes crash on "test" change
 }
 
 void RenderPass::Bind() {

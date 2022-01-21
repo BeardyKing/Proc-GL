@@ -16,19 +16,19 @@ test_post_processing::test_post_processing(){
     manager->addEntity(create_post_processing());
     manager->addEntity(create_water());
 
-    for (int i = 0; i < 30; ++i){
+    /*for (int i = 0; i < 30; ++i){
         manager->addEntity(create_random_default_object(i));
-    }
+    }*/
 
     initialise_frame_buffers();
 }
 
 test_post_processing ::~test_post_processing() {
 
-    delete entity;
-    delete editor;
-    delete camera;
-    delete e_skybox;
+    entity = nullptr ;
+    editor = nullptr ;
+    camera = nullptr ;
+    e_skybox = nullptr ;
 
     fbo.UnBind();
     glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());

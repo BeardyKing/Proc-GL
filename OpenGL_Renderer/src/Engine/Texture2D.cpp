@@ -23,6 +23,7 @@ void Texture2D::OnImGuiRender(){
 
 Texture2D::~Texture2D() {
 	glDeleteTextures(sizeof(m_texture), &m_texture);
+	std::cout << "deleted texture : " << debug_filename << std::endl;
 }
 
 GLuint Texture2D::GetTexture() {
@@ -35,6 +36,9 @@ glm::vec2 Texture2D::GetTextureSize() {
 
 
 bool Texture2D::LoadTexture(const std::string& fileName, bool generateMipMaps) {
+	
+	debug_filename = fileName;
+
 	unsigned char* imageData;
 	int width, height, components;
 	stbi_set_flip_vertically_on_load(true);
@@ -95,6 +99,9 @@ bool Texture2D::LoadTexture(const std::string& fileName, bool generateMipMaps) {
 }
 
 void Texture2D::GenerateFallbackTexture() {
+
+	debug_filename = "fallback texture";
+
 	glGenTextures(1, &m_texture);
 
 	GLenum format;
@@ -116,6 +123,8 @@ void Texture2D::GenerateFallbackTexture() {
 }
 
 bool Texture2D::LoadHDRTexture(const std::string& fileName) {
+	debug_filename = fileName;
+
 	stbi_set_flip_vertically_on_load(true);
 
 	int width, height, components;
@@ -135,6 +144,7 @@ bool Texture2D::LoadHDRTexture(const std::string& fileName) {
 		return true;
 	}
 	else{
+		stbi_image_free(imageData);
 		std::cout << "Failed to load HDR image at path: " << fileName << std::endl;
 	}
 	unsigned int envCubemap;
@@ -145,6 +155,7 @@ bool Texture2D::LoadHDRTexture(const std::string& fileName) {
 }
 
 bool Texture2D::LoadCubemap(const std::vector<std::string> fileNames) {
+	debug_filename = "CUBE MAP ";
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
@@ -152,9 +163,11 @@ bool Texture2D::LoadCubemap(const std::vector<std::string> fileNames) {
 	int width, height, nrComponents;
 	for (unsigned int i = 0; i < fileNames.size(); i++){
 		unsigned char* data = stbi_load(fileNames[i].c_str(), &width, &height, &nrComponents, 0);
+
+		debug_filename.append(fileNames[i]);
+
 		if (data){
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			stbi_image_free(data);
 		}
 		else{
 			std::cout << "Cubemap texture failed to load at path: " << fileNames[i] << std::endl;

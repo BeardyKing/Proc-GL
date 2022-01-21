@@ -24,7 +24,7 @@ namespace uniform {
 		void SetBaseColor(glm::vec3 _colour) override;
 	private:
 		glm::vec3 _baseColor = glm::vec3(1.0f,0.38f,0.38f);
-		std::unique_ptr <Texture2D[]> _pbr_textures;
+		std::unique_ptr <Texture2D[]> m_pbr_textures;
 		int numberOfTextures = 0;
 		bool castShadows = true;
 		bool recieveShadows = true;
@@ -48,7 +48,7 @@ namespace uniform {
 		auto m_lights = G_GetManager()->FindLights();
 		auto camPos = G_GetManager()->FindActiveCamera()->getComponent<Transform>().position;
 
-		_pbr_textures[0].Bind(0);
+		m_pbr_textures[0].Bind(0);
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_2D, G_GetShadowMap());
 
@@ -86,7 +86,7 @@ namespace uniform {
 				name = "tex : " + std::to_string(i);
 				if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap)) {
 					int adjustedWidth = (int)ImGui::GetContentRegionAvailWidth() * 1024 / 1024;
-					ImGui::Image((void*)_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
+					ImGui::Image((void*)m_pbr_textures[i].GetTexture(), ImVec2(ImGui::GetContentRegionAvailWidth(), adjustedWidth));
 				}
 			}
 			ImGui::Unindent();
@@ -97,15 +97,19 @@ namespace uniform {
 	void Shader_Blinn_Phong_Uniforms::LoadTextures(Entity& _shader) {
 		auto tex = _shader.getComponent<ShaderProgram>().GetTextures();
 		numberOfTextures = tex.size();
-		_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
+		m_pbr_textures = std::make_unique<Texture2D[]>(numberOfTextures);
 
 		for (int i = 0; i < numberOfTextures; i++){
-			_pbr_textures[i].LoadTexture(tex[i], true);	  
+			m_pbr_textures[i].LoadTexture(tex[i], true);	  
 		}
 	}
 
 	Shader_Blinn_Phong_Uniforms::Shader_Blinn_Phong_Uniforms() {}
-	Shader_Blinn_Phong_Uniforms::~Shader_Blinn_Phong_Uniforms() {}
+	Shader_Blinn_Phong_Uniforms::~Shader_Blinn_Phong_Uniforms() {
+		auto tex_ptr = m_pbr_textures.get();
+		delete[] tex_ptr;
+		m_pbr_textures.release();
+	}
 }
 
 #endif // !SHADER_BLIN_PHONG_UNIFORMS_H

@@ -1,30 +1,28 @@
-﻿  test_ECS.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_ECS.cpp(40): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
-  test_post_processing.cpp
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(135,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(136,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(142,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(143,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(147,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(148,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(152,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(153,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\dev\Proc-GL\OpenGL_Renderer\src\ECS\Entity.h(28,2): warning C4316: 'LightObject': object allocated on the heap may not be aligned 16
-C:\dev\Proc-GL\OpenGL_Renderer\src\Tests\test_post_processing.cpp(381): message : see reference to function template instantiation 'T &Entity::addComponent<LightObject,>(void)' being compiled
-          with
-          [
-              T=LightObject
-          ]
+﻿  Depth_Pass.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(43,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(43,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(46,69): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(46,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(48,33): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(48,19): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(57,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(57,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(70,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\Depth_Pass.cpp(70,53): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  FrameBuffer.cpp
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(44,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(44,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(47,69): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(47,55): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(49,36): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(49,22): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(58,58): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\dev\Proc-GL\OpenGL_Renderer\src\Engine\Buffers\FrameBuffer.cpp(58,44): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  17 of 4582 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+  46 of 4585 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    89 functions had inline decision re-evaluated but remain unchanged
+    77 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 LINK : warning LNK4286: symbol '___glewDeleteBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
 LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Anim_Mesh.obj'
@@ -43,6 +41,7 @@ LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew
 LINK : warning LNK4286: symbol '___glewBindFramebuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewGenFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture2D' defined in 'glew32s.lib(glew.obj)' is imported by 'DepthBuffer.obj'
+LINK : warning LNK4286: symbol '___glewDeleteFramebuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewDrawBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewFramebufferTexture' defined in 'glew32s.lib(glew.obj)' is imported by 'Depth_Pass.obj'
 LINK : warning LNK4286: symbol '___glewUniform4f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
@@ -51,7 +50,6 @@ LINK : warning LNK4286: symbol '___glewDeleteShader' defined in 'glew32s.lib(gle
 LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
-LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewUniform1f' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
 LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'ShaderProgram.obj'
@@ -68,6 +66,7 @@ LINK : warning LNK4286: symbol '___glewGenerateMipmap' defined in 'glew32s.lib(g
 LINK : warning LNK4286: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendEquationSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendEquation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
+LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewBlendFuncSeparate' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewGetAttribLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'
 LINK : warning LNK4286: symbol '___glewDrawElementsBaseVertex' defined in 'glew32s.lib(glew.obj)' is imported by 'imgui_impl_opengl3.obj'

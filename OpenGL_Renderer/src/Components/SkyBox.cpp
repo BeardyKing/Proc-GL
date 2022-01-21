@@ -9,6 +9,7 @@ GLuint SkyBox::GetSkyboxTexture(){
 	return m_Texture.GetTexture();
 }
 
-SkyBox::~SkyBox() {}
+SkyBox::~SkyBox() {
+}
 
 void SkyBox::OnImGuiRender(){}

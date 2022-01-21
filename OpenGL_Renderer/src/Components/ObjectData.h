@@ -9,6 +9,9 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 
+static uint32_t G_idCounter = 0;
+
+
 class ObjectData : public Component{
 public:
 	ObjectData();

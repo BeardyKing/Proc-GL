@@ -57,12 +57,12 @@ namespace test {
         };
 
         e_skybox = new Entity("Skybox");
-        G_GetManager()->addEntity(e_skybox);
 
         e_skybox->addComponent<Mesh>("objectDefaults/cube.obj");
         e_skybox->addComponent<SkyBox>(faces);
-        e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag","Uniform_Skybox");
+        e_skybox->addComponent<ShaderProgram>("Shaders/skybox/skybox.vert", "Shaders/skybox/skybox.frag", "Uniform_Skybox");
         
+        G_GetManager()->addEntity(e_skybox);
         #pragma endregion
 
         #pragma region Terrain
@@ -687,11 +687,11 @@ namespace test {
     }
 
     test_shadowMap::~test_shadowMap() {
-        delete entity;
-        delete editor;
-        delete camera;
-        delete depthShader;
-        delete e_skybox;
+        entity = nullptr;
+        editor = nullptr;
+        camera = nullptr;
+        depthShader = nullptr;
+        e_skybox = nullptr;
 
         fbo.UnBind();
         glViewport(0, 0, G_GetWindowWidth(), G_GetWindowHeight());

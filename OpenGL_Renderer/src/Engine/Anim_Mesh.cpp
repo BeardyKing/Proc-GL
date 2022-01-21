@@ -151,7 +151,7 @@ void Anim_Mesh::OnImGuiRender(){
 			str += std::to_string((20 * sizeof(GLfloat)) + (4 * sizeof(GLuint)));
 			ImGui::Text(&str[0]);
 			ImGui::Text("Using Index Buffer");
-			ImGui::Text(indices > 0 ? "True" : "False");
+			ImGui::Text((int)indices > 0 ? "True" : "False");
 
 			if (ImGui::CollapsingHeader("Layout / offsets", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 				ImGui::Text("LAYOUR HERE");
